@@ -1,0 +1,4 @@
+applications:
+- name: pz-docs
+  host: pz-docs
+  buildpack: staticfile_buildpack

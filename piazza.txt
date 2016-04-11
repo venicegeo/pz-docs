@@ -1,0 +1,15 @@
+**Venice** is an open source community focused on building cloud-based frameworks, tools, applications, and other initiatives in support of Geospatial Intelligence ([GEOINT](https://en.wikipedia.org/wiki/Geospatial_intelligence)) needs.
+
+### Community  
+* [[Getting Involved|https://github.com/venicegeo/venice/wiki/Getting-Involved]]
+* [[Coding and Commit Conventions|https://github.com/venicegeo/venice/wiki/Coding-and-Commit-Conventions]]
+* [[Licenses|https://github.com/venicegeo/venice/wiki/LIcenses]]
+* [[Tech Corner|https://github.com/venicegeo/venice/wiki/Tech-Corner]]
+* [[Venice Agile Framework|https://github.com/venicegeo/venice/wiki/Venice-Agile-Framework]]
+
+###  Projects
+* [[DevOps|https://github.com/venicegeo/venice/blob/master/docs/devops.md]]  
+* [[Piazza Core Services|PiazzaCoreServices]]  
+* [[Time Lapse Viewer (TLV)|Time-Lapse-Viewer]]  
+* [[Sample External Services]]  
+* _(and many more forthcoming!)_

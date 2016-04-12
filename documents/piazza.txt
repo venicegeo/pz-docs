@@ -1,0 +1,21 @@
+Home
+
+    Home
+    Coding and Commit Conventions
+    Core Interop
+    General Pz Service Operations
+    Getting Involved
+    HTTP Status Codes
+    Integration Testing
+    Java Spring Application Profiles
+    Job Workflow
+    Licenses
+    Piazza Jobs
+    PiazzaCoreServices
+    Pz Access
+    Pz Client (SAK)
+    Pz Discover
+    Show 21 more pages…
+
+
+Venice is an open source community focused on building cloud-based frameworks, tools, applications, and other initiatives in support of Geospatial Intelligence (GEOINT) needs.

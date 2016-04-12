@@ -15,7 +15,7 @@ Home
     Pz Access
     Pz Client (SAK)
     Pz Discover
-    Show 21 more pages…
+    Show 21 more pages....
 
 
 Venice is an open source community focused on building cloud-based frameworks, tools, applications, and other initiatives in support of Geospatial Intelligence (GEOINT) needs.

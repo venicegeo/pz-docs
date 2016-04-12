@@ -6,9 +6,9 @@ popd > /dev/null
 
 source $root/ci/vars.sh
 
-for f in $(ls -1 $root/documents) ; do
+for f in $(ls -1 $root/documents | grep .txt$) ; do
   base=$(basename $root/$f .txt)
-  python $root/scripts/asciidoc-8.6.9/asciidoc.py -o out/$base.html documents/$f
+  python $root/scripts/asciidoc-8.6.9/asciidoc.py -o $root/out/$base.html $root/documents/$f
 done
 
 tar -czf $APP.$EXT -C $root out

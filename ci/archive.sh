@@ -8,4 +8,6 @@
 
 #tar -czf $APP.$EXT -C $root public
 
+python scripts/asciidoc-8.6.9/asciidoc.py -o out/piazza.html documents/piazza.txt
+
 #python scripts/asciidoc-8.6.9/asciidoc.py -o out/piazza.html piazza.txt

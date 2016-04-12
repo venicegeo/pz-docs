@@ -1,4 +1,4 @@
 #!/bin/bash
 
 APP=pz-docs
-EXT=tar.gz
+#EXT=tar.gz

@@ -1,0 +1,46 @@
+Piazza Design and Architecture
+==============================
+
+microservice principles, REST APIs
+
+internal services, message passing, IDs, etc
+
+public gateway
+
+storage model
+
+infrastructure services
+
+Piazza consists of three components: the Gateway, a set of Services, and a set of various data stores.
+o The Gateway is the sole external web API for the system. It sends requests to the various Services and tracks the state of each request.
+o The Services implement various processing workflows, such as ingesting data, searching for data, or logging events. The types of Services in the system will vary depending on the deployment scenario.
+o The data stores are databases and S3 buckets that hold persistent data within the system. The types of data stores in the system will also vary depending on the deployment scenario.
+● Clients build their own viewers, services, and applications on top of Piazza’s APIs.
+● The basic workflow:
+o Client requests are sent to the Gateway.
+o The Gateway forwards the request to the appropriate Service. o The Service performs the work needed to satisfy the request. o The Service sends a response back to the Gateway.
+o The client receives the response.
+● See Figure 00.
+
+
+All work within the system is coordinated with Kafka messages queues for scalability.
+● Each Service is represented as an Apache Storm workflow (topology) in a traditional DAG form.
+● When ingesting data from a client, the system can store the data in it’s own internal, persistent stores or it can just keep a URI.
+● The system provides several points at which full security procedures will be implemented.
+● The system itself is open source. However, when configured appropriately, the system can be deployed in classified environments.
+
+
+
+The Gateway
+● front door for all service requests, external and internal
+● is not a Service (or Storm topology)
+● REST API, using async semantics
+o later: add async callback model and sync'd model
+● has a DB to record status of all requests
+● operations
+o POST to submit a request; requires submitter id, service name, parameters; returns request id
+o GET request id; returns latest status event from Request DB o DELETE request id, to request cancellation of service
+o PUT not supported
+● also supports an /admin function
+o for development purposes
+● see Figure 10

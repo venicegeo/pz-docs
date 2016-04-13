@@ -2,6 +2,10 @@ Piazza Documentation
 ====================
 The Piazza Team <venice@radiantblue.com>
 v0.0, 13 April 2016
+:doctype: book
+:toc:
+:toc-placement:
+
 
 Piazza is a set of open source, cloud-based services aimed at helping developers build
 GeoInt applications and sevices. Piazza provides features like data load and access, workflow
@@ -11,9 +15,11 @@ could build themselves, but often shouldn't have to.
 Piazza is part of the Venice Project, an open source community focused on building cloud-based frameworks,
 tools, applications, and other initiatives in support of Geospatial Intelligence (GEOINT) needs.
 
-'''
+toc::[]
 
-*General Information*
+include::introduction.txt[tabsize=4]
+
+include::architecture.txt[tabsize=4]
 
 * link:general-introduction.html[Introduction]
 * link:general-architecture.html[Architecture]

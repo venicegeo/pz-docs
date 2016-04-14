@@ -2,60 +2,32 @@ Piazza Documentation
 ====================
 The Piazza Team <venice@radiantblue.com>
 v0.0, 13 April 2016
-:doctype: book
-:toc:
-:toc-placement:
+
+include::common/intro.txt[tabsize=4]
+
+Manuals
+-------
+
+* link:userguide/index.html[Users Guide]
+* link:devguide/index.html[Developers Guide]
+* link:devopsguide/index.html[DevOps Guide]
 
 
-Piazza is a set of open source, cloud-based services aimed at helping developers build
-GeoInt applications and sevices. Piazza provides features like data load and access, workflow
-execution, and execution of user-provided serivces deployed elsewhere on the web -- features that developers
-could build themselves, but often shouldn't have to.
+Additional Links
+----------------
 
-Piazza is part of the Venice Project, an open source community focused on building cloud-based frameworks,
-tools, applications, and other initiatives in support of Geospatial Intelligence (GEOINT) needs.
-
-toc::[]
-
-include::introduction.txt[tabsize=4]
-
-include::architecture.txt[tabsize=4]
-
-* link:general-introduction.html[Introduction]
-* link:general-architecture.html[Architecture]
-* link:general-contacts.html[Contact us]
-* link:general-legal.html[Legal]
-
-
-*For Piazza Users* _(those building applications or serivces that will use Piazza)_
-
-* link:users-tutorial.html[Tutorial]
-* link:users-gateway.html[The Gateway]
-* ...
-
-*For Piazza Developers* _(those building Piazza itself)_
-
-* link:developers-intro.html[Introduction to Piazza Development]
-* link:developers-gateway.html[pz-gateway]
-* link:developers-logger.html[pz-logger]
-* ...
-
-*DevOps Information*
-
-* ...
-
-
-*Other Documentation*
-
-* ...
-
-
-*Additional Links*
-
-* https://github.com/venicegeo[GitHub repository]
 * http://pz-docs.stage.geointservices.io[Piazza documentation]
-* http://pz-sak.stage.geointservices.io[UI for Piazza internal development]
 * http://pz-swagger.stage.geointservices.io[API Reference (swagger)]
+* https://github.com/venicegeo[GitHub repository]
+* http://pz-sak.stage.geointservices.io[UI for Piazza internal development]
 * https://jenkins.devops.geointservices.io/job/piazza/[Jenkins server (login required)]
 * https://apps.devops.geointservices.io/organizations/d6f6d5eb-d2e5-470e-98cf-372cc3015d44#spaces[PCF console (login required)]
 * https://redmine.devops.geointservices.io/projects/piazza/issues[Redmine (login required)]
+* Videos
+* * 03-29-2016 - [Piazza Sprint 3 Status](https://youtu.be/eFuq-t7kQgM)
+* * 03-15-2016 - [Piazza Core - Service Controller](https://www.youtube.com/watch?v=eyLPKhqDOvc)
+
+
+
+
+

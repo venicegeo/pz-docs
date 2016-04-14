@@ -1,0 +1,147 @@
+# Gateway
+
+Handles all user-facing requests to Piazza via REST endpoints. The purpose of this component is to allow for external users to be able to create jobs such as ingesting data or executing services, and to provide the mechanisms for querying the status of submitted jobs. 
+
+Upon validation and authentication of a submitted request, the Gateway communicates directly with the [Dispatcher](https://github.com/venicegeo/pz-dispatcher) component, which internally routes messages to the appropriate Piazza components. 
+
+## Vagrant
+
+*Note*: Vagrant setup will fail because the Nexus credentials are not injected. If you want Vagrant to work, you will have to update the Maven settings on the Vagrant box to include the Nexus repository with your credentials. In the mean time, please run this component locally. 
+
+Run ``vagrant up`` to start the Gateway REST service. The service will be accessible via http://gateway.dev:8081. This machine's functionality depends on the [Dispatcher](https://github.com/venicegeo/pz-dispatcher) and [Job Manager](https://github.com/venicegeo/pz-jobmanager) components also being running their own Vagrant machines. For Kafka messaging, the [Kafka Devbox](https://github.com/venicegeo/kafka-devbox) is also required to be running. 
+
+## Running Locally
+
+To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8081. If you are also running the Dispatcher locally (and not through Vagrant) you will also have to override the host name parameter ``dispatcher.host`` as ``localhost``. 
+
+## S3 Credentials
+
+The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers will require environment variables to be established for passing in the values for the S3 Access key and the S3 Private Access key to be used. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access` and `vcap.services.pz-blobstore.credentials.private`. If you are a developer and you do not have these values on your host, you will not be able to Ingest files into the Gateway.
+
+## Interface
+
+Once running in Cloud Foundry, the Job service will be accessible via the `pz-gateway.cf.piazzageo.io/job` endpoint. Requests take on the form of a JSON Payload that is POSTED to this endpoint.
+
+The following Status Codes are possible response codes from the `/job` endpoint:
+
+* **200 OK** Successful retrieval of Job Statuses or Resource information.
+* **201 CREATED** The Job has been successfully created. Query back for the [Job Status](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-status). 
+* **400 BAD REQUEST** The JSON payload is incorrectly formatted. Details will be included in the response.
+* **401 UNAUTHORIZED** The User associated with the Job does not have permission to execute that Job Type.
+* **500 INTERNAL ERROR** Some internal (non-Gateway) component has failed, such as the Dispatcher or Job Manager. Details should be included with the response.
+* **503 SERVICE UNAVAILABLE** Internal Piazza components are unavailable. This may occur if Kafka or the UUIDGen service are down.
+
+## Authentication and Authorization
+
+Each request will contain the API Key of the submitting user. This API Key will be used to authenticate the users permission to access the Piazza system, and authorize their access to the requested resources. Every request that is sent to the Gateway, without exception, must contain an API key. 
+
+### Job Request
+
+Each Job sent to the Piazza system through the Gateway is assigned a UUID. This UUID is then used to uniquely identify the Job within the system. 
+
+In every case, the bare minimum of the response from the `/job` Endpoint will be a JSON object containing the Job ID of the submitted request. Since many of the Jobs requested will be long-running processes, the service will immediately return a Job ID. This Job ID can then be used to check the status of the long-running Job process in order to get information such as status, progress, or time remaining. 
+
+The typical response for submitting a Job to the Gateway will look like:
+
+```
+{
+	"type": "job"
+	"jobId": "784c11b2-0426-490c-9fde-986f16fc2bfb"
+}
+```
+
+The `jobId` field can then be used to submit a separate Job in order to [Get the Status](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-status) of the first Job or, if done, the Result of that Job. 
+
+### Job Types
+
+Below are the some of the Job requests that can be sent to the Gateway. This list will be updated as new Job types become supported. For a full list of the Job types, see the individual components that support Jobs such as [pz-access](https://github.com/venicegeo/venice/wiki/Pz-Access) or [pz-gateway](https://github.com/venicegeo/venice/wiki/Pz-Gateway).
+
+#### Job Status
+
+Once a Job has been submitted, and a UUID has been received by the submitting client, the UUID can then be used in order to retrieve the current status of that Job. The response to this request will contain the current status of the Job, and if available, the result of the Job. Results of Jobs may vary, and could be anything from a simple number to a large GeoTIFF, so the result for a Job is dependant on the type of Job that submitted it. In some cases, the result of a Job may be a resource URL (such as a WFS or WMS) or UUID that can be used to access that resource from another endpoint.
+
+```
+{
+	"userName": "my-api-key-38n987",
+	"jobType": {
+		"type": "get",
+		"jobId": "8504ceff-2af6-405b-bd8a-6804e7759676"
+	}
+}
+```
+
+Job Status is queried through the ``get`` Job type. The ``jobId`` is then specified. It is important to note that the ``get`` Job type does not produce a new Job. It is a synchronous fetching of a current Job's status; thus creating a Job of type ``get`` will not result in the creation of a new Job.
+
+```
+{
+	"type": "status",
+	"jobId": "8504ceff-2af6-405b-bd8a-6804e7759676",
+	"status": "Submitted",
+	"progress": {
+		"percentComplete": 50,
+		"timeRemaining": null,
+		"timeSpent": null
+	}
+}
+```
+
+The resulting JSON will contain the current status information for that Job. The ``status`` and ``progress`` objects contain information to the Job's current status. 
+
+If the Job has encountered an error, then this information will also be available in the resulting JSON.
+
+#### Job Abort
+
+Users who submit a Job that is currently running, can request that Job be cancelled using the ``abort`` Job type. This will dispatch the event throughout the Piazza application that all components handling this Job should stop immediately. 
+
+```
+{
+	"userName": "my-api-key-38n987",
+	"jobType": {
+		"type": "abort",
+		"jobId": "8504ceff-2af6-405b-bd8a-6804e7759676"
+	}
+}
+```
+
+#### Ingest
+
+This is used for ingesting data into the Piazza Ingest component. This will spawn off a job to parse the appropriate data information from the JSON payload, and begin and Ingest Job. Since ingesting large datasets could take a long period of time, this request will synchronously return the Job ID which can then be queried for updates on the status of the Job. 
+
+For examples of Ingest requests, see the documentation [here](https://github.com/venicegeo/venice/wiki/Pz-Ingest)
+
+#### Access
+
+This is used for accessing data that has been Ingested into the Piazza system. Deployments can be GeoServer layers, or simply requesting a copy of the Ingested file. Since deploying large datasets could take a long period of time, this request will synchronously return the Job ID which can then be queried for updates on the status of the Job. 
+
+For examples of Access requests, see the documentation [here](https://github.com/venicegeo/venice/wiki/Pz-Access)
+
+#### User Services
+
+Users can register, execute and manage web services external to the Piazza core using the Piazza Service Controller Component.  When User Service requests are made via Gateway as a job, the Service Controller will parse the JSON payload and will perform the user service request.  
+
+For examples on how to submit User Service requests, see details here on example payloads [here](https://github.com/venicegeo/venice/wiki/Pz-ServiceController#submitting-user-service-requests)
+
+## REST Endpoints
+
+Gateway component provides a set of REST endpoints that are used to interact with the internal Piazza system. 
+
+### Public Endpoints
+
+##### Job Submission
+> POST **/job**
+
+> Posts a Job Payload to the Piazza System. For information on the POST body to this request, see [Job Request](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request). The Access Job must be submitted first to ensure the bytes are ready to be streamed. 
+
+##### Access File
+> POST **/file**
+
+> Posts a file access payload to the [Access](https://github.com/venicegeo/venice/wiki/Pz-Access) component. See Access wiki for details. The response will be the streamed bytes of the requested file. 
+
+> Sample Body: ```{ 	"userName": "api-key-sdfoij", 	"dataId": "8501e6f5-b6c9-4e52-a853-658a335a5787" }```
+
+### Administrative API
+
+##### Administrative Statistics
+> GET **/admin/stats**
+
+> Return object containing information regarding the running instance of this component. Returns Kafka and S3 information.

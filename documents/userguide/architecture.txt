@@ -1,5 +1,5 @@
-Piazza Design and Architecture
-==============================
+Design and Architecture
+-----------------------
 
 microservice principles, REST APIs
 

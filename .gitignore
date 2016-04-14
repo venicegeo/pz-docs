@@ -1,3 +1,5 @@
+stderr.tmp
 pz-docs.tar.gz
 out/*.html
+out/*/*.html
 

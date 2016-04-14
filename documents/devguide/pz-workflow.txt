@@ -1,0 +1,287 @@
+# Workflow Service
+
+## Summary
+
+The Pz-Workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows.
+
+A user will follow these general steps: (1) register a new event type, (2) register a trigger for that event type, (3) send an event, (4) poll for new alerts, and (5) go to (3).
+
+## User-Level View
+
+### The EventType
+
+The user (or some service) first defines an `EventType` which is the "schema" for the events that the user will be generating. The `EventType` object is POSTed to `/eventtypes` and contains contains a `name` (string) and a map describing the event type's parameters. It also contains a system-generated ID. For example:
+
+    {
+        "id": "17de4",
+        "name": "USDataFound",  # short, id-like string
+        "mapping": {
+            "ItemId":   "string",   # the uuid of the bad data
+            "Severity": "integer",  # level of offense, 1..5
+            "Problem":  "string"   # nature of the issue, e.g. US bbox, US phone number, etc
+        }
+    }
+
+The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
+
+### The Event
+
+The user may generate an `Event` of that `EventType` to indicate some interesting condition has occurred. The `Event` object is POSTed to `/events` and contains the ID of the `EventType`, the date the event occurrent, and the parameters of the event. It also contains a system-generated ID. For example:
+
+    {
+        "id": "53dac"
+        "eventtype_id": "17de4",
+        "date": "2007-04-05T14:30:00Z",
+        "data": {
+            "ItemId": "eb872",   # in this case, the id of a data item loaded into Pz
+            "Severity": 4,
+            "Problem": "us-bbox",
+            "userName": "my-api-key-38n987",
+            "jobId":  "43688858-b6d4-4ef9-a98b-163e1980bba8"
+        }
+    }
+
+### The Trigger
+
+The user then defines a `Trigger` which defines what action is to be taken when a specific event occurs. The `Trigger` is POSTed to `/triggers/` and contains two parts, the `Condition` and the `Job`. The `Condition` defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type. The `Job` defines what action is to be taken, expressed as using Gateway/Dispatcher-style syntax. The `Trigger` also contains a system-generated ID. For example:
+
+    {
+        "id": "987d6",
+        "title": "my found-a-bad-telephone-number trigger",
+        "condition": {
+            "eventtype_ids": ["17de4"],   # array of event type ids
+            "query": {   
+                "query" : {    # the Elasticsearch query string
+	            "bool": {
+                        "must": [
+                            {
+                                "match" : {
+                                    "Severity" : 4
+                                }
+                            },
+                            {
+                                "match" : {
+                                    "Problem" : "us-bbox"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            "job": {
+               "Task": "{\"userName\": \"$userName\", \"jobType\": {\"type\": \"get\", \"jobId\": \"$jobId\"}}"
+            }
+        }
+    }
+
+In this example, the the job will be executed only when our "US data found" event occurs with the specific problem being that a US bounding box has been found with a severity of 4. 
+
+_Note: the `Job's Task` is a string that contains JSON.   It can be templated and filled in with values provided by the event data.  To make a value variable,  prefix it with a '$'.    
+
+_Note: the "type" field of the "condition" will likely be removed in the future, as the query DSL allows us to specify the event type directly within it; this would open up the possibility of having a condition based on multiple events.
+
+### The Alert
+
+Whenever a the condition of a `Trigger` is met, the system will create an `Alert` object. The user can GET a list of alerts from `/alerts`. The `Alert` object contains the ids of the `Trigger` that was hit and the `Event` which caused it. It also contains the now ubiquitous system-generated ID. For example:
+
+    {
+        "id": "8e6fa",
+        "trigger_id": "987d6",
+        "event_id": "53dac"
+    }
+
+_Note: in the future the `event_id` may become an array of event IDs._
+
+_Note: because we do not yet support an actual `Job` to execute in the `Trigger` definition, the user can poll the `/alerts` endpoint and perform the required job action manually.
+
+_Note: the `?trigger=id` and `?after=date` query params will soon be provided to make this polling process somewhat more palatable._
+
+## Internal Design Notes
+
+* Elasticsearch indexes are used to store the event types, the events, the triggers, and the alerts.
+* When a new trigger is added, it's query is registered with the events index's percolation system.
+* When a new event is added, the event index's percolation system is checked to see if any trigger's query has matched. If so, the trigger's job is executed.
+
+## Command Line App
+
+The service is started as a command line app:
+
+    $ pz-workflow
+
+In local mode, the workflow service depends on finding the logger, uuidgen, and elasticsearch.
+
+***
+***
+
+## HTTP API
+
+### `GET /`
+
+Requests a "health check" for the service.
+
+The returned status code is `200` and a body with a short, friendly text string.
+
+***
+
+### `POST /v1/eventtypes`
+
+Sends an EventType to the workflow service.
+
+The POST body is a JSON object:
+
+    {
+        "name": STRING,
+        "mapping": {
+            "NAME" : STRING (datatype, see list below),
+            ...
+        }
+    }
+
+The available data types are: `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`.
+
+The return will be a 201 with the payload `{"id": STRING}`.
+
+### GET /v1/eventtypes
+
+Returns 200 with a payload of an array of all the event types registered.
+
+This endpoint supports pagination, as described in [[General Pz Service Operations]].
+
+### GET /v1/eventtypes/:id
+
+Returns 200 with a payload of the event type with id of `:id`.
+
+### DELETE /v1/eventtypes/:id
+
+Deletes the event type with id `:id`. and returns 200 with no payload.
+
+*** 
+
+### `POST /v1/events/:eventtypename`
+
+Sends an Event to the workflow service, with eventtypename taken from the `name` string the EventType object. (note: this is a bug, shouldn't be needed.) 
+
+The POST body is a JSON object:
+
+    {
+        "eventtype_id": STRING (id of eventtype),
+        "date": STRING (ISO timestamp),
+        "data": {
+            "PARAMETERNAME": VALUE,
+            ...
+        }
+    }
+
+The return will be a 201 with the payload `{"id": STRING}`.
+
+Requests all the Events. Returns an array of `Event` objects of the form used in POST above.
+
+### `GET /v1/events`
+
+Requests all the events (of all event typse). Returns 200 with an array of `Event` objects.
+
+This endpoint supports pagination, as described in [[General Pz Service Operations]].
+
+### `GET /v1/events/:eventtype`
+
+Requests all the events of event type `:eventtype`. Returns 200 with an array of `Event` objects.
+
+This endpoint supports pagination, as described in [[General Pz Service Operations]].
+
+### `GET /v1/events/:eventtype/:id`
+
+Requests a specific Event with id of `:id` and event type `:eventtype`. Returns 200 with the `Event` object.
+
+### `DELETE /v1/events/:eventtype/:id`
+
+Delete a specific Event and returns 200 with no payload.
+
+***
+
+### `POST /v1/alerts`
+
+Sends an Alert to the workflow service.
+
+The POST body is a JSON object:
+
+    {
+        "trigger_id": string,
+        "event_id": string
+    }
+
+*Note:* use this for testing only; only the workflow service should generate alerts.
+
+### `GET /v1/alerts`
+
+Requests all the Alerts.
+
+This endpoint supports pagination, as described in [[General Pz Service Operations]].
+
+Two query parameters are NOT YET supported that will filter the returned list:
+* `trigger=id`: return only those Alerts with arising from the given Trigger
+* `after=date` return only those Alerts that have happened since the given date
+
+The returned value is an array of `Alert` objects of the form used by POST.
+
+### `GET /v1/alerts/:id`
+
+Requests a specific Alert with id of `:id`. Returns 200 and the `Alert` object.
+
+### `DELETE /v1/alerts/:id`
+
+Deletes the alert specified by the id value and returns 200 with no payload.
+
+*Note:* use this for testing only; only the workflow service should delete alerts.
+
+***
+
+### `POST /v1/triggers`
+
+Sends a Trigger to the workflow service.
+
+The POST body is a JSON object:
+
+    {
+        "title": short string,
+        "condition": {
+            "eventtype_id": event type id string,
+            "query": {
+                # Elasticsearch JSON query expression
+            }
+        },
+        "job": {
+            "task": the thing-to-do (JSON contained in a string)
+        }
+    }
+
+### `GET /v1/triggers`
+
+Requests all the Triggers. Returns 200 with an array of `Trigger` objects of the form used by POST.
+
+This endpoint supports pagination, as described in [[General Pz Service Operations]].
+
+### `GET /v1/triggers/:id`
+
+Requests a Trigger with id of `:id`. Returns 200 with the `Trigger` object.
+
+### `DELETE /v1/triggers/:id`
+
+Whacks the trigger specified by the `:id` value and returns 200.
+
+***
+
+### Common operations
+
+This service includes the common endpoints described in [[General Pz Service Operations]].
+
+The `admin settings` supported are:
+
+    {
+        "debug": "true"
+    }
+
+The `admin stats` supported are:
+
+    {
+        "starttime": "....",
+    }

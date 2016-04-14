@@ -1,0 +1,141 @@
+Coding Conventions
+------------------
+
+
+
+* Piazza APIs SHALL use [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
+* Piazza APIs SHALL use [ISO 8601](https://www.w3.org/TR/NOTE-datetime) for time/date formatting.
+
+
+
+### Conventions
+
+At the root of every [[ venicegeo| https://github.com/venicegeo]] repo, please include this file: https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt
+
+In the header of every piece of source code in an open source repo, include this snippet:  https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt
+
+For documentation, videos, slide decks, etc, you must add this line:
+
+    “Sprint 3 Demo Video” by YourNameHere is licensed under CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/us/)
+    
+    
+    
+    
+For additional information on technology standards followed by the community, please visit the [[Venice Tech Corner | https://github.com/venicegeo/venice/wiki/Tech-Corner]].
+
+##### Topics 
+* [Java](#java)  
+* [Go](#go)         
+* [Unit Testing](#unit-testing)  
+* [GitHub](#github)  
+* [Source Code Headers - License Agreement](#license-agreement)  
+
+## Java  
+For general Java coding, follow the Google Java Style coding standards: http://google.github.io/styleguide/javaguide.html#s2-source-file-basics   
+  
+The package naming convention should be:  
+
+* Piazza Project - _org.venice.piazza.[component name]_
+
+## Go
+
+## Unit Testing
+
+
+## GitHub  
+
+New GitHub Repositories within the **_github.com/venicegeo_** community should be named using following convention:   
+
+        Core Piazza Components: pz-[COMPONENT NAME]  
+        VeniceGeo Services: pzsvc-[COMPONENT NAME] 
+ 
+## License Agreement
+
+When contributing to the Venice open source community, please include the appropriate [[Licenses|https://github.com/venicegeo/venice/wiki/Licenses]] in github repos and source code.
+
+include::conventions/http.txt[tabsize=4]
+
+'''
+
+For consistency across our APIs, Pz services are encouraged to support these common endpoints and query parameters.
+
+_(This is not a requirement now, just a Good Idea. `pz-logger`, `pz-uuidgen`, and `pz-workflow` already follow these conventions.)_
+
+
+***
+
+## Pagination Query Parameters
+
+The "pagination" query parameters are used in some `GET` endpoints.
+
+* `size`: number of results to return (integer)
+* `from`: initial result (integer)
+* `key`: the field to use for sorting (string)
+* `order`: indicates ascending or descending order (bool, false is ascending)
+
+For example, these two calls will return the 60 most recent log messages, in batches of 30:
+
+    GET /messages?size=30&from=0&key=stamp&order=true
+    GET /messages?size=60&from=30&key=stamp&order=true
+
+Pagination is currently supported only on the `GET` endpoints for `pz-logger` and `pz-workflow`.
+
+***
+
+## Health Check Endpoint
+
+### `GET /`
+
+Requests a "health check" for the service.
+
+The returned status code is `200` and a body with a short, friendly text string.
+
+***
+
+## Admin Endpoints
+
+### `GET /admin/stats`
+
+Requests the current metrics for the service.
+
+The returned value is a JSON object:
+
+    {
+        "starttime": "....",
+        "<SERVICE_NAME>": {
+            _fields specific to your service_
+        }
+    }
+
+Fields might include things like the time the service started, how many requests it has served, etc.
+
+
+### `GET /admin/settings`
+
+Requests the configurable settings of the service.
+
+The returned value is a JSON object:
+
+    {
+        _fields specific to your service_
+    }
+
+Fields might include things like a `debug` switch or a logging level.
+
+
+### `POST /admin/settings`
+
+Sets the configurable settings of the service.
+
+The POST body is a JSON object:
+
+    {
+        _fields specific to your service_
+
+    }
+
+
+### `POST /admin/shutdown`
+
+(this endpoint is not to be used anymore)
+

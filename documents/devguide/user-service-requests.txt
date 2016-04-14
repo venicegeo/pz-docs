@@ -1,0 +1,386 @@
+ [Registering a Service](#registering-a-service)    
+ [Getting the Status of the Register Service Job](#getting-register-service-status)  
+ [Executing a Service](#executing-a-service)  
+ [Getting the Status of the Execute Service Job](#getting-execute-service-status)  
+ [Getting the Resource Data](#getting-the-resource-data)  
+ [Listing User Services](#listing-user-services)  
+ [Search User Services](#search-user-services)  
+ [Delete User Services](#delete-user-service)  
+ [Describe User Services](#describe-user-service)  
+ [Update User Services](#update-user-service) 
+
+
+User Service requests can be submitted to Piazza via the [Pz Gateway](https://github.com/venicegeo/venice/wiki/Pz-Gateway).  
+
+All User Service requests are submitted using **POST /job**
+The payload for this job is sent in the **form-data** body of the HTTP Request with a content type **Content-Type: multipart/form-data**.
+
+The following examples for registering and executing a service use the [ pzsvc-preview-generator](https://github.com/venicegeo/pzsvc-preview-generator) as an example.
+
+#### Registering a Service
+To register a service, metadata about the user service needs to be sent.  User service metadata is represented as JSON and maps to the ResourceMetadata object once the user service request is submitted.  For details on the metadata associated with User Services, see [ResourceMetadata object](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java) for details.  Below is an example of the minimum data parameters that should be specified when registering a service.
+
+```
+{
+	"userName": "my-api-key-38n987",
+	"jobType": {
+		"type": "register-service",
+		"data": {
+			"id": "",
+			"name": "pz-svcs-prevgen",
+			"inputs": [{
+				"name": "BODY",
+				"minOccurs": 1,
+				"maxOccurs": 1,
+				"dataType": {
+					"type": "body"
+				},
+				"metadata": null,
+				"formats": [{
+					"mimeType": "application/json",
+					"encoding": null,
+					"schema": null,
+					"maximumMegabytes": null,
+					"dataType": null
+				}]
+			}],
+			"outputs": [{
+				"name": "RasterDataType",
+				"minOccurs": 1,
+				"maxOccurs": 1,
+				"dataType": {
+					"mimeType": "application/json",
+					"type": "raster"
+				},
+				"metadata": {
+					"about": "RasterDataType",
+					"href": null,
+					"role": null,
+					"title": "location information of raster info"
+				},
+				"formats": [{
+					"mimeType": "application/json",
+					"encoding": null,
+					"schema": null,
+					"maximumMegabytes": null,
+					"dataType": null
+				}]
+			}],
+			"resourceMetadata": {
+				"name": "pz-svcs-prevgen",
+				"description": "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+				"url": "https://pz-svcs-prevgen.stage.geointservices.io/crop",
+				"method": "POST"
+			}
+		}
+	}
+}
+```
+
+The response provided back from the gateway is the jobId.  This jobId is used to track the status of the job.  Below is an example of what is returned.
+````
+{
+  "type": "job",
+  "jobId": "cb5ae6a1-2d90-48c4-bee4-4e620dd5dc0f"
+}
+````
+
+##### Getting Register Service Status
+
+To get a status of a job, submit a GET request to the pz-gateway.  For example, to get the status of a registered user service, perform the following GET request.
+````
+{     
+    "userName": "my-api-key-38n987",     
+    "jobType": {          
+                   "type": "get",       
+                   "jobId": "cb5ae6a1-2d90-48c4-bee4-4e620dd5dc0f"     
+     }  
+}  
+````
+The job manager returns the status of the submitted job.  In this case, the result of the registered user service is returned with the resourceId of the registered service.  the resourceID is used to manage the registered user service.
+
+````
+{
+  "type": "job",  
+  "jobId": "cb5ae6a1-2d90-48c4-bee4-4e620dd5dc0f",  
+  "result": {  
+    "type": "text",  
+    "text": "{\"headers\":{},\"body\":[\"{\"resourceId\":\"436acee3-7c73-4735-a4ad-45e59a5ff4cc\"}\"],\"statusCode\":\"OK\"}"  
+  },  
+  "status": "Success"  
+}   
+````
+#### Executing a Service
+Once a user service is registered, it can be executed by sending in runtime values.  Below is an example on how to execute the service registered above.  The payload sent to the service controller is in the "data" section.  
+
+resourceID : The Id of the user service
+dataInputs : A list of parameters
+dataInput  : Used if there is a single parameter.  In this example, the input is sent as a JSON payload via POST (see how the service was registered).
+```
+{
+	"userName": "my-api-key-38n987",
+	"jobType": {
+		"type": "execute-service",
+		"data": {
+			"serviceId": "60b233a1-0458-454e-b4a7-ec34c45e69d7",
+			"dataInputs": {
+				"test": {
+					"content": "{\n    \"source\": {\n        
+					\"domain\": \"s3.amazonaws.com\",\n        
+					\"bucketName\": \"pz-svcs-prevgen\",\n        
+					\"fileName\": \"NASA-GDEM-10km-colorized.tif\"\n    
+					},\n    
+					\"function\": \"crop\",\n    
+					\"bounds\": {\n        
+						\"minx\": -140.00,\n        
+						\"miny\": 10.00,\n        
+						\"maxx\": -60.00,\n        
+						\"maxy\": 70.00\n    
+						}\n
+					}",
+					"type": "body",
+					"mimeType": "application/json"
+				}
+			},
+			"dataOutput": {
+				"mimeType": "image/tiff",
+				"type": "raster"
+			}
+		}
+	}
+}
+```
+
+When the job is executed, your response will be the job id which is used to monitor the progress of the User Service.
+````
+{
+  "type": "job",
+  "jobId": "289b957f-6031-436c-be32-a1d39154c336"
+}
+````
+##### Getting Execute Service Status
+To obtain status of the job (executing a service), perform another get using the provided job id.  
+````
+{     "userName": "my-api-key-38n987",     
+      "jobType": 
+      {         "type": "get",         
+                "jobId": "289b957f-6031-436c-be32-a1d39154c336"     
+      } 
+}
+##### Getting the Resource Data
+`````
+If the User service has finished executing, a **dataId** is provided in the response.  The dataId is used to retrieve the data from the executed User service.  
+**Response**
+````
+{
+  "type": "status",
+  "jobId": "289b957f-6031-436c-be32-a1d39154c336",
+  "result": {
+    "type": "data",
+    "dataId": "0ae3a522-08a2-4e4b-9bac-fa37803001d6"
+  },
+  "status": "Success"
+}
+````
+With this _dataId_, a call to get the resource data can be made to retrieve the data.
+
+````
+{   
+    "userName": "my-api-key-38n987", 
+    "jobType":  
+    {         
+        "type": "get-resource",           
+        "resourceId": "ef5ab5d2-bb5a-415b-adca-4abc36d96e89"     
+    }   
+}  
+````
+A call to get the resource data will respond with the data from the execute service.
+
+````
+{
+     "type":"data",  
+     "type":"job",    
+     "data":{   
+              "dataId":"ef5ab5d2-bb5a-415b-adca-4abc36d96e89",    
+              "dataType":{    
+                            "type":"text",   
+                            "content":"[\"{\\\"format\\\":\\\"dms\\\",\\\"dd\\\":\\\"12.582222, -123.765556\\\",\\\"dms\\\":\\\"123456.0N 1234556.0W\\\",\\\"latitude\\\":12.582222222255556,\\\"longitude\\\":-123.76555555555555,\\\"mgrs\\\":\\\"10PDU1684391057\\\"}\"]",   
+               }   
+      }  
+}
+````
+
+#### Listing User Services
+To get a list of all the user services that exist in Piazza, the list-service job can be used.  To obtain this list, post the following form-data to the **POST /job**
+
+````
+{     
+     "userName": "my-api-key-38n987",     
+     "jobType":   
+      {         
+          "type": "list-service"
+      }
+}
+````
+
+The response to this list service request is a job id.  
+**Response**
+````
+{    
+  "type": "job",    
+  "jobId": "7996671b-8d78-412b-8df5-643f9a5c20dc"    
+}    
+````
+With the job id, the list of user services can retrieved using the **get** job type.
+
+````
+{     
+    "userName": "my-api-key-38n987",     
+    "jobType":    {         
+                     "type": "get",         
+                     "jobId": "7996671b-8d78-412b-8df5-643f9a5c20dc"     
+                  }  
+}
+````
+
+The **Response** will contain a listing of all the user services within Piazza
+````
+{  
+  "type": "status",  
+  "jobId": "7996671b-8d78-412b-8df5-643f9a5c20dc",  
+  "result": {  
+    "type": "text",  
+    "text": "[{\"name\":\"Coordinate Conversion\",\"id\":\"436acee3-7c73-4735-a4ad-45e59a5ff4cc\",\"description\":\"Read and convert various types of geospatial location formats.\",\"url\":\"http://pzsvc-coordinate-conversion.cf.piazzageo.io/location/convert\",\"method\":\"GET\",\"responseMimeType\":\"application/json\",\"params\":[]},   
+              {\"name\":\"Coordinate Conversion\",\"id\":\"c0499338-5f68-4f46-a407-ec47c0604a62\",\"description\":\"Read and convert various types of geospatial location formats.\",\"url\":\"http://pzsvc-coordinate-conversion.cf.piazzageo.io/location/convert\",\"method\":\"GET\",\"responseMimeType\":\"application/json\",\"params\":[]},   
+             {\"name\":\"Coordinate Conversion\",\"id\":\"db71afbf-0681-4616-9ccf-496b7039a39d\",\"description\":\"Read and convert various types of geospatial location formats.\",\"url\":\"http://pzsvc-coordinate-conversion.cf.piazzageo.io/location/convert\",\"method\":\"GET\",\"responseMimeType\":\"application/json\",\"params\":[]},   
+            {\"name\":\"Coordinate Conversion\",\"id\":\"38b97ebc-aeac-430b-a203-bcdb913d1b2a\",\"description\":\"Read and convert various types of geospatial location formats.\",\"url\":\"http://pzsvc-coordinate-conversion.cf.piazzageo.io/location/convert\",\"method\":\"GET\",\"responseMimeType\":\"application/json\",\"params\":[]}]"   
+  },  
+  "status": "Success"  
+}
+````
+#### Search User Services
+To search for services within Piazza, the search-service job can be used.  To obtain this search, **POST /job** specifying the field and search regular expression in the form-data body payload.
+
+````
+{     
+     "userName": "my-api-key-38n987",     
+     "jobType": {  
+                    "type": "search-service",  
+                    "data" :  {  
+                                  "field": "name" , 
+                                  "pattern": "to" 
+                     }   
+      } 
+}
+````
+The response will contain the job id associated with the search
+
+````
+{   
+   "type":"job",   
+   "type":"job",   
+   "jobId":"cca8654a-ae20-488c-a85c-992879030049"  
+} 
+````
+To get the search results, submit a get job request using the provided jobId.  
+
+````
+{     
+    "userName": "my-api-key-38n987",     
+    "jobType": {         
+                   "type": "get",        
+                   "jobId": "99c0a4ec-5e90-4901-8b03-477f239987de"    
+     }   
+}   
+````
+
+The response will contain the results of the search.  
+````
+
+{
+  "type": "status",
+  "jobId": "115db407-e269-413f-82e3-4b77cfe6aec6",
+  "result": {   
+    "type": "text",
+    "text": "[{\"name\":\"The toLower Service\",\"id\":\"123-345-456725016366712\",\"description\":\"Service to convert string to lower case\",\"url\":\"http://pz-servicecontroller.cf.piazzageo.io/servicecontroller/jumpstart/string/toLower\",\"method\":\"POST\",\"responseMimeType\":\"application/json\",\"params\":[\"aString\"]},{\"name\":\"The toLower Service\",\"id\":\"123-345-456335677235732\",\"description\":\"Service to convert string to lower case\",\"url\":\"http://pz-servicecontroller.cf.piazzageo.io/servicecontroller/jumpstart/string/toLower\",\"method\":\"POST\",\"responseMimeType\":\"application/json\",\"params\":[\"aString\"]},{\"name\":\"The toLower Service\",\"id\":\"123-345-456464336273332\",\"description\":\"Service to convert string to lower case\",\"url\":\"http://pz-servicecontroller.cf.piazzageo.io/servicecontroller/jumpstart/string/toLower\",\"method\":\"POST\",\"responseMimeType\":\"application/json\",\"params\":[\"aString\"]},{\"name\":\"The toLower Service\",\"id\":\"123-345-456214314703932\",\"description\":\"Service to convert string to lower case\",\"url\":\"http://pz-servicecontroller.cf.piazzageo.io/servicecontroller/jumpstart/string/toLower\",\"method\":\"POST\",\"responseMimeType\":\"application/json\",\"params\":[\"aString\"]},{\"name\":\"The toLower Service\",\"id\":\"123-345-4569278837882\",\"description\":\"Service to convert string to lower case\",\"url\":\"http://pz-servicecontroller.cf.piazzageo.io/servicecontroller/jumpstart/string/toLower\",\"method\":\"POST\",\"responseMimeType\":\"application/json\",\"params\":[\"aString\"]}    
+    }    
+}    
+````
+  
+#### Delete User Service
+To delete a user service, the **delete-service** needs to be submitted to the PZ-Gateway.  When a User Service is deleted, it is not removed from Piazza but is set to a status of **OUT OF SERVICE**.  
+
+To delete a user service, submit the following form-data body payload:
+
+````
+{     
+    "userName": "my-api-key-38n987",    
+        "jobType": {         
+        "type": "delete-service",       
+        "serviceID":    "db71afbf-0681-4616-9ccf-496b7039a39d" , 
+       "reason":"This is a test" 
+    }  
+}  
+````
+
+The response will consist of a jobId.  To get the status of the deletion, using the jobId, submit a get job to the Gateway.  The response will provide the status of the deletion:
+
+````
+{ "_id" : ObjectId("56be3dfebee8a233c5cc7c11"), "name" : "gdaldem", "id" : "1db71afbf-0681-4616-9ccf-496b7039a39d", "description" : "Gdaldem Service - Localhost", "url" : "http://pzsvc-gdaldem.cf.piazzageo.io/gdaldem", "method" : "POST", "requestMimeType" : "application/json", "responseMimeType" : "application/json", "params" : [ ], "availability" : "OUT OF SERVICE" }  
+
+}
+````
+
+#### Describe User Service  
+
+The describe-service job allows users to get details on a specific User Service.  To get the details on a specific User Service, submit the resourceId of the service.
+````
+{     
+    "userName": "my-api-key-38n987",     
+    "jobType": {         
+        "type": "read-service",      
+        "serviceID":   
+        "07aeb7de-e55a-4a78-b585-7a76fab1cd68" 
+    }  
+}
+````  
+The response will consist of a jobId.  To get the results of the describe request, using the jobId, submit a get job to the Gateway.  The response will contain the detailed metadata on the User Service.
+
+````   
+{
+  "type": "status",  
+  "jobId": "07aeb7de-e55a-4a78-b585-7a76fab1cd68",  
+  "result": {  
+    "type": "text",  
+    "text": "{\"name\":\"gdaldem\",\"id\":\"123-345-456662897974432\",\"description\":\"Gdaldem Service - Localhost\",\"url\":\"http://pzsvc-gdaldem.cf.piazzageo.io/gdaldem\",\"availability\":\"OUT OF SERVICE\",\"method\":\"POST\",\"requestMimeType\":\"application/json\",\"responseMimeType\":\"application/json\",\"params\":[]}"
+  },
+  "status": "Success"
+}
+````  
+
+#### Update User Service  
+
+The update-service job allows users to update the information for a specific User Service.  To update a specific User Service, submit the resourceId of the service and the Service Metadata  you want to update.  
+The example before is updating the location url of the service.
+````
+{     
+    "userName": "my-api-key-38n987",     
+    "jobType": {         
+        "type": "update-service",      
+        "serviceID":   
+        "07aeb7de-e55a-4a78-b585-7a76fab1cd68" 
+        "data":
+                  { "id" : "07aeb7de-e55a-4a78-b585-7a76fab1cd68",
+                     "resourceMetadata" : {
+                         "name" : "toUpper Params",
+                          "description" : "This service is a service that converts text to upper case...",
+                          "url" : "http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toUpper",
+                   }  
+         }           
+  
+    }  
+}
+
+ 
+
+

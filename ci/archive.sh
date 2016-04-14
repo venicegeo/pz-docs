@@ -8,14 +8,20 @@ source $root/ci/vars.sh
 
 for f in $(ls -1 $root/documents | grep .txt$) ; do
   base=$(basename $root/$f .txt)
+
+  # txt -> html
   python $root/scripts/asciidoc-8.6.9/asciidoc.py -o $root/out/$base.html $root/documents/$f
+
+  # Generate docbook xml for pdf generation
+  python $root/scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book $root/documents/$f
+
+  # If dblatex is available, make pdf.
+  type dblatex >/dev/null 2>&1 \
+      && dblatex -V -T db2latex $root/documents/$base.xml \
+      || echo "dblatex not installed: no pdf generated" >&2
 done
 
+# Cleanup
+rm $root/documents/*.xml
+
 tar -czf $APP.$EXT -C $root out
-
-
-  #scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book documents/index.txt;dblatex -V -T db2latex documents/index.xml
-  #then move that newly created *.pdf file into pz-docs/out folder.
-  
-#scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book documents/index.txt;dblatex -V -T db2latex documents/index.xml
-#scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book documents/index.txt

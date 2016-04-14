@@ -128,20 +128,29 @@ Gateway component provides a set of REST endpoints that are used to interact wit
 ### Public Endpoints
 
 ##### Job Submission
-> POST **/job**
 
-> Posts a Job Payload to the Piazza System. For information on the POST body to this request, see [Job Request](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request). The Access Job must be submitted first to ensure the bytes are ready to be streamed. 
+****
+POST **/job**
+
+Posts a Job Payload to the Piazza System. For information on the POST body to this request, see [Job Request](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request). The Access Job must be submitted first to ensure the bytes are ready to be streamed. 
+****
 
 ##### Access File
-> POST **/file**
 
-> Posts a file access payload to the [Access](https://github.com/venicegeo/venice/wiki/Pz-Access) component. See Access wiki for details. The response will be the streamed bytes of the requested file. 
+****
+POST **/file**
 
-> Sample Body: ```{ 	"userName": "api-key-sdfoij", 	"dataId": "8501e6f5-b6c9-4e52-a853-658a335a5787" }```
+Posts a file access payload to the [Access](https://github.com/venicegeo/venice/wiki/Pz-Access) component. See Access wiki for details. The response will be the streamed bytes of the requested file. 
+
+Sample Body: ```{ 	"userName": "api-key-sdfoij", 	"dataId": "8501e6f5-b6c9-4e52-a853-658a335a5787" }```
+****
 
 ### Administrative API
 
 ##### Administrative Statistics
-> GET **/admin/stats**
 
-> Return object containing information regarding the running instance of this component. Returns Kafka and S3 information.
+****
+GET **/admin/stats**
+
+Return object containing information regarding the running instance of this component. Returns Kafka and S3 information.
+****

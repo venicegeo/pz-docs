@@ -221,10 +221,13 @@ Upon the successful Ingest of any type of Data into Piazza (internal or external
 The Ingest Component contains various REST Endpoints that can be used for query for run-time information on specific instances of this component. 
 
 ### Administrative Statistics
-> GET **/admin/stats**
 
-> Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
+****
+GET **/admin/stats**
 
-> ```{
+Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
+
+```{
   "jobs": ["job-id-1", "job-id-2"]
 }```
+****

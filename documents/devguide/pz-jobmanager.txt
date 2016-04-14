@@ -78,60 +78,83 @@ Jobs returned through REST Endpoints will follow the JSON Model defined in the [
 #### REST Endpoints
 
 ##### Getting Job Count
-> **/job/count**
 
-> Gets a count of the Jobs in the Piazza system. 
+****
+**/job/count**
+
+Gets a count of the Jobs in the Piazza system. 
+****
 
 ##### Getting Jobs
-> **/job**
 
-> Gets all of the Jobs in the Piazza system. 
+****
+**/job**
 
-> *page* : The start page for the query. Optional, default 0.
+Gets all of the Jobs in the Piazza system. 
 
-> *pageSize* : The number of results per page. Optional, default 10. 
+*page* : The start page for the query. Optional, default 0.
+
+*pageSize* : The number of results per page. Optional, default 10. 
+****
 
 ##### Get Specific Job
-> **/job/{jobId}**
 
-> Gets a specific Job.
+****
+**/job/{jobId}**
 
-> *jobId* : The ID of the Job to retrieve.
+Gets a specific Job.
+
+*jobId* : The ID of the Job to retrieve.
+****
 
 ##### Get Job Statuses
-> **/job/status**
 
-> Gets a list of all possible Statuses to query.
+****
+**/job/status**
+
+Gets a list of all possible Statuses to query.
+****
 
 ##### Get Jobs Status Counts
-> **/job/status/{status}/count**
 
-> *status* : The Status to get the count for.
+****
+**/job/status/{status}/count**
+
+*status* : The Status to get the count for.
+****
 
 ##### Get Job by Status
-> **/job/status/{status}**
 
-> *status* : The Status to get the Jobs for.
+****
+**/job/status/{status}**
 
-> *page* : The start page for the query. Optional, default 0.
+*status* : The Status to get the Jobs for.
 
-> *pageSize* : The number of results per page. Optional, default 10. 
+*page* : The start page for the query. Optional, default 0.
+
+*pageSize* : The number of results per page. Optional, default 10. 
+****
 
 ##### Get Jobs by User ID
-> **/job/userName/{userName}**
 
-> *userName* : The API Key of the user to query for Jobs submitted by.
+****
+**/job/userName/{userName}**
 
-> *page* : The start page for the query. Optional, default 0.
+*userName* : The API Key of the user to query for Jobs submitted by.
 
-> *pageSize* : The number of results per page. Optional, default 10. 
+*page* : The start page for the query. Optional, default 0.
+
+*pageSize* : The number of results per page. Optional, default 10. 
+****
 
 ##### Administrative Statistics
-> **/admin/stats**
 
-> Return object containing information regarding the running instance of this component. Currently returns the number of Jobs held in the Job Table, listed by status.
+****
+**/admin/stats**
 
-> ```{
+Return object containing information regarding the running instance of this component. Currently returns the number of Jobs held in the Job Table, listed by status.
+
+```{
   "running": 2,
   "fail": 0,
   "total": 19,
@@ -141,3 +164,4 @@ Jobs returned through REST Endpoints will follow the JSON Model defined in the [
   "cancelled": 0,
   "error": 1
 }```
+****

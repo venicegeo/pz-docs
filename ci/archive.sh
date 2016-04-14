@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 pushd `dirname $0`/.. > /dev/null
 root=$(pwd -P)
@@ -11,25 +11,32 @@ function doit {
     outdir=$2
     
     cmd="python $root/scripts/asciidoc-8.6.9/asciidoc.py"
-    $cmd -o $outdir/index.html $indir/index.txt 2> stderr.tmp
+    aaa=`dirname $indir/index.txt`
+    bbb=`basename $aaa`
+    echo "Proceesing: $bbb/index.txt"
+    $cmd -o $outdir/index.html $indir/index.txt > stdout.tmp
+    
+    # treat asciidoc warnings as errors
+    if [ -s stdout.tmp ] ;
+    then
+      cat stdout.tmp
+      exit 1
+    fi
+    
+    echo done
 }
 
 rm -f out/*.html out/*/*.html
-rm -f stderr.tmp
+rm -f stdout.tmp
 
 ins="$root/documents"
 outs="$root/out"
 
-doit $ins $outs
-doit $ins/userguide $outs/userguide
-doit $ins/devguide $outs/devguide
-doit $ins/devopsguide $outs/devopsguide
+#doit $ins $outs
+doit $ins/userguide   $outs/userguide
+#doit $ins/devguide    $outs/devguide
+#doit $ins/devopsguide $outs/devopsguide
 
-# treat asciidoc warnings as errors
-if [ -s stderr.tmp ] ;
-then
-  cat stderr.tmp
-  exit 1
-fi
+echo done
 
 tar -czf $APP.$EXT -C $root out

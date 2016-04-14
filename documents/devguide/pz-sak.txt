@@ -16,9 +16,9 @@ SAK will be used by developers as an easy way to test the functionality of the s
 ### Steps
 
 1. Copy pzclient-sak/conf/nginx.conf to nginx-1.8.1/conf
-1. Modify nginx.conf to point root to your local copy of the repos /public directory (line 50)
-1. From a command line run `start nginx.exe`
-1. Go to http://localhost
+2. Modify nginx.conf to point root to your local copy of the repos /public directory (line 50)
+3. From a command line run `start nginx.exe`
+4. Go to http://localhost
 
 Note: The following commands are helpful as well:  
 `nginx -s reload` - Updates changes to the conf  

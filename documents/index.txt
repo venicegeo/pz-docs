@@ -24,10 +24,5 @@ Additional Links
 * https://apps.devops.geointservices.io/organizations/d6f6d5eb-d2e5-470e-98cf-372cc3015d44#spaces[PCF console (login required)]
 * https://redmine.devops.geointservices.io/projects/piazza/issues[Redmine (login required)]
 * Videos
-* * 03-29-2016 - [Piazza Sprint 3 Status](https://youtu.be/eFuq-t7kQgM)
-* * 03-15-2016 - [Piazza Core - Service Controller](https://www.youtube.com/watch?v=eyLPKhqDOvc)
-
-
-
-
-
+** 03-29-2016 - https://youtu.be/eFuq-t7kQgM[Piazza Sprint 3 Status]
+** 03-15-2016 - https://www.youtube.com/watch?v=eyLPKhqDOvc[Piazza Core - Service Controller]

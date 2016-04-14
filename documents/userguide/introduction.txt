@@ -1,16 +1,35 @@
 Introduction
 ------------
 
-Goals
-~~~~~
+Piazza is a set of open source, cloud-based services aimed at helping users (developers) build
+GeoInt applications and sevices. These services are exposed via REST endpoints, providing
+developers with the ability to:
 
-- from the slide deck
+* _Load data into the system._ -- Given a reference to an external data source, Piazza can extract metadata and
+other information about that data and record it locally. Piazza now "knows"
+about that data. These data sources can be files, such as a GeoTIFF in an S3 bucket, or features, such as from a Shapefile
+or PostGIS databse. (Note that while Piazza typically needs to read the data source's contents,
+it does not need to store a copy of it locally.)
 
-Piazza
-~~~~~~
+* _Access data from the system._ -- Having loaded data into the system, Piazza can create access points such as OGC endpoints
+or download links, so users can access the data.
 
-- what it is - features
+* _Search data within the system._ -- Piazza stores the metadata about the data sources, allowing users to submit queries
+and recieve in return a list of data resources matching the criteria.
 
-- what it is not
+* _Execute external services._ -- Users will wish to execute external services, such as querying a gazeteer for a given location
+or extracting vector features from an image. Services can be registered by providing endpoints, descriptions,
+and parameter lists, and then Piazza can execute these services on the user's behalf. The services can reference
+data loaded into Piazza or externally via URL.
 
- 
+* _Detect events and trigger actions._ -- Piazza allows users to define "types" of events, such as the loading
+of a new file within a certain bounding box or the successful completion of an external service; the events
+can be generated from within the system or sent to the system from the outside. Users can then define
+actions to be taken when certain event conditions are met, thus allowing Piazza to be responsible
+for executing simple "workflows" of activities.
+
+Piazza is not unique in its ability to offer these services. Developers could, for example, use a message queueing system
+to implement their own eventing and triggering system, or could stand up their own WPS server for invoking external services.
+It is our position, however, that in many cases developers shouldn't have to 
+
+All of these services are 

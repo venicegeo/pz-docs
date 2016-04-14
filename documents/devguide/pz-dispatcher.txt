@@ -44,6 +44,9 @@ Because all Jobs are asynchronous, then they are relayed through Kafka messaging
 The Dispatcher contains some REST Endpoints that can be used to query an individual instance of this component for run-time statistics.
 
 ### Administrative Statistics
-> GET **/admin/stats**
 
-> Return object containing information regarding the running instance of this component. 
+****
+GET **/admin/stats**
+
+Return object containing information regarding the running instance of this component. 
+****

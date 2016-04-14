@@ -53,7 +53,7 @@ New GitHub Repositories within the **_github.com/venicegeo_** community should b
 
 When contributing to the Venice open source community, please include the appropriate [[Licenses|https://github.com/venicegeo/venice/wiki/Licenses]] in github repos and source code.
 
-include::conventions/http.txt[tabsize=4]
+include::http.txt[tabsize=4]
 
 '''
 

@@ -140,31 +140,43 @@ Resources returned through REST Endpoints will follow the JSON Model defined in 
 #### REST Endpoints
 
 ##### Getting Data Count
-> **/data/count**
 
-> Gets a count of the Resources held in the Piazza system. 
+****
+**/data/count**
+
+Gets a count of the Resources held in the Piazza system. 
+****
 
 ##### Getting Data 
-> **/data**
 
-> Gets all of the Resources in the Piazza system. 
+****
+**/data**
 
-> *page* : The start page for the query. Optional, default 0.
+Gets all of the Resources in the Piazza system. 
 
-> *pageSize* : The number of results per page. Optional, default 10. 
+*page* : The start page for the query. Optional, default 0.
+
+*pageSize* : The number of results per page. Optional, default 10. 
+****
 
 ##### Getting Specific Data
-> **/data/{dataId}**
 
-> Gets the Resource for the specified Resource ID
+****
+**/data/{dataId}**
 
-> *dataId* : The ID of the Resource to fetch. 
+Gets the Resource for the specified Resource ID
+
+*dataId* : The ID of the Resource to fetch. 
+****
 
 ##### Administrative Statistics
-> GET **/admin/stats**
 
-> Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
+****
+GET **/admin/stats**
 
-> ```{
+Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
+
+```{
   "jobs": ["job-id-1", "job-id-2"]
 }```
+****

@@ -12,3 +12,10 @@ for f in $(ls -1 $root/documents | grep .txt$) ; do
 done
 
 tar -czf $APP.$EXT -C $root out
+
+
+  #scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book documents/index.txt;dblatex -V -T db2latex documents/index.xml
+  #then move that newly created *.pdf file into pz-docs/out folder.
+  
+#scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book documents/index.txt;dblatex -V -T db2latex documents/index.xml
+#scripts/asciidoc-8.6.9/asciidoc.py -a lang=en -v -b docbook -d book documents/index.txt

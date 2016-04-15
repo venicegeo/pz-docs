@@ -14,6 +14,8 @@ function doit {
     aaa=`dirname $indir/index.txt`
     bbb=`basename $aaa`
     echo "Proceesing: $bbb/index.txt"
+
+    # txt -> html
     $cmd -o $outdir/index.html $indir/index.txt > stdout.tmp
     
     # treat asciidoc warnings as errors
@@ -23,11 +25,19 @@ function doit {
       exit 1
     fi
     
+    # Generate docbook xml for pdf generation
+    $cmd -a lang=en -v -b docbook -d book -o $outdir/index.xml $indir/index.txt
+    
+    # If dblatex is available, make pdf.
+    type dblatex >/dev/null 2>&1 \
+        && dblatex -V -T db2latex $outdir/index.xml \
+        || echo "dblatex not installed: no pdf generated" >&2
+
     echo done
 }
 
-rm -f out/*.html out/*/*.html
-rm -f stdout.tmp
+rm -f $root/out/*.html $root/out/*/*.html
+rm -f $root/stdout.tmp
 
 ins="$root/documents"
 outs="$root/out"
@@ -38,5 +48,8 @@ doit $ins/devguide    $outs/devguide
 doit $ins/devopsguide $outs/devopsguide
 
 echo done
+
+# Cleanup
+rm -f $root/out/index.xml $root/out/*/index.xml
 
 tar -czf $APP.$EXT -C $root out

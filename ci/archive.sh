@@ -15,6 +15,8 @@ $venv/bin/pip install --install-option="--prefix=$venv" latex
 $venv/bin/pip install --install-option="--prefix=$venv" PyLaTex
 $venv/bin/easy_install --script-dir="$venv/bin" dblatex
 
+mkdir -p $root/tmp
+
 source $root/ci/vars.sh
 
 function doit {
@@ -40,7 +42,16 @@ function doit {
     $cmd -a lang=en -v -b docbook -d book -o $outdir/index.xml $indir/index.txt
     
     # If dblatex is available, make pdf.
-    dblatex --backend pdftex --dump --verbose --type pdf --style db2latex --output-dir $outdir $outdir/index.xml
+    dblatex --output-dir $outdir \
+            --input-format xml \
+            --backend pdftex \
+            --type pdf \
+            --style db2latex \
+            --verbose \
+            --tmpdir $root/tmp \
+            --debug \
+            --dump \
+        $outdir/index.xml
 
     echo done
 }

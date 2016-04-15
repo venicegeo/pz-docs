@@ -1,26 +1,31 @@
-# Ingest (Loader)
+pz-ingest (Loader)
+------------------
 
 Inspects and ingests data & metadata into the Piazza system. 
 
-## Vagrant
+Vagrant
+~~~~~~~
 
 *Note*: Vagrant setup will fail because the Nexus credentials are not injected. If you want Vagrant to work, you will have to update the Maven settings on the Vagrant box to include the Nexus repository with your credentials. In the mean time, please run this component locally. 
 
 Run ``vagrant up`` to start the Ingest service. For Kafka messaging, the [Kafka Devbox](https://github.com/venicegeo/kafka-devbox) is also required to be running. This box will listen to Kafka messages fired by the [Dispatcher](https://github.com/venicegeo/pz-dispatcher).
 
-## Running Locally
+Running Locally
+~~~~~~~~~~~~~~~
 
 To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. 
 
-## S3 Credentials
+S3 Credentials
+~~~~~~~~~~~~~~
 
 The Ingest component inspects files uploaded to S3 by the Gateway. As such, the `pz-ingest` component is also dependent on the `vcap.services.pz-blobstore.credentials.access` and `vcap.services.pz-blobstore.credentials.private` ENV variables. For more information, see [Gateway S3 Credentials](https://github.com/venicegeo/venice/wiki/Pz-Gateway#s3-credentials) information.
 
-## Interface
+Interface
+~~~~~~~~~
 
 The Ingest service listens to Kafka messages fired by the Gateway and Dispatcher components. It does not contain a direct REST interface for interactions. In order to Ingest data, a message will be posted to the Gateway to create an Ingest job. The JSON payload shell for an Ingest Job takes on the form:
 
-```
+....
 {
 	"userName": "my-api-key-38n987",
 	"jobType": {
@@ -31,7 +36,7 @@ The Ingest service listens to Kafka messages fired by the Gateway and Dispatcher
 		}, "metadata": {}
 	}
 }
-```
+....
 
 The metadata fields under the `jobType.data` tag are defined in the [DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) POJO object. This object contains the `ResourceType` interface, which is listed in the `model.data.type` package. This package defines format types for each type of Data that Piazza currently supports: Shapefiles, Text, PostGIS Tables, etc. 
 
@@ -41,7 +46,8 @@ When ingesting data, users will be encouraged to fill out as much `metadata` as 
 
 The above JSON payload is sent via POST to the Gateway Jobs endpoint under the `body` parameter. For more information on Gateway Jobs, see the documentation for the [Gateway](https://github.com/venicegeo/pz-gateway). A File can also be specified in the POST request under the `file` parameter; such as the case when uploading Shapefiles for Ingest.
 
-## Ingest Process
+Ingest Process
+~~~~~~~~~~~~~~
 
 The Gateway will receive the Ingest Job request and then forward the request along, via Kafka, to the Dispatcher, where the Job Creation message is then forwarded along to the Ingest component. If a File is specified in the initial request, the Gateway will store this file on disk immediately and then upload to AWS S3 storage. The file path information is then attached to the message that the Ingest receives. 
 
@@ -51,7 +57,8 @@ The following diagram describes the process for Ingesting Data:
 
 ![Ingest Sequence Diagram](https://raw.githubusercontent.com/venicegeo/venice/master/docs/img/uml-ingest.png)
 
-## Supported Data Types
+Supported Data Types
+~~~~~~~~~~~~~~~~~~~~
 
 | Data Type           | Ingest and Hosted                 | Ingest and Not Hosted                         |
 |---------------------|-----------------------------------|-----------------------------------------------|
@@ -61,13 +68,15 @@ The following diagram describes the process for Ingesting Data:
 | PointCloud          | Yes, stored in S3                 | Possibly, if we have credentials passed to us |
 | Web Feature Service | Yes, stored in PostGIS            | Yes, referenced via external URL              |
 
-## Example Ingest Requests
+Example Ingest Requests
+~~~~~~~~~~~~~~~~~~~~~~~
 
-### Text Ingest
+Text Ingest
+^^^^^^^^^^^
 
 Great for testing! This will upload some Text into Piazza and will be stored within the Resource database. The JSON Payload for this request takes on this form:
 
-```
+....
 {
 	"userName": "my-api-key-38n987",
 	"jobType": {
@@ -87,13 +96,14 @@ Great for testing! This will upload some Text into Piazza and will be stored wit
 		}
 	}
 }
-```
+....
 
-### Shapefile Ingest
+Shapefile Ingest
+^^^^^^^^^^^^^^^^
 
 The POST body, sent to the Gateway, for file uploads must be multipart. It will contain the `body` field which will contain the following payload:
 
-```
+....
 {
 	"userName": "my-api-key-38n987",
 	"jobType": {
@@ -111,15 +121,16 @@ The POST body, sent to the Gateway, for file uploads must be multipart. It will 
 		}
 	}
 }
-```
+....
 
 It will also contain the `file` field will which contain the bytes for the file being uploaded. When uploading Shapefiles, the contents of the shapefile (.shp, .dbf, .prj, etc) must be zipped up. This `.zip` file is what should be uploaded through the `file` form parameter. 
 
-### GeoTIFF Ingest
+GeoTIFF Ingest
+^^^^^^^^^^^^^^
 
 GeoTIFF Raster files can be ingested. 
 
-```
+....
 {
 	"userName": "my-api-key-38n987",
 	"jobType": {
@@ -137,13 +148,14 @@ GeoTIFF Raster files can be ingested.
 		}
 	}
 }
-```
+....
 
 It will also contain the `file` field will which contain the bytes for the file being uploaded. This should be the `.tif` or `.tiff` file. 
 
-### GeoJSON Ingest
+GeoJSON Ingest
+^^^^^^^^^^^^^^
 
-```
+....
 {
 	"userName": "my-api-key-38n987",
 	"jobType": {
@@ -161,15 +173,16 @@ It will also contain the `file` field will which contain the bytes for the file 
 		}
 	}
 }
-```
+....
 
 It will also contain the `file` field will which contain the bytes for the file being uploaded. This should be the `.geojson` or `.json` file. 
 
-### Web Feature Service (WFS) Ingest
+Web Feature Service (WFS) Ingest
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Web Feature Services can be ingested and hosted within Piazza. If `host` is set to true, then Piazza will store the WFS data pulled from the provided endpoint into the Piazza PostGIS database. If the WFS is not able to be parsed, then an error will be thrown. All WFS URLs provided to Piazza must be accessible to the Ingest component. If advanced credentials or authentication is required, then it must be specified or else the request will fail (currently, WFS credentials are not implemented).
 
-```
+....
 {
 	"userName": "my-api-key-38n987",
 	"jobType": {
@@ -190,17 +203,19 @@ Web Feature Services can be ingested and hosted within Piazza. If `host` is set 
 		}
 	}
 }
-```
+....
 
-## Workflow Events
+Workflow Events
+~~~~~~~~~~~~~~~
 
 In support of the [Workflow](https://github.com/venicegeo/venice/wiki/Pz-Workflow) service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
 
-### Event Type
+Event Type
+^^^^^^^^^^
 
 Upon the successful Ingest of any type of Data into Piazza (internal or external), the Ingest component will fire an Event. The Event is defined with the Workflow using the following template:
 
-```
+....
 {
 	"name": "Ingest",
 	"mapping": {
@@ -214,20 +229,19 @@ Upon the successful Ingest of any type of Data into Piazza (internal or external
 		"hosted": "boolean"
 	}
 }
-```
+....
 
-## Administrative API
+Administrative API
+~~~~~~~~~~~~~~~~~~
 
 The Ingest Component contains various REST Endpoints that can be used for query for run-time information on specific instances of this component. 
 
-### Administrative Statistics
-
-****
-GET **/admin/stats**
+Administrative Statistic -- `GET /admin/stats`
 
 Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
 
-```{
+....
+{
   "jobs": ["job-id-1", "job-id-2"]
-}```
-****
+}
+....

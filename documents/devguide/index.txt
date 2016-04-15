@@ -14,6 +14,8 @@ include::jobs.txt[tabsize=4]
 
 include::job-workflow.txt[tabsize=4]
 
+include::pz-jobmanager.txt[tabsize=4]
+
 include::pz-logger.txt[tabsize=4]
 
 include::pz-gateway.txt[tabsize=4]
@@ -25,8 +27,6 @@ include::pz-access.txt[tabsize=4]
 include::pz-dispatcher.txt[tabsize=4]
 
 include::pz-ingest.txt[tabsize=4]
-
-include::pz-jobmanager.txt[tabsize=4]
 
 include::pz-search-metadata-ingest.txt[tabsize=4]
 

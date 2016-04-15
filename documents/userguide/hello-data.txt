@@ -1,0 +1,14 @@
+Data Load and Access
+~~~~~~~~~~~~~~~~~~~~
+
+_discussion of storage models - host/nohost, etc -- as per slides_
+
+_example file load_
+
+_example of getting metadata from resource id_
+
+_example WMS_
+
+_exampel features_
+
+_example download_

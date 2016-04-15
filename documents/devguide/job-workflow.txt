@@ -1,13 +1,13 @@
 Job Workflow
 ------------
 
-### Job Workflow
-
 The purpose of this page is to document the Workflow of the Piazza Core Job process, and aims to show how Piazza Jobs are created and processed, in order to give a better understanding of how the many internal Piazza Core components communicate.
 
-### Job Sequence
+Job Sequence
+~~~~~~~~~~~~
 
 The Sequence for Jobs is as follows:
+
 * User POSTs a Job to the [Gateway](https://github.com/venicegeo/venice/wiki/Pz-Gateway)
 * The Gateway validates the Job, and passes it to the [Dispatcher](https://github.com/venicegeo/venice/wiki/Pz-Dispatcher)
 * Simultaneously, the Gateway returns the [HTTP response](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request) to the User containing the ID of the Job
@@ -22,7 +22,8 @@ The above process is described in the UML Diagram below:
 
 ![Job Sequence Diagram](https://raw.githubusercontent.com/venicegeo/venice/master/docs/img/uml-job.png)
 
-### Cancelling Jobs: Kafka and Worker Components
+Cancelling Jobs: Kafka and Worker Components
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Each Worker component (defined as a Component capable of processing Jobs), such as [Service Controller](https://github.com/venicegeo/venice/wiki/Pz-ServiceController) or [Ingest](https://github.com/venicegeo/venice/wiki/Pz-Ingest), will join a single Kafka consumer group together. By joining the same Kafka consumer group, this ensures that as each component scales out towards N-number of instances, only one instance of that component will receive an incoming Job. In this way, Jobs are spread out among all instances automatically by Kafka. This group name is often named based on the component itself, for readability: For example, the `pz-ingest` component Consumer group is called `ingest`.
 

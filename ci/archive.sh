@@ -32,10 +32,10 @@ rm -f stdout.tmp
 ins="$root/documents"
 outs="$root/out"
 
-#doit $ins $outs
+doit $ins $outs
 doit $ins/userguide   $outs/userguide
-#doit $ins/devguide    $outs/devguide
-#doit $ins/devopsguide $outs/devopsguide
+doit $ins/devguide    $outs/devguide
+doit $ins/devopsguide $outs/devopsguide
 
 echo done
 

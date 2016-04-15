@@ -1,15 +1,16 @@
-Purpose of [pzsvc-preview-generator](https://github.com/venicegeo/pzsvc-preview-generator) is to showcase piazza's core capabilites. This app exposes rest endpoint, takes a post request containing payload of required metadata. Points to the s3 location, downloads, crops the raster file, and uploads the cropped raster back up to s3 bucket, returns a DataResource.
+User Services
+~~~~~~~~~~~~~
 
-# Usage:
+The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilites. This app exposes a REST endpoint which takes a POST request containing payload of required parameters. Given an s3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
 
-Post a request with a payload.
-url: 
-https://pz-svcs-prevgen.stage.geointservices.io/crop
+Usage
+^^^^^
 
-Local: http://localhost:8086/crop
+Post a request with a payload to the URL: https://pz-svcs-prevgen.stage.geointservices.io/crop
 
-Use sample working payload:
-```
+Sample working payload:
+
+....
 {
     "source": {
         "domain": "s3.amazonaws.com",
@@ -24,13 +25,14 @@ Use sample working payload:
         "maxy": 70.00
     }
 }
-```
+....
 
 Service will download the file from "pz-svcs-prevgen" s3 bucket and crop it with given bounding box info. The cropped result tif will be uploaded back up to s3 bucket "pz-svcs-prevgen-output": https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=
 
 
 If all goes well, the resulting received payload will be of DataResource type:
-```
+
+....
 {
   "dataType": {
     "type": "raster",
@@ -50,4 +52,5 @@ If all goes well, the resulting received payload will be of DataResource type:
     "method": "POST"
   }
 }
-```
+....
+

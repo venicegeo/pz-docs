@@ -1,6 +1,5 @@
-# Service for Ingest of Search Data
-
-## Summary
+Service for Ingest of Search Data
+----------------------------------
 
 A web service project for metadata ingest within Piazza (for subsequent search: https://github.com/venicegeo/pz-search-query) into AWS Elasticsearch service.
 
@@ -8,8 +7,9 @@ AWS-hosted endpoint "http://pz-search-metadata-ingest.cf.piazzageo.io/api/v1/dat
 
 Example JSON docs for ingest:
 
-********EXAMPLE 1***************
+*Example One*
 
+....
     {
         "dataId": "Alfred E. Newman",
         "dataType": {
@@ -45,9 +45,11 @@ Example JSON docs for ingest:
            "epsgCode": 1984
         }
     }
+....
 
-********EXAMPLE 2***************
+*Example Two*
 
+....
     {
         "dataId": "Alfred E. Newman",
         "dataType": {
@@ -87,4 +89,4 @@ Example JSON docs for ingest:
             "maxX": 0.334
         }
     }
-
+....

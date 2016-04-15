@@ -4,13 +4,22 @@ pushd `dirname $0`/.. > /dev/null
 root=$(pwd -P)
 popd > /dev/null
 
+venv=$root/.venv
+PATH=$venv/bin:$PATH
+
+[ ! -d $venv ] && virtualenv $venv
+
+source $venv/bin/activate
+
+type dblatex >/dev/null 2>&1 || $venv/bin/pip install --install-option="--prefix=$venv" dblatex
+
 source $root/ci/vars.sh
 
 function doit {
     indir=$1
     outdir=$2
     
-    cmd="python $root/scripts/asciidoc-8.6.9/asciidoc.py"
+    cmd="$venv/bin/python $root/scripts/asciidoc-8.6.9/asciidoc.py"
     aaa=`dirname $indir/index.txt`
     bbb=`basename $aaa`
     echo "Proceesing: $bbb/index.txt"
@@ -29,9 +38,7 @@ function doit {
     $cmd -a lang=en -v -b docbook -d book -o $outdir/index.xml $indir/index.txt
     
     # If dblatex is available, make pdf.
-    type dblatex >/dev/null 2>&1 \
-        && dblatex -V -T db2latex $outdir/index.xml \
-        || echo "dblatex not installed: no pdf generated" >&2
+    dblatex -V -T db2latex $outdir/index.xml
 
     echo done
 }

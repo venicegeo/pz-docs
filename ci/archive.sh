@@ -11,7 +11,7 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
-$venv/bin/pip install --install-options="--prefixr=$venv" dblatex
+$venv/bin/pip install --install-option="--prefix=$venv" dblatex
 
 mkdir -p $root/tmp
 

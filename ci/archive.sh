@@ -10,8 +10,9 @@ PATH=$venv/bin:$PATH
 [ ! -d $venv ] && virtualenv $venv
 
 source $venv/bin/activate
-type latex >/dev/null 2>&1 || $venv/bin/pip install --install-option="--prefix=$venv" latex
-type dblatex >/dev/null 2>&1 || $venv/bin/pip install --install-option="--prefix=$venv" dblatex
+
+$venv/bin/pip install --install-option="--prefix=$venv" latex
+$venv/bin/easy_install --script-dir="$venv/bin" dblatex
 
 source $root/ci/vars.sh
 

@@ -1,0 +1,14 @@
+Hello, Piazza!
+--------------
+
+_discussion of examples_
+
+include::hello-data.txt[tabsize=4]
+
+include::hello-search.txt[tabsize=4]
+
+include::hello-userservices.txt[tabsize=4]
+
+include::hello-workflow.txt[tabsize=4]
+
+include::hello-endtoend.txt[tabsize=4]

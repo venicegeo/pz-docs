@@ -1,0 +1,10 @@
+Search
+~~~~~~
+
+_ingest is internal, so not disucssed here_
+
+_discussion of exposed metadata fields_
+
+_discussion of ES query model_
+
+_example of query against known loaded data_

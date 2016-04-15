@@ -1,4 +1,0 @@
-The pz-gateway Service
-======================
-
-This is the intro.

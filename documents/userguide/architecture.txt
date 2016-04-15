@@ -1,0 +1,28 @@
+Design and Architecture
+-----------------------
+
+_content forthcoming, derived from other docs and slides_
+
+_diagrams 1 and 2_
+
+* design goals
+** native to cloud
+** build on existing open source infrastructures
+** asynchronous message passing
+** clean REST API
+
+* architecture
+** service-based design
+** layers
+*** infrastructure - Kafka, etc
+*** storage - Elasticsearch, Mongo, etc
+*** core utilities - logger, uuidgen, etc
+*** services - workflow, user services, data load/access, search, etc
+*** API - gateway
+** security - bridge to external auth/auth
+** global resource IDs
+
+* deployment
+** cloud foundry, but not tightly
+** devops pipeline - CI/CD, artifact storage, etc
+** provided infrastructure components

@@ -1,0 +1,13 @@
+Piazza DevOps Guide
+===================
+The Piazza Team <venice@radiantblue.com>
+v0.0, 13 April 2016
+:doctype: book
+:toc:
+:toc-placement:
+
+include::../common/intro.txt[tabsize=4]
+
+toc::[]
+
+_forthcoming_

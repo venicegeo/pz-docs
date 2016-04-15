@@ -1,0 +1,91 @@
+Jobs
+----
+
+The purpose of this wiki page is to outline the complete list of available Jobs that the [[Piazza Gateway|Pz-Gateway]] supports. Piazza Jobs are sent to the Gateway via https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request[POST requests]. Jobs are forwarded by the Gateway to the internal Piazza components. For full documentation on each individual component, see the Piazza Core Services wiki. 
+
+The Jobs listed in the lists below should map 1-to-1 with the https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/job/type[Java Job POJO Objects]
+
+Job Management
+~~~~~~~~~~~~~~
+
+* [Abort Job](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-abort)
+* [Get Job Status](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-status)
+* [Repeat Job](https://github.com/venicegeo/venice/wiki/Pz-JobManager#repeating-jobs)
+
+Data Management Jobs
+~~~~~~~~~~~~~~~~~~~~
+
+* [Ingest Job](https://github.com/venicegeo/venice/wiki/Pz-ingest#example-ingest-requests) _Shapefile, GeoTIFF, Text, WFS, GeoJSON_
+* [Get Resource Job](https://github.com/venicegeo/venice/wiki/Pz-access#querying-metadata)
+* [Access Job](https://github.com/venicegeo/venice/wiki/Pz-Access#accessing-data) _file downloads and GeoServer deployments
+* [Search Metadata Ingest and Search Query Jobs](https://github.com/venicegeo/venice/wiki/Pz-Search-Services#search-through-the-piazza-workflow)
+
+Service Controller Jobs
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [Register Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#registering-a-service)
+* [Describe Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#describe-user-service)
+* [List Services Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#listing-user-services)
+* [Execute Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#executing-a-service)
+* [Delete Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#delete-user-service)
+* [Update Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#update-user-service)
+* [Search Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#search-user-services)
+
+Workflow
+~~~~~~~~
+
+* _TODO_
+
+Proposed API Migration
+~~~~~~~~~~~~~~~~~~~~~~
+
+Propose API Endpoints for migrating from the single `/job` Gateway endpoint into more specific endpoint names. These endpoints should follow [18F API Guidelines and Standards](https://github.com/18F/api-standards)
+
+Job Management
+^^^^^^^^^^^^^^
+
+* Get Job Status _GET_ `/job/{jobId}`
+* Abort _DELETE_ `/job/{jobId}`
+* Repeat _PUT_ `/job/{jobId}`
+
+Data Management Jobs
+^^^^^^^^^^^^^^^^^^^^
+
+* Ingest _POST_ `/data`
+* Get Resource _GET_ `/data/{dataId}`
+* Search Query _GET_ | _POST_ `/data/query`
+* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case?*
+* Access Request _POST_ `/deployment`
+* Access Fetch _GET_ `/deployment/{deploymentId}`
+* Access File _GET_ `/file/{dataId}`
+
+Service Controller Jobs
+^^^^^^^^^^^^^^^^^^^^^^^
+
+* Register Service _POST_ `/service`
+* Describe Service _GET_ `/service/{serviceId}`
+* List Services _GET_ `/service`
+* Search Service _GET_ `/service?keywords=beachfront` _with query string_
+* Delete Service _DELETE_ `/service/{serviceId}`
+* Update Service _PUT_ `/service/{serviceId}`
+* Execute Service _POST_ `/job`
+
+Workflow
+^^^^^^^^
+
+* Get all events: `GET /event`
+* Add an event: `POST /event/{eventType}`
+* Get all events of a specific type: `GET /event/{eventType}`
+* Get a specific event: `GET /event/{eventTypeId}/{eventId}`
+* Delete a specific event: `DELETE /event/{eventTypeId}/{eventId}`
+* Add an event type: `POST /eventType`
+* Get all event types: `GET /eventType`
+* Get a specific event type: `GET /eventType/{eventTypeId}`
+* Delete a specific event type: `DELETE /eventType/{eventTypeId}`
+* Add a trigger: `POST /trigger`
+* Get all triggers: `GET /trigger`
+* Get a specific trigger: `GET /trigger/{triggerId}`
+* Delete a specific trigger: `DELETE /trigger/{triggerId}`
+* Get all alerts: `GET /alert`
+* Get a specific alert: `GET /alert/{alertId}`
+* Delete a specific alert: `DELETE /alert/{alertId}`

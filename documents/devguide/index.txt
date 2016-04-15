@@ -1,0 +1,47 @@
+Piazza Developers Guide
+=======================
+The Piazza Team <venice@radiantblue.com>
+v0.0, 13 April 2016
+:doctype: book
+:toc:
+:toc-placement:
+
+include::../common/intro.txt[tabsize=4]
+
+toc::[]
+
+include::jobs.txt[tabsize=4]
+
+include::job-workflow.txt[tabsize=4]
+
+include::pz-jobmanager.txt[tabsize=4]
+
+include::pz-logger.txt[tabsize=4]
+
+include::pz-gateway.txt[tabsize=4]
+
+include::pz-sak.txt[tabsize=4]
+
+include::pz-access.txt[tabsize=4]
+
+include::pz-dispatcher.txt[tabsize=4]
+
+include::pz-ingest.txt[tabsize=4]
+
+include::pz-search-metadata-ingest.txt[tabsize=4]
+
+include::pz-search-services.txt[tabsize=4]
+
+include::pz-security.txt[tabsize=4]
+
+include::pz-servicecontroller.txt[tabsize=4]
+
+include::pz-uuidgen.txt[tabsize=4]
+
+include::pz-workflow.txt[tabsize=4]
+
+include::job-common.txt[tabsize=4]
+
+include::user-service-requests.txt[tabsize=4]
+
+include::conventions.txt[tabsize=4]

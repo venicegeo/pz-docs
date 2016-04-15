@@ -1,0 +1,158 @@
+Security
+--------
+
+The Piazza Core Pz-Security project is an internal component that provides a REST endpoint for managing User and Role data. 
+
+Running Locally
+~~~~~~~~~~~~~~~
+
+Run the following commands to retrieve the project and start the tomcat server hosting the web service:
+
+    git clone git@github.com:venicegeo/pz-security.git
+    mvn clean install -U spring-boot:run
+
+The roles are stored in a file: `src/main/resources/roles.txt`. To prevent this file from being overwritten with the default values every time the pz-security application runs, do the following:
+
+1. Copy the file to a readable and writable location on the filesystem, e.g., `/data/roles.txt`
+2. Update the `pz.security.fileurl` property in the `src/main/resources/application.properties` file with this new location.
+
+Endpoints
+~~~~~~~~~
+
+The REST service has the following endpoints:
+
+Retrieving Data:
+^^^^^^^^^^^^^^^^
+
+Returns the usernames of all users defined:
+
+    GET /users
+
+Example output:
+
+    [
+      "johnsmith",
+      "jimdugan",
+      "samwinston"
+    ]
+
+Returns the roles for the username provided in the URL parameter:
+
+    GET /users/<username>/roles
+
+Example output:
+
+    [
+      "abort",
+      "access",
+      "admin-stats",
+      "delete-service",
+      "execute-service",
+      "get",
+      "get-resource",
+      "ingest",
+      "list-service",
+      "read-service",
+      "register-service",
+      "search-service",
+      "update-service"
+    ]
+
+Returns the usernames of all users defined, along with the roles for that user:
+
+    GET /users/roles
+
+Example output:
+
+    {
+      "johnsmith": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
+      "jimdugan": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
+      "samwinston": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service"
+    }
+
+Adding Data:
+^^^^^^^^^^^^
+
+Adds a list of one or more usernames and their respective roles
+    
+    POST /users/roles
+
+Example payload:
+
+    {
+      "russellorf": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
+      "davidthomas": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service"
+    }
+
+Example output:
+
+    {
+      "Successes": [
+        "User 'russellorf' inserted with roles: abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
+        "User 'davidthomas' inserted with roles: abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service"
+      ],
+      "Failures": []
+    }
+
+Adds a list of one or more usernames to the system
+
+    POST /users
+
+Example payload:
+
+    [
+      "larrycable",
+      "davidcopperfield",
+      "jimbobarnes"
+    ]
+
+Example output:
+
+    {
+      "Successes": [
+        "User 'larrycable' inserted with no roles.",
+        "User 'davidcopperfield' inserted with no roles.",
+        "User 'jimbobarnes' inserted with no roles."
+      ],
+      "Failures": []
+    }
+
+Updating Data:
+^^^^^^^^^^^^^^
+
+Replaces a users list of assigned roles with the roles provided, erasing any previously assigned roles:
+
+    PUT /users/{userid}/roles
+
+Example payload:
+
+    ["get","ingest"]
+
+Example output:
+
+    {
+      "Status": "User 'larrycable' updated with roles: [get, ingest]"
+    }
+
+Deleting Data:
+^^^^^^^^^^^^^^
+
+Deletes a single role from a users list of assigned roles:
+
+    DELETE /users/{userid}/roles/{role}
+
+Example output:
+
+    {
+      "Status": "Role 'ingest' deleted for user 'larrycable'"
+    }
+
+Deletes a user, and all assigned roles:
+
+    DELETE /users/{userid}
+
+Example output:
+
+    {
+      "Status": "User 'larrycable' deleted."
+    }

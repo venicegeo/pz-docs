@@ -1,0 +1,56 @@
+pz-sak (Development/Debug UI Tool)
+----------------------------------
+
+The Client (aka Swiss Army Knife or SAK for short) is a UI front end for testing Piazza services.
+
+SAK will be used by developers as an easy way to test the functionality of the services.
+
+Running SAK locally
+~~~~~~~~~~~~~~~~~~~
+
+Requirements
+^^^^^^^^^^^^
+
+* Code cloned from https://github.com/venicegeo/pzclient-sak.git
+* Nginx 1.8.1 http://nginx.org/en/download.html
+
+Steps
+^^^^^
+
+1. Copy pzclient-sak/conf/nginx.conf to nginx-1.8.1/conf
+2. Modify nginx.conf to point root to your local copy of the repos /public directory (line 50)
+3. From a command line run `start nginx.exe`
+4. Go to http://localhost
+
+Note: The following commands are helpful as well:  
+
+* `nginx -s reload` - Updates changes to the conf  
+* `nginx -s quit` - Shuts down nginx  
+
+Troubleshooting:  
+
+* If you're having trouble with your proxies, it may be because your network is preventing 8.8.8.8 from resolving as the default DNS.  You can just replace that with the DNS that your machine uses.  You can find your DNS by running `ipconfig /all` in Windows
+
+Running SAK from the cloud
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Requirements
+^^^^^^^^^^^^
+
+* Web-browser (we typically test in Chrome but any modern browser should work)
+
+Steps
+^^^^^
+
+1. Open your web-browser
+2. Go to: http://pz-sak.cf.piazzageo.io/
+
+Design
+~~~~~~
+
+SAK uses AngularJS and Bootstrap to create a simple UI for accessing REST endpoints exposed through Piazza services. Each Piazza service will be listed in the left tree pane.  When selecting a service any functions associated will be listed on the page that appears, and some services will have more functions than others.
+
+UI mockups
+^^^^^^^^^^
+
+![](https://github.com/venicegeo/venice/blob/master/docs/img/sak-tree-branches.png)

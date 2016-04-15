@@ -48,6 +48,7 @@ function doit {
             --type pdf \
             --style db2latex \
             --verbose \
+            --no-batch \
             --tmpdir $root/tmp \
             --debug \
             --dump \

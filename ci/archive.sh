@@ -11,7 +11,7 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
-type dblatex >/dev/null 2>&1 || $venv/bin/pip install --install-option="--prefix=$venv" dblatex
+type dblatex >/dev/null 2>&1 || $venv/bin/easy_install --script-dir="$venv/bin" dblatex
 
 source $root/ci/vars.sh
 

@@ -11,8 +11,6 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
-$venv/bin/pip install --install-option="--prefix=$venv" latex
-$venv/bin/pip install --install-option="--prefix=$venv" PyLaTex
 $venv/bin/easy_install --script-dir="$venv/bin" dblatex
 
 mkdir -p $root/tmp

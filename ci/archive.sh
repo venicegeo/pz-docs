@@ -11,6 +11,7 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
+$venv/bin/pip install latex
 $venv/bin/pip install --install-option="--prefix=$venv" dblatex
 
 mkdir -p $root/tmp

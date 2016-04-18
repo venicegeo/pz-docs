@@ -11,28 +11,6 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
-set +e
-
-rm install-tl-unx.tar.*
-rm -r install-tl-20160405
-rm -r $HOME/.texhome
-rm -r $HOME/.texlive2015
-rm -r $HOME/texmf
-
-set -e
-
-wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
-tar -xzf install-tl-unx.tar.gz
-
-pushd install-tl-20160405/
-
-./install-tl --profile=$root/ci/texlive.profile
-
-popd
-
-rm install-tl-unx.tar.*
-rm -r install-tl-20160405
-
 $venv/bin/pip install --install-option="--prefix=$venv" dblatex
 
 mkdir -p $root/tmp
@@ -69,8 +47,6 @@ function doit {
             --style db2latex \
             --verbose \
             --no-batch \
-            --tmpdir $root/tmp \
-            --debug \
             --dump \
         $outdir/index.xml
 

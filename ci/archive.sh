@@ -26,7 +26,7 @@ tar -xzf install-tl-unx.tar.gz
 
 pushd install-tl-20160405/
 
-./install-tl -profile=$root/ci/texlive.profile
+./install-tl --profile=$root/ci/texlive.profile
 
 popd
 

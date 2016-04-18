@@ -11,11 +11,15 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
+set +e
+
 rm install-tl-unx.tar.*
 rm -r install-tl-20160405
 rm -r $HOME/.texhome
 rm -r $HOME/.texlive2015
 rm -r $HOME/texmf
+
+set -e
 
 wget http://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 tar -xzf install-tl-unx.tar.gz

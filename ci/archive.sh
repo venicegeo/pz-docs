@@ -35,7 +35,4 @@ doit $ins/devopsguide $outs/devopsguide
 
 echo done
 
-# Cleanup
-rm -f $root/out/index.xml $root/out/*/index.xml
-
 tar -czf $APP.$EXT -C $root out

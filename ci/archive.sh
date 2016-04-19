@@ -19,7 +19,7 @@ function doit {
 
     # txt -> html
     asciidoctor -o $outdir/index.html $indir/index.txt > stdout.tmp
-    asciidoctor -o $outdir/index.pdf $indir/index.txt > stdout.tmp
+    asciidoctor -r asciidoctor-pdf -b pdf -o $outdir/index.pdf $indir/index.txt
 }
 
 rm -f $root/out/*.html $root/out/*/*.html

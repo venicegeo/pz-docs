@@ -11,6 +11,9 @@ PATH=$venv/bin:$PATH
 
 source $venv/bin/activate
 
+type asciidoctor >/dev/null 2>&1 || gem install asciidoctor
+type asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
+
 $venv/bin/pip install --install-option="--prefix=$venv" dblatex
 #$venv/bin/easy_install --script-dir="$venv/bin" dblatex
 

@@ -3,8 +3,6 @@ Piazza Documentation
 The Piazza Team <venice@radiantblue.com>
 v0.0, 13 April 2016
 
-:imagesdir: ./images
-
 include::common/intro.txt[tabsize=4]
 
 Manuals

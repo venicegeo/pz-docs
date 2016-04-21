@@ -1,7 +1,7 @@
 Piazza Documentation
 ====================
 The Piazza Team <venice@radiantblue.com>
-v0.0, 13 April 2016
+v0.0, 21 April 2016
 
 include::common/intro.txt[tabsize=4]
 
@@ -20,9 +20,6 @@ Additional Links
 * http://pz-swagger.stage.geointservices.io[API Reference (swagger)]
 * https://github.com/venicegeo[GitHub repository]
 * http://pz-sak.stage.geointservices.io[UI for Piazza internal development]
-* https://jenkins.devops.geointservices.io/job/piazza/[Jenkins server (login required)]
-* https://apps.devops.geointservices.io/organizations/d6f6d5eb-d2e5-470e-98cf-372cc3015d44#spaces[PCF console (login required)]
-* https://redmine.devops.geointservices.io/projects/piazza/issues[Redmine (login required)]
 * Videos
 ** 03-29-2016 - https://youtu.be/eFuq-t7kQgM[Piazza Sprint 3 Status]
 ** 03-15-2016 - https://www.youtube.com/watch?v=eyLPKhqDOvc[Piazza Core - Service Controller]

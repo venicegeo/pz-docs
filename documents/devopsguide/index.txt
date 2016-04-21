@@ -5,7 +5,7 @@ v0.1, 21 April 2016
 :doctype: book
 :toc:
 :toc-placement:
-:imagesdir: img
+:imagesdir: ../images
 
 include::../common/intro.txt[tabsize=4]
 

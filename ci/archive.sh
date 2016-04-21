@@ -33,6 +33,8 @@ doit $ins/userguide   $outs/userguide
 doit $ins/devguide    $outs/devguide
 doit $ins/devopsguide $outs/devopsguide
 
+cp -R $ins/devopsguide/img $outs/devopsguide/img
+
 echo done
 
 tar -czf $APP.$EXT -C $root out

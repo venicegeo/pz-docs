@@ -26,3 +26,10 @@ Additional Links
 * Videos
 ** 03-29-2016 - https://youtu.be/eFuq-t7kQgM[Piazza Sprint 3 Status]
 ** 03-15-2016 - https://www.youtube.com/watch?v=eyLPKhqDOvc[Piazza Core - Service Controller]
+
+
+
+:imagesdir: ./images
+
+image::earthspec.jpg[WorldMap]
+

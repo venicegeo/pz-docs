@@ -16,7 +16,7 @@ Manuals
 Additional Links
 ----------------
 
-* http://pz-docs.stage.geointservices.io[Piazza documentation]
+* http://pz-docs.stage.geointservices.io[Piazza documentation]  https://pz-docs.stage.geointservices.io/index.pdf[( pdf)]
 * http://pz-swagger.stage.geointservices.io[API Reference (swagger)]
 * https://github.com/venicegeo[GitHub repository]
 * http://pz-sak.stage.geointservices.io[UI for Piazza internal development]

@@ -35,6 +35,9 @@ doit $ins/devopsguide $outs/devopsguide
 
 cp -R $ins/devopsguide/img $outs/devopsguide/img
 
+# copy images directory to out
+cp -R $ins/images $outs/images
+
 echo done
 
 tar -czf $APP.$EXT -C $root out

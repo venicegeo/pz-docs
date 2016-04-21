@@ -51,13 +51,16 @@ Job Management
 Data Management Jobs
 ^^^^^^^^^^^^^^^^^^^^
 
+* Access Data _GET_ `/data`
 * Ingest _POST_ `/data`
+* Ingest with File _POST_ `/data/file`
 * Get Resource _GET_ `/data/{dataId}`
 * Search Query _GET_ | _POST_ `/data/query`
 * Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case?*
 * Access Request _POST_ `/deployment`
 * Access Fetch _GET_ `/deployment/{deploymentId}`
 * Access File _GET_ `/file/{dataId}`
+* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case? TBD*
 
 Service Controller Jobs
 ^^^^^^^^^^^^^^^^^^^^^^^

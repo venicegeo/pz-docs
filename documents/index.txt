@@ -31,5 +31,5 @@ Additional Links
 
 :imagesdir: ./images
 
-image::l1/l2/e_tile.tif[sample image]
+image::l1/l2/PiazzaFlow.jpg[sample image]
 

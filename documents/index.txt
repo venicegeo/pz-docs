@@ -3,6 +3,8 @@ Piazza Documentation
 The Piazza Team <venice@radiantblue.com>
 v0.0, 13 April 2016
 
+:imagesdir: ./images
+
 include::common/intro.txt[tabsize=4]
 
 Manuals
@@ -26,10 +28,4 @@ Additional Links
 * Videos
 ** 03-29-2016 - https://youtu.be/eFuq-t7kQgM[Piazza Sprint 3 Status]
 ** 03-15-2016 - https://www.youtube.com/watch?v=eyLPKhqDOvc[Piazza Core - Service Controller]
-
-
-
-:imagesdir: ./images
-
-image::l1/l2/PiazzaFlow.jpg[sample image]
 

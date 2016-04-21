@@ -1,0 +1,72 @@
+## Jenkins
+
+* All jobs are generated and maintained using the https://github.com/venicegeo/jenkins[jenkins seed job].
+* All jobs publish status to https://venicegeo.slack.com/messages/jenkins/[slack].
+* Connect your github repo to jenkins:
+  - Go to _github.com/venicegeo/<your-repository>_ and navigate to `Settings -> Webhooks & Services -> Services -> Add service -> Jenkins (GitHub plugin)`
+  - Webhook URL: `https://jenkins.devops.geointservices.io/github-webhook/`
+
+image::jenkins-webhook.png[title="Jenkins Webhook"]
+
+* Create automation scripts:
+  - `./ci/` - holds any scripts you'd like jenkins to use in building, testing, and deploying your project.
+    - `./ci/<job-name>.sh` corresponds to the `<job-name>` in your Jenkins pipeline.
+* Add your repo to the https://github.com/venicegeo/jenkins/blob/geoint/Projects.groovy[Jenkins Projects list]:
+
+[source,groovy]
+.Projects.groovy
+----
+    static projects = [
+      [
+       name: 'my-app',
+       pipeline: ['test', 'archive', 'stage']
+      ]
+    ]
+----
+
+* All jobs will only build master by default, but you can specify branches useing the `branch` key in your project map:
+  - `branch: '**'` will build all branches.
+
+### Special Sauce
+* Versioning - the automation pipeline follows a versioning convention that is coupled with the git revision (i.e. we're not aiming for human readability).
+* `./ci/vars.sh` - projects should provide the automation with a file `./ci/vars.sh` that defines two variables `APP` and `EXT`:
+
+[source,bash]
+./ci/vars.sh
+----
+    APP=pz-app
+    EXT=jar
+----
+
+
+* `archive` - archive jobs automagically push your artifact to nexus.
+  - Required: `./ci/archive.sh` needs to build your artifact and move it to `./$APP.$EXT`.
+* `stage` - stage jobs automagically in Cloud Foundry.
+  - Required: `manifest.jenkins.yml` - a manifest specific to Jenkins (and the staging environment).
+* `deploy` - complete the blue/green deploy for an app.
+* `blackbox` - make sure newman is available
+* Static file projects - the automation will expect a `tar.gz` file to push to nexus; it is recommended to do something like: `./ci/archive.sh`:
+
+[source,bash]
+./ci/archive.sh
+----
+  #!/bin/bash -ex
+
+  pushd `dirname $0`/.. > /dev/null
+  root=$(pwd -P)
+  popd > /dev/null
+
+  # APP=<my-project>
+  # EXT=tar.gz
+  source $root/ci/vars.sh
+  tar -czf $APP.$EXT -C $root <directory-that-contains-the-static-files>
+----
+
+* Binary projects (I'm looking at you `golang`) - `EXT=bin` lets the automation know we're dealing with an executable.
+* The seed job will organize your project's jobs into a folder:
+
+image::jenkins-dashboard.png[title="Jenkins Build Dashboard"]
+
+* The seed job will create a pipeline view for you:
+
+image::jenkins-pipeline.png[title="Jenkins Build Pipeline"]

@@ -1,0 +1,4 @@
+## Roadmap
+
+* `jenkins.yml`: control jenkins from your project's repository (no more editing the seed job).
+* PCF Service Controller - dynamically provision resources from `pz-infrastructure`.

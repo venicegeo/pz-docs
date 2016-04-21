@@ -1,0 +1,122 @@
+## Cloud Foundry
+
+### Local Development
+* https://github.com/cloudfoundry/cli#downloads[Install] the `cf` CLI client.
+* Login to PCF:
+
+[source,shell]
+.command line:
+----
+    cf login -a https://api.devops.geointservices.io
+    # Note: for `email`, use your LDAP username
+    cf target -o piazza -s simulator-dev
+----
+
+* The `dev` space is the sandbox environment for piazza devs.
+* `simulator-stage` is the space jenkins will use to stage apps.
+* Useful commands:
+
+
+    cf apps                      # list all apps
+    cf app <app>                 # individual app info
+    cf env                       # view an apps current environment variables
+    cf logs --recent <app>       # show recent logs for an app
+    cf logs <app>                # tail and follow logs for an app
+    cf marketplace               # view a list of available marketplace services
+    cf push                      # push an app to Cloud Foundry
+    cf services                  # view a list of running services
+
+* And there is also a https://login.devops.geointservices.io/login[Web UI].
+
+### Services
+* Bind a service to your app using the `manifest` to expose `VCAP_SERVICES`:
+
+[source,yml]
+.manifest.yml
+----
+    services:
+      - pz-postgres
+      - pz-blobstore
+----
+
+
+* Available services:
+  - `pz-blobstore` - s3 bucket
+  - `pz-geoserver`
+  - `pz-geoserver-cluster` - geoserver + s3 + postGIS
+  - `pz-kafka`
+  - `pz-postgres`
+  - `pz-zookeeper`
+  - `pz-mongodb`
+  - `pz-elasticsearch`
+* Sample `VCAP_SERVICES` json:
+
+[source,json]
+.environment:
+----
+    {
+      "VCAP_SERVICES": {
+        "user-provided": [
+          {
+            "credentials": {
+              "bucket": "pz-blobstore-staging"
+            },
+            "label": "user-provided",
+            "name": "pz-blobstore",
+            "syslog_drain_url": "",
+            "tags": []
+          }
+        ]
+      }
+    }
+----
+
+* Backing Services come from one of three possible locations:
+  - AWS FADE: LDAP.
+  - pz-infrastructure: our VPC.
+  - PCF Marketplace: `cf marketplace`
+
+#### Using Services Locally
+
+Our backing services are only accessible from 2 locations: Cloud Foundry and our bastion host. If you want to interact with a backing service from your local machine, you'll have to set up an ssh tunnel through one of those two locations.
+
+##### Via Cloud Foundry
+* Bind a service to your app, or find an app that is already bound to the service you'd like to access.
+* Find the ip and port of the service in the `VCAP_SERVICES` environment variable: `cf env <app>`
+* Run the following command:
+
+[source,shell]
+----
+    cf ssh <app> -N -L 3333:<ip-address>:<port>
+----
+
+* You should now be able to interact with the service via `localhost:3333`.
+* _Note: you can tunnel through any running PCF app to our backing services (the service does not need to be bound to the app), but you'll need to know the address!_
+
+##### Via Bastion
+* Generate an ssh key-pair:
+
+[source,shell]
+.command line:
+----
+    ssh-keygen -q -t rsa -b 4096 -f $HOME/.ssh/venice.pem -P '' -C <your-email>
+----
+
+* Copy the contents of `$HOME/.ssh/venice.pem.pub` and send them to https://github.com/sbaxter[@sbaxter] or https://github.com/wgb[@wgb].
+* We'll send you some information about the network...
+* Then use the following command to set up your tunnel:
+
+[source,shell]
+.command line:
+----
+    ssh -f -N -i $HOME/.ssh/venice.pem -o ExitOnForwardFailure=yes -p <SSH_PORT> -L 3333:<INTERNAL_DNS>:<PORT> <SSH_USER>@<BASTION>
+----
+
+* You should now be able to interact with the service via `localhost:3333`
+* To tear the tunnel down:
+
+[source,shell]
+.command line:
+----
+    ps -ef | grep venice.pem | grep -v grep | awk '{print $2}' | xargs kill -9
+----

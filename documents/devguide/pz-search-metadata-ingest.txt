@@ -1,5 +1,4 @@
-Service for Ingest of Search Data
-----------------------------------
+# Service for Ingest of Search Data
 
 A web service project for metadata ingest within Piazza (for subsequent search: https://github.com/venicegeo/pz-search-query) into AWS Elasticsearch service.
 

@@ -1,5 +1,4 @@
-stdout.tmp
+errs.tmp
 pz-docs.tar.gz
-out/*.html
-out/*/*.html
+out
 

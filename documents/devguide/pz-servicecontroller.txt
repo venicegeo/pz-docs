@@ -1,5 +1,4 @@
-Pz Service Controller
----------------------
+# Pz Service Controller
 
 The Piazza Core ServiceController manages and executes web services external to the Piazza core architecture (User Services).  It provides a REST API allowing developers to perform web service management activities.  The ServiceController also listens to Kafka topics dispatched from the Piazza Core Dispatcher, responds and handles web service management and execution Kafka messages.  Using the ServiceController, developers can:
 
@@ -13,17 +12,14 @@ The figure below shows the high level architecture of Piazza and how the Service
 
 ![alt text](https://cloud.githubusercontent.com/assets/12052181/13731572/c6d3e148-e942-11e5-9fab-12b51a48fd4f.jpg "ServiceController in Piazza")
 
-API Overviews
-~~~~~~~~~~~~~
+## API Overviews
 
 [Sprint 3 - ServiceController API Overview - 3/31/2016](https://github.com/venicegeo/pz-servicecontroller/files/199832/Piazza-ServiceController-Overview.pptx)
 
 
-How to Use
-~~~~~~~~~~
+## How to Use
 
-Prerequisites
-^^^^^^^^^^^^^
+### Prerequisites
 
 The ServiceContoller, version 1.0, uses the following to build and run:
 
@@ -46,13 +42,11 @@ _**These services are part of the Piazza Core. When these services are not avail
 The repo containing the ServiceController is located in github at the following location: https://github.com/venicegeo/pz-servicecontroller
 Clone this repo to obtain the latest copy.  The ServiceController can be built and run standalone or from within predefined virtual machines using Vagrant.
 
-Building the Source
-~~~~~~~~~~~~~~~~~~~
+## Building the Source
 
 Before using the ServiceController, decide whether you want to run the ServiceController with supporting Piazza Core Services and VirtualBox VMs (with MongoDB, Kafka, etc..), or if you want to run the ServiceController standalone.
 
-Standalone Option
-^^^^^^^^^^^^^^^^^
+### Standalone Option
 
 To build the ServiceController, run   
  _mvn clean install_ from the _**mainServiceController**_ directory.  
@@ -60,13 +54,11 @@ This will build the ServiceController and produce an executable jar which is pla
 
 The name of the jar will be **_piazzaServiceController-(version number).BUILD-SNAPSHOT.jar_**.
 
-Vagrant
-^^^^^^^^
+### Vagrant
 
 Start up a Windows PowerShell **as administrator**.  Navigate to the mainServiceController/conf directory.  Issue the command **Vagrant up**. This command will create the serviceregistry and serviceregistrydb VMs. 
 
-Running the ServiceController
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Running the ServiceController
 
 The ServiceController is a Spring Boot application and can be run directly from the command line.
 It uses an _**application.properties**_ file which contains port, hostname, database name and other information used by the ServiceController.  When the Piazza Discover Service is not available, the Service Controller utilizes information in the application.properties file to connect to supporting services.
@@ -116,11 +108,11 @@ This will run the ServiceController, after initializing, the following message w
 `_o.v.p.servicecontroller.Application : Started Application in 8.994 seconds (JVM running for 9.658)_`
 
 ### Running with the Discover Service
+
 For the ServiceController to be aware of where the Discover is located, the ServiceController has to be run by setting the _**core.discoverservice**_ property and _**core.discoverapi**_ property.  The _mainServiceController/conf_ directory contains the _**application-cf.properties**_ file which has these properties set to use the Discover service.
 
 
-Debugging
-^^^^^^^^^
+### Debugging
 
 The ServiceController provides logging messages at an **INFO** level displaying informational messages that highlight the progress of the application at coarse-grained level.  To debug, the ServiceController, run the ServiceController specifying the _logging.level.org.venice.piazza.servicecontroller_ property as **DEBUG**
 
@@ -128,8 +120,7 @@ _>java -jar -Dlogging.level.org.venice.piazza.servicecontroller=DEBUG piazzaServ
 
 When the Piazza core [[Logger|Pz-Logger]] service is available, the ServiceController uses it to log additional messages.
 
-Getting Started With the REST API
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Getting Started With the REST API
 
 The ServiceController comes with some sample services to help with getting started with using the ServiceController API.  
 
@@ -146,8 +137,7 @@ The ServiceController leverages Java object definitions defined the pz-jobcommon
 
 Piazza Core Resources are represented as _**ResourceMetadata**_ within the Piazza Core.
 
-Registering a Service
-^^^^^^^^^^^^^^^^^^^^^
+### Registering a Service
 
 Before the ServiceController can manage a service, the service has to be registered. To do this, utilize the ServiceController's _**registerService**_ service passing in ResourceMetadata JSON.  As of now, there are no mandatory fields, but at a bare minimum register enough information so that other developers can discover and use the service.
 
@@ -293,8 +283,7 @@ To register a service that uses the **GET** example without URL parameters (as p
 ....
 
 
-Executing a Service
-^^^^^^^^^^^^^^^^^^^
+### Executing a Service
 
 To execute a service, utilize the ServiceControllers _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section.
 
@@ -337,8 +326,7 @@ Details on using pz-servicecontrollers are located on the github venice wiki!
 "},{Server=[Apache-Coyote/1.1], Content-Type=[application/json;charset=UTF-8], Content-Length=[140], Date=[Tue, 19 Jan 2016 13:31:17 GMT]}>
 ....
 
-Executing a Service Sending JSON
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Executing a Service Sending JSON
 
 To execute the convert service, do the following:
 
@@ -356,8 +344,7 @@ http://pz-servicecontroller.stage.geointservices.io/servicecontroller/executeSer
 }
 ....
 
-Coordinate Conversion Example
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Coordinate Conversion Example
 
 A coordinate conversion is an external service which allows users to convert geospatial coordinates.  To call this service directly, users of the service would formulate requests as depicted below:
 
@@ -437,8 +424,7 @@ The ServiceController will respond with a json message sent from the service:
 }
 ....
 
-General Pz Service Operations  
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### General Pz Service Operations  
 
 The Pz ServiceController supports other Pz Service Operations..
 
@@ -459,8 +445,7 @@ Provides statistics on the Pz-ServiceController.
 {"mem":382464,"mem.free":159813,"processors":2,"instance.uptime":18151962,"uptime":18166991,"systemload.average":1.05,"heap.committed":382464,"heap.init":382976,"heap.used":222650,"heap":382464,"threads.peak":31,"threads.daemon":27,"threads.totalStarted":37,"threads":31,"classes":11529,"classes.loaded":11529,"classes.unloaded":0,"gc.ps_scavenge.count":4900,"gc.ps_scavenge.time":13789,"gc.ps_marksweep.count":0,"gc.ps_marksweep.time":0,"httpsessions.max":-1,"httpsessions.active":0,"gauge.response.admin.stats":7.0,"gauge.response.root":102.0,"counter.status.200.root":1,"counter.status.302.admin.stats":1}
 ....
 
-Submitting User Service Requests
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+### Submitting User Service Requests
 
 User Service requests can be submitted to Piazza via the [Pz Gateway](https://github.com/venicegeo/venice/wiki/Pz-Gateway).  All User Service requests are submitted using **POST /job**
 

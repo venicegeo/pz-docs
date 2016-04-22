@@ -1,10 +1,9 @@
-User Services
-~~~~~~~~~~~~~
+# User Services
 
 The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilites. This app exposes a REST endpoint which takes a POST request containing payload of required parameters. Given an s3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
 
-Usage
-^^^^^
+## Usage
+
 
 Post a request with a payload to the URL: https://pz-svcs-prevgen.stage.geointservices.io/crop
 

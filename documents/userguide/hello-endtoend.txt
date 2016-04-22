@@ -1,4 +1,3 @@
-End-to-End Example
-~~~~~~~~~~~~~~~~~~
+# End-to-End Example
 
 _complete script for end-to-end example of cropped-preview-generation demo_

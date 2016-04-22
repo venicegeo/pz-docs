@@ -3,19 +3,20 @@ Piazza Users Guide
 The Piazza Team <venice@radiantblue.com>
 v0.0, 13 April 2016
 :doctype: book
-:toc:
-:toc-placement:
+:toc: left
 
-include::../common/intro.txt[tabsize=4]
+:leveloffset: +1
 
-toc::[]
+include::../common/intro.txt[]
 
-include::introduction.txt[tabsize=4]
+include::introduction.txt[]
 
-include::architecture.txt[tabsize=4]
+include::architecture.txt[]
 
-include::hello.txt[tabsize=4]
+include::hello.txt[]
 
-include::../common/support.txt[tabsize=4]
+include::../common/support.txt[]
 
-include::../common/legal.txt[tabsize=4]
+include::../common/legal.txt[]
+
+:leveloffset: -1

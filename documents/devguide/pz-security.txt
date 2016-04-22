@@ -1,10 +1,8 @@
-Security
---------
+# Security
 
 The Piazza Core Pz-Security project is an internal component that provides a REST endpoint for managing User and Role data. 
 
-Running Locally
-~~~~~~~~~~~~~~~
+## Running Locally
 
 Run the following commands to retrieve the project and start the tomcat server hosting the web service:
 
@@ -16,13 +14,11 @@ The roles are stored in a file: `src/main/resources/roles.txt`. To prevent this 
 1. Copy the file to a readable and writable location on the filesystem, e.g., `/data/roles.txt`
 2. Update the `pz.security.fileurl` property in the `src/main/resources/application.properties` file with this new location.
 
-Endpoints
-~~~~~~~~~
+## Endpoints
 
 The REST service has the following endpoints:
 
-Retrieving Data:
-^^^^^^^^^^^^^^^^
+### Retrieving Data:
 
 Returns the usernames of all users defined:
 
@@ -70,8 +66,7 @@ Example output:
       "samwinston": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service"
     }
 
-Adding Data:
-^^^^^^^^^^^^
+### Adding Data:
 
 Adds a list of one or more usernames and their respective roles
     
@@ -117,8 +112,7 @@ Example output:
       "Failures": []
     }
 
-Updating Data:
-^^^^^^^^^^^^^^
+### Updating Data:
 
 Replaces a users list of assigned roles with the roles provided, erasing any previously assigned roles:
 
@@ -134,8 +128,7 @@ Example output:
       "Status": "User 'larrycable' updated with roles: [get, ingest]"
     }
 
-Deleting Data:
-^^^^^^^^^^^^^^
+### Deleting Data:
 
 Deletes a single role from a users list of assigned roles:
 

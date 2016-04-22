@@ -1,27 +1,24 @@
-Jobs
-----
+# Jobs
+
 
 The purpose of this wiki page is to outline the complete list of available Jobs that the [[Piazza Gateway|Pz-Gateway]] supports. Piazza Jobs are sent to the Gateway via https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request[POST requests]. Jobs are forwarded by the Gateway to the internal Piazza components. For full documentation on each individual component, see the Piazza Core Services wiki. 
 
 The Jobs listed in the lists below should map 1-to-1 with the https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/job/type[Java Job POJO Objects]
 
-Job Management
-~~~~~~~~~~~~~~
+## Job Management
 
 * [Abort Job](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-abort)
 * [Get Job Status](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-status)
 * [Repeat Job](https://github.com/venicegeo/venice/wiki/Pz-JobManager#repeating-jobs)
 
-Data Management Jobs
-~~~~~~~~~~~~~~~~~~~~
+## Data Management Jobs
 
 * [Ingest Job](https://github.com/venicegeo/venice/wiki/Pz-ingest#example-ingest-requests) _Shapefile, GeoTIFF, Text, WFS, GeoJSON_
 * [Get Resource Job](https://github.com/venicegeo/venice/wiki/Pz-access#querying-metadata)
 * [Access Job](https://github.com/venicegeo/venice/wiki/Pz-Access#accessing-data) _file downloads and GeoServer deployments
 * [Search Metadata Ingest and Search Query Jobs](https://github.com/venicegeo/venice/wiki/Pz-Search-Services#search-through-the-piazza-workflow)
 
-Service Controller Jobs
-~~~~~~~~~~~~~~~~~~~~~~~
+## Service Controller Jobs
 
 * [Register Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#registering-a-service)
 * [Describe Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#describe-user-service)
@@ -31,25 +28,21 @@ Service Controller Jobs
 * [Update Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#update-user-service)
 * [Search Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#search-user-services)
 
-Workflow
-~~~~~~~~
+## Workflow
 
 * _TODO_
 
-Proposed API Migration
-~~~~~~~~~~~~~~~~~~~~~~
+## Proposed API Migration
 
 Propose API Endpoints for migrating from the single `/job` Gateway endpoint into more specific endpoint names. These endpoints should follow [18F API Guidelines and Standards](https://github.com/18F/api-standards)
 
-Job Management
-^^^^^^^^^^^^^^
+### Job Management
 
 * Get Job Status _GET_ `/job/{jobId}`
 * Abort _DELETE_ `/job/{jobId}`
 * Repeat _PUT_ `/job/{jobId}`
 
-Data Management Jobs
-^^^^^^^^^^^^^^^^^^^^
+### Data Management Jobs
 
 * Access Data _GET_ `/data`
 * Ingest _POST_ `/data`
@@ -62,8 +55,7 @@ Data Management Jobs
 * Access File _GET_ `/file/{dataId}`
 * Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case? TBD*
 
-Service Controller Jobs
-^^^^^^^^^^^^^^^^^^^^^^^
+### Service Controller Jobs
 
 * Register Service _POST_ `/service`
 * Describe Service _GET_ `/service/{serviceId}`
@@ -73,8 +65,7 @@ Service Controller Jobs
 * Update Service _PUT_ `/service/{serviceId}`
 * Execute Service _POST_ `/job`
 
-Workflow
-^^^^^^^^
+### Workflow
 
 * Get all events: `GET /event`
 * Add an event: `POST /event/{eventType}`

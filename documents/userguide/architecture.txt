@@ -1,5 +1,4 @@
-Design and Architecture
------------------------
+# Design and Architecture
 
 _content forthcoming, derived from other docs and slides_
 

@@ -1,14 +1,17 @@
-Hello, Piazza!
---------------
+# Hello, Piazza!
 
 _discussion of examples_
 
-include::hello-data.txt[tabsize=4]
+:leveloffset: +1
 
-include::hello-search.txt[tabsize=4]
+include::hello-data.txt[]
 
-include::hello-userservices.txt[tabsize=4]
+include::hello-search.txt[]
 
-include::hello-workflow.txt[tabsize=4]
+include::hello-userservices.txt[]
 
-include::hello-endtoend.txt[tabsize=4]
+include::hello-workflow.txt[]
+
+include::hello-endtoend.txt[]
+
+:leveloffset: -1

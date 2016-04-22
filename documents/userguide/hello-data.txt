@@ -1,5 +1,4 @@
-Data Load and Access
-~~~~~~~~~~~~~~~~~~~~
+# Data Load and Access
 
 _discussion of storage models - host/nohost, etc -- as per slides_
 

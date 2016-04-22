@@ -1,5 +1,4 @@
-HTTP Conventions
-~~~~~~~~~~~~~~~~
+## HTTP Conventions
 
 These are our favorite HTTP codes. Contributions welcome!
 

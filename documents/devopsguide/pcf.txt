@@ -1,6 +1,7 @@
-## Cloud Foundry
+# Cloud Foundry
 
-### Local Development
+## Local Development
+
 * https://github.com/cloudfoundry/cli#downloads[Install] the `cf` CLI client.
 * Login to PCF:
 
@@ -28,7 +29,8 @@
 
 * And there is also a https://login.devops.geointservices.io/login[Web UI].
 
-### Services
+## Services
+
 * Bind a service to your app using the `manifest` to expose `VCAP_SERVICES`:
 
 [source,yml]
@@ -76,11 +78,12 @@
   - pz-infrastructure: our VPC.
   - PCF Marketplace: `cf marketplace`
 
-#### Using Services Locally
+### Using Services Locally
 
 Our backing services are only accessible from 2 locations: Cloud Foundry and our bastion host. If you want to interact with a backing service from your local machine, you'll have to set up an ssh tunnel through one of those two locations.
 
-##### Via Cloud Foundry
+#### Via Cloud Foundry
+
 * Bind a service to your app, or find an app that is already bound to the service you'd like to access.
 * Find the ip and port of the service in the `VCAP_SERVICES` environment variable: `cf env <app>`
 * Run the following command:
@@ -93,7 +96,8 @@ Our backing services are only accessible from 2 locations: Cloud Foundry and our
 * You should now be able to interact with the service via `localhost:3333`.
 * _Note: you can tunnel through any running PCF app to our backing services (the service does not need to be bound to the app), but you'll need to know the address!_
 
-##### Via Bastion
+#### Via Bastion
+
 * Generate an ssh key-pair:
 
 [source,shell]

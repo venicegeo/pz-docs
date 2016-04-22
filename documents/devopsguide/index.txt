@@ -3,20 +3,24 @@ Piazza DevOps Guide
 The Piazza Team <venice@radiantblue.com>
 v0.1, 21 April 2016
 :doctype: book
-:toc:
-:toc-placement:
-:imagesdir: ../images
+:toc: left
 
-include::../common/intro.txt[tabsize=4]
+:leveloffset: +1
 
-toc::[]
+include::../common/intro.txt[]
 
-include::credentials.txt[tabsize=4]
+include::credentials.txt[]
 
-include::pcf.txt[tabsize=4]
+include::pcf.txt[]
 
-include::jenkins.txt[tabsize=4]
+include::jenkins.txt[]
 
-include::nexus.txt[tabsize=4]
+include::nexus.txt[]
 
-include::roadmap.txt[tabsize=4]
+include::roadmap.txt[]
+
+include::../common/support.txt[]
+
+include::../common/legal.txt[]
+
+:leveloffset: -1

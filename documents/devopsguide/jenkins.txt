@@ -1,4 +1,4 @@
-## Jenkins
+# Jenkins
 
 * All jobs are generated and maintained using the https://github.com/venicegeo/jenkins[jenkins seed job].
 * All jobs publish status to https://venicegeo.slack.com/messages/jenkins/[slack].
@@ -6,7 +6,7 @@
   - Go to _github.com/venicegeo/<your-repository>_ and navigate to `Settings -> Webhooks & Services -> Services -> Add service -> Jenkins (GitHub plugin)`
   - Webhook URL: `https://jenkins.devops.geointservices.io/github-webhook/`
 
-image::jenkins-webhook.png[title="Jenkins Webhook"]
+image::images/jenkins-webhook.png[title="Jenkins Webhook"]
 
 * Create automation scripts:
   - `./ci/` - holds any scripts you'd like jenkins to use in building, testing, and deploying your project.
@@ -27,7 +27,8 @@ image::jenkins-webhook.png[title="Jenkins Webhook"]
 * All jobs will only build master by default, but you can specify branches useing the `branch` key in your project map:
   - `branch: '**'` will build all branches.
 
-### Special Sauce
+## Special Sauce
+
 * Versioning - the automation pipeline follows a versioning convention that is coupled with the git revision (i.e. we're not aiming for human readability).
 * `./ci/vars.sh` - projects should provide the automation with a file `./ci/vars.sh` that defines two variables `APP` and `EXT`:
 
@@ -65,8 +66,8 @@ image::jenkins-webhook.png[title="Jenkins Webhook"]
 * Binary projects (I'm looking at you `golang`) - `EXT=bin` lets the automation know we're dealing with an executable.
 * The seed job will organize your project's jobs into a folder:
 
-image::jenkins-dashboard.png[title="Jenkins Build Dashboard"]
+image::images/jenkins-dashboard.png[title="Jenkins Build Dashboard"]
 
 * The seed job will create a pipeline view for you:
 
-image::jenkins-pipeline.png[title="Jenkins Build Pipeline"]
+image::images/jenkins-pipeline.png[title="Jenkins Build Pipeline"]

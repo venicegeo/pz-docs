@@ -1,4 +1,3 @@
-Support
--------
+# Support
 
 The Piazza team welcomes your questions and suggestions. Please contact us at mailto:venice@radiantblue.com[venice@radiantblue.com].

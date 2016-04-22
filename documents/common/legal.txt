@@ -1,5 +1,4 @@
-Legal
------
+# Legal
 
 Source code for Piazza is licensed under the http://www.apache.org/licenses/LICENSE-2.0[Apache License, Version 2.0].
 Documentation, videos, and other items are licensed under https://creativecommons.org/licenses/by/3.0/us/[Creative Commons Attribution 3.0 License].

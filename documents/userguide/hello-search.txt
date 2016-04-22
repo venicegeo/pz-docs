@@ -1,5 +1,4 @@
-Search
-~~~~~~
+# Search
 
 _ingest is internal, so not disucssed here_
 

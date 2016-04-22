@@ -1,5 +1,4 @@
-Introduction
-------------
+# Introduction
 
 Piazza is a set of open source, cloud-based services aimed at helping users (developers) build
 GeoInt applications and services. These services are exposed via REST endpoints, providing

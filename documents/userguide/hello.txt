@@ -2,6 +2,11 @@
 
 _discussion of examples_
 
+[source,sh]
+----
+include::scripts/hi.sh[tags=public]
+----
+
 :leveloffset: +1
 
 include::hello-data.txt[]

@@ -31,6 +31,7 @@ function doit {
         exit 1
     fi
 
+    # copy images directory to out dir
     cp -R $indir/images $outdir
 }
 
@@ -44,8 +45,11 @@ doit $ins/userguide   $outs/userguide
 doit $ins/devguide    $outs/devguide
 doit $ins/devopsguide $outs/devopsguide
 
-# copy images directory to out
+# verify the example scripts
+echo Checking examples.
+$root/documents/userguide/scripts/hi.sh
+echo Examples checked.
 
-echo done
+echo Done.
 
 tar -czf $APP.$EXT -C $root out

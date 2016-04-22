@@ -1,39 +1,32 @@
-pz-access
----------
+# pz-access
 
 Handles the deployment of Resources currently held within the Piazza system.
 
-Vagrant
-~~~~~~~
+## Vagrant
 
 *Note*: Vagrant setup will fail because the Nexus credentials are not injected. If you want Vagrant to work, you will have to update the Maven settings on the Vagrant box to include the Nexus repository with your credentials. In the mean time, please run this component locally. 
 
 Run ``vagrant up`` to start the Access service locally. This will start up a GeoServer instance for Deployments, and the Access application. For Kafka messaging, the [Kafka Devbox](https://github.com/venicegeo/kafka-devbox) is also required to be running. This box will listen to Kafka messages fired by the [Dispatcher](https://github.com/venicegeo/pz-dispatcher).
 
-Running Locally
-~~~~~~~~~~~~~~~
+## Running Locally
 
 To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. 
 
-S3 Credentials
-~~~~~~~~~~~~~~
+## S3 Credentials
 
 The Access component deploys files uploaded to S3 by the Gateway. As such, the `pz-access` component is also dependent on the `vcap.services.pz-blobstore.credentials.access` and `vcap.services.pz-blobstore.credentials.private` ENV variables. For more information, see [Gateway S3 Credentials](https://github.com/venicegeo/venice/wiki/Pz-Gateway#s3-credentials) information.
 
-Interface
-~~~~~~~~~
+## Interface
 
 The Access service listens to Kafka messages fired by the Dispatcher component. The interfaces allow users to request Deployments of data currently loaded into Piazza, or more simply to just query the Data that is currently ingested into Piazza.
 
-Access Process
-~~~~~~~~~~~~~~
+## Access Process
 
 The Access Process is described in the following UML Sequence diagram:
 
 ![Access Sequence Diagram](https://raw.githubusercontent.com/venicegeo/venice/master/docs/img/uml-access.png)
 
-Querying Metadata
-^^^^^^^^^^^^^^^^^
+### Querying Metadata
 
 After processing a Job through the `Ingest` component, a Data Resource will be added to the Piazza system. The Access component provides a `get-resource` Job which will allow users to query the metadata for the data that has been ingested into Piazza.
 
@@ -74,13 +67,11 @@ The `dataId` field is the unique ID for this dataset. The `dataType` field descr
 
 The Access Component, internally, also contains a REST Endpoint used for querying the status. This is to prevent us from having to use asynchronous Kafka queues for fetching the metadata of Piazza data. It is recommended to use the above-mentioned Job, but if you wish, you can also use the REST Interface at `http://access/data/{dataid}` and the same JSON response will be returned. 
 
-Accessing Data
-~~~~~~~~~~~~~~
+## Accessing Data
 
 Currently, there are two ways to get data out of Piazza. The first is retrieving the raw file that was initially ingested. The second is to get a live GeoServer deployment of the ingested data.
 
-File Access
-^^^^^^^^^^^
+### File Access
 
 This will simply retrieve the file for a Resource item. The Job takes on the form:
 
@@ -108,8 +99,7 @@ Currently, the Result for the above Access File Job will be the Data ID that is 
 
 The response for this request will be the actual bytes of the file. 
 
-GeoServer Deployments
-^^^^^^^^^^^^^^^^^^^^^^
+### GeoServer Deployments
 
 A better way to Access data, instead of accessing the raw file, is to have Piazza stand up a GeoServer service that can be used to access vector data as Web Feature Services (WFS) or raster data as Web Coverage Services (WCS). This is handled by specifying the `deploymentType` parameter to `geoserver`.
 
@@ -124,13 +114,11 @@ A better way to Access data, instead of accessing the raw file, is to have Piazz
 }
 ....
 
-Deployment Leases
-^^^^^^^^^^^^^^^^^
+### Deployment Leases
 
 A Lease represents an amount of time that a Deployed resource is available in the system for. Deployments should be guaranteed to be available as long as they have an active Deployment lease. A Lease is considered active as long as its expiration date has not passed. If the Expiration date of a lease has passed, then the resource may still be available (perhaps it has not been subject to resource reaping yet) but it will not be guaranteed. Periodically expired leases will be undeployed in order to avoid overtaxing the system with outdated or unused deployments.
 
-Supported Data Types
-^^^^^^^^^^^^^^^^^^^^^
+### Supported Data Types
 
 | Data Type            | Access and Hosted  | Access and Not Hosted                         |
 |----------------------|--------------------|-----------------------------------------------|
@@ -141,18 +129,15 @@ Supported Data Types
 | Web Feature Service  | Yes, GeoServer     | Yes, via the external URL                     |
 | Database (artibtary) | Depends on content | Possibly, if we have credentials passed to us |
 
-Administrative API
-~~~~~~~~~~~~~~~~~~
+## Administrative API
 
 The Access component provides a series of REST Endpoints that can be used to query the Data held by Piazza. This is provided for certain information useful to utilities like the Swiss-Army-Knife (SAK). It provides nothing more than a debug look into the system. These endpoints would most likely be locked down in production. The requests are as follows.
 
-Data Resource Model
-^^^^^^^^^^^^^^^^^^^
+### Data Resource Model
 
 Resources returned through REST Endpoints will follow the JSON Model defined in the [model.data.DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) class. 
 
-REST Endpoints
-^^^^^^^^^^^^^^
+### REST Endpoints
 
 * Getting Data Count -- `/data/count`
 ** Gets a count of the Resources held in the Piazza system. 

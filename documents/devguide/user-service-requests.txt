@@ -1,5 +1,4 @@
-User Service Requests
----------------------
+# User Service Requests
 
 User Service requests can be submitted to Piazza via the [Pz Gateway](https://github.com/venicegeo/venice/wiki/Pz-Gateway).  
 
@@ -8,8 +7,7 @@ The payload for this job is sent in the **form-data** body of the HTTP Request w
 
 The following examples for registering and executing a service use the [ pzsvc-preview-generator](https://github.com/venicegeo/pzsvc-preview-generator) as an example.
 
-Registering a Service
-~~~~~~~~~~~~~~~~~~~~~
+## Registering a Service
 
 To register a service, metadata about the user service needs to be sent.  User service metadata is represented as JSON and maps to the ResourceMetadata object once the user service request is submitted.  For details on the metadata associated with User Services, see [ResourceMetadata object](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java) for details.  Below is an example of the minimum data parameters that should be specified when registering a service.
 
@@ -79,8 +77,7 @@ The response provided back from the gateway is the jobId.  This jobId is used to
 }
 ....
 
-Getting Register Service Status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Getting Register Service Status
 
 To get a status of a job, submit a GET request to the pz-gateway.  For example, to get the status of a registered user service, perform the following GET request.
 
@@ -108,8 +105,7 @@ The job manager returns the status of the submitted job.  In this case, the resu
 }   
 ....
 
-Executing a Service
-~~~~~~~~~~~~~~~~~~~
+## Executing a Service
 
 Once a user service is registered, it can be executed by sending in runtime values.  Below is an example on how to execute the service registered above.  The payload sent to the service controller is in the "data" section.  
 
@@ -161,8 +157,7 @@ When the job is executed, your response will be the job id which is used to moni
 }
 ....
 
-Getting Execute Service Status
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+## Getting Execute Service Status
 
 To obtain status of the job (executing a service), perform another get using the provided job id.  
 
@@ -176,8 +171,7 @@ To obtain status of the job (executing a service), perform another get using the
 }
 ....
 
-Getting the Resource Data
-~~~~~~~~~~~~~~~~~~~~~~~~~
+## Getting the Resource Data
 
 If the User service has finished executing, a **dataId** is provided in the response.  The dataId is used to retrieve the data from the executed User service.  
 
@@ -224,8 +218,7 @@ A call to get the resource data will respond with the data from the execute serv
 }
 ....
 
-Listing User Services
-~~~~~~~~~~~~~~~~~~~~~
+## Listing User Services
 
 To get a list of all the user services that exist in Piazza, the list-service job can be used.  To obtain this list, post the following form-data to the **POST /job**
 
@@ -279,8 +272,7 @@ The **Response** will contain a listing of all the user services within Piazza
 }
 ....
 
-Search User Services
-~~~~~~~~~~~~~~~~~~~~
+## Search User Services
 
 To search for services within Piazza, the search-service job can be used.  To obtain this search, **POST /job** specifying the field and search regular expression in the form-data body payload.
 
@@ -331,9 +323,8 @@ The response will contain the results of the search.
     }    
 }    
 ....
-  
-Delete User Service
-~~~~~~~~~~~~~~~~~~~
+ 
+## Delete User Service
 
 To delete a user service, the **delete-service** needs to be submitted to the PZ-Gateway.  When a User Service is deleted, it is not removed from Piazza but is set to a status of **OUT OF SERVICE**.  
 
@@ -357,8 +348,7 @@ The response will consist of a jobId.  To get the status of the deletion, using 
 }
 ....
 
-Describe User Service  
-~~~~~~~~~~~~~~~~~~~~~
+## Describe User Service 
 
 The describe-service job allows users to get details on a specific User Service.  To get the details on a specific User Service, submit the resourceId of the service.
 
@@ -387,8 +377,7 @@ The response will consist of a jobId.  To get the results of the describe reques
 }
 ....
 
-Update User Service  
-~~~~~~~~~~~~~~~~~~~
+## Update User Service  
 
 The update-service job allows users to update the information for a specific User Service.  To update a specific User Service, submit the resourceId of the service and the Service Metadata  you want to update.  
 The example before is updating the location url of the service.

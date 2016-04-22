@@ -9,15 +9,17 @@ v0.1, 21 April 2016
 
 include::../common/intro.txt[]
 
-include::credentials.txt[]
+include::introduction.txt[]
 
-include::pcf.txt[]
+// include::credentials.txt[]
 
-include::jenkins.txt[]
+// include::pcf.txt[]
 
-include::nexus.txt[]
+// include::jenkins.txt[]
 
-include::roadmap.txt[]
+// include::nexus.txt[]
+
+// include::roadmap.txt[]
 
 include::../common/support.txt[]
 

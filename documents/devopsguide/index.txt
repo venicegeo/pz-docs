@@ -4,6 +4,7 @@ The Piazza Team <venice@radiantblue.com>
 v0.1, 21 April 2016
 :doctype: book
 :toc: left
+link:index.pdf[_PDF_]
 
 :leveloffset: +1
 

@@ -1,6 +1,15 @@
 # Workflow Service
 
-_summary of four step process_
+Piazza provides the ability for users to define and send _events_, representing some "thing" that has happened. These events can be issued either from within Piazza or by an external client. Piazza also allows for users to define _triggers_, containing both an event-condition and an action: when the condition is met, the action is performed. Taken together, _event types_, _events_, and _triggers_ can be used to define _workflows_.
+
+For example, let's imagine building a simple application requests Piazza to alert the user whenever a file with a certain metadata tag is loaded into Piazza:
+
+* Piazza has a built-in 
+
+The client application will use the system-provided event type that is used whenever new data is loaded.
+
+NOTE: By design, events and triggers are fairly primitive, low-level constructs. As Piazza matures, richer support for defining workflows may be added.
+
 
 ## The EventType
 

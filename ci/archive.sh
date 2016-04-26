@@ -33,6 +33,9 @@ function doit {
 
     # copy images directory to out dir
     cp -R $indir/images $outdir
+    
+    # copy scripts directory to out dir
+    cp -R $indir/scripts $outdir
 }
 
 rm -fr $root/out/*

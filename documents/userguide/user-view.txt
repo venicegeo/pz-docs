@@ -1,0 +1,58 @@
+# A User's View of Piazza
+
+From the outside, Piazza is web service that exposes several REST endpoints for performing operations like loading data or invoking a user service.
+This web service is called the Gateway, and it is the only service most users will need to know about.
+
+Following the REST model, the Gateway supports the usual HTTP verbs (`POST`, `GET`, `DELETE`, etc.) and models objects within the system
+as _resources_ with unique ids (GUIDs). For example, to load a file into Piazza, one might `POST` to `/data` a JSON object which describes
+an image in an S3 bucket. If the operation is successful, an id such as `b72b270a-168f-466a-a7eb-952a3da7fc8b` will be returned. The user can then
+issue a `GET` request to `/data/b72b270a-168f-466a-a7eb-952a3da7fcb8` and get back a JSON object containing information about
+that data resource. These operations are described in detail in the next section.
+
+Internal to Piazza, and hidden from users, are a set of web services that implement and support the operations that the Gateway provides.
+These services include operations like storing metadata, serving up feature data via WFS, and tracking the status
+of executions of user services. Also hidden behind the Gateway are a number of "infrastructure" components like Elasticsearch, GeoServer,
+PostGIS, and Kafka. Information about Piazza's internals can be found in the Piazza Developers Guide.
+
+## An Example Application
+
+Let's consider an example of an application that might use Piazza: shoreline extraction.
+Detailed, current information about shoreline locations -- expressed as vector (linear) features -- is an important
+resource for everything from monitoring coastal erosion to planning amphibious assaults.
+
+Imagine that you have been asked to build an application that runs 24x7 to continually update a
+database of shoreline vectors. You have been given access to a repository of global satellite imagery,
+and this repository is contiually being updated with new data. 
+You have also been given three different algorithms that compute shoreline vectors from such imagery;
+none of the three works perfectly, and some are better than others for detecting certain types of
+shoreline, e.g estuaries. Because none of them work all the time, the algorithms return a "confidence" metric
+for each computed shoreline vector; if the confidence is "low", the imagery and the candidate vector
+must be reviewed manually.
+
+Your application will need to perform the following operations:
+
+. The image repository must be monitored for a new image to appear.
+. When a new image is available, its metadata must be extracted, such as its spatial bounding box, estimated cloud cover percentage, etc.
+. Using that metadata, the images usability must be determined, based on whether the image contains any coastal regions (using the bounding box)
+and if the image's quality (using the cloud cover) is high enough.
+. If the new imagery is usable, it must be sent to each of the shoreline extraction algorithms.
+. When all three have completed, the vectors must be either sent to a user for manual inspection (if confidence is low) or
+inserted into the shoreline database (if confidence high).
+
+Piazza can be used to help implement all of these operations.
+
+. A script must be written to monitor the imagery repostory for new data; when new data appears, it must be loaded into Piazza.footnote:[Future
+Piazza feature: direct support for monitoring (and loading) various types of data sources automatically]
+. When loaded into Piazza, the image's metadata is extracted and stored within Piazza.
+. Using Piazza's workflow (eventing) service, a "rule" can be constructed: when _a new image is loaded and its bounding box intersects this
+polygon and its cloud cover is below a threshhold_, then _invoke each of the algorithms (in parallel) using the loaded image's
+resource id as the input_.
+. Again using the workflow service:
+.. When _all three algorithms have completed and if the confidence is low_, then _issue an manual-check-needed
+alert, whose payload consists of the data resource id, the candiate vector, and the confidence value_.
+.. When _all three algorithms have completed and if the confidence is high_, then _perform a databse insert_.
+. Within some UI application, poll Piazza for manual-check-needed alerts: when found, present the data to the user for
+evaluation.
+
+A variation of this example exercise is provided in the Piazza distribution.footnote:[TBD]
+

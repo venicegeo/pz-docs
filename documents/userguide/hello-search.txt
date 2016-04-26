@@ -1,6 +1,6 @@
 # Search
 
-_ingest is internal, so not disucssed here_
+_search is used as part of data loading (and service registration); ingest is internal and not exposed, so not disucssed here_
 
 _discussion of exposed metadata fields_
 

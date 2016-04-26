@@ -152,7 +152,7 @@ Example output:
 
 ### Mock Authentication Service:
 
-Returns an authentication decisioni (true or false) based on the provided username and credential:
+Returns an authentication decision (true or false) based on the provided username and credential:
 
     POST /verification
 

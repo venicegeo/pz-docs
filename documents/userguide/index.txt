@@ -12,9 +12,11 @@ include::../common/intro.txt[]
 
 include::introduction.txt[]
 
-include::architecture.txt[]
+include::user-view.txt[]
 
 include::hello.txt[]
+
+include::notes.txt[]
 
 include::../common/support.txt[]
 

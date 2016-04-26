@@ -1,55 +1,8 @@
 # User Services
 
-The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilites. This app exposes a REST endpoint which takes a POST request containing payload of required parameters. Given an s3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
+_registration, and metadata fields_
 
-## Usage
+_invocation_
 
-
-Post a request with a payload to the URL: https://pz-svcs-prevgen.stage.geointservices.io/crop
-
-Sample working payload:
-
-....
-{
-    "source": {
-        "domain": "s3.amazonaws.com",
-        "bucketName": "pz-svcs-prevgen",
-        "fileName": "NASA-GDEM-10km-colorized.tif"
-    },
-    "function": "crop",
-    "bounds": {
-        "minx": -140.00,
-        "miny": 10.00,
-        "maxx": -60.00,
-        "maxy": 70.00
-    }
-}
-....
-
-Service will download the file from "pz-svcs-prevgen" s3 bucket and crop it with given bounding box info. The cropped result tif will be uploaded back up to s3 bucket "pz-svcs-prevgen-output": https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=
-
-
-If all goes well, the resulting received payload will be of DataResource type:
-
-....
-{
-  "dataType": {
-    "type": "raster",
-    "location": {
-      "type": "s3",
-      "bucketName": "pz-svcs-prevgen",
-      "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
-      "domainName": "s3.amazonaws.com"
-    },
-    "mimeType": "image/tiff"
-  },
-  "metadata": {
-    "name": "External Crop Raster Service",
-    "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
-    "description": "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
-    "url": "http://host:8086/crop",
-    "method": "POST"
-  }
-}
-....
+_checking status_
 

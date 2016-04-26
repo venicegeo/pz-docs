@@ -6,8 +6,10 @@ _example file load_
 
 _example of getting metadata from resource id_
 
+_example download_
+
 _example WMS_
 
-_exampel features_
+_example geojson load_
 
-_example download_
+_example WFS_

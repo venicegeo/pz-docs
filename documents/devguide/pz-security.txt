@@ -149,3 +149,20 @@ Example output:
     {
       "Status": "User 'larrycable' deleted."
     }
+
+### Mock Authentication Service:
+
+Returns an authentication decisioni (true or false) based on the provided username and credential:
+
+    POST /verification
+
+Example payload:
+
+    {
+      "username":"mcmahojm",
+      "credential":"credential"
+    }
+
+Example output:
+
+    true

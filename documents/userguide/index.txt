@@ -7,27 +7,29 @@ v0.0, 13 April 2016
 :source-highlighter: prettify
 link:index.pdf[_PDF_]
 
+:sectnums:
+
 :leveloffset: +1
 
 include::../common/intro.txt[]
 
-include::introduction.txt[]
+include::1-introduction.txt[]
 
-include::user-view.txt[]
+include::2-user-view.txt[]
 
-include::hello.txt[]
+include::3-hello.txt[]
 
-include::hello-data.txt[]
+include::4-hello-data.txt[]
 
-include::hello-search.txt[]
+include::5-hello-search.txt[]
 
-include::hello-userservices.txt[]
+include::6-hello-userservices.txt[]
 
-include::hello-workflow.txt[]
+include::7-hello-workflow.txt[]
 
-include::hello-endtoend.txt[]
+include::8-endtoend.txt[]
 
-include::notes.txt[]
+include::9-notes.txt[]
 
 include::../common/support.txt[]
 

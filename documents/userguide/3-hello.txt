@@ -14,7 +14,20 @@ if they do not, please contact the Piazza team.
 IMPORTANT: Security concerns such as authentication and authorization 
 are not yet addressed in this tutorial. Contact the Piazza team for current information.
 
-We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning instance of Piazza to talk to.
+We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning instance of
+Piazza to talk to.
+
+[source,sh]
+.link:scripts/hi-full.sh[hi-full.sh]
+----
+include::scripts/hi-full.sh[]
+----
+
+The script requires that you set the $DOMAIN environment variable to the domain of the Piazza system you are
+using. Contact the Piazza team if you are unsure what your domain should be.
+
+In the examples that follow, we will only show the portions of the script that are relevant, typically
+omitting the setup and teardown code. The above script will just be: 
 
 [source,sh]
 .link:scripts/hi.sh[hi.sh]
@@ -22,7 +35,7 @@ We will begin with a simple "health check" ping to the Gateway to verify that we
 include::scripts/hi.sh[tags=public]
 ----
 
-You should verify that the health check script works before continuing with this tutorial.
+NOTE: You should verify that the health check script works before continuing with this tutorial.
 
 ## Additional Resources
 

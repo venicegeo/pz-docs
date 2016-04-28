@@ -1,0 +1,1 @@
+{"timestamp":1461879611141,"status":500,"error":"Internal Server Error","exception":"java.lang.Exception","message":"Error downloading file for Data ddd by user UNAUTHENTICATED: 500 Internal Server Error","path":"/file/ddd"}

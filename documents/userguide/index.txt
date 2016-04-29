@@ -21,11 +21,11 @@ include::3-hello.txt[]
 
 include::4-load-access.txt[]
 
-include::5-hello-search.txt[]
+include::5-search.txt[]
 
-include::6-hello-userservices.txt[]
+include::6-userservices.txt[]
 
-include::7-hello-workflow.txt[]
+include::7-workflow.txt[]
 
 include::8-endtoend.txt[]
 

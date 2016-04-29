@@ -1,8 +1,0 @@
-# User Services
-
-_registration, and metadata fields_
-
-_invocation_
-
-_checking status_
-

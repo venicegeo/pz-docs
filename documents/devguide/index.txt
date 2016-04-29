@@ -1,5 +1,5 @@
-Piazza Developers Guide
-=======================
+Piazza Developers Guide (WORK IN PROGRESS)
+==========================================
 The Piazza Team <venice@radiantblue.com>
 v0.0, 13 April 2016
 :doctype: book

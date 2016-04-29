@@ -18,33 +18,31 @@ We will begin with a simple "health check" ping to the Gateway to verify that we
 Piazza to talk to.
 
 [source,sh]
-.link:scripts/hi-full.sh[hi-full.sh]
+.link:scripts/3-hello-full.sh[3-hello-full.sh]
 ----
-include::scripts/hi-full.sh[]
+include::scripts/3-hello-full.sh[]
 ----
 
-The script requires that you set the $DOMAIN environment variable to the domain of the Piazza system you are
+IMPORTANT: The script requires that you set the $DOMAIN environment variable to the domain of the Piazza system you are
 using. Contact the Piazza team if you are unsure what your domain should be.
 
 In the examples that follow, we will only show the portions of the script that are relevant, typically
-omitting the setup and teardown code. The above script will just be: 
+omitting the setup and teardown code. The above script might be shown as just this: 
 
 [source,sh]
-.link:scripts/hi.sh[hi.sh]
+.link:scripts/3-hello.sh[3-hello.sh]
 ----
-include::scripts/hi.sh[tags=public]
+include::scripts/3-hello.sh[tags=public]
 ----
 
 NOTE: You should verify that the health check script works before continuing with this tutorial.
 
-## Additional Resources
+As you work through this tutorial, you might find these two additional Piazza resources helpful:
 
-As you work through this tutorial, you might find these two Piazza resources helpful:
+* `pz-swagger.$DOMAIN` is a browser-based UI for exploring Piazza's REST API. If you are not familiar
+with Swagger, see http://swagger.io[swagger.io].
 
-* `pz-swagger.<domain>` is a browser-based UI for exploring Piazza's REST API. (If you are not familiar
-with Swagger, see http://swagger.io[swagger.io].)
-
-* `pz-sak.<domain>` is a developer-level tool for directly interacting with some of Piazza's public
+* `pz-sak.$DOMAIN` is a developer-level tool for directly interacting with some of Piazza's public
 and private services: for example, you can use SAK to examine log files, check the status of jobs, and
 perform metadata queries. SAK is an internal tool for debugging and testing only; it is not to be
 used in production. Contact the Piazza team for assistance with SAK.

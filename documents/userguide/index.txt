@@ -1,7 +1,7 @@
 Piazza Users Guide
 ==================
 The Piazza Team <venice@radiantblue.com>
-v0.0, 13 April 2016
+v0.0, 28 April 2016
 :doctype: book
 :toc: left
 :source-highlighter: prettify
@@ -19,13 +19,13 @@ include::2-user-view.txt[]
 
 include::3-hello.txt[]
 
-include::4-hello-data.txt[]
+include::4-load-access.txt[]
 
-include::5-hello-search.txt[]
+include::5-search.txt[]
 
-include::6-hello-userservices.txt[]
+include::6-userservices.txt[]
 
-include::7-hello-workflow.txt[]
+include::7-workflow.txt[]
 
 include::8-endtoend.txt[]
 

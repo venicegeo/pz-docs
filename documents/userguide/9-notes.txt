@@ -1,4 +1,6 @@
 # Additional Notes and FAQs
 
-_tbd_
+* pagination
+* error codes
+* structure of returned objects
 

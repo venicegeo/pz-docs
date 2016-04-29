@@ -1,5 +1,5 @@
-Piazza DevOps Guide
-===================
+Piazza DevOps Guide (WORK IN PROGRESS)
+======================================
 The Piazza Team <venice@radiantblue.com>
 v0.1, 21 April 2016
 :doctype: book

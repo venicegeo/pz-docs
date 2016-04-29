@@ -1,0 +1,34 @@
+# User Services
+
+Piazza can invoke external services, such as orthorectifying an image or running a statistical
+analysis on a feature set.
+
+NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
+the future, the user service will be a deployable container, so Piazza can scale up and down the
+number of instances needed.
+
+*TODO* - see the "end to end" section of this manual for an example
+
+## Registration
+
+*TODO*
+
+A user service must be _registered_ with Piazza before it can be executed. In the registration operation,
+the client sends to Piazza a JSON
+payload with the URL of the service, a description of its parameters, and other metadata.
+
+*TODO*
+
+## Invocation
+
+*TODO*
+
+
+## Getting Status and Results
+
+*TODO*
+
+
+## How to Write Your Own Services
+
+*TODO*

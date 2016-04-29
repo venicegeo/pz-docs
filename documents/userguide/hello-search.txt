@@ -1,9 +1,0 @@
-# Search
-
-_search is used as part of data loading (and service registration); ingest is internal and not exposed, so not disucssed here_
-
-_discussion of exposed metadata fields_
-
-_discussion of ES query model_
-
-_example of query against known loaded data_

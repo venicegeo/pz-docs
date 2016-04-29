@@ -8,16 +8,15 @@ include::common/intro.txt[tabsize=4]
 Manuals
 -------
 
-* link:userguide/index.html[Users Guide]
-* link:devguide/index.html[Developers Guide]
-* link:devopsguide/index.html[DevOps Guide]
+* link:userguide/index.html[Users Guide (WORK IN PROGRESS)]
+* link:devguide/index.html[Developers Guide (WORK IN PROGRESS)]
+* link:devopsguide/index.html[DevOps Guide (WORK IN PROGRESS)]
 
 
 Additional Links
 ----------------
 
-* http://pz-docs.stage.geointservices.io[Piazza documentation]  https://pz-docs.stage.geointservices.io/index.pdf[( pdf)]
-* http://pz-swagger.stage.geointservices.io[API Reference (swagger)]
+* http://pz-swagger.stage.geointservices.io[Swagger API Reference]
 * https://github.com/venicegeo[GitHub repository]
 * http://pz-sak.stage.geointservices.io[UI for Piazza internal development]
 * Videos

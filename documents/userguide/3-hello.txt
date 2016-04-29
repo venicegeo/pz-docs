@@ -23,8 +23,9 @@ Piazza to talk to.
 include::scripts/3-hello-full.sh[]
 ----
 
-IMPORTANT: The script requires that you set the $DOMAIN environment variable to the domain of the Piazza system you are
-using. Contact the Piazza team if you are unsure what your domain should be.
+IMPORTANT: Some of the scripts in this section require that you set the $DOMAIN environment variable to the
+domain of the Piazza system you are using. Contact the Piazza team if you are unsure what your domain should
+be. Other scripts rely on a helper script, link:scripts/setup.sh[setup.sh].
 
 In the examples that follow, we will only show the portions of the script that are relevant, typically
 omitting the setup and teardown code. The above script might be shown as just this: 

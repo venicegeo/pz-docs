@@ -16,9 +16,9 @@ Manuals
 Additional Links
 ----------------
 
-* http://pz-swagger.stage.geointservices.io[Swagger API Reference]
+* http://pz-swagger.venicegeo.io[Swagger API Reference]
 * https://github.com/venicegeo[GitHub repository]
-* http://pz-sak.stage.geointservices.io[UI for Piazza internal development]
+* http://pz-sak.venicegeo.io[UI for Piazza internal development]
 * Videos
 ** 03-29-2016 - https://youtu.be/eFuq-t7kQgM[Piazza Sprint 3 Status]
 ** 03-15-2016 - https://www.youtube.com/watch?v=eyLPKhqDOvc[Piazza Core - Service Controller]

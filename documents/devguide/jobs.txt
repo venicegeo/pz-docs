@@ -1,9 +1,69 @@
-# Jobs
+## Gateway API
+
+The Gateway API is the single point-of-contact for external users to interact with Piazza Core components. This API provides functionality for loading and accessing data, registering and executing services, and registering events and triggers. The entirety of Piazza functionality is accessed through these Gateway API calls.
+
+See the Swagger documentation for a full explanation of all of these endpoints.
+
+### Job Management
+
+Endpoints related to managing long-running jobs processed by Piazza.
+
+* Get Job Status _GET_ `/job/{jobId}`
+* Abort _DELETE_ `/job/{jobId}`
+* Repeat _PUT_ `/job/{jobId}`
+
+### Data Management Jobs
+
+Endpoints related to managing geospatial data within Piazza.
+
+* Access Data _GET_ `/data`
+* Ingest _POST_ `/data`
+* Ingest with File _POST_ `/data/file`
+* Get Resource _GET_ `/data/{dataId}`
+* Search Query _GET_ | _POST_ `/data/query`
+* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case?*
+* Access Request _POST_ `/deployment`
+* Access Fetch _GET_ `/deployment/{deploymentId}`
+* Access File _GET_ `/file/{dataId}`
+* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case? TBD*
+
+### Service Controller Jobs
+
+Endpoints related to external service registrations and executions.
+
+* Register Service _POST_ `/service`
+* Describe Service _GET_ `/service/{serviceId}`
+* List Services _GET_ `/service`
+* Search Service _GET_ `/service?keywords=beachfront` _with query string_
+* Delete Service _DELETE_ `/service/{serviceId}`
+* Update Service _PUT_ `/service/{serviceId}`
+* Execute Service _POST_ `/job`
+
+### Workflow
+
+Endpoints related to setting up events and event types, and defining triggers for when certain events occur.
+
+* Get all events: `GET /event`
+* Add an event: `POST /event/{eventType}`
+* Get all events of a specific type: `GET /event/{eventType}`
+* Get a specific event: `GET /event/{eventTypeId}/{eventId}`
+* Delete a specific event: `DELETE /event/{eventTypeId}/{eventId}`
+* Add an event type: `POST /eventType`
+* Get all event types: `GET /eventType`
+* Get a specific event type: `GET /eventType/{eventTypeId}`
+* Delete a specific event type: `DELETE /eventType/{eventTypeId}`
+* Add a trigger: `POST /trigger`
+* Get all triggers: `GET /trigger`
+* Get a specific trigger: `GET /trigger/{triggerId}`
+* Delete a specific trigger: `DELETE /trigger/{triggerId}`
+* Get all alerts: `GET /alert`
+* Get a specific alert: `GET /alert/{alertId}`
+* Delete a specific alert: `DELETE /alert/{alertId}`
 
 
-The purpose of this wiki page is to outline the complete list of available Jobs that the [[Piazza Gateway|Pz-Gateway]] supports. Piazza Jobs are sent to the Gateway via https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-request[POST requests]. Jobs are forwarded by the Gateway to the internal Piazza components. For full documentation on each individual component, see the Piazza Core Services wiki. 
+# Legacy Jobs
 
-The Jobs listed in the lists below should map 1-to-1 with the https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/job/type[Java Job POJO Objects]
+The previous, now legacy, version of the Gateway API used the concept of "Everything is a Job". This means that every single Piazza action sent to the Gateway was a separate Job. This behavior is now deprecated, but still supported for the time being. If you are a new application, please do not reference this Legacy API. 
 
 ## Job Management
 
@@ -27,59 +87,3 @@ The Jobs listed in the lists below should map 1-to-1 with the https://github.com
 * [Delete Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#delete-user-service)
 * [Update Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#update-user-service)
 * [Search Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#search-user-services)
-
-## Workflow
-
-* _TODO_
-
-## Proposed API Migration
-
-Propose API Endpoints for migrating from the single `/job` Gateway endpoint into more specific endpoint names. These endpoints should follow [18F API Guidelines and Standards](https://github.com/18F/api-standards)
-
-### Job Management
-
-* Get Job Status _GET_ `/job/{jobId}`
-* Abort _DELETE_ `/job/{jobId}`
-* Repeat _PUT_ `/job/{jobId}`
-
-### Data Management Jobs
-
-* Access Data _GET_ `/data`
-* Ingest _POST_ `/data`
-* Ingest with File _POST_ `/data/file`
-* Get Resource _GET_ `/data/{dataId}`
-* Search Query _GET_ | _POST_ `/data/query`
-* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case?*
-* Access Request _POST_ `/deployment`
-* Access Fetch _GET_ `/deployment/{deploymentId}`
-* Access File _GET_ `/file/{dataId}`
-* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case? TBD*
-
-### Service Controller Jobs
-
-* Register Service _POST_ `/service`
-* Describe Service _GET_ `/service/{serviceId}`
-* List Services _GET_ `/service`
-* Search Service _GET_ `/service?keywords=beachfront` _with query string_
-* Delete Service _DELETE_ `/service/{serviceId}`
-* Update Service _PUT_ `/service/{serviceId}`
-* Execute Service _POST_ `/job`
-
-### Workflow
-
-* Get all events: `GET /event`
-* Add an event: `POST /event/{eventType}`
-* Get all events of a specific type: `GET /event/{eventType}`
-* Get a specific event: `GET /event/{eventTypeId}/{eventId}`
-* Delete a specific event: `DELETE /event/{eventTypeId}/{eventId}`
-* Add an event type: `POST /eventType`
-* Get all event types: `GET /eventType`
-* Get a specific event type: `GET /eventType/{eventTypeId}`
-* Delete a specific event type: `DELETE /eventType/{eventTypeId}`
-* Add a trigger: `POST /trigger`
-* Get all triggers: `GET /trigger`
-* Get a specific trigger: `GET /trigger/{triggerId}`
-* Delete a specific trigger: `DELETE /trigger/{triggerId}`
-* Get all alerts: `GET /alert`
-* Get a specific alert: `GET /alert/{alertId}`
-* Delete a specific alert: `DELETE /alert/{alertId}`

@@ -1,6 +1,6 @@
 # pz-jobmanager
 
-Internal component that provides persistence for Jobs as they pass throughout the application. This contains a [MongoDB](https://www.mongodb.org/) instance that stores all Jobs.
+Internal component that provides persistence for long-running Jobs (processes) as they pass throughout the application. This contains a [MongoDB](https://www.mongodb.org/) instance that stores all Jobs.
 
 ## Vagrant
 
@@ -14,7 +14,7 @@ To run the Job Manager service locally (without Vagrant), perhaps through Eclips
 
 ## Interface
 
-The Dispatcher component interacts directly with the Job Manager. For updates, this is done through Kafka Messages such as ``Create-Job``. For querying the status of Jobs, this is done synchronously through a REST Endpoint exposed by the Job Manager and available at http://jobmanager.dev:8083/job/JOB_ID. *(Since this endpoint is not intended to be accessed directly, it will likely be eventually locked down so that only the Dispatcher is allowed access to it. However, for testing, it will remain open.)*
+The Dispatcher component interacts directly with the Job Manager. For updates, this is done through Kafka Messages such as ``Create-Job``. For querying the status of Jobs, this is done synchronously through a REST Endpoint exposed by the Job Manager and wrapped via a Gateway endpoint.
 
 ## Piazza Database & Jobs Collection
 
@@ -37,19 +37,13 @@ The MongoDB instance uses a database titled ``Piazza`` with a single ``Jobs`` co
 
 ## Repeating Jobs
 
-The Job Manager, for the most part, acts like a metadata store that simply marks the statuses of Jobs in the Mongo database. However, the Job Manager does handle one specific Job type: Repeating Jobs. Jobs that have been previously processed into the Piazza system (including Jobs that have previously failed) can be re-run using the `repeat` Job Type. 
+The Job Manager, for the most part, acts like a metadata store that simply marks the statuses of Jobs in the Mongo database. However, the Job Manager does handle one specific Job type: Repeating Jobs. Jobs that have been previously processed into the Piazza system (including Jobs that have previously failed) can be re-run.. 
 
 ....
-{
-	"userName": "my-api-key-38n987",
-	"jobType": {
-		"type": "repeat",
-		"jobId": "d42bfc70-0194-47bb-bb70-a16346eff42b"
-	}
-}
+PUT /job/{jobId}
 ....
 
-The Repeat job takes in a single parameter `jobId` which is used to find the Job to repeat. The Job will then be repeated based on the initial request parameters of that Job (all stored in the Job Table). The Job will be re-run with identical parameters to its initial request, except for one difference: the API Key of the user who requested the Repeat Job will be attached to the new Job being repeated. This ensures that users who do not have permissions to create the initial Job, also do not have permissions to Repeat someone else's Job.
+The Repeat job endpoint takes in a single parameter `jobId` which is used to find the Job to repeat. The Job will then be repeated based on the initial request parameters of that Job (all stored in the Job Table). The Job will be re-run with identical parameters to its initial request, except for one difference: the API Key of the user who requested the Repeat Job will be attached to the new Job being repeated. This ensures that users who do not have permissions to create the initial Job, also do not have permissions to Repeat someone else's Job.
 
 The response for a Repeat Job is simply the ID of the new Job that has been created for the Repeating Job.
 
@@ -84,13 +78,6 @@ Jobs returned through REST Endpoints will follow the JSON Model defined in the [
 ** Gets all of the Jobs in the Piazza system. 
 *** *page* : The start page for the query. Optional, default 0.
 *** *pageSize* : The number of results per page. Optional, default 10. 
-
-* Get Specific Job - `/job/{jobId}`
-** Gets a specific Job.
-*** *jobId* : The ID of the Job to retrieve.
-
-* Get Job Statuses -- `/job/status`
-** Gets a list of all possible Statuses to query.
 
 * Get Jobs Status Counts -- `/job/status/{status}/count`
 ** *status* : The Status to get the count for.

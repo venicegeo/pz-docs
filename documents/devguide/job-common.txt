@@ -104,6 +104,4 @@ Each of these methods throw a `RestClientException` which occurs when the REST E
 
 ### Kafka Producers and Consumers
 
-### Kafka Message Creation
-
 ## Models

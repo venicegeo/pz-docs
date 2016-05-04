@@ -14,11 +14,13 @@ To run the Dispatcher service locally (without Vagrant), perhaps through Eclipse
 
 ## Interface
 
-The Gateway contains a REST interface for the submission and polling of Jobs. However, the Dispatcher does not contain such a REST Endpoint. The interaction with the Dispatcher amongst internal components is done purely through Kafka messaging - with the exception of synchronous requests, such as fetching the Job Status or fetching Resource Metadata. For these synchronous requests, the Dispatcher *does* contain REST endpoints that will be called by the Gateway. These Dispatcher REST endpoints are *NOT* intended to be called by any entity other than the Gateway, and will likely be locked down as such in production scenarios. See the [Job Status](https://github.com/venicegeo/venice/wiki/Pz-Dispatcher#job-status) section for more details on this.
+The Gateway contains a REST interface for the submission and polling of Jobs. However, the Dispatcher does not contain such a REST Endpoint. The interaction with the Dispatcher amongst internal components is done purely through Kafka messaging - with the exception of synchronous requests, such as fetching the Job Status or fetching Resource Metadata. For these synchronous requests, the Dispatcher *does* contain REST endpoints that will be called by the Gateway - but these endpoints are deprecated and will eventually be removed.
 
 ### Kafka Messages
 
 * Relaying Gateway Jobs
+
+Piazza uses the concept of a Job to maintain a handle to a long-running process that has been initiated through a Gateway API call, where an immediate response could not be directly send back to the user. Cases for this include executing external services, or loading large datasets. In cases such as this, Piazza uses the concept of a Job to track these processes.
 
 ** The primary function of the Dispatcher is to relay Job and Status Requests from external users sent into the Gateway. These messages are simply relayed from the Dispatcher to the Job Manager or other appropriate internal component.
 

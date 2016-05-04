@@ -1,6 +1,6 @@
 # pz-access
 
-Handles the deployment of Resources currently held within the Piazza system.
+Handles the deployment of Geospatial Data Resources currently held within the Piazza system.
 
 ## Vagrant
 
@@ -18,7 +18,7 @@ The Access component deploys files uploaded to S3 by the Gateway. As such, the `
 
 ## Interface
 
-The Access service listens to Kafka messages fired by the Dispatcher component. The interfaces allow users to request Deployments of data currently loaded into Piazza, or more simply to just query the Data that is currently ingested into Piazza.
+The Access service listens to Kafka messages fired by the Dispatcher component. The interfaces allow users to request Deployments of data currently loaded into Piazza, or more simply to just query the Data that is currently ingested into Piazza. Access also handles some Gateway API Endpoint requests based on the `/data` endpoint, which are used for retrieving geospatial metadata or other information related to loaded Piazza data.
 
 ## Access Process
 
@@ -28,26 +28,16 @@ The Access Process is described in the following UML Sequence diagram:
 
 ### Querying Metadata
 
-After processing a Job through the `Ingest` component, a Data Resource will be added to the Piazza system. The Access component provides a `get-resource` Job which will allow users to query the metadata for the data that has been ingested into Piazza.
-
-The `get-resource` Job functions the same as the Job format for querying Job Status, but you specify the `get-resource` type and instead of querying for a `jobId`, you query for a `resourceId`. 
+After processing a Job through the `Ingest` component, a Data Resource will be added to the Piazza system. The Access component provides a Gateway API Endpoint Job which will allow users to query the metadata for the data that has been ingested into Piazza.
 
 ....
-{
-	"userName": "my-api-key-dfaoji",
-	"jobType": {
-		"type": "get-resource",
-		"resourceId": "resource-id-here"
-	}
-}
+/data/{dataId}
 ....
 
 The response for this request will be all of the metadata currently held in Piazza for this Resource:
 
 ....
 {
-  "type": "job",
-  "data": {
     "dataId": "03810dc8-82a8-4cbc-95c1-75699142f95c",
     "dataType": {
       "type": "text",
@@ -59,13 +49,10 @@ The response for this request will be all of the metadata currently held in Piaz
       "description": "This is a test.",
       "classType": { "classification": "unclassified" }
     }
-  }
 }
 ....
 
 The `dataId` field is the unique ID for this dataset. The `dataType` field describes all information required for describing the type of file, format, and location of the data. The `spatialMetadata` will include information such as Bounding Box and Coordinate Reference System. The `metadata` field will contain other metadata information such as `contact` or `classification`.
-
-The Access Component, internally, also contains a REST Endpoint used for querying the status. This is to prevent us from having to use asynchronous Kafka queues for fetching the metadata of Piazza data. It is recommended to use the above-mentioned Job, but if you wish, you can also use the REST Interface at `http://access/data/{dataid}` and the same JSON response will be returned. 
 
 ## Accessing Data
 
@@ -73,44 +60,27 @@ Currently, there are two ways to get data out of Piazza. The first is retrieving
 
 ### File Access
 
-This will simply retrieve the file for a Resource item. The Job takes on the form:
+This will simply retrieve the file for a Resource item. The Gateway API Endpoint is:
 
 ....
-{
-	"userName": "my-api-key-38n987",
-	"jobType": {
-		"type": "access",
-		"dataId": "d42bfc70-0194-47bb-bb70-a16346eff42b",
-		"deploymentType": "file"
-	}
-}
-....
-
-The important flag here being the `deploymentType` parameter. This specifies that the user wishes to retrieve the file. The file returned may either be a byte stream download of the file, or perhaps a link to an S3 share that can be used to retrieve the file. This will be discussed.
-
-Currently, the Result for the above Access File Job will be the Data ID that is used to then request the actual download of the file. This is done by performing another request that is POSTed to the [Gateway /file](https://github.com/venicegeo/venice/wiki/Pz-Gateway#access-file) endpoint. The payload for this request is as follows:
-
-....
-{
-	"userName": "bogus",
-	"dataId": "8501e6f5-b6c9-4e52-a853-658a335a5787"
-}
+/data/file/{dataId}
 ....
 
 The response for this request will be the actual bytes of the file. 
 
 ### GeoServer Deployments
 
-A better way to Access data, instead of accessing the raw file, is to have Piazza stand up a GeoServer service that can be used to access vector data as Web Feature Services (WFS) or raster data as Web Coverage Services (WCS). This is handled by specifying the `deploymentType` parameter to `geoserver`.
+A better way to Access data, instead of accessing the raw file, is to have Piazza stand up a GeoServer service that can be used to access vector data as Web Feature Services (WFS) or raster data as Web Coverage Services (WCS). This is handled by POSTing to the `/deployment` Gateway API endpoint.
+
+....
+/deployment
+....
 
 ....
 {
-	"userName": "my-api-key-38n987",
-	"jobType": {
-		"type": "access",
-		"dataId": "d42bfc70-0194-47bb-bb70-a16346eff42b",
-		"deploymentType": "geoserver"
-	}
+	"type": "access",
+	"dataId": "d42bfc70-0194-47bb-bb70-a16346eff42b",
+	"deploymentType": "geoserver"
 }
 ....
 
@@ -133,23 +103,10 @@ A Lease represents an amount of time that a Deployed resource is available in th
 
 The Access component provides a series of REST Endpoints that can be used to query the Data held by Piazza. This is provided for certain information useful to utilities like the Swiss-Army-Knife (SAK). It provides nothing more than a debug look into the system. These endpoints would most likely be locked down in production. The requests are as follows.
 
-### Data Resource Model
-
-Resources returned through REST Endpoints will follow the JSON Model defined in the [model.data.DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) class. 
-
 ### REST Endpoints
 
 * Getting Data Count -- `/data/count`
 ** Gets a count of the Resources held in the Piazza system. 
-
-* Getting Data -- `/data`
-** Gets all of the Resources in the Piazza system. 
-*** *page* : The start page for the query. Optional, default 0.
-*** *pageSize* : The number of results per page. Optional, default 10. 
-
-* Getting Specific Data -- `/data/{dataId}`
-** Gets the Resource for the specified Resource ID
-*** *dataId* : The ID of the Resource to fetch. 
 
 * Administrative Statistics -- `GET /admin/stats`
 ** Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.

@@ -1,6 +1,6 @@
 Piazza is a set of open source, cloud-based services aimed at helping developers build
-GeoInt applications and sevices. Piazza provides features like data load and access, workflow
-execution, and execution of user-provided serivces deployed elsewhere on the web -- features that developers
+GeoInt applications and services. Piazza provides features like data load and access, workflow
+execution, and execution of user-provided services deployed elsewhere on the web -- features that developers
 could build themselves, but often shouldn't have to.
 
 Piazza is part of the Venice Project, an open source community focused on building cloud-based frameworks,

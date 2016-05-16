@@ -19,6 +19,8 @@ TODO: explain the JSON input and output fields
 This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host` set to `true`.
 The script will print out the id of the _job_ that was submitted.
 
+NOTE: The GeoTIFF file used in these examples can be found at link:scripts/terrametrics.tif[terrametrics.tif].
+
 [source,sh]
 .link:scripts/4-file-load.sh[4-file-load.sh]
 ----

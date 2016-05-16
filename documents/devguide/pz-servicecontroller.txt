@@ -123,14 +123,13 @@ When the Piazza core [[Logger|Pz-Logger]] service is available, the ServiceContr
 ## Getting Started With the REST API
 
 The ServiceController comes with some sample services to help with getting started with using the ServiceController API.  
-
+|===
 | Jumpstart Service | Description | Example URL |
-|-----------------|:----------|:---|
 | toLower | Converts a string to lowercase. **POST** method | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toLower?aString=testing |
 | toUpper | Converts a string to uppercase. **POST** method | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toUpper?aString=testing |
 | convert | Converts a string to UPPER or LOWER case.  **POST** method | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/convert { "theString":"testing", "conversionType":"UPPER"} |
 | moviequotewelcome | Takes an optional name as a parameter and provides a movie quote greeting to ServiceController users.  **GET** method | hhttp://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome?name=Marge or http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome |
-
+|===
 To become familiar with the ServiceController, use data transfer tools such as **cURL** or UI data transfer tools such as **Postman** ( https://www.getpostman.com/) to interact with the ServiceController REST API.
 
 The ServiceController leverages Java object definitions defined the pz-jobcommon github repo (https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/job/metadata) as definitions of the JSON used in the ServiceController REST API.
@@ -145,140 +144,61 @@ Below is an example of how to register a web service that uses the **POST** meth
 
 ....
 http://pz-servicecontroller.stage.geointservices.io/servicecontroller/registerService  
-{  
-    "id" : "",
-    "resourceMetadata" : {  
-           "name":"The toLower Service",  
-          "description":"Service to convert string to lower case",  
-          "url":"http://pz-servicecontroller.cf.piazzageo.io/jumpstart/string/toLower",  
-          "method":"POST"
-    },
-    "inputs" : [ {
-    "name" : "aString",
-    "minOccurs" : 1,
-    "maxOccurs" : 1,
-    "dataType" : {
-      "type" : "urlparameter"
-    },
-    "metadata" : null,
-    "formats" : null
-  } ],
-  "outputs" : [ {
-    "name" : "Lower Case message",
-    "minOccurs" : 1,
-    "maxOccurs" : 1,
-    "dataType" : {
-      "mimeType" : "application/json",
-      "type" : "text"
-    },
-    "metadata" : {
-      "about" : "ConvertToLowerCase",
-      "href" : null,
-      "role" : null,
-      "title" : "Lower Case Text"
-    },
-    "formats" : [ {
-      "mimeType" : "application/json",
-      "encoding" : null,
-      "schema" : null,
-      "maximumMegabytes" : null,
-      "dataType" : null
-    } ]
-  } ]
+{   "userName" : "my-api-key-38n987",  
+	"jobType" : {
+		"id" : "",
+		"url":"http://pz-servicecontroller.cf.piazzageo.io/jumpstart/string/toLower",
+		"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/toLowerContract",
+		"resourceMetadata" : {  
+			   "name":"The toLower Service",  
+			  "description":"Service to convert string to lower case",   
+			  "method":"POST"
+		}
+	}
 }
 ....
 
-The response from the ServiceController will be a JSON message providing the ResourceID for the toLower Resource.  
+The response from the ServiceController will be a JSON message providing the serviceId for the toLower Service.  
 
 ....
-{"resourceId":"123-345-456846434418332"}
+{"serviceId":"123-345-456846434418332"}
 ....
 
 _Once registered, users, should utilize the ResourceID to perform any functions on the registered service._
 
-_**A response of {"resourceId":""} means that the service was not properly registered within the ServiceController.  Be sure MongoDB and other required software is up and running.**_
+_**A response of {"service`Id":""} means that the service was not properly registered within the ServiceController.  Be sure MongoDB and other required software is up and running.**_
 
 To register a service that uses the **POST** method requiring JSON as the RequestBody, send the following payload to the registerService:
 
 ....
-{
-  "id" : "",
-    "resourceMetadata" : {  
-           "name":"The toLower Service",  
-          "description":"Service to convert string to upper or lower case",  
-          "url":"http://localhost:8086/jumpstart/string/convert",  
-          "method":"POST"
-    },
-    "inputs" : [ {
-    "name" : "BODY",
-    "minOccurs" : 1,
-    "maxOccurs" : 1,
-    "dataType" : {
-      "type" : "body"
-    },
-    "metadata" : null,
-    "formats" : null
-  } ],
-  "outputs" : [ {
-    "name" : "Converted message",
-    "minOccurs" : 1,
-    "maxOccurs" : 1,
-    "dataType" : {
-      "mimeType" : "application/json",
-      "type" : "text"
-    },
-    "metadata" : {
-      "about" : "Converted message",
-      "href" : null,
-      "role" : null,
-      "title" : "Converted Text"
-    },
-    "formats" : [ {
-      "mimeType" : "application/json",
-      "encoding" : null,
-      "schema" : null,
-      "maximumMegabytes" : null,
-      "dataType" : null
-    } ]
-  } ]
+{	"userName" : "my-api-key-38n987",  
+	"jobType" : {
+		"id" : "",
+		"url":"http://localhost:8086/jumpstart/string/convert",
+		"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/convertContract",		
+		"resourceMetadata" : {  
+			   "name":"The toLower Service",  
+			  "description":"Service to convert string to upper or lower case",  
+			  "method":"POST"
+		}
+	}
 }
 ....
 
 To register a service that uses the **GET** example without URL parameters (as per a "pure" REST case), the process is the same but be sure to specify **GET** as the method.
 
 ....
-{ 
-    "id" : "",
-    "resourceMetadata" : {  
-           "name":"Movie Quote Welcome",  
-          "description":"A web service that welcomes you to pz-servicecontroller",  
-          "url":"http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome",  
-          "method":"GET"
-    },
-    
-  "outputs" : [ {
-    "name" : "Movie Quote",
-    "minOccurs" : 1,
-    "maxOccurs" : 1,
-    "dataType" : {
-      "mimeType" : "application/json",
-      "type" : "text"
-    },
-    "metadata" : {
-      "about" : "Movie Quote",
-      "href" : null,
-      "role" : null,
-      "title" : "Movie Quote"
-    },
-    "formats" : [ {
-      "mimeType" : "application/json",
-      "encoding" : null,
-      "schema" : null,
-      "maximumMegabytes" : null,
-      "dataType" : null
-    } ]
-  } ]
-
+{   "userName" : "my-api-key-38n987",  
+	"jobType" : {
+		"id" : "",
+		"url":"http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome",
+        "contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/moviequotewelcomeContract",		
+		"resourceMetadata" : {  
+			   "name":"Movie Quote Welcome",  
+			  "description":"A web service that welcomes you to pz-servicecontroller",  
+			  "method":"GET"
+		}
+	}
 }
 ....
 
@@ -290,10 +210,10 @@ To execute a service, utilize the ServiceControllers _**executeService**_ API.  
 ....
 http://pz-servicecontroller.stage.geointservices.io/servicecontroller/executeService
 {
-  "serviceId" : "{{resourceId}}",
+  "serviceId" : "{{serviceId}}",
   "dataInputs" : {
     "aString" : {
-      "type" : "text",
+      "type" : "urlparameter",
       "content" : "The rain in Spain"
     }
   }
@@ -357,32 +277,24 @@ To register this service using the ServiceController API, send the following JSO
 
 ....
 http://pz-servicecontroller.stage.geointservices.io/servicecontroller/registerService  
- {   "id" : "",  
-     "resourceMetadata" : {  
-        "name" : "Coordinate Conversion",    
-        "description" : "Read and convert various types of geospatial location formats",     
-        "url" : "http://pzsvc-coordinate-conversion.cf.piazzageo.io/location/convert",     
-        "method" : "GET"   },  
-        "inputs" : [ {     
-            "name" : "",   
-             "minOccurs" : 1,   
-             "maxOccurs" : 1,    
-             "dataType" : {       "type" : "urlparameter"     },     
-             "metadata" : null,     "formats" : null   } ], 
-        "outputs" : [ {    
-            "name" : "converted coordinates",   
-            "minOccurs" : 1,     
-            "maxOccurs" : 1,     
-            "dataType" : {       "mimeType" : "application/json",       "type" : "text",       "type" : "text"     },  
-            "metadata" : {       "about" : "Convert coordinates",   "href" : null,       "role" : null,       "title" : "coordinated coords"     },
-            "formats" : [ {       "mimeType" : "application/json",       "encoding" : null,       "schema" : null,       "maximumMegabytes" : null,  
-            "dataType" : null     } ]   } ] }    
+ {   "userName" : "my-api-key-38n987",  
+	"jobType" : {
+		"id" : "",  
+		 "url" : "http://pzsvc-coordinate-conversion.cf.piazzageo.io/location/convert",  
+         "contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/convertCoordContract",				 
+		 "resourceMetadata" : {  
+			"name" : "Coordinate Conversion",    
+			"description" : "Read and convert various types of geospatial location formats",      
+			"method" : "GET"   } 
+		}
+	}
+}    
 ....
 
-A response should be sent back with the resourceId.
+A response should be sent back with the serviceId.
 
 ....
-{"resourceId":"2cef8efc-a142-4426-9560-ba52d7c393cf"}
+{"serviceId":"2cef8efc-a142-4426-9560-ba52d7c393cf"}
 ....
 
 Once registered, to execute this service, perform the following specifying a Lat/Lon or Country:
@@ -394,7 +306,7 @@ http://pz-servicecontroller.stage.geointservices.io/servicecontroller/executeSer
   "dataInputs" : {
     "" : {
       "content" : "123456N 1234556W",
-      "type" : "text"
+      "type" : "urlparameter"
     }
   }
 }
@@ -404,7 +316,7 @@ or
   "dataInputs" : {
     "" : {
       "content" : "Benghazi",
-      "type" : "text"
+      "type" : "urlparameter"
     }
   }
 }

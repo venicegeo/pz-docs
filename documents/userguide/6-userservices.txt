@@ -70,7 +70,8 @@ https://pz-gateway.stage.geointservices.io/v2/job
   "type": "execute-service",
   "data": {
     "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
-    "dataInputs": {}
+    "dataInputs": {},
+	"dataOutput": [ {  "mimeType":"application/json", "type":"text"}]
   }
 }
 ....
@@ -100,7 +101,8 @@ The return value is not the result of the service call.  The execute-service cal
 		  "type" : "body",
 		  "mimeType" : "application/json" 
 		}
-  }
+    },
+	"dataOutput": [ {  "mimeType":"application/json", "type":"text"}]
 }
 ....
 When executing a service that requires a POST body for input, the body message is specified in the content field, the type is "body" and the mimeType has to be specified.

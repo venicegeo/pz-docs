@@ -76,7 +76,8 @@ https://pz-gateway.stage.geointservices.io/v2/job
 }
 ....
 
-The serviceId is set to the return value from registering the service.  In this example, no dataInputs are specified.
+The serviceId is set to the return value from registering the service.  In this example, no dataInputs are specified.  For dataOutput, the mimeType refers to the mimeType of the 
+service output.  The type refers to how the output will be stored until retrieved (See Below).
 
 
 

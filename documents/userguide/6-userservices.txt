@@ -8,20 +8,64 @@ the future, the user service will be a deployable container, so Piazza can scale
 number of instances needed.
 
 *TODO* - see the "end to end" section of this manual for an example
+The following sections will use a "Hello World" service.  This service basically just says hello.
+It is deployed in our cloud for testing services
 
 ## Registration
-
-*TODO*
 
 A user service must be _registered_ with Piazza before it can be executed. In the registration operation,
 the client sends to Piazza a JSON
 payload with the URL of the service, a description of its parameters, and other metadata.
 
-*TODO*
+### Hello Example invoked with GET method.
+Registration Service invoked by posting to service endpoint.
+....
+https://pz-gateway.stage.geointservices.io/service 
+{
+  "url": "http://pzsvc-hello.int.geointservices.io/",
+  "contractUrl": "http://helloContract",
+  "serviceId": "",
+  "resourceMetadata": {
+    "name": "pzsvc-hello service",
+    "description": "Hello World Example",
+    "method" : "GET"	
+  }
+}
+....
+
+* https://pz-gateway.stage.geointservices.io/service is the endpoint for registering the service.
+* Inside the curly brackets is a JSON object describing the service.
+
+** The url field is the URL for invoking the service.
+** The contractUrl is an optional field containing additional detail information about the service.
+** The serviceId will be filled in by Piazza.
+** The resourceMetadata fields has 3 subfields with the name, description of the service and the invocation method for the service.
+
+NOTE: The description should be entered with some care because it will enable other users to search for your service.
+
+Return Value
+....
+{
+  "type": "service",
+  "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
+}
+....
+The serviceId field has to be noted down since it will be used in invoking the service.
 
 ## Invocation
 
-*TODO*
+The service is invoked by send a message to the pz-gateway job endpoint
+https://pz-gateway.stage.geointservices.io/v2/job
+....
+{
+  "type": "execute-service",
+  "data": {
+    "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
+    "dataInputs": {}
+  }
+}
+....
+The serviceId is set to the return value from registering the service.  In this example, no dataInputs are specified.
 
 
 ## Getting Status and Results

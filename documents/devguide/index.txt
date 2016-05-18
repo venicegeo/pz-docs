@@ -12,6 +12,12 @@ include::../common/intro.txt[]
 
 include::introduction.txt[]
 
+include::process.txt[]
+
+include::requirements.txt[]
+
+include::testing.txt[]
+
 include::pz-core.txt[]
 
 

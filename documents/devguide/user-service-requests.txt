@@ -60,7 +60,7 @@ To register a service, metadata about the user service needs to be sent.  User s
 			"resourceMetadata": {
 				"name": "pz-svcs-prevgen",
 				"description": "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
-				"url": "https://pz-svcs-prevgen.stage.geointservices.io/crop",
+				"url": "https://pz-svcs-prevgen.venicegeo.io/crop",
 				"method": "POST"
 			}
 		}
@@ -394,7 +394,7 @@ The example before is updating the location url of the service.
                      "resourceMetadata" : {
                          "name" : "toUpper Params",
                           "description" : "This service is a service that converts text to upper case...",
-                          "url" : "http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toUpper",
+                          "url" : "http://pz-servicecontroller.venicegeo.io/jumpstart/string/toUpper",
                    }  
          }           
   

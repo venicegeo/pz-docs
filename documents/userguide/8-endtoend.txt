@@ -10,7 +10,7 @@ This app exposes a REST endpoint which takes a POST request containing payload o
 a raster file, crops the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
 
 
-Post a request with a payload to the URL: https://pz-svcs-prevgen.stage.geointservices.io/crop
+Post a request with a payload to the URL: https://pz-svcs-prevgen.venicegeo.io/crop
 
 Sample working payload:
 

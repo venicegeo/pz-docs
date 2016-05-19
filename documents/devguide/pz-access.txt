@@ -2,33 +2,23 @@
 
 Handles the deployment of Geospatial Data Resources currently held within the Piazza system.
 
-## Vagrant
-
-*Note*: Vagrant setup will fail because the Nexus credentials are not injected. If you want Vagrant to work, you will have to update the Maven settings on the Vagrant box to include the Nexus repository with your credentials. In the mean time, please run this component locally. 
-
-Run ``vagrant up`` to start the Access service locally. This will start up a GeoServer instance for Deployments, and the Access application. For Kafka messaging, the [Kafka Devbox](https://github.com/venicegeo/kafka-devbox) is also required to be running. This box will listen to Kafka messages fired by the [Dispatcher](https://github.com/venicegeo/pz-dispatcher).
-
 ## Running Locally
 
-To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. 
+To run the Gateway service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. 
+
+The `application.properties` file controls URL information for the components it connects to - mainly GeoServer. If you are intending to debug a local instance of GeoServer, then simply changing the appropriate `vcap.services.pz-geoserver.*` configuration values.
 
 ## S3 Credentials
 
-The Access component deploys files uploaded to S3 by the Gateway. As such, the `pz-access` component is also dependent on the `vcap.services.pz-blobstore.credentials.access` and `vcap.services.pz-blobstore.credentials.private` ENV variables. For more information, see [Gateway S3 Credentials](https://github.com/venicegeo/venice/wiki/Pz-Gateway#s3-credentials) information.
+The Access component deploys files uploaded to S3 by the Gateway. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key`. If you are a developer and you do not have these values on your host, you will not be able to deploy files to GeoServer using a local debug instance.
 
 ## Interface
 
-The Access service listens to Kafka messages fired by the Dispatcher component. The interfaces allow users to request Deployments of data currently loaded into Piazza, or more simply to just query the Data that is currently ingested into Piazza. Access also handles some Gateway API Endpoint requests based on the `/data` endpoint, which are used for retrieving geospatial metadata or other information related to loaded Piazza data.
-
-## Access Process
-
-The Access Process is described in the following UML Sequence diagram:
-
-![Access Sequence Diagram](https://raw.githubusercontent.com/venicegeo/venice/master/docs/img/uml-access.png)
+For users requesting deployments, the Access service listens to Kafka messages. The interfaces allow users to request Deployments of data currently loaded into Piazza, or more simply to just query the Data that is currently ingested into Piazza. Access also handles some Gateway API Endpoint requests based on the `/data` endpoint, which are used for retrieving geospatial metadata or other information related to loaded Piazza data.
 
 ### Querying Metadata
 
-After processing a Job through the `Ingest` component, a Data Resource will be added to the Piazza system. The Access component provides a Gateway API Endpoint Job which will allow users to query the metadata for the data that has been ingested into Piazza.
+After processing a Job through the `Loader` component, a Data Resource will be added to the Piazza system. The Access component provides a Gateway API Endpoint Job which will allow users to query the metadata for the data that has been ingested into Piazza.
 
 ....
 /data/{dataId}

@@ -14,7 +14,7 @@ The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) 
 
 ## Interface
 
-The Gateway API provides a series of REST endpoints that enable users to work with data, services, events, and triggers. See the Swagger documentation for a complete documentation and listing for all available Gateway API endpoints.
+The Gateway API provides a series of REST endpoints that enable users to work with data, services, events, and triggers. See the Swagger documentation for a complete documentation and listing for all available Gateway API endpoints. See Swagger documentation for the Gateway for specific endpoints, payloads and responses.
 
 ## Authentication and Authorization
 

@@ -26,21 +26,25 @@ If you do not wish to use the `PiazzaLogger` or `UUIDFactory` classes as Autowir
 
 ### PiazzaLogger
 
-Provides a Java API to the [pz-logger](https://github.com/venicegeo/venice/wiki/Pz-Logger) component.
+Provides a Java API to the [pz-logger](https://github.com/venicegeo/Pz-Logger) component.
 
 The PiazzaLogger Bean has two required property values. These must be placed in your `application.properties` or `application-cloud.properties` file in order for these components to work when Autowired.
 
 ....
-pz.logger.url=pz-logger.cf.piazzageo.io/v1/messages
-pz.logger.name=COMPONENT_NAME
-pz.logger.console=false
+logger.protocol=https
+logger.prefix=pz-logger
+logger.port=443
+logger.endpoint=v1/messages
+logger.name=COMPONENT_NAME
+logger.console=true
+logger.url=${logger.protocol}://${logger.prefix}.${DOMAIN}:${logger.port}
 ....
 
-The `pz.logger.url` represents the Pz-Logger endpoint that will receive Log messages. The `pz.logger.name` component will correspond to the name of your individual component (such as `Gateway`) and will be associated with each Log message.
+The `logger.url` represents the Pz-Logger endpoint that will receive Log messages. The `logger.name` component will correspond to the name of your individual component (such as `Gateway`) and will be associated with each Log message. The components of the full URL are customizable based on your own environment - if you were to be running a local version of the logger and, for example, needed to switch the port number.
 
-*IMPORTANT!* Your local, debug instances of your components probably don't need to log to `pz-logger`. Why bother cluttering up the live version of the pz-logger component with your debug code? In this case, just leave the `pz.logger.url` blank, or give it a junk value. The `PiazzaLogger` component will fail gracefully and no junk messages will ever get published to the real `Pz-Logger`. The recommended approach is to leave this value outside your `application.properties` file, and instead place it only in your `application-cloud.properties` file.
+*IMPORTANT!* Your local, debug instances of your components probably don't need to log to `pz-logger`. Why bother cluttering up the live version of the pz-logger component with your debug code? In this case, just leave the `logger.url` blank, or give it a junk value. The `PiazzaLogger` component will fail gracefully and no junk messages will ever get published to the real `Pz-Logger`. The recommended approach is to leave this value outside your `application.properties` file, and instead place it only in your `application-cloud.properties` file.
 
-If you want the `PiazzaLogger` class to also write to your local console (useful for debugging!) then you can specify the `pz.logger.console` configuration value to `true`. All statements will then also be directed out to your local console.
+If you want the `PiazzaLogger` class to also write to your local console (useful for debugging!) then you can specify the `logger.console` configuration value to `true`. All statements will then also be directed out to your local console.
 
 Incorporating the `PiazzaLogger` class as a Component is simple.
 
@@ -70,15 +74,19 @@ Please reference these static variables when sending your Logs. For example:
 
 ### UUID Gen (UUIDFactory)
 
-Provides a Java API to the [pz-uuidgen](https://github.com/venicegeo/venice/wiki/Pz-UuidGen) component.
+Provides a Java API to the [pz-uuidgen](https://github.com/venicegeo/Pz-UuidGen) component.
 
 The UUIDFactory Bean has one required property value. This must be placed in your `application.properties` or `application-cloud.properties` file in order for this component to work when Autowired.
 
 ....
-pz.uuid.url=pz-uuidgen.cf.piazzageo.io/v1/uuids
+uuid.protocol=https
+uuid.prefix=pz-uuidgen
+uuid.port=443
+uuid.endpoint=v1/uuids
+uuid.url=${uuid.protocol}://${uuid.prefix}.${DOMAIN}:${uuid.port}
 ....
 
-This `pz.uuid.url` should point to the UUIDGen endpoint that hosts this service.
+This `uuid.url` should point to the UUIDGen endpoint that hosts this service. This URL is constructed similarly to the Logger's configuration.
 
 Incorporating the `UUIDFactory` class as a Component is simple.
 
@@ -100,8 +108,17 @@ Each of these methods throw a `RestClientException` which occurs when the REST E
 
 *IMPORTANT*: Currently, if the `UUIDGen` REST Endpoint is not found or contains an error, a UUID will be generated locally using the `java.util.UUID` class. This is temporary behavior and should NOT be relied upon. Error messages will be logged to your console output if this happens - it is not silent.
 
-## Other Utilities/Factories
-
 ### Kafka Producers and Consumers
 
+For internal components wishing to use Kafka, `pz-jobcommon` provides some simple factories to get Kafka consumers and producers.
+
+....
+	consumer = KafkaClientFactory.getConsumer(KAFKA_HOST, KAFKA_PORT, KAFKA_GROUP);
+	producer = KafkaClientFactory.getProducer(KAFKA_HOST, KAFKA_PORT);
+....
+
+By using the `KafkaClientFactory` to instantiate producers and consumers, then there is a consistent guarantee that the configuration properties and parameters for all clients are in tune with what the Piazza Kafka broker is expecting.
+
 ## Models
+
+`pz-jobcommon` also contains a variety of models that map all of the JSON payload information that is passed throughout the Gateway and other internal components. These models are located in the `model.*` namespace. These models are documented in the Swagger documentation, with regards to their usage in the Gateway API.

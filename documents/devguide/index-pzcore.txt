@@ -20,7 +20,6 @@ include::testing.txt[]
 
 include::pz-core.txt[]
 
-
 include::jobs.txt[]
 
 include::job-workflow.txt[]
@@ -34,8 +33,6 @@ include::pz-gateway.txt[]
 include::pz-sak.txt[]
 
 include::pz-access.txt[]
-
-include::pz-dispatcher.txt[]
 
 include::pz-ingest.txt[]
 

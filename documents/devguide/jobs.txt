@@ -4,6 +4,28 @@ The Gateway API is the single point-of-contact for external users to interact wi
 
 See the Swagger documentation for a full explanation of all of these endpoints.
 
+### Authentication
+
+Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-security` security component which handles authentication and authorization.
+
+### Jobs
+
+For most requests handled through the Piazza Gateway, the response will contain the expected information for said request (for example - querying data will return a list of data results, etc.), however: when executing a request within Piazza that could take a long amount of time (such as ingesting data, or executing an external service) Piazza will return a Job ID which can be used to track the status and progress of that request. The motivation for providing a Job ID is to allow the Gateway to return a response immediately, which will not block the user. It will also allow the user to track the progress of a long-running job as it is handled by internal Piazza components.
+
+Endpoints that return a Job ID are documented and outlined in the Swagger documentation.
+
+....
+{
+	"jobId": "my-job-id"
+}
+....
+
+The response may look something like the above. In this case, the requesting user can then take the Job ID and re-query the Gateway with the Job ID in order to get the latest status and progress of that Job. 
+
+When the Job has been completed, the result of the associated Job (being a data ID, or service, or whatever the end result of the Job was) will be contained in the status of that Job, including the time it was completed and how long it took.
+
+## Endpoints
+
 ### Job Management
 
 Endpoints related to managing long-running jobs processed by Piazza.
@@ -59,31 +81,3 @@ Endpoints related to setting up events and event types, and defining triggers fo
 * Get all alerts: `GET /alert`
 * Get a specific alert: `GET /alert/{alertId}`
 * Delete a specific alert: `DELETE /alert/{alertId}`
-
-
-# Legacy Jobs
-
-The previous, now legacy, version of the Gateway API used the concept of "Everything is a Job". This means that every single Piazza action sent to the Gateway was a separate Job. This behavior is now deprecated, but still supported for the time being. If you are a new application, please do not reference this Legacy API. 
-
-## Job Management
-
-* [Abort Job](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-abort)
-* [Get Job Status](https://github.com/venicegeo/venice/wiki/Pz-Gateway#job-status)
-* [Repeat Job](https://github.com/venicegeo/venice/wiki/Pz-JobManager#repeating-jobs)
-
-## Data Management Jobs
-
-* [Ingest Job](https://github.com/venicegeo/venice/wiki/Pz-ingest#example-ingest-requests) _Shapefile, GeoTIFF, Text, WFS, GeoJSON_
-* [Get Resource Job](https://github.com/venicegeo/venice/wiki/Pz-access#querying-metadata)
-* [Access Job](https://github.com/venicegeo/venice/wiki/Pz-Access#accessing-data) _file downloads and GeoServer deployments
-* [Search Metadata Ingest and Search Query Jobs](https://github.com/venicegeo/venice/wiki/Pz-Search-Services#search-through-the-piazza-workflow)
-
-## Service Controller Jobs
-
-* [Register Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#registering-a-service)
-* [Describe Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#describe-user-service)
-* [List Services Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#listing-user-services)
-* [Execute Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#executing-a-service)
-* [Delete Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#delete-user-service)
-* [Update Service Job] (https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#update-user-service)
-* [Search Service Job](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway#search-user-services)

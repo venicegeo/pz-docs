@@ -5,8 +5,8 @@ The Piazza Core Search infrastructure includes two services with REST APIs: **pz
 ## How to Use
 
 REST endpoints are exposed for explicit use:
-https://pz-search-metadata-ingest.stage.geointservices.io/
-https://pz-search-query.stage.geointservices.io/
+https://pz-search-metadata-ingest.venicegeo.io/
+https://pz-search-query.venicegeo.io/
 
 ### Debugging
 
@@ -19,7 +19,7 @@ To become familiar with the Search services, use data transfer tools such as **c
 The Search services standardize on Java object definitions defined the pz-jobcommon github repo (https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/DataResource) as definitions of the JSON used in the ServiceController REST API.
 
 Mapping the DataResource as schema basis for ingest REST endpoint, for example:
-POST to https://pz-search-metadata-ingest.stage.geointservices.io/api/v1/data this raw JSON document:
+POST to https://pz-search-metadata-ingest.venicegeo.io/api/v1/data this raw JSON document:
 
 ....
 "data":{
@@ -78,7 +78,7 @@ Subsequently, this simple DSL query will return the stored record:
 ## Search through the Piazza Workflow
 
 The Ingest of metadata will be coincidental with a Piazza data Ingest job.  Though not the norm, an explicit search-metadata-ingest-job is available through the Gateway:
-https://pz-gateway.stage.geointservices.io/job:
+https://pz-gateway.venicegeo.io/job:
 
 ....
 {   

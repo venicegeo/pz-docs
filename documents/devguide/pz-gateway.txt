@@ -1,28 +1,24 @@
 # pz-gateway
 
-Handles all user-facing requests to Piazza via REST endpoints. The purpose of this component is to allow for external users to be able to interact with Piazza data, services, events, and other core Piazza functionality. 
-
-## Vagrant
-
-*Note*: Vagrant setup will fail because the Nexus credentials are not injected. If you want Vagrant to work, you will have to update the Maven settings on the Vagrant box to include the Nexus repository with your credentials. In the mean time, please run this component locally. 
-
-Run ``vagrant up`` to start the Gateway REST service. The service will be accessible via http://gateway.dev:8081. This machine's functionality depends on the [Dispatcher](https://github.com/venicegeo/pz-dispatcher) and [Job Manager](https://github.com/venicegeo/pz-jobmanager) components also being running their own Vagrant machines. For Kafka messaging, the [Kafka Devbox](https://github.com/venicegeo/kafka-devbox) is also required to be running. 
+Handles all user-facing requests to Piazza via REST endpoints. The purpose of this component is to allow for external users to be able to interact with Piazza data, services, events, and other core Piazza functionality.
 
 ## Running Locally
 
-To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8081. If you are also running the Dispatcher locally (and not through Vagrant) you will also have to override the host name parameter ``dispatcher.host`` as ``localhost``. 
+To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8081. 
+
+Check the `application.properties` file if any port or host information needs to change for certain components. Since the Gateway proxies to all internal Piazza components, then depending on what you are attempting to debug locally, you may need to set one or many of these parameters. For example, if you are debugging `pz-ingest` as well, then you would change the `ingest.url` property in `application.properties` to your own local machine.
 
 ## S3 Credentials
 
-The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers will require environment variables to be established for passing in the values for the S3 Access key and the S3 Private Access key to be used. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access` and `vcap.services.pz-blobstore.credentials.private`. If you are a developer and you do not have these values on your host, you will not be able to Ingest files into the Gateway.
+The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers will require environment variables to be established for passing in the values for the S3 Access key and the S3 Private Access key to be used. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key`. If you are a developer and you do not have these values on your host, you will not be able to Ingest files into the Gateway.
 
 ## Interface
 
-The Gateway API provides a series of REST endpoints that enable users to work with data, services, events, and triggers. See the Swagger documentation for a complete documentation and listing for all available Gateway API endpoints.
+The Gateway API provides a series of REST endpoints that enable users to work with data, services, events, and triggers. See the Swagger documentation for a complete documentation and listing for all available Gateway API endpoints. See Swagger documentation for the Gateway for specific endpoints, payloads and responses.
 
 ## Authentication and Authorization
 
-Mutual SSL authentication will eventually be used for authentication and authorization with the Gateway. This is not currently enabled.
+Authentication and authorization is handled via the `pz-security` component. This authentication becomes active when the `secure` Spring profile is enabled in the Gateway. When authentication, all requests to the Gateway will require basic authentication (standard base64-encoded) with usernames and passwords defined in `pz-security`.
 
 ### Job Request
 
@@ -33,7 +29,7 @@ Each Job sent to the Piazza system through the Gateway is assigned a UUID. This 
 The typical response for getting the status of a Job to the Gateway will look like:
 
 ....
-/job/{jobId}
+http://gateway/job/{jobId}
 ....
 
 This will return any progress, or status information. When the job is done, this will also contain a `result` field which will contain a reference to the resulting objects of the Job. The result will look like the following:
@@ -63,20 +59,6 @@ Users who submit a Job that is currently running, can request that Job be cancel
 DELETE /job/{jobId}
 ....
 
-### Ingest
+## REST API
 
-This is used for ingesting data into the Piazza Ingest component. This will spawn off a job to parse the appropriate data information from the JSON payload, and begin and Ingest Job. Since ingesting large datasets could take a long period of time, this request will synchronously return the Job ID which can then be queried for updates on the status of the Job. 
-
-For examples of Ingest requests, see the documentation [here](https://github.com/venicegeo/venice/wiki/Pz-Ingest)
-
-### Access
-
-This is used for accessing data that has been Ingested into the Piazza system. Deployments can be GeoServer layers, or simply requesting a copy of the Ingested file. Since deploying large datasets could take a long period of time, this request will synchronously return the Job ID which can then be queried for updates on the status of the Job. 
-
-For examples of Access requests, see the documentation [here](https://github.com/venicegeo/venice/wiki/Pz-Access)
-
-### User Services
-
-Users can register, execute and manage web services external to the Piazza core using the Piazza Service Controller Component.  When User Service requests are made via Gateway as a job, the Service Controller will parse the JSON payload and will perform the user service request.  
-
-For examples on how to submit User Service requests, see details here on example payloads [here](https://github.com/venicegeo/venice/wiki/Pz-ServiceController#submitting-user-service-requests)
+Please see the Jobs section in this document for more information on the specific endpoints that the Gateway provides. For live documentation, see the Swagger files.

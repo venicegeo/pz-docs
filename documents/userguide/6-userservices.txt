@@ -8,25 +8,142 @@ the future, the user service will be a deployable container, so Piazza can scale
 number of instances needed.
 
 *TODO* - see the "end to end" section of this manual for an example
+The following sections will use a "Hello World" service.  This service basically just says hello.
+It is deployed in our cloud for testing services
 
 ## Registration
-
-*TODO*
 
 A user service must be _registered_ with Piazza before it can be executed. In the registration operation,
 the client sends to Piazza a JSON
 payload with the URL of the service, a description of its parameters, and other metadata.
 
-*TODO*
+### Hello Example invoked with GET method.
+Registration Service invoked by posting to service endpoint.
+....
+https://pz-gateway.venicegeo.io/service 
+{
+  "url": "http://pzsvc-hello.venicegeo.io/",
+  "contractUrl": "http://helloContract",
+  "serviceId": "",
+  "resourceMetadata": {
+    "name": "pzsvc-hello service",
+    "description": "Hello World Example",
+    "method" : "GET"	
+  }
+}
+....
+
+* https://pz-gateway.venicegeo.io/service is the endpoint for registering the service.
+* Inside the curly brackets is a JSON object describing the service.
+
+** The url field is the URL for invoking the service.
+** The contractUrl is an optional field containing additional detail information about the service.
+** The serviceId will be filled in by Piazza.
+** The resourceMetadata fields has 3 subfields with the name, description of the service and the invocation method for the service.
+
+NOTE: The description should be entered with some care because it will enable other users to search for your service.
+
+Return Value
+....
+{
+  "type": "service",
+  "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
+}
+....
+The serviceId field has to be noted down since it will be used in invoking the service.
+
+### Hello Example invoked with POST method.
+
+This example is almost identical with 2 exceptions.  
+
+1.  When registering the service, the method is POST.
+2.  When registering the service ,the url is http://pzsvc-hello.venicegeo.io/v1/hello
 
 ## Invocation
 
-*TODO*
+### Hello Example invoked with GET method.
+
+The service is invoked by sending a message to the pz-gateway job endpoint
+https://pz-gateway.venicegeo.io/v2/job
+....
+{
+  "type": "execute-service",
+  "data": {
+    "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
+    "dataInputs": {},
+	"dataOutput": [ {  "mimeType":"application/json", "type":"text"}]
+  }
+}
+....
+
+The serviceId is set to the return value from registering the service.  In this example, no dataInputs are specified.  For dataOutput, the mimeType refers to the mimeType of the 
+service output.  The type refers to how the output will be stored until retrieved (See Below).
 
 
-## Getting Status and Results
 
-*TODO*
+The return value is not the result of the service call.  The execute-service call creates a job and returns the id of that job
+....
+{
+  "type": "job",
+  "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847"
+}
+....
+
+### Hello Example invoked with POST method.
+
+....
+{
+  "type": "execute-service",
+  "data": {
+    "serviceId": {{serviceId}}
+    "dataInputs": {
+		"test" : {
+		  "content" : "{ \"name\": \"Fred\", \"count\": 4 }",
+		  "type" : "body",
+		  "mimeType" : "application/json" 
+		}
+    },
+	"dataOutput": [ {  "mimeType":"application/json", "type":"text"}]
+}
+....
+When executing a service that requires a POST body for input, the body message is specified in the content field, the type is "body" and the mimeType has to be specified.
+Getting the jobId is exactly the same as in the GET case.
+
+
+## Getting Status and Results (GET and POST cases are the same)
+
+The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/v2/job/{{jobId}}
+where jobId is the id returned when executing the service.
+On success the resulting status is
+....
+{
+  "type": "status",
+  "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847",
+  "result": {
+    "type": "data",
+    "dataId": "b92e7cc5-310e-4a72-a4ab-21661b58d601"
+  },
+  "status": "Success",
+  "jobType": "execute-service",
+  "submittedBy": "UNAUTHENTICATED",
+  "progress": {}
+}
+....
+Finally, the actual result is returned by sending a GET message to https://pz-gateway.venicegeo.io/{{dataId}}
+where the dataId is from the result.dataId field of the returned status.  In this case the result is text
+....
+{
+  "type": "data",
+  "data": {
+    "dataId": "b92e7cc5-310e-4a72-a4ab-21661b58d601",
+    "dataType": {
+      "type": "text",
+      "content": "Hi. I'm pzsvc-hello."
+    }
+  }
+}
+....
+
 
 
 ## How to Write Your Own Services

@@ -20,9 +20,9 @@ payload with the URL of the service, a description of its parameters, and other 
 ### Hello Example invoked with GET method.
 Registration Service invoked by posting to service endpoint.
 ....
-https://pz-gateway.stage.geointservices.io/service 
+https://pz-gateway.venicegeo.io/service 
 {
-  "url": "http://pzsvc-hello.int.geointservices.io/",
+  "url": "http://pzsvc-hello.venicegeo.io/",
   "contractUrl": "http://helloContract",
   "serviceId": "",
   "resourceMetadata": {
@@ -33,7 +33,7 @@ https://pz-gateway.stage.geointservices.io/service
 }
 ....
 
-* https://pz-gateway.stage.geointservices.io/service is the endpoint for registering the service.
+* https://pz-gateway.venicegeo.io/service is the endpoint for registering the service.
 * Inside the curly brackets is a JSON object describing the service.
 
 ** The url field is the URL for invoking the service.
@@ -57,14 +57,14 @@ The serviceId field has to be noted down since it will be used in invoking the s
 This example is almost identical with 2 exceptions.  
 
 1.  When registering the service, the method is POST.
-2.  When registering the service ,the url is http://pzsvc-hello.int.geointservices.io/v1/hello
+2.  When registering the service ,the url is http://pzsvc-hello.venicegeo.io/v1/hello
 
 ## Invocation
 
 ### Hello Example invoked with GET method.
 
 The service is invoked by sending a message to the pz-gateway job endpoint
-https://pz-gateway.stage.geointservices.io/v2/job
+https://pz-gateway.venicegeo.io/v2/job
 ....
 {
   "type": "execute-service",
@@ -112,7 +112,7 @@ Getting the jobId is exactly the same as in the GET case.
 
 ## Getting Status and Results (GET and POST cases are the same)
 
-The status is returned by sending a GET message to https://pz-gateway.stage.geointservices.io/v2/job/{{jobId}}
+The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/v2/job/{{jobId}}
 where jobId is the id returned when executing the service.
 On success the resulting status is
 ....
@@ -129,7 +129,7 @@ On success the resulting status is
   "progress": {}
 }
 ....
-Finally, the actual result is returned by sending a GET message to https://pz-gateway.stage.geointservices.io/{{dataId}}
+Finally, the actual result is returned by sending a GET message to https://pz-gateway.venicegeo.io/{{dataId}}
 where the dataId is from the result.dataId field of the returned status.  In this case the result is text
 ....
 {

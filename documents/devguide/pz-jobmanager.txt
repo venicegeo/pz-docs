@@ -1,20 +1,16 @@
 # pz-jobmanager
 
-Internal component that provides persistence for long-running Jobs (processes) as they pass throughout the application. This contains a [MongoDB](https://www.mongodb.org/) instance that stores all Jobs.
-
-## Vagrant
-
-*Note*: Vagrant setup will fail because the Nexus credentials are not injected. If you want Vagrant to work, you will have to update the Maven settings on the Vagrant box to include the Nexus repository with your credentials. In the mean time, please run this component locally. 
-
-Run ``vagrant up`` to start the Job Manager service and Database Instance. The Job Manager service and the Database are **not** intended to be accessed directly, and thus provide no convenient interface for access. Instead, internal Piazza components should communicate with the [Dispatcher](https://github.com/venicegeo/pz-dispatcher) component. The Dispatcher provides a REST Interface for synchronously querying Job Status, and consumes a series of Kafka topics that can be produced in order to modify the Job collections contained in the database. As a result, the [Dispatcher](https://github.com/venicegeo/pz-dispatcher) Vagrant machine should also be running in order to interact with the Job Manager's Vagrant machines. For Kafka messaging, the [Kafka Devbox](https://github.com/venicegeo/kafka-devbox) is also required to be running. 
+Internal component that provides persistence for long-running Jobs (processes) as they pass throughout the application. This contains a [MongoDB](https://www.mongodb.org/) instance that stores all Jobs. Internally, this component also routes certain Kafka messages for when Jobs are requested to be created. 
 
 ## Running Locally
 
-To run the Job Manager service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8083. Even if running the Job Manager locally, you should still run the MongoDB instance inside of Vagrant by running ``vagrant up jobdb`` from the /config directory.
+To run the Job Manager service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8083. Even if running the Job Manager locally, you should still run the MongoDB instance inside of Vagrant by running ``vagrant up jobdb`` from the /config directory. 
 
 ## Interface
 
-The Dispatcher component interacts directly with the Job Manager. For updates, this is done through Kafka Messages such as ``Create-Job``. For querying the status of Jobs, this is done synchronously through a REST Endpoint exposed by the Job Manager and wrapped via a Gateway endpoint.
+The main communication with the Job Manager is via Kafka from messages. The Gateway sends "Request-Job" messages to the Job Manager in order to index the running of new jobs. The components that process Jobs will also send Kafka messages to the Job Manager in order to update the status of running jobs. 
+
+The Job Manager also contains a series of REST endpoints that are used for obtaining Job Status, or lists of Jobs. 
 
 ## Piazza Database & Jobs Collection
 

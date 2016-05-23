@@ -12,6 +12,10 @@ Check the `application.properties` file if any port or host information needs to
 
 The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers will require environment variables to be established for passing in the values for the S3 Access key and the S3 Private Access key to be used. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key`. If you are a developer and you do not have these values on your host, you will not be able to Ingest files into the Gateway.
 
+## Code Organization
+
+The Gateway uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Gateway API provides. These are located in the `controller` package, and are broken up into separate objects by their functionality. The `auth` package defines how Gateway authenticates users through the `pz-security` project. The logic for turning on Authentication is located in the `Application.java` class - this is handled by either enabling or disabling the `secure` Spring profile. If this profile is enabled, then authentication is active and will point to `pz-security` for basic authentication credentials. If this profile is disabled, then the Gateway will not require any authentication for incoming requests.
+
 ## Interface
 
 The Gateway API provides a series of REST endpoints that enable users to work with data, services, events, and triggers. See the Swagger documentation for a complete documentation and listing for all available Gateway API endpoints. See Swagger documentation for the Gateway for specific endpoints, payloads and responses.

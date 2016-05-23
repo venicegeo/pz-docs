@@ -4,24 +4,30 @@ Inspects and loads data & metadata into the Piazza system.
 
 ## Running Locally
 
-To run the Loader service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. 
+To run the Loader service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run the application on port 8084 of the machine. 
 
 ## S3 Credentials
 
 The Loader component inspects files uploaded to S3 by the Gateway. As such, the `pz-ingest` component is also dependent on the `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key` ENV variables. 
+
+## Source Organization 
+
+The `messaging` package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The `IngestWorker.java` class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the `inspect` package. There is an inspector for each type of data (GeoJSON, GeoTIFF, Point Cloud, GeoJSON). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the `DataResource` objects and store them into the MongoDB instance.
+
+The `controller` package contains the administrative REST endpoints for this component.
 
 ## Interface
 
 In order to Load data, a message will be posted to the Gateway to create an Load job. There are two Gateway API endpoints to load data. 
 
 ....
-/data
+POST /data
 ....
 
 This first endpoint takes in a JSON payload only. This is used when a file does not need to specified - and instead, an S3 path or public folder share location is used to load the data.
 
 ....
-/data/file
+GET /data/file
 ....
 
 This second endpoint is a multi-part POST request which takes in an actual geospatial file and loads this into Piazza data holdings.

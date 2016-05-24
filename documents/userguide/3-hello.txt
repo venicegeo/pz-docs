@@ -11,7 +11,7 @@ be handled more cleanly in a future release.] You can find the complete scripts 
 Those scripts are regularly tested against the current Piazza build, so they should work as advertised:
 if they do not, please contact the Piazza team.
 
-IMPORTANT: Security concerns such as authentication and authorization 
+IMPORTANT: Security concerns such as authentication and authorization
 are not yet addressed in this tutorial. Contact the Piazza team for current information.
 
 We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning instance of
@@ -28,7 +28,7 @@ domain of the Piazza system you are using. Contact the Piazza team if you are un
 be. Other scripts rely on a helper script, link:scripts/setup.sh[setup.sh].
 
 In the examples that follow, we will only show the portions of the script that are relevant, typically
-omitting the setup and teardown code. The above script might be shown as just this: 
+omitting the setup and teardown code. The above script might be shown as just this:
 
 [source,sh]
 .link:scripts/3-hello.sh[3-hello.sh]

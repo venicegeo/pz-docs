@@ -59,7 +59,7 @@ The user then defines a `Trigger` which defines what action is to be taken when 
     "title": "my found-a-bad-telephone-number trigger",
     "condition": {
         "eventtype_ids": ["17de4"],   # array of event type ids
-        "query": {   
+        "query": {
             "query" : {    # the Elasticsearch query string
             "bool": {
                     "must": [
@@ -84,9 +84,9 @@ The user then defines a `Trigger` which defines what action is to be taken when 
 }
 ----
 
-In this example, the job will be executed only when our "US data found" event occurs with the specific problem being that a US bounding box has been found with a severity of 4. 
+In this example, the job will be executed only when our "US data found" event occurs with the specific problem being that a US bounding box has been found with a severity of 4.
 
-_Note: the `Job's Task` is a string that contains JSON.   It can be templated and filled in with values provided by the event data.  To make a value variable,  prefix it with a '$'.    
+_Note: the `Job's Task` is a string that contains JSON. It can be templated and filled in with values provided by the event data. To make a value variable, prefix it with a '$'.
 
 _Note: the "type" field of the "condition" will likely be removed in the future, as the query DSL allows us to specify the event type directly within it; this would open up the possibility of having a condition based on multiple events.
 

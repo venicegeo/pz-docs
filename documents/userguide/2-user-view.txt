@@ -11,7 +11,7 @@ that data resource. These operations are described in detail in the next section
 
 Requests sent to Piazza can be either _short_ or _long_. Short requests, like most `GET` and `DELETE` operations return their results immediately. Long operations, however, like a `POST` to load a file, return a _job id_.
 Piazza executes a long operation as a _job_. Using the job id, a client can query for the status of the job and,
-when it has completed, the result of the job. 
+when it has completed, the result of the job.
 
 Internal to Piazza, and hidden from users, are a set of web services that implement and support the operations that the Gateway provides.
 These services include operations like storing metadata, serving up feature data via WFS, and tracking the status
@@ -26,7 +26,7 @@ resource for everything from monitoring coastal erosion to planning amphibious a
 
 Imagine that you have been asked to build an application that runs 24x7 to continually update a
 database of shoreline vectors. You have been given access to a repository of global satellite imagery,
-and this repository is continually being updated with new data. 
+and this repository is continually being updated with new data.
 You have also been given three different algorithms that compute shoreline vectors from such imagery;
 none of the three works perfectly, and some are better than others for detecting certain types of
 shoreline, e.g estuaries. Because none of them work all the time, the algorithms return a "confidence" metric

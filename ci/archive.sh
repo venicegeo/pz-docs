@@ -15,7 +15,7 @@ function doit {
     
     aaa=`dirname $indir/index.txt`
     bbb=`basename $aaa`
-    echo "Proceesing: $bbb/index.txt"
+    echo "Processing: $bbb/index.txt"
   
     # txt -> html
     asciidoctor -o $outdir/index.html $indir/index.txt  &> errs.tmp

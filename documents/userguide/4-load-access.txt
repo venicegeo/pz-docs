@@ -4,7 +4,7 @@
 
 Piazza provides the ability to load external data into the system: metadata is extracted from external data, stored within Piazza, and a resource ID is returned. The metadata is also entered into Piazza's search index. Piazza supports several data formats today -- including GeoJSON, Shapefies, and GeoTIFFs -- with more to come as suers require them.
 
-For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be used as a global, unique refernece to the data.
+For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be used as a global, unique reference to the data.
 
 Piazza is not intended to be a storage system for user data and so normally only the metadata is stored -- not the file itself. We refer to this as the _no-host_ model.
 

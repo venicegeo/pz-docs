@@ -1,7 +1,20 @@
 # User Services
 
-Piazza can invoke external services, such as orthorectifying an image or running a statistical
-analysis on a feature set.
+Piazza allows users to discover, manage and invoke external web services known as *User Services*.  A user service is defined as a set of web technologies used for exchanging data between software applications over a network, such as the Internet.  Web technologies such as HTTP, JSON and XML are used because they allow for data to be exchanged in a platform-independent manner.  
+
+Using Piazza, users can combine user services to perform complex tasks automatically such as orthrorectifying an image, running statistical analysis on the image and then notifying an analyst that image has finished processing and is ready for review.
+
+Piazza provides a RESTful API allowing users to perform user service management activities such as:
+
+. Register user services for search/discovery (See the <<Search>> section for details)
+. Update information on the web service (e.g. URL, name, version and other metadata)
+. Remove a web service from the registry
+. View details about registered web services
+. Execute a registered user service
+. Combine user services to perform various tasks (See the <<Workflow Service>> section for details).
+
+While Piazza’s overall all goal is to provide users with the ability to register and use existing RESTful user services, to work best with Piazza, there are some guidelines on writing user services.  See the <<How to Write Your Own Services>> section for details on how to write a user services to be used by Piazza.  
+
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
 the future, the user service will be a deployable container, so Piazza can scale up and down the
@@ -13,9 +26,10 @@ It is deployed in our cloud for testing services
 
 ## Registration
 
-A user service must be _registered_ with Piazza before it can be executed. In the registration operation,
-the client sends to Piazza a JSON
-payload with the URL of the service, a description of its parameters, and other metadata.
+A user service must be _registered_ with Piazza before it can invoked or discovered by Piazza users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
+
+### Registration JSON Payload Schema
+
 
 ### Hello Example invoked with GET method.
 Registration Service invoked by posting to service endpoint.

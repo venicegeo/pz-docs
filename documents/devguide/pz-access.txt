@@ -12,6 +12,12 @@ The `application.properties` file controls URL information for the components it
 
 The Access component deploys files uploaded to S3 by the Gateway. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key`. If you are a developer and you do not have these values on your host, you will not be able to deploy files to GeoServer using a local debug instance.
 
+## Source Organization
+
+The main logic of the Access component is split between two packages. The `controller` package contains the Spring RestController class that defines REST endpoints that handle user queries for DataResource information, and other REST endpoints used. The `messaging` package defines Kafka consumers which listen for messages through Kafka for creating GeoServer deployments. The logic for the Deploying of Data Resources as GeoServer layers happens in the `deploy` package through the `Deployer.java` and `Leaser.java` classes. These two class manage the deployments of GeoServer (Deployment.java), and managing their life times and resource cleanup (Leaser.java). In the `Leaser.java` class that is a method `reapExpiredLeases()` that runs once a night that will clean up any expired resources on GeoServer. 
+
+The Access component interacts with the MongoDB DataResource collection, and management for this code is located in the `database` package.
+
 ## Interface
 
 For users requesting deployments, the Access service listens to Kafka messages. The interfaces allow users to request Deployments of data currently loaded into Piazza, or more simply to just query the Data that is currently ingested into Piazza. Access also handles some Gateway API Endpoint requests based on the `/data` endpoint, which are used for retrieving geospatial metadata or other information related to loaded Piazza data.

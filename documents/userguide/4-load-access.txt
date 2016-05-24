@@ -29,7 +29,7 @@ include::scripts/4-file-load.sh[tags=public]
 
 *TODO: explain JSON input and output fields*
 
-A client can now periodically check the status of the job, waiting for it to be completed. This script takes as a single command-line parameter, the job id string:
+A client can now periodically check the status of the job, waiting for it to be completed. This script takes as a single command-line parameter, the job id string. Run this script using `sh 4-file-job.sh {jobId}` (jobId is displayed by the previous script).
 
 [source,sh]
 .link:scripts/4-file-job.sh[4-file-job.sh]

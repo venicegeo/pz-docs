@@ -1,4 +1,4 @@
-# Configuration Management
+## Configuration Management
 
 Piazza defines a Configuration Management process to streamline the building, testing, and deploying of the Piazza application services. This section defines the processes that Piazza development team adheres to.
 

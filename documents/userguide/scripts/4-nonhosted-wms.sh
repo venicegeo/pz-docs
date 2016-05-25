@@ -5,11 +5,11 @@ printenv DOMAIN > /dev/null
 # tag::public[]
 id=$1
 
-data="{
-    \"type\": \"access\",
-    \"dataId\": $id,
-    \"deploymentType\": \"string\"
-}"
+data='{
+    "type": "access",
+    "dataId": $id,
+    "deploymentType": "string"
+}'
 
 curl -S -s -X GET \
     --header 'Content-Type: application/json' --header 'Accept: application/json' \
@@ -22,8 +22,8 @@ curl -S -s -X GET \
 grep -q 200 status.txt
 grep -q jobId response.txt
 
-# print out the JobId
+# print out the jobId
 grep -o '"jobId":".*"' response.txt | cut -d \" -f 4
-# end::public[] 
+# end::public[]
 
 rm -f response.txt status.txt

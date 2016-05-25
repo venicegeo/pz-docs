@@ -1,3 +1,9 @@
 # Introduction
 
-Welcome to Piazza
+The core functionality of Piazza is split up into several internal components that are shown in the below diagram. The purpose of this section is to provide an overview of these core components, and how interactions between these components are defined.
+
+image::images/overview.jpg[title="Piazza Component Overview"]
+
+
+Communication between the Gateway and the internal core components is done one of two ways. First, for most synchronous calls (such as data retrieval of querying), the internal Piazza components will define REST endpoints that Gateway will proxy user requests to; Gateway will then await responses from this request and proxy along the response back to the user. In this scenario, the Gateway is functionally just a simple proxy that provides functionality for internal Piazza components. Second, for requests that are asynchronous by nature (such as executing a long-running service, or loading a very large dataset) the Gateway will then produce messages to a Kafka broker. Internal Piazza components that are delegated to handle these messages will have Kafka consumers defined to subscribe to these messages, and upon receiving an appropriate message, will begin work on handling that request. The Gateway will return a handle to this long-running process that the user can then use to retrieve the status, and subsequent results, of that process.
+

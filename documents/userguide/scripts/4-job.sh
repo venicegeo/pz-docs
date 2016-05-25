@@ -16,6 +16,6 @@ grep -q '"status":"Success"' response.txt
 
 # print the data's resource id
 grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4
-# end::public[] 
+# end::public[]
 
 rm -f response.txt status.txt

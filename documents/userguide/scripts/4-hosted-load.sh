@@ -3,19 +3,19 @@
 printenv DOMAIN > /dev/null
 
 # tag::public[]
-data="{
-    \"type\": \"ingest\",
-    \"host\": true,
-    \"data\": {
-        \"dataType\": {
-            \"type\": \"raster\"
+data='{
+    "type": "ingest",
+    "host": true,
+    "data": {
+        "dataType": {
+            "type": "raster"
         },
-        \"metadata\": {
-            \"name\": \"terrametrics\",
-            \"description\": \"geotiff_test\"
+        "metadata": {
+            "name": "terrametrics",
+            "description": "geotiff_test"
         }
     }
-}"
+}'
 
 curl -S -s -X POST \
     -w "%{http_code}" \
@@ -30,6 +30,6 @@ grep -q jobId response.txt
 
 # print out the jobId
 grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4
-# end::public[] 
+# end::public[]
 
 rm -f response.txt status.txt

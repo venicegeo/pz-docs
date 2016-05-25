@@ -12,10 +12,6 @@ curl -S -s -X GET \
 
 # verify all worked successfully
 grep -q 200 status.txt
-grep -q jobId response.txt
-
-# print out the JobId
-grep -o '"jobId":".*"' response.txt | cut -d \" -f 4
-# end::public[] 
+# end::public[]
 
 rm -f response.txt status.txt

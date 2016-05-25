@@ -31,7 +31,7 @@ The available data types are `string`, `boolean`, `integer`, `double`, `date`, `
 
 ## The Event
 
-The user may generate an `Event` of that `EventType` to indicate some interesting condition has occurred. The `Event` object is POSTed to `/events` and contains the ID of the `EventType`, the date the event occurrent, and the parameters of the event. It also contains a system-generated ID. For example:
+The user may generate an `Event` of that `EventType` to indicate some interesting condition has occurred. The `Event` object is POSTed to `/events` and contains the ID of the `EventType`, the date the event occurred, and the parameters of the event. It also contains a system-generated ID. For example:
 
 ----
 {
@@ -84,7 +84,7 @@ The user then defines a `Trigger` which defines what action is to be taken when 
 }
 ----
 
-In this example, the the job will be executed only when our "US data found" event occurs with the specific problem being that a US bounding box has been found with a severity of 4. 
+In this example, the job will be executed only when our "US data found" event occurs with the specific problem being that a US bounding box has been found with a severity of 4. 
 
 _Note: the `Job's Task` is a string that contains JSON.   It can be templated and filled in with values provided by the event data.  To make a value variable,  prefix it with a '$'.    
 
@@ -93,7 +93,7 @@ _Note: the "type" field of the "condition" will likely be removed in the future,
 
 ## The Alert
 
-Whenever a the condition of a `Trigger` is met, the system will create an `Alert` object. The user can GET a list of alerts from `/alerts`. The `Alert` object contains the ids of the `Trigger` that was hit and the `Event` which caused it. It also contains the now ubiquitous system-generated ID. For example:
+Whenever the condition of a `Trigger` is met, the system will create an `Alert` object. The user can GET a list of alerts from `/alerts`. The `Alert` object contains the ids of the `Trigger` that was hit and the `Event` which caused it. It also contains the now ubiquitous system-generated ID. For example:
 
 ----
 {

@@ -12,11 +12,11 @@ source $root/ci/vars.sh
 function doit {
     indir=$1
     outdir=$2
-    
+
     aaa=`dirname $indir/index.txt`
     bbb=`basename $aaa`
     echo "Processing: $bbb/index.txt"
-  
+
     # txt -> html
     asciidoctor -o $outdir/index.html $indir/index.txt  &> errs.tmp
     if [ -s errs.tmp ] ; then
@@ -33,7 +33,7 @@ function doit {
 
     # copy images directory to out dir
     cp -R $indir/images $outdir
-    
+
     # copy scripts directory to out dir
     cp -R $indir/scripts $outdir
 }
@@ -80,5 +80,8 @@ cp -f $ins/presentations/*.pdf $outs/presentations/
 run_tests
 
 echo Done.
+
+# if errs.tmp is empty, remove it
+[ -s "errs.tmp" ] || rm "errs.tmp"
 
 tar -czf $APP.$EXT -C $root out

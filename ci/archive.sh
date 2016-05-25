@@ -44,15 +44,17 @@ function run_tests {
     echo Checking examples.
 
     echo "Checking section 3 examples"
-    #$root/documents/userguide/scripts/3-hello.sh
-    #$root/documents/userguide/scripts/3-hello-full.sh
+    $root/documents/userguide/scripts/3-hello.sh
+    $root/documents/userguide/scripts/3-hello-full.sh
 
     echo "Checking section 4 examples"
-    #jobid=`$root/documents/userguide/scripts/4-file-load.sh`
-    #dataid=`$root/documents/userguide/scripts/4-file-job.sh $jobid`
-    #$root/documents/userguide/scripts/4-file-info.sh $dataid
-    #$root/documents/userguide/scripts/4-file-download.sh $dataid
-    #$root/documents/userguide/scripts/4-file-wms.sh $dataid
+    # TODO These fail due to terrametrics.tif not being in PWD
+    # jobid=`$root/documents/userguide/scripts/4-hosted-load.sh`
+    # dataid=`$root/documents/userguide/scripts/4-job.sh $jobid`
+    # $root/documents/userguide/scripts/4-hosted-download.sh $dataid
+    # jobid=`$root/documents/userguide/scripts/4-nonhosted-load.sh`
+    # dataid=`$root/documents/userguide/scripts/4-job.sh $jobid`
+    # $root/documents/userguide/scripts/4-nonhosted-wms.sh $dataid
 
     echo "Checking section 5 examples"
 

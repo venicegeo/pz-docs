@@ -93,7 +93,7 @@ A Lease represents an amount of time that a Deployed resource is available in th
 | GeoTIFF              | Yes, GeoServer     | Not Possible                                  |
 | PointCloud           | Yes, GeoServer     | Not Possible                                  |
 | Web Feature Service  | Yes, GeoServer     | Yes, via the external URL                     |
-| Database (artibtary) | Depends on content | Possibly, if we have credentials passed to us |
+| Database (arbitrary) | Depends on content | Possibly, if we have credentials passed to us |
 
 ## Administrative API
 

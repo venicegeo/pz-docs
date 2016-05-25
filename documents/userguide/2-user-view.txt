@@ -26,7 +26,7 @@ resource for everything from monitoring coastal erosion to planning amphibious a
 
 Imagine that you have been asked to build an application that runs 24x7 to continually update a
 database of shoreline vectors. You have been given access to a repository of global satellite imagery,
-and this repository is contiually being updated with new data. 
+and this repository is continually being updated with new data. 
 You have also been given three different algorithms that compute shoreline vectors from such imagery;
 none of the three works perfectly, and some are better than others for detecting certain types of
 shoreline, e.g estuaries. Because none of them work all the time, the algorithms return a "confidence" metric
@@ -49,12 +49,12 @@ Piazza can be used to help implement all of these operations.
 Piazza feature: direct support for monitoring (and loading) various types of data sources automatically]
 . When loaded into Piazza, the image's metadata is extracted and stored within Piazza.
 . Using Piazza's workflow (eventing) service, a "rule" can be constructed: when _a new image is loaded and its bounding box intersects this
-polygon and its cloud cover is below a threshhold_, then _invoke each of the algorithms (in parallel) using the loaded image's
+polygon and its cloud cover is below a threshold_, then _invoke each of the algorithms (in parallel) using the loaded image's
 resource id as the input_.
 . Again using the workflow service:
 .. When _all three algorithms have completed and if the confidence is low_, then _issue an manual-check-needed
 alert, whose payload consists of the data resource id, the candiate vector, and the confidence value_.
-.. When _all three algorithms have completed and if the confidence is high_, then _perform a databse insert_.
+.. When _all three algorithms have completed and if the confidence is high_, then _perform a database insert_.
 . Within some UI application, poll Piazza for manual-check-needed alerts: when found, present the data to the user for
 evaluation.
 

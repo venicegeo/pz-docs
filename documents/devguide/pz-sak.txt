@@ -154,5 +154,4 @@ Other options available for User Service registry include:
 SAK uses AngularJS and Bootstrap to create a simple UI for accessing REST endpoints exposed through Piazza services. Each Piazza service will be listed in the left tree pane.  When selecting a service any functions associated will be listed on the page that appears, and some services will have more functions than others.
 
 ### UI mockups
-
-image::https://raw.githubusercontent.com/venicegeo/venice/master/docs/img/sak-tree-branches.png[]
+image::images/sak-tree-branches.png[title="SAK TREE Branches"]

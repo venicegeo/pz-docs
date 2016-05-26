@@ -19,4 +19,4 @@ grep -q OK response.txt
 rm -f response.txt
 
 # provide positive encouragement
-echo Pass.
+echo pass.

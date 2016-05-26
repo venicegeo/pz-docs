@@ -1,4 +1,7 @@
-#!/bin/sh -ex
+#!/bin/bash
+set -e
+
+[[ -f auth.sh ]] && . auth.sh
 
 printenv DOMAIN > /dev/null
 

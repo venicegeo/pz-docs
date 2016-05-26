@@ -1,4 +1,7 @@
-#!/bin/sh -e
+#!/bin/bash
+set -e
+
+[[ -f auth.sh ]] && . auth.sh
 
 printenv DOMAIN > /dev/null
 
@@ -8,8 +11,8 @@ curl -u $USER:$PASS -S -s -X GET -o response.txt "http://pz-gateway.$DOMAIN/heal
 
 # verify the response was "OK"
 grep -q OK response.txt
-# end::public[] 
+# end::public[]
 
 rm -f response.txt
 
-echo Pass.
+echo pass.

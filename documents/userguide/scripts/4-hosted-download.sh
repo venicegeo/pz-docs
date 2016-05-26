@@ -1,4 +1,7 @@
-#!/bin/sh -ex
+#!/bin/bash
+set -e
+
+[[ -f auth.sh ]] && . auth.sh
 
 printenv DOMAIN > /dev/null
 
@@ -12,7 +15,7 @@ curl -S -s -X GET \
     "https://pz-gateway.$DOMAIN/file/$id?fileName=terrametrics.tif" > status.txt
 
 # verify all worked successfully
-grep -q 200 status.txt
+grep -q 200 status.txt && echo "Download successful"
 # end::public[]
 
 rm -f response.txt status.txt

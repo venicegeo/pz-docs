@@ -1,5 +1,8 @@
-#!/bin/sh -e
-# -e means exit the script if any error 
+#!/bin/bash
+# -e means exit the script if any error
+set -e
+
+[[ -f auth.sh ]] && . auth.sh
 
 # verify $DOMAIN set; will error if not
 printenv DOMAIN > /dev/null

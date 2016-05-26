@@ -1,7 +1,7 @@
-#!/bin/sh -e
+#!/bin/bash
+set -e
 
-dir=`dirname $0`
-source $dir/setup.sh
+[[ -f auth.sh ]] && . auth.sh
 
 # tag::public[]
 name=$1

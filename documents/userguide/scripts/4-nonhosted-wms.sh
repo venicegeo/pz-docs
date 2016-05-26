@@ -1,4 +1,7 @@
-#!/bin/sh -ex
+#!/bin/bash
+set -e
+
+[[ -f auth.sh ]] && . auth.sh
 
 printenv DOMAIN > /dev/null
 
@@ -24,7 +27,7 @@ grep -q 200 status.txt
 grep -q jobId response.txt
 
 # print out the jobId
-grep -o '"jobId":".*"' response.txt | cut -d \" -f 4
+grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 # end::public[]
 
 rm -f response.txt status.txt

@@ -1,4 +1,7 @@
-#!/bin/sh -ex
+#!/bin/bash
+set -e
+
+[[ -f auth.sh ]] && . auth.sh
 
 printenv DOMAIN > /dev/null
 
@@ -13,7 +16,7 @@ curl -S -s -X GET \
 
 # verify all worked successfully
 grep -q 200 status.txt
-grep -q '"status":"Success"' response.txt
+grep -E -q '"status"\s?:\s?"Success"' response.txt
 
 # print the data's resource id
 grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4

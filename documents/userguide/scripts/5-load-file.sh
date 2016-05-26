@@ -18,14 +18,17 @@ data="{
 }"
 
 # load the file
-$curl -X POST \
+curl -S -s -X POST \
+    -w "%{http_code}" \
+    -o response.txt \
+    -u $USER:$PASS \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
-    -F "file=@$dir/terrametrics.tif" \
-    https://pz-gateway.$DOMAIN/data/file > status.txt
-assert_contains status.txt 200
-assert_contains response.txt jobId
-id=`extract_jobid response.txt`
+    -F "file=@./terrametrics.tif" https://pz-gateway.$DOMAIN/data/file > status.txt
+
+grep -q "200" status.txt
+grep -q "jobId" response.txt
+jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
 # wait a bit for the load job to finish
 sleep 3

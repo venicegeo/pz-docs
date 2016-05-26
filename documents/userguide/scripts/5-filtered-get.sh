@@ -7,9 +7,14 @@ source $dir/setup.sh
 term=$1
 id=$2
 
-$curl -X GET "https://pz-gateway.$DOMAIN/data?keyword=$term&page=0&per_page=100" > status.txt
-assert_contains status.txt 200
-assert_contains response.txt $id
-# end::public[] 
+curl -X GET -S -s \
+    -w "%{http_code}" \
+    -o response.txt \
+    -u $USER:$PASS \
+    "https://pz-gateway.$DOMAIN/data?keyword=$term&page=0&per_page=100" > status.txt
+
+grep -q 200 status.txt
+grep -q $id response.txt
+# end::public[]
 
 rm -f response.txt status.txt

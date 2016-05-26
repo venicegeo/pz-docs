@@ -6,9 +6,10 @@ printenv DOMAIN > /dev/null
 id=$1
 
 curl -S -s -X GET \
+    -u $USER:$PASS \
     -w "%{http_code}" \
     -o response.txt \
-    https://pz-gateway.$DOMAIN/job/$id > status.txt
+    "https://pz-gateway.$DOMAIN/job/$id" > status.txt
 
 # verify all worked successfully
 grep -q 200 status.txt

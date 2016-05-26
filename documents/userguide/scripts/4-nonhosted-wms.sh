@@ -12,7 +12,8 @@ data='{
 }'
 
 curl -S -s -X GET \
-    --header 'Content-Type: application/json' --header 'Accept: application/json' \
+    -u $USER:$PASS
+    -H 'Content-Type: application/json' \
     -d '$data' \
     -w "%{http_code}" \
     -o response.txt \

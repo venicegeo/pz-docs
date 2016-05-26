@@ -26,7 +26,7 @@ curl -S -s -X POST \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" https://pz-gateway.$DOMAIN/data/file > status.txt
 
-grep -q "200" status.txt
+grep -q 200 status.txt
 grep -q "jobId" response.txt
 jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 

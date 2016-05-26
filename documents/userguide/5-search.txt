@@ -48,7 +48,7 @@ include::scripts/5-filtered-get.sh[tags=public]
 
 *TODO*
 
-The Elasticsearch DSL can get very complicated. As an aid, here are some sample queries:
+The Elasticsearch DSL can get very complicated. For more details, visit link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch Query DSL]. As an aid, here are some sample queries:
 
 [source,json]
 .name is "kitten"
@@ -59,3 +59,20 @@ The Elasticsearch DSL can get very complicated. As an aid, here are some sample 
 }
 ----
 
+[source,json]
+----
+{
+    "query": {
+        "bool": {
+            "must": [
+            { "match": { "title":   "Search"        }},
+            { "match": { "content": "Elasticsearch" }}
+            ],
+            "filter": [
+            { "term":  { "status": "published" }},
+            { "range": { "publish_date": { "gte": "2015-01-01" }}}
+            ]
+        }
+    }
+}
+----

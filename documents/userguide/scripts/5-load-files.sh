@@ -4,9 +4,11 @@ set -e
 [[ -f auth.sh ]] && . auth.sh
 
 # tag::public[]
-one=`$dir/5-load-file.sh "one" "The quick, brown fox."`
+one=$(sh 5-load-file.sh "one" "The quick, brown fox.")
 
-two=`$dir/5-load-file.sh "two" "The lazy dog."`
+two=$(sh 5-load-file.sh "two" "The lazy dog.")
 
-echo $one $two
-# end::public[] 
+three=$(sh 5-load-file.sh "three" "The hungry hungry hippo.")
+
+echo $one $two $three
+# end::public[]

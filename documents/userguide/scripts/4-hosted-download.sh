@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-[[ -f auth.sh ]] && . auth.sh
+[[ -f setup.sh ]] && . setup.sh &> /dev/null
 
 printenv DOMAIN > /dev/null
 
@@ -9,7 +9,7 @@ printenv DOMAIN > /dev/null
 id=$1
 
 curl -S -s -X GET \
-    -u $USER:$PASS \
+    -u $PZUSER:$PZPASS \
     -w "%{http_code}" \
     -o response.txt \
     "https://pz-gateway.$DOMAIN/file/$id?fileName=terrametrics.tif" > status.txt

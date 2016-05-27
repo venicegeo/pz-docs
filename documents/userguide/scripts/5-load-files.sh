@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-[[ -f auth.sh ]] && . auth.sh
+[[ -f setup.sh ]] && . setup.sh &> /dev/null
 
 # tag::public[]
 one=$(sh 5-load-file.sh "one" "The quick, brown fox.")

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-[[ -f auth.sh ]] && . auth.sh
+[[ -f setup.sh ]] && . setup.sh &> /dev/null
 
 printenv DOMAIN > /dev/null
 
@@ -15,7 +15,7 @@ data='{
 }'
 
 curl -S -s -X GET \
-    -u $USER:$PASS
+    -u $PZUSER:$PZPASS
     -H 'Content-Type: application/json' \
     -d '$data' \
     -w "%{http_code}" \

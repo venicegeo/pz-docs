@@ -1,26 +1,24 @@
 #!/bin/bash
 set -e
 
-[[ -f auth.sh ]] && . auth.sh
+[[ -f setup.sh ]] && . setup.sh &> /dev/null
 
 # tag::public[]
-query='
-{
-  "query": {
-    "bool": {
-      "must": [
-        { "match": { "title": "Search"          }},
-        { "match": { "content": "Elasticsearch" }}
-        ]
+query='{
+    "query": {
+        "bool": {
+            "must": [
+                { "match": { "title": "Search" }}
+            ]
+        }
     }
-  }
 }
 '
 
 curl -X POST -S -s \
     -w "%{http_code}" \
     -o response.txt \
-    -u $USER:$PASS \
+    -u $PZUSER:$PZPASS \
     -H "Content-Type: application/json" \
     -d "$query" \
     "https://pz-gateway.$DOMAIN/data/query" > status.txt

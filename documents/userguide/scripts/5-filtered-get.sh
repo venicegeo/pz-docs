@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-[[ -f auth.sh ]] && . auth.sh
+[[ -f setup.sh ]] && . setup.sh &> /dev/null
 
 # tag::public[]
 term=$1
@@ -10,7 +10,7 @@ id=$2
 curl -X GET -S -s \
     -w "%{http_code}" \
     -o response.txt \
-    -u $USER:$PASS \
+    -u $PZUSER:$PZPASS \
     "https://pz-gateway.$DOMAIN/data?keyword=$term&page=0&per_page=100" > status.txt
 
 grep -q 200 status.txt

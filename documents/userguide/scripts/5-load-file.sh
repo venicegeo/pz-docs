@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-[[ -f auth.sh ]] && . auth.sh
+[[ -f setup.sh ]] && . setup.sh &> /dev/null
 
 # tag::public[]
 name=$1
@@ -21,7 +21,7 @@ data="{
 curl -S -s -X POST \
     -w "%{http_code}" \
     -o response.txt \
-    -u $USER:$PASS \
+    -u $PZUSER:$PZPASS \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" https://pz-gateway.$DOMAIN/data/file > status.txt
@@ -37,7 +37,7 @@ sleep 2
 curl -S -s -X GET \
     -w "%{http_code}" \
     -o response.txt \
-    -u $USER:$PASS \
+    -u $PZUSER:$PZPASS \
     https://pz-gateway.$DOMAIN/job/$jobId > status.txt
 
 grep -q 200 status.txt

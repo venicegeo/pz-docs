@@ -1,11 +1,12 @@
-#!/bin/bash -ex
+#!/bin/bash
+set -e
 
 pushd `dirname $0`/.. > /dev/null
 root=$(pwd -P)
 popd > /dev/null
 
-type asciidoctor >/dev/null 2>&1 || gem install asciidoctor
-type asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
+hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
+hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 
 source $root/ci/vars.sh
 
@@ -19,17 +20,20 @@ function doit {
 
     # txt -> html
     asciidoctor -o $outdir/index.html $indir/index.txt  &> errs.tmp
-    if [ -s errs.tmp ] ; then
+    if [[ -s errs.tmp ]] ; then
         cat errs.tmp
         exit 1
     fi
 
     # txt -> pdf
     asciidoctor -r asciidoctor-pdf -b pdf -o $outdir/index.pdf $indir/index.txt  &> errs.tmp
-    if [ -s errs.tmp ] ; then
+    if [[ -s errs.tmp ]] ; then
         cat errs.tmp
         exit 1
     fi
+
+    # if errs.tmp is empty, remove it
+    [[ -s "errs.tmp" ]] || rm "errs.tmp"
 
     # copy images directory to out dir
     cp -R $indir/images $outdir
@@ -44,20 +48,26 @@ function run_tests {
     echo Checking examples.
 
     echo "Checking section 3 examples"
-    # FIXME these require an auth.sh to be in the PWD
-    # $root/documents/userguide/scripts/3-hello.sh
-    # $root/documents/userguide/scripts/3-hello-full.sh
+    echo "Checking 3-hello.sh"
+    $root/documents/userguide/scripts/3-hello.sh
+    echo "Checking 3-hello-full.sh"
+    $root/documents/userguide/scripts/3-hello-full.sh
 
     echo "Checking section 4 examples"
-    # FIXME these require an auth.sh to be in the PWD
-    # cp $root/documents/userguide/scripts/terrametrics.tif $root
-    # jobid=`$root/documents/userguide/scripts/4-hosted-load.sh`
-    # dataid=`$root/documents/userguide/scripts/4-job.sh $jobid`
-    # $root/documents/userguide/scripts/4-hosted-download.sh $dataid
+    cp $root/documents/userguide/scripts/terrametrics.tif $root
+    echo "Checking 4-hosted-load.sh"
+    jobid=`$root/documents/userguide/scripts/4-hosted-load.sh`
+    echo "Checking 4-job.sh"
+    dataid=`$root/documents/userguide/scripts/4-job.sh $jobid`
+    echo "Checking 4-hosted-download.sh"
+    $root/documents/userguide/scripts/4-hosted-download.sh $dataid
+    # echo "Checking 4-nonhosted-load.sh"
     # jobid=`$root/documents/userguide/scripts/4-nonhosted-load.sh`
+    # echo "Checking 4-job.sh"
     # dataid=`$root/documents/userguide/scripts/4-job.sh $jobid`
+    # echo "Checking 4-nonhosted-wms.sh"
     # $root/documents/userguide/scripts/4-nonhosted-wms.sh $dataid
-    # rm $root/terrametrics.tif
+    rm $root/terrametrics.tif
 
     echo "Checking section 5 examples"
 
@@ -68,11 +78,12 @@ function run_tests {
     echo Examples checked.
 }
 
-
-rm -fr $root/out/*
-
 ins="$root/documents"
 outs="$root/out"
+
+[[ -d "$outs" ]] && rm -rf $outs
+
+mkdir $outs
 
 doit $ins $outs
 doit $ins/userguide   $outs/userguide
@@ -85,8 +96,5 @@ cp -f $ins/presentations/*.pdf $outs/presentations/
 run_tests
 
 echo Done.
-
-# if errs.tmp is empty, remove it
-[ -s "errs.tmp" ] || rm "errs.tmp"
 
 tar -czf $APP.$EXT -C $root out

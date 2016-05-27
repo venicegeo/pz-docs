@@ -1,35 +1,37 @@
 # Hello, Piazza!
 
-We now describe each of the major Piazza features. We will provide a text description of the what the
-feature does and an example of how to use the feature's REST API via the Gateway.
+We now describe each of the major Piazza features. We will provide a text description of the what
+the feature does and an example of how to use the feature's REST API via the Gateway.
 
-The code examples are presented as extracts of shell scripts using `curl` to make the HTTP calls, JSON for
-the payloads and returned objects, and in some cases other shell magic to extract resource ids or validate
-the results. Because they are just extracts of scripts, however, they may not work with a simple copy-paste:
-in most cases this because `$DOMAIN` needs to be set to point to your instance of Piazza, as well as the
-`$PZUSER` and `$PZPASS` environment variables.footnote:[This will be handled more cleanly in a future
-release.] You can find the complete scripts in Piazza's `pz-docs` repository. Those scripts are regularly
-tested against the current Piazza build, so they should work as advertised: if they do not, please contact
-the Piazza team.
+The code examples are presented as extracts of shell scripts using `curl` to make the HTTP calls,
+JSON for the payloads and returned objects, and in some cases other shell magic to extract resource
+ids or validate the results. Because they are just extracts of scripts, however, they may not work
+with a simple copy-paste: in most cases this because `$DOMAIN` needs to be set to point to your
+instance of Piazza, as well as the `$PZUSER` and `$PZPASS` environment variables.footnote:[This
+will be handled more cleanly in a future release.] You can find the complete scripts in Piazza's
+`pz-docs` repository. Those scripts are regularly tested against the current Piazza build, so they
+should work as advertised: if they do not, please contact the Piazza team.
 
-NOTE: To set `$DOMAIN`, `$PZUSER` and `$PZPASS`, you can use the .link:scripts/setup.sh[setup.sh] script. Run
-this script using `source setup.sh DOMAIN PZUSER PZPASS` to set these environment variables for the current
-shell and child processes (the `source` is necessary to export environment variables to the current shell).
-If your instance of Piazza requires no authentication, simply replace PZUSER and PZPASS with blank strings:
-`source setup.sh DOMAIN '' ''`.  You can also run the setup.sh script to ensure that these variables are set:
-`sh setup.sh`. These variables can also be set using the `export` command.
+NOTE: To set `$DOMAIN`, `$PZUSER` and `$PZPASS`, you can use the .link:scripts/setup.sh[setup.sh]
+script. Run this script using `source setup.sh DOMAIN PZUSER PZPASS` to set these environment
+variables for the current shell and child processes (the `source` is necessary to export
+environment variables to the current shell). If your instance of Piazza requires no authentication,
+simply replace PZUSER and PZPASS with blank strings: `source setup.sh DOMAIN '' ''`. You can also
+run the setup.sh script to ensure that these variables are set: `sh setup.sh` (this is done within
+most of the scripts, so it's wise to set these environment variables before continuing. These
+variables can also be set using the `export` command.
 
-TIP: If your username or password use special characters, be sure to surround them with 'single quotes' to
-ensure they aren't interpreted by the shell.
+TIP: If your username or password use special characters, be sure to surround them with 'single
+quotes' to ensure they aren't interpreted by the shell.
 
 WARNING: Be careful when using `export`s within files to set `$PZUSER` and `$PZPASS`, i.e. `export
-$PZPASS=password` in a shell configuration file. If these files are pushed to a remote pubic git repository,
-or are available online via public means, your username and password may be compromised. It is advised to use
-the `setup.sh` script as described in the previous section, or `export $PZUSER=user` and `export
-$PZPASS=password` in the current shell, using your credentials.
+$PZPASS=password` in a shell configuration file. If these files are pushed to a remote pubic git
+repository, or are available online via public means, your username and password may be
+compromised. It is advised to use the `setup.sh` script as described in the previous section, or
+`export $PZUSER=user` and `export $PZPASS=password` in the current shell, using your credentials.
 
-We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning instance of
-Piazza to talk to.
+We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning
+instance of Piazza to talk to.
 
 [source,sh]
 .link:scripts/3-hello-full.sh[3-hello-full.sh]
@@ -37,8 +39,8 @@ Piazza to talk to.
 include::scripts/3-hello-full.sh[]
 ----
 
-In the examples that follow, we will only show the portions of the script that are relevant, typically
-omitting the setup and teardown code. The above script might be shown as just this:
+In the examples that follow, we will only show the portions of the script that are relevant,
+typically omitting the setup and teardown code. The above script might be shown as just this:
 
 [source,sh]
 .link:scripts/3-hello.sh[3-hello.sh]
@@ -50,10 +52,10 @@ NOTE: You should verify that the health check script works before continuing wit
 
 As you work through this tutorial, you might find these two additional Piazza resources helpful:
 
-* `pz-swagger.$DOMAIN` is a browser-based UI for exploring Piazza's REST API. If you are not familiar
-with Swagger, see http://swagger.io[swagger.io].
+* `pz-swagger.$DOMAIN` is a browser-based UI for exploring Piazza's REST API. If you are not
+familiar with Swagger, see http://swagger.io[swagger.io].
 
 * `pz-sak.$DOMAIN` is a developer-level tool for directly interacting with some of Piazza's public
-and private services: for example, you can use SAK to examine log files, check the status of jobs, and
-perform metadata queries. SAK is an internal tool for debugging and testing only; it is not to be
-used in production. Contact the Piazza team for assistance with SAK.
+and private services: for example, you can use SAK to examine log files, check the status of jobs,
+and perform metadata queries. SAK is an internal tool for debugging and testing only; it is not to
+be used in production. Contact the Piazza team for assistance with SAK.

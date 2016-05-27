@@ -2,25 +2,38 @@
 
 ## Load
 
-Piazza provides the ability to load external data into the system: metadata is extracted from external data, stored within Piazza, and a resource ID is returned. The metadata is also entered into Piazza's search index. Piazza supports several data formats today -- including GeoJSON, Shapefies, and GeoTIFFs -- with more to come as users require them.
+Piazza provides the ability to load external data into the system: metadata is extracted from
+external data, stored within Piazza, and a resource ID is returned. The metadata is also entered
+into Piazza's search index. Piazza supports several data formats today -- including GeoJSON,
+Shapefiles, and GeoTIFFs -- with more to come as users require them.
 
-For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be used as a global, unique reference to the data.
+For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded,
+Piazza can perform other operations on the data such as generating a WMS layer or sending the data
+to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be
+used as a global, unique reference to the data.
 
-Piazza is not intended to be a storage system for user data and so normally only the metadata is stored -- not the file itself. We refer to this as the _no-host_ model.
+Piazza is not intended to be a storage system for user data and so normally only the metadata is
+stored -- not the file itself. We refer to this as the _no-host_ model.
 
-In the no-host case, Piazza will need to have read-access to the file and in some cases will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
+In the no-host case, Piazza will need to have read-access to the file and in some cases will have
+to copy the file to temporary local storage in order to open the file and extract the metadata;
+when the extraction is complete, the file is deleted. For large files, this will incur a
+performance penalty.
 
-Although not intended for long-term use, Piazza does also support a _hosted_ model in which the data is copied locally for metadata extraction but _not_ deleted.
+Although not intended for long-term use, Piazza does also support a _hosted_ model in which the
+data is copied locally for metadata extraction but _not_ deleted.
 
 
 ## Hosted GeoTIFF File Example
 
 TODO: explain the JSON input and output fields
 
-This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host` set to `true`.
-The script will print out the id of the _job_ that was submitted.
+This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host`
+set to `true`. The script will print out the id of the _job_ that was submitted.
 
-NOTE: The GeoTIFF file used in these examples can be found at link:scripts/terrametrics.tif[terrametrics.tif]. Run this script using `sh 4-hosted-load.sh` with terrametrics.tif in your present working directory.
+NOTE: The GeoTIFF file used in these examples can be found at
+link:scripts/terrametrics.tif[terrametrics.tif]. Run this script using `sh 4-hosted-load.sh` with
+terrametrics.tif in your present working directory.
 
 [source,sh]
 .link:scripts/4-hosted-load.sh[4-hosted-load.sh]
@@ -30,7 +43,9 @@ include::scripts/4-hosted-load.sh[tags=public]
 
 *TODO: explain JSON input and output fields*
 
-A client can now periodically check the status of the job, waiting for it to be completed. This script takes as a single command-line parameter, the job id string. Run this script using `sh 4-job.sh {jobId}` (`{jobId}` is displayed by the previous script).
+A client can now periodically check the status of the job, waiting for it to be completed. This
+script takes as a single command-line parameter, the job id string. Run this script using
+`sh 4-job.sh {jobId}` (`{jobId}` is displayed by the previous script).
 
 [source,sh]
 .link:scripts/4-job.sh[4-job.sh]
@@ -38,7 +53,8 @@ A client can now periodically check the status of the job, waiting for it to be 
 include::scripts/4-job.sh[tags=public]
 ----
 
-Finally, we can retrieve the file, using the id of the data resource (displayed by the previous script): `sh 4-hosted-download.sh {dataId}`.
+Finally, we can retrieve the file, using the id of the data resource (displayed by the previous
+script): `sh 4-hosted-download.sh {dataId}`.
 
 [source,sh]
 .link:scripts/4-hosted-download.sh[4-hosted-download.sh]
@@ -49,8 +65,8 @@ include::scripts/4-hosted-download.sh[tags=public]
 
 ## Non-hosted GeoJSON File
 
-This example shows how to load an externally hosted file into piazza, without piazza hosting the file itself.
-The script will print out the id of the _job_ that was submitted.
+This example shows how to load an externally hosted file into piazza, without piazza hosting the
+file itself. The script will print out the id of the _job_ that was submitted.
 
 [source,sh]
 .link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]

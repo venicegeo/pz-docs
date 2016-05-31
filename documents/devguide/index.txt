@@ -14,9 +14,11 @@ include::introduction.txt[]
 
 include::process.txt[]
 
-include::configuration-management.txt[]
-
 include::requirements.txt[]
+
+include::development.txt[]
+
+include::configuration-management.txt[]
 
 include::testing.txt[]
 

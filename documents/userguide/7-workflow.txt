@@ -73,9 +73,9 @@ Gateway/Dispatcher-style syntax. The `Trigger` also contains a system-generated 
     "id": "987d6",
     "title": "my found-a-bad-telephone-number trigger",
     "condition": {
-        "eventtype_ids": ["17de4"],   # array of event type ids
+        "eventtype_ids": ["17de4"], # array of event type ids
         "query": {
-            "query" : {    # the Elasticsearch query string
+            "query" : { # the Elasticsearch query string
             "bool": {
                     "must": [
                         {
@@ -128,7 +128,7 @@ For example:
 NOTE: in the future the `event_id` may become an array of event IDs._
 
 NOTE: because we do not yet support an actual `Job` to execute in the `Trigger` definition, the
-user can poll the `/alerts` endpoint and perform the required job action manually.
+    user can poll the `/alerts` endpoint and perform the required job action manually.
 
 NOTE: the `?trigger=id` and `?after=date` query params will soon be provided to make this polling
-process somewhat more palatable._
+    process somewhat more palatable._

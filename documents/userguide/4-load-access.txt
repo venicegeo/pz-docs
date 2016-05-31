@@ -32,8 +32,8 @@ This example shows how to load a GeoTIFF file from your local file system into P
 set to `true`. The script will print out the id of the _job_ that was submitted.
 
 NOTE: The GeoTIFF file used in these examples can be found at
-link:scripts/terrametrics.tif[terrametrics.tif]. Run this script using `sh 4-hosted-load.sh` with
-terrametrics.tif in your present working directory.
+    link:scripts/terrametrics.tif[terrametrics.tif]. Run this script using `sh 4-hosted-load.sh`
+    with terrametrics.tif in your present working directory.
 
 [source,sh]
 .link:scripts/4-hosted-load.sh[4-hosted-load.sh]

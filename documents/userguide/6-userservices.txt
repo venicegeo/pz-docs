@@ -25,8 +25,8 @@ services. See the <<How to Write Your Own Services>> section for details on how 
 services to be used by Piazza.
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
-the future, the user service will be a deployable container, so Piazza can scale up and down the
-number of instances needed.
+    the future, the user service will be a deployable container, so Piazza can scale up and down
+    the number of instances needed.
 
 *TODO* - see the "end to end" section of this manual for an example
 The following sections will use a "Hello World" service. This service basically just says hello.
@@ -71,7 +71,7 @@ https://pz-gateway.venicegeo.io/service
 invocation method for the service.
 
 NOTE: The description should be entered with some care because it will enable other users to search
-for your service.
+    for your service.
 
 Return Value
 ....
@@ -123,11 +123,11 @@ returns the id of that job
   "data": {
     "serviceId": {{serviceId}}
     "dataInputs": {
-        "test" : {
-          "content" : "{ \"name\": \"Fred\", \"count\": 4 }",
-          "type" : "body",
-          "mimeType" : "application/json"
-        }
+      "test" : {
+        "content" : "{ \"name\": \"Fred\", \"count\": 4 }",
+        "type" : "body",
+        "mimeType" : "application/json"
+      }
     },
     "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
 }

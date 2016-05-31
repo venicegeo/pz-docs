@@ -1,1 +1,9 @@
 ## Requirements
+
+Requirements for Piazza (PZ Core) are gathered on a continuous basis.  Stakeholders such as subject mater experts in the geospatial domain provide the necessary input which are then derived into user stories. Also, a core group of external users who have been selected to develop services within the Piazza framework provide feedback to the Piazza development team.  These users develop within the Piazza framework to enhance their geospatial capabilities and tool sets.
+
+The product owner along with PZ Core team leaders meet on a regular basis to capture stakeholder needs and solicit the long-term vision.  Epics are drawn from these discussions and user stories are mapped these epics. 
+
+Additional user stories are driven from technical trends to meet the emerging needs within our customer-base in order to be responsive to the changing geospatial technology domain.
+
+Incoming change requests such defects and feature requests are continuously reviewed and triaged by the team.  The team works closely with the product owner and the technical lead to prioritize backlog and plan upcoming sprints.

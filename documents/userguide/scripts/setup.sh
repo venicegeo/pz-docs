@@ -19,5 +19,6 @@ elif [[ $# -eq 3 ]]; then
 else
     echo 'Please use "source setup.sh DOMAIN PZUSER PZPASS"'
     echo 'Or, "sh setup.sh" to check your environment variables'
-    return 1
+    echo 'Number of arguments passed: ' $#
+    exit 1
 fi

@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 term=$1
 id=$2

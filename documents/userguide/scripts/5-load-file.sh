@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 name=$1
 desc=$2
@@ -42,11 +40,8 @@ curl -S -s -X GET \
 
 grep -q 200 status.txt
 grep -E -q '"status"\s?:\s?"Success"' response.txt
-grep -q "dataId" response.txt
-dataId=$(grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
+grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 
-# print our result
-echo $dataId
 # end::public[]
 
 rm -f response.txt status.txt

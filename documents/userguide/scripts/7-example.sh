@@ -45,8 +45,8 @@ event="{
     }
 }"
 
+# POST eventtype
 echo POSTING EVENTTYPE
-# Post eventtype
 curl -X POST -S -s \
     -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
@@ -60,34 +60,22 @@ grep -q 200 status.txt || { cat response.txt; exit 1; }
 echo POSTED EVENTTYPE
 sleep 1
 
-# Post trigger
-# curl -X POST -S -s \
-#     -u "$PZUSER":"$PZPASS" \
-#     -w "%{http_code}" \
-#     -H 'Content-Type: application/json' \
-#     -o response.txt \
-#     -d "$trigger" \
-#     "https://pz-gateway.$DOMAIN/trigger" > status.txt
-
-# grep -q 200 status.txt || { cat response.txt; exit 1; }
-# echo POSTED TRIGGER
-# sleep 1
-
-# Get alerts
-echo GETTING ALERTS
-curl -X GET -S -s \
+# POST trigger
+echo POSTING TRIGGER
+curl -X POST -S -s \
     -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
+    -H 'Content-Type: application/json' \
     -o response.txt \
-    "https://pz-gateway.$DOMAIN/alert" > status.txt
+    -d "$trigger" \
+    "https://pz-gateway.$DOMAIN/trigger" > status.txt
 
-echo CHECKING ALERTS RESPONSE
 grep -q 200 status.txt || { cat response.txt; exit 1; }
-echo GOT ALERTS
+echo POSTED TRIGGER
 sleep 1
 
+# POST event
 echo POSTING EVENT
-# Send event
 curl -X POST -S -s \
     -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
@@ -99,6 +87,19 @@ curl -X POST -S -s \
 echo CHECKING EVENT RESPONSE
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 echo POSTED EVENT
+
+# GET alerts
+echo GETTING ALERTS
+curl -X GET -S -s \
+    -u "$PZUSER":"$PZPASS" \
+    -w "%{http_code}" \
+    -o response.txt \
+    "https://pz-gateway.$DOMAIN/alert" > status.txt
+
+echo CHECKING ALERTS RESPONSE
+grep -q 200 status.txt || { cat response.txt; exit 1; }
+echo GOT ALERTS
+sleep 1
 
 # end::public[]
 

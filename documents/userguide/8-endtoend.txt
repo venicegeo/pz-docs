@@ -9,7 +9,7 @@ showcase Piazza's core capabilities. This app exposes a REST endpoint which take
 containing payload of required parameters. Given an s3 location, it downloads a raster file, crops
 the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
 
-Post a request with a payload to the URL: https://pz-svcs-prevgen.venicegeo.io/crop
+POST a request with a payload to the URL: https://pz-svcs-prevgen.venicegeo.io/crop
 
 Sample working payload:
 

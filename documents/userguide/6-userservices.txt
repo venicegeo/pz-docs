@@ -47,7 +47,7 @@ Registration Service registered by POSTing to service endpoint.
 A script registering the following service and returning the service ID can be found
 .link:scripts/6-register.sh[here].
 
-....
+----
 https://pz-gateway.venicegeo.io/service
 {
   "url": "http://pzsvc-hello.venicegeo.io/",
@@ -59,7 +59,7 @@ https://pz-gateway.venicegeo.io/service
     "method" : "GET"
   }
 }
-....
+----
 
 * https://pz-gateway.venicegeo.io/service is the endpoint for registering the service.
 * Inside the curly brackets is a JSON object describing the service.
@@ -74,12 +74,12 @@ NOTE: The description should be entered with some care because it will enable ot
     for your service.
 
 Return Value
-....
+----
 {
   "type": "service",
   "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
 }
-....
+----
 The serviceId field should be noted since it will be used in invoking the service.
 
 Note that the method field can be changed as needed, depending on the intended operation performed
@@ -89,9 +89,9 @@ by the service.
 
 ### Hello Example invoked with GET method.
 
-The service is invoked by sending a message to the pz-gateway job endpoint
+The service is invoked by POSTing to the pz-gateway job endpoint
 https://pz-gateway.venicegeo.io/v2/job
-....
+----
 {
   "type": "execute-service",
   "data": {
@@ -100,7 +100,7 @@ https://pz-gateway.venicegeo.io/v2/job
     "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
   }
 }
-....
+----
 
 The serviceId is set to the return value from registering the service. In this example, no
 dataInputs are specified. For dataOutput, the mimeType refers to the mimeType of the service
@@ -108,16 +108,16 @@ output. The type refers to how the output will be stored until retrieved (See Be
 
 The return value is not the result of the service call. The execute-service call creates a job and
 returns the id of that job
-....
+----
 {
   "type": "job",
   "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847"
 }
-....
+----
 
 ### Hello Example invoked with POST method.
 
-....
+----
 {
   "type": "execute-service",
   "data": {
@@ -131,7 +131,7 @@ returns the id of that job
     },
     "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
 }
-....
+----
 When executing a service that requires a POST body for input, the body message is specified in the
 content field, the type is "body" and the mimeType has to be specified. Getting the jobId is
 exactly the same as in the GET case.
@@ -139,9 +139,9 @@ exactly the same as in the GET case.
 
 ## Getting Status and Results (GET and POST cases are the same)
 
-The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/v2/job/{{jobId}}
+The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/job/{{jobId}}
 where jobId is the id returned when executing the service. On success the resulting status is
-....
+----
 {
   "type": "status",
   "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847",
@@ -154,11 +154,13 @@ where jobId is the id returned when executing the service. On success the result
   "submittedBy": "UNAUTHENTICATED",
   "progress": {}
 }
-....
+----
+
 Finally, the actual result is returned by sending a GET message to
-https://pz-gateway.venicegeo.io/{{dataId}} where the dataId is from the result.dataId field of the
+https://pz-gateway.venicegeo.io/data/{{dataId}} where the dataId is from the result.dataId field of the
 returned status. In this case the result is text.
-....
+
+----
 {
   "type": "data",
   "data": {
@@ -169,8 +171,7 @@ returned status. In this case the result is text.
     }
   }
 }
-....
-
+----
 
 ## How to Write Your Own Services
 

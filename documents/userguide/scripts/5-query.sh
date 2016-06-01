@@ -6,11 +6,7 @@ set -e
 # tag::public[]
 query='{
     "query": {
-        "bool": {
-            "must": [
-                { "match": { "title": "Search" }}
-            ]
-        }
+        "match": { "_all": "hipp" }
     }
 }
 '
@@ -26,4 +22,4 @@ curl -X POST -S -s \
 grep -q 200 status.txt
 # end::public[]
 
-rm -f response.txt status.txt
+#rm -f response.txt status.txt

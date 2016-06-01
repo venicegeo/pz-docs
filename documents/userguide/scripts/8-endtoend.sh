@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 service='{
     "url": "http://pzsvc-hello.venicegeo.io/",
@@ -23,7 +21,7 @@ curl -X POST -S -s \
     -d "$service" \
     "https://pz-svcs-prevgen.$DOMAIN/service" > status.txt
 
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 # print serviceId
 grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 # end::public[]

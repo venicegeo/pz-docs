@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-printenv DOMAIN > /dev/null
-
 # tag::public[]
 id=$1
 
@@ -15,5 +13,7 @@ curl -S -s -X GET \
 # verify all worked successfully
 grep -q 200 status.txt
 # end::public[]
+
+echo pass.
 
 rm -f response.txt status.txt

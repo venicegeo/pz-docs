@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 
 eventtype='{
@@ -101,6 +99,7 @@ curl -X POST -S -s \
 echo CHECKING EVENT RESPONSE
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 echo POSTED EVENT
+
 # end::public[]
 
 rm -f response.txt status.txt

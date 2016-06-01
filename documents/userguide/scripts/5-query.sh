@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 query='{
     "query": {
@@ -22,4 +20,6 @@ curl -X POST -S -s \
 grep -q 200 status.txt
 # end::public[]
 
-#rm -f response.txt status.txt
+echo pass.
+
+rm -f response.txt status.txt

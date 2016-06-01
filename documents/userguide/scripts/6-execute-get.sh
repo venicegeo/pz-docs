@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 serviceId=$1
 
@@ -10,8 +8,8 @@ job="{
     \"type\": \"execute-service\",
     \"data\": {
         \"serviceId\": \"$serviceId\",
-        \"dataInputs\": {},
-        \"dataOutput\": [{ \"mimeType\":\"application/json\", \"type\":\"text\" }]
+        \"dataInputs\": { },
+        \"dataOutput\": [ { \"mimeType\":\"application/json\", \"type\":\"text\" } ]
     }
 }"
 

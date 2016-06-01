@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
-printenv DOMAIN > /dev/null
-
 # tag::public[]
 # ping the gateway, sending the returned string to a file
 curl -u $PZUSER:$PZPASS -S -s -X GET -o response.txt "http://pz-gateway.$DOMAIN/health"

@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-[[ -f setup.sh ]] && . setup.sh &> /dev/null
-
 # tag::public[]
 dataId=$1
 
@@ -13,8 +11,7 @@ curl -X GET -S -s \
     -o response.txt \
     "https://pz-gateway.$DOMAIN/data/$dataId" > status.txt
 
-grep -q 200 status.txt
-cat response.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 # end::public[]
 
 rm -f response.txt status.txt

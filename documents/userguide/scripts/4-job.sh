@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-printenv DOMAIN > /dev/null
-
 # tag::public[]
 id=$1
 

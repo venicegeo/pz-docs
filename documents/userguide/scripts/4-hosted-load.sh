@@ -1,10 +1,6 @@
 #!/bin/bash
 set -e
 
-# [[ -f setup.sh ]] && . setup.sh &> /dev/null
-
-# printenv DOMAIN > /dev/null
-
 # tag::public[]
 data='{
     "type": "ingest",

@@ -32,7 +32,7 @@ curl -S -s -X POST \
     "https://pz-gateway.$DOMAIN/data" > status.txt
 
 # verify all worked successfully
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 grep -q jobId response.txt
 
 # print out the jobId

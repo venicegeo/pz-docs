@@ -11,7 +11,7 @@ curl -S -s -X GET \
     "https://pz-gateway.$DOMAIN/file/$id?fileName=terrametrics.tif" > status.txt
 
 # verify all worked successfully
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 # end::public[]
 
 echo pass.

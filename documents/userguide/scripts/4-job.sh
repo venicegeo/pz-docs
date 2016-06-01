@@ -11,7 +11,7 @@ curl -S -s -X GET \
     "https://pz-gateway.$DOMAIN/job/$id" > status.txt
 
 # verify all worked successfully
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 grep -E -q '"status"\s?:\s?"Success"' response.txt
 
 # print the data's resource id

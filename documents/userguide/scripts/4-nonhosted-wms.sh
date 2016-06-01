@@ -19,7 +19,7 @@ curl -S -s -X POST \
     "https://pz-gateway.$DOMAIN/deployment" > status.txt
 
 # verify all worked successfully
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 
 # print out the jobId
 grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4

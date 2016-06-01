@@ -26,7 +26,7 @@ curl -X POST -S -s \
     -d "$job" \
     "https://pz-gateway.$DOMAIN/v2/job" > status.txt
 
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 # print jobId
 grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 # end::public[]

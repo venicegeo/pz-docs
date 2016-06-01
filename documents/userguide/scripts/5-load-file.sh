@@ -24,7 +24,7 @@ curl -S -s -X POST \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" https://pz-gateway.$DOMAIN/data/file > status.txt
 
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 grep -q "jobId" response.txt
 jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
@@ -38,7 +38,7 @@ curl -S -s -X GET \
     -u $PZUSER:$PZPASS \
     https://pz-gateway.$DOMAIN/job/$jobId > status.txt
 
-grep -q 200 status.txt
+grep -q 200 status.txt || { cat response.txt; exit 1; }
 grep -E -q '"status"\s?:\s?"Success"' response.txt
 grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 

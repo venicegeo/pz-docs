@@ -87,3 +87,6 @@ Using the dataId (displayed by the previous script), we can create a WMS endpoin
 ----
 include::scripts/4-nonhosted-wms.sh[tags=public]
 ----
+
+After running this script, a job is created to create the WMS endpoint. Thus, we need to run
+.link:scripts/4-job.sh[4-job.sh] to see the result of our job.

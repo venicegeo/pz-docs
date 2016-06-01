@@ -48,10 +48,16 @@ include::scripts/5-filtered-get.sh[tags=public]
 ## Query Example
 
 *TODO*
+We can additionally perform a more advanced query on data. This is done via a POST to the
+/data/query endpoint, with the data field specifying the query to be performed. For example:
+
+[source,sh]
+.link:scripts/5-query.sh[5-query.sh]
+----
+include::scripts/5-query.sh[tags=public]
+----
 
 ### The Query Syntax
-
-*TODO*
 
 The Elasticsearch DSL can get very complicated. For more details, visit
 link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch

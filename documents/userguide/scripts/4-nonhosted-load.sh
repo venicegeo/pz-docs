@@ -25,7 +25,7 @@ data='{
 
 curl -S -s -X POST \
     -w "%{http_code}" \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -o response.txt \
     -H "Content-Type: application/json" \
     -d "$data" \

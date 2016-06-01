@@ -19,7 +19,7 @@ data='{
 curl -S -s -X POST \
     -w "%{http_code}" \
     -o response.txt \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" "https://pz-gateway.$DOMAIN/data/file" > status.txt

@@ -11,7 +11,7 @@ data="{
 }"
 
 curl -S -s -X POST \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -H 'Content-Type: application/json' \
     -d "$data" \
     -w "%{http_code}" \

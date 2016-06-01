@@ -48,7 +48,7 @@ event="{
 echo POSTING EVENTTYPE
 # Post eventtype
 curl -X POST -S -s \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
     -H 'Content-Type: application/json' \
     -o response.txt \
@@ -62,7 +62,7 @@ sleep 1
 
 # Post trigger
 # curl -X POST -S -s \
-#     -u $PZUSER:$PZPASS \
+#     -u "$PZUSER":"$PZPASS" \
 #     -w "%{http_code}" \
 #     -H 'Content-Type: application/json' \
 #     -o response.txt \
@@ -76,7 +76,7 @@ sleep 1
 # Get alerts
 echo GETTING ALERTS
 curl -X GET -S -s \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
     -o response.txt \
     "https://pz-gateway.$DOMAIN/alert" > status.txt
@@ -89,7 +89,7 @@ sleep 1
 echo POSTING EVENT
 # Send event
 curl -X POST -S -s \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
     -H 'Content-Type: application/json' \
     -o response.txt \

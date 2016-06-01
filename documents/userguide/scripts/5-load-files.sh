@@ -8,5 +8,5 @@ two=$(sh 5-load-file.sh "two" "The lazy dog.")
 
 three=$(sh 5-load-file.sh "three" "The hungry hungry hippo.")
 
-echo $one $two $three
+echo "$one" "$two" "$three"
 # end::public[]

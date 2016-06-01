@@ -2,13 +2,13 @@
 set -e
 
 # tag::public[]
-id=$1
+jobId=$1
 
 curl -S -s -X GET \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
     -o response.txt \
-    "https://pz-gateway.$DOMAIN/job/$id" > status.txt
+    "https://pz-gateway.$DOMAIN/job/$jobId" > status.txt
 
 # verify all worked successfully
 grep -q 200 status.txt || { cat response.txt; exit 1; }

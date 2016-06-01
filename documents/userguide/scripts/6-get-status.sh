@@ -5,7 +5,7 @@ set -e
 jobId=$1
 
 curl -X GET -S -s \
-    -u $PZUSER:$PZPASS \
+    -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
     -H 'Content-Type: application/json' \
     -o response.txt \

@@ -18,9 +18,7 @@ The `prod` or production environment is pushed to from stage, manually, when the
 
 Jenkins sets up a GitHub webhook, so that each Piazza repository in GitHub will alert Jenkins when master receives a new commit. This will then trigger the Jenkins pipeline for that repository. The pipeline for each project will 1) Compile the code 2) Stage the application 3) Deploy the application to Cloud Foundry. Cloud Foundry deployments are achieved by each project defining a *.manifest.yml file in the root directory of its repository that will contain information for the Cloud Foundry deployment. Jenkins will automatically push to `int` on any commits to master. Jenkins can also, manually, be told to push an individual project to a specific environment - or push the entire Piazza set of components to a specific environment. 
 
-### Testing
 
-Testing is done in two stages. First, each project contains its own set of isolated unit tests that must succeed before any build/compilation of the code succeeds. Any unit tests failed will mark the build as failure and no code will be pushed to any Cloud Foundry environment. Once the Unit Tests pass, then the application can be pushed to a Cloud Foundry environment. At this point, automated integration tests take place. These integration tests will test the Gateway API (and other internal component APIs) via REST requests. This integration test collection is handled using Postman/Newman as run through Jenkins. Any failures in the Integration tests will alert that the integrated environment is "failing" and no elevation of that environment will take place.
 
 ### Versioning
 

@@ -8,7 +8,7 @@ id=$1
 data="{
     \"type\": \"access\",
     \"dataId\": $id,
-    \"deploymentType\": \"string\"
+    \"deploymentType\": \"geoserver\"
 }"
 
 curl -S -s -X GET \

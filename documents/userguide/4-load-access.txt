@@ -2,54 +2,40 @@
 
 ## Load
 
-Piazza provides the ability to load external data into the system: metadata is extracted from
-external data, stored within Piazza, and a resource ID is returned. The metadata is also entered
-into Piazza's search index. Piazza supports several data formats today -- including GeoJSON,
-Shapefiles, and GeoTIFFs -- with more to come as users require them.
+Piazza provides the ability to load external data into the system: metadata is extracted from external data, stored within Piazza, and a resource ID is returned. The metadata is also entered into Piazza's search index. Piazza supports several data formats today -- including GeoJSON, Shapefies, and GeoTIFFs -- with more to come as users require them.
 
-For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded,
-Piazza can perform other operations on the data such as generating a WMS layer or sending the data
-to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be
-used as a global, unique reference to the data.
+For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be used as a global, unique reference to the data.
 
-Piazza is not intended to be a storage system for user data and so normally only the metadata is
-stored -- not the file itself. We refer to this as the _no-host_ model.
+Piazza is not intended to be a storage system for user data and so normally only the metadata is stored -- not the file itself. We refer to this as the _no-host_ model.
 
-In the no-host case, Piazza will need to have read-access to the file and in some cases will have
-to copy the file to temporary local storage in order to open the file and extract the metadata;
-when the extraction is complete, the file is deleted. For large files, this will incur a
-performance penalty.
+In the no-host case, Piazza will need to have read-access to the file and in some cases will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
 
-Although not intended for long-term use, Piazza does also support a _hosted_ model in which the
-data is copied locally for metadata extraction but _not_ deleted.
+Although not intended for long-term use, Piazza does also support a _hosted_ model in which the data is copied locally for metadata extraction but _not_ deleted.
 
+## Hosted Image File Example
 
-## Hosted GeoTIFF File Example
-
-This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host`
-set to `true`. The script will print out the id of the _job_ that was submitted.
+This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host` set to `true`.
+The script will print out the id of the _job_ that was submitted.
 
 ....
 {
-    "type": "ingest",
-    "host": true,
-    "data": {
-        "dataType": {
-            "type": "raster"
-        },
-        "metadata": {
-            "name": "terrametrics",
-            "description": "geotiff_test"
-        }
-    }
+	"type": "ingest",
+	"host": true,
+	"data": {
+		"dataType": {
+			"type": "raster"
+		},
+		"metadata": {
+			"name": "terrametrics",
+			"description": "geotiff_test"
+		}
+	}
 }
 ....
 
-The `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are
-_geojson_, _shapefile_, _raster_, _wfs_, and _pointcloud_. The _metadata_ field contains the series
-of optional key/value pairs for metadata that Piazza will associate with this file.
+The `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are _geojson_, _shapefile_, _raster_, _wfs_, and _pointcloud_. The _metadata_ field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
 
-The response from this request will contain the ID of the Job that was submitted.
+The response from this request will contain the ID of the Job that was submitted. 
 
 ....
 {
@@ -61,20 +47,18 @@ The response from this request will contain the ID of the Job that was submitted
 NOTE: The GeoTIFF file used in these examples can be found at link:scripts/terrametrics.tif[terrametrics.tif].
 
 [source,sh]
-.link:scripts/4-hosted-load.sh[4-hosted-load.sh]
+.link:scripts/4-file-load.sh[4-file-load.sh]
 ----
-include::scripts/4-hosted-load.sh[tags=public]
+include::scripts/4-file-load.sh[tags=public]
 ----
 
-The ID of the Job is used to fetch the status of the Load, as Piazza opens the file and validates
-the data. Requesting the status of a Job is performed by executing a simple GET request:
+The ID of the Job is used to fetch the status of the Load, as Piazza opens the file and validates the data. Requesting the status of a Job is performed by executing a simple GET request:
 
 ....
 http://pz-gateway/job/{jobId}
 ....
 
-The response of this request will contain current status information for the specified Job,
-including progress %, job status, and the submitting user information.
+The response of this request will contain current status information for the specified Job, including progress %, job status, and the submitting user information.
 
 ....
 {
@@ -89,23 +73,21 @@ including progress %, job status, and the submitting user information.
 }
 ....
 
-A client can now periodically check the status of the job, waiting for it to be completed. This
-script takes as a single command-line parameter, the job id string. Run this script using
-`sh 4-job.sh {jobId}` (`{jobId}` is displayed by the previous script).
+A client can now periodically check the status of the job, waiting for it to be completed. This script takes as a single command-line parameter, the job id string:
 
 [source,sh]
-.link:scripts/4-job.sh[4-job.sh]
+.link:scripts/4-file-job.sh[4-file-job.sh]
 ----
-include::scripts/4-job.sh[tags=public]
+include::scripts/4-file-job.sh[tags=public]
 ----
 
-Once the job is complete, we can retrieve the metadata about the image. Here too the script takes
-an argument: this time, the id of the data resource (displayed by the previous script).
+Once the job is complete, we can retrieve the metadata about the image. Here too the script takes an argument: this time,
+the id of the data resource (displayed by the previous script).
 
 [source,sh]
-.link:scripts/4-hosted-download.sh[4-hosted-download.sh]
+.link:scripts/4-file-info.sh[4-file-info.sh]
 ----
-include::scripts/4-hosted-download.sh[tags=public]
+include::scripts/4-file-info.sh[tags=public]
 ----
 
 ....
@@ -125,112 +107,96 @@ include::scripts/4-hosted-download.sh[tags=public]
 }
 ....
 
-When the Job is done, the response for the Job status request will now contain the _result_ field,
-and the _status_ of the job will now be set to _Success_. For a Load job, the result type will be
-_data_ because the result is Data loaded into Piazza, and the _result.dataId_ will be the unique
-identifier of the Data that was loaded. This unique identifier can now be used to permanently
-reference the Data.
+When the Job is done, the response for the Job status request will now contain the _result_ field, and the _status_ of the job will now be set to _Success_. For a Load job, the result type will be _data_ because the result is Data loaded into Piazza, and the _result.dataId_ will be the unique identifier of the Data that was loaded. This unique identifier can now be used to permanently reference the Data. 
 
 Next, we can retrieve the file:
 
-## Non-hosted GeoJSON File
+[source,sh]
+.link:scripts/4-file-download.sh[4-file-download.sh]
+----
+include::scripts/4-file-download.sh[tags=public]
+----
 
-This example shows how to load an externally hosted file into piazza, without piazza hosting the
-file itself. The script will print out the id of the _job_ that was submitted.
+And, finally, we can create a WMS endpoint for our GeoTIFF:
 
 [source,sh]
-.link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
+.link:scripts/4-file-wms.sh[4-file-wms.sh]
 ----
-include::scripts/4-nonhosted-load.sh[tags=public]
+include::scripts/4-file-wms.sh[tags=public]
 ----
 
-The response from this request will return a Job ID. Checking the status of the Job ID is done as
-normal. Once the Job is complete, the resulting Deployment information can be retrieved through the
-_result_ field in the Job Response.
+The response from this request will return a Job ID. Checking the status of the Job ID is done as normal. Once the Job is complete, the resulting Deployment information can be retrieved through the _result_ field in the Job Response.
 
 ....
 {
-    "type": "deployment",
-    "deployment": {
-        "id": "{id of the deployment}",
-        "dataId": "{id of the data}",
-        "host": "http://geoserver.piazza",
-        "port": 80,
-        "layer": "{id of the data}",
-        "capabilitiesUrl": "http://geoserver.piazza:8080/{data}?request=GetCapabilities"
-    }
+	"type": "deployment",
+	"deployment": {
+		"id": "{id of the deployment}",
+		"dataId": "{id of the data}",
+		"host": "http://geoserver.piazza",
+		"port": 80,
+		"layer": "{id of the data}",
+		"capabilitiesUrl": "http://geoserver.piazza:8080/{data}?request=GetCapabilities"
+	}
 }
 ....
 
-The information will contain the host, port, and layer name of the data as hosted on the Piazza
-GeoServer instance. The capabilities URL and be copied-and-pasted into a browser to view the
-capabilities of the service. This can then be used as would any other typical WMS service.
+The information will contain the host, port, and layer name of the data as hosted on the Piazza GeoServer instance. The capabilities URL and be copied-and-pasted into a browser to view the capabilities of the service. This can then be used as would any other typical WMS service.
 
 ## Non-hosted Image File
 
-Loading a non-hosted image file is nearly identical to loading a hosted image file. The differences
-are: 1) _hosted_ flag be set to false. 2) _dataType.location_ is now populated and will point to
-the external location of the file. 3) The POST request is _application/json_ content type - not
-multipart, as no file attachment is specified in the request.
+Loading a non-hosted image file is nearly identical to loading a hosted image file. The differences are: 1) _hosted_ flag be set to false. 2) _dataType.location_ is now populated and will point to the external location of the file. 3) The POST request is _application/json_ content type - not multipart, as no file attachment is specified in the request.
 
 ....
 {
-    "type": "ingest",
-    "host": "false",
-    "data": {
-        "dataType": {
-            "type": "raster",
-            "location": {
-                "type": "s3",
-                "bucketName": "my-bucket",
-                "fileName": "elevation.tif",
-                "domainName": "s3.amazonaws.com"
-            }
-        },
-        "metadata": {
-            "name": "terrametrics",
-            "description": "geotiff_test"
-        }
-    }
+	"type": "ingest",
+	"host": "false",
+	"data": {
+		"dataType": {
+			"type": "raster",
+			"location": {
+				"type": "s3",
+				"bucketName": "my-bucket",
+				"fileName": "elevation.tif",
+				"domainName": "s3.amazonaws.com"
+			}
+		},
+		"metadata": {
+			"name": "terrametrics",
+			"description": "geotiff_test"
+		}
+	}
 }
 ....
 
-Note the _dataType.location_ field now present. This key tells Piazza where to find the external
-file. For files in S3, this depends on the _bucketName_, _fileName_ (sometimes called key), and
-_domainName_ parameters. Piazza must have access to this S3 bucket in order for load to succeed.
+Note the _dataType.location_ field now present. This key tells Piazza where to find the external file. For files in S3, this depends on the _bucketName_, _fileName_ (sometimes called key), and _domainName_ parameters. Piazza must have access to this S3 bucket in order for load to succeed.
 
 [source,sh]
-.link:scripts/4-file-load-external.sh[4-file-load-external.sh]
+.link:scripts/4-file-load.sh[4-file-load-external.sh]
 ----
 include::scripts/4-file-load-external.sh[tags=public]
 ----
 
 From this point on, the workflow is identical to hosted files.
 
-.link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh].
-----
-include::scripts/4-nonhosted-wms.sh[tags=public]
-----
+## Hosted GeoJSON File
 
-Loading GeoJSON data is nearly identical to loading image files. The difference is 1) the _type_ of
-the _dataType_ field is set to _geojson_. 2) The file uploaded is of *.geojson type. Other than
-those changes, the entire process is identical.
+Loading GeoJSON data is nearly identical to loading image files. The difference is 1) the _type_ of the _dataType_ field is set to _geojson_. 2) The file uploaded is of *.geojson type. Other than those changes, the entire process is identical.
 
 ....
 {
-    "type": "ingest",
-    "host": true,
-    "data": {
-        "dataType": {
-            "type": "geojson"
-        },
-        "metadata": {
-            "name": "geojson_test",
-            "description": "geojson_test"
-        }
-    }
+	"type": "ingest",
+	"host": true,
+	"data": {
+		"dataType": {
+			"type": "geojson"
+		},
+		"metadata": {
+			"name": "geojson_test",
+			"description": "geojson_test"
+		}
+	}
 }
 ....
 
-Job status, downloads, and GeoServer (WFS/WMS) deployments are identical to the image-based
-examples as above-mentioned in this document.
+Job status, downloads, and GeoServer (WFS/WMS) deployments are identical to the image-based examples as above-mentioned in this document.

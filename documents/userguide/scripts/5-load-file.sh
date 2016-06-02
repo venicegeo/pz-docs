@@ -1,7 +1,5 @@
-#!/bin/sh -e
-
-dir=`dirname $0`
-source $dir/setup.sh
+#!/bin/bash
+set -e
 
 # tag::public[]
 name=$1
@@ -18,27 +16,32 @@ data="{
 }"
 
 # load the file
-$curl -X POST \
+curl -S -s -X POST \
+    -w "%{http_code}" \
+    -o response.txt \
+    -u "$PZUSER":"$PZPASS" \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
-    -F "file=@$dir/terrametrics.tif" \
-    https://pz-gateway.$DOMAIN/data/file > status.txt
-assert_contains status.txt 200
-assert_contains response.txt jobId
-id=`extract_jobid response.txt`
+    -F "file=@./terrametrics.tif" "https://pz-gateway.$DOMAIN/data/file" > status.txt
+
+grep -q 200 status.txt || { cat response.txt; exit 1; }
+grep -q "jobId" response.txt
+jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
 # wait a bit for the load job to finish
-sleep 3
+sleep 2
 
 # get the data resource id from the job
-$curl -S -s -X GET https://pz-gateway.$DOMAIN/job/$id > status.txt
-assert_contains status.txt 200
-assert_contains response.txt '"status":"Success"'
-assert_contains response.txt dataId
-id=`extract_dataid response.txt`
+curl -S -s -X GET \
+    -w "%{http_code}" \
+    -o response.txt \
+    -u "$PZUSER":"$PZPASS" \
+    "https://pz-gateway.$DOMAIN/job/$jobId" > status.txt
 
-# print our result
-echo $id
-# end::public[] 
+grep -q 200 status.txt || { cat response.txt; exit 1; }
+grep -E -q '"status"\s?:\s?"Success"' response.txt
+grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4
+
+# end::public[]
 
 rm -f response.txt status.txt

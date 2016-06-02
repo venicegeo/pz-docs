@@ -1,15 +1,15 @@
 #!/bin/bash
 #set -e
 
-ins="$root/documents"
-outs="$root/out"
-scripts="$root/documents/userguide/scripts"
-
 [[ -f "$scripts/setup.sh" ]] && . "$scripts/setup.sh"
 
 pushd "$(dirname "$0")/.." > /dev/null
 root=$(pwd -P)
 popd > /dev/null
+
+ins="$root/documents"
+outs="$root/out"
+scripts="$root/documents/userguide/scripts"
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
@@ -107,7 +107,7 @@ doit "$ins/devguide"    "$outs/devguide"
 doit "$ins/devopsguide" "$outs/devopsguide"
 
 mkdir "$outs/presentations"
-cp -f "$ins/presentations/*.pdf" "$outs/presentations/"
+cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
 run_tests
 

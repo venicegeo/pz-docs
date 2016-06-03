@@ -1,23 +1,21 @@
 # Search
 
-*TODO: how do filtered GETs do string matching: all fields, exact, and/or*
-
 Piazza supports searching across the metadata extracted from all loaded data. The search API
 returns the resource ids of any matching items. (Adding data to the search index is an internal
 Piazza function and so does not have an API.)
 
 Two kinds of searching are supported. First, when doing a GET on the `/data` endpoint, you can
-specify keywords to be matched: the list normally returned by `GET` is filtered to contain just
-those resources that match the keywords. This is called a _filtered GET_. Second, we have an
-actual _query_: you can provide an Elasticsearch JSON object to the `/data/query` endpoint. Piazza
-uses Elasticsearch DSL directly so as to avoid inventing yet another query syntax system.
+specify the keyword to be matched: the list normally returned by `GET` is filtered to contain just
+those resources that match the keyword. This is called a _filtered GET_. Second, we have an actual
+_query_: you can POST an Elasticsearch JSON object to the `/data/query` endpoint. Piazza uses
+Elasticsearch DSL directly to avoid inventing yet another query syntax language.
 
 ## Setup
 
 To demonstrate, we will first load three files into Piazza and set the metadata fields with some
-interesting strings. (We will use the same source GeoTIFF, since we only care about the metadata.)
-And to do that, we will write a script that loads the file with a given name and description and
-returns the corresponding data resource id:
+interesting strings. (We will use the same source .link:scripts/terrametrics.tif[GeoTIFF], since we
+only care about the metadata.) And to do that, we will write a script that loads the file with a
+given name and description and returns the corresponding data resource id:
 
 [source,sh]
 .link:scripts/5-load-file.sh[5-load-file.sh]
@@ -35,9 +33,9 @@ include::scripts/5-load-files.sh[tags=public]
 
 ## Filtered GET Example
 
-Now that we have the files loaded, we will perform a filtered GET. This script takes two arguments:
-a search term and a data resource id. If that id does appear in the list of resources returned by
-the GET, the script will pass.
+Now that we have the files loaded, we will perform a filtered GET. This script takes one argument:
+the keyword to search for. The script will echo the response given by the server containing the
+metadata that matched the keyword that was searched for.
 
 [source,sh]
 .link:scripts/5-filtered-get.sh[5-filtered-get.sh]
@@ -47,7 +45,6 @@ include::scripts/5-filtered-get.sh[tags=public]
 
 ## Query Example
 
-*TODO*
 We can additionally perform a more advanced query on data. This is done via a POST to the
 /data/query endpoint, with the data field specifying the query to be performed. For example:
 

@@ -1,8 +1,6 @@
 # End-to-End Example
 
-*TODO*
-
-_complete script for end-to-end example of cropped-preview-generation demo_
+*TODO: _complete script for end-to-end example of cropped-preview-generation demo_*
 
 The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to
 showcase Piazza's core capabilities. This app exposes a REST endpoint which takes a POST request

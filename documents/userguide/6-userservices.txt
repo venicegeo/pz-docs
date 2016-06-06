@@ -17,20 +17,21 @@ Piazza provides a RESTful API allowing users to perform user service management 
 . View details about registered web services
 . Execute a registered user service
 . Combine user services to perform various tasks (See the <<Workflow Service>> section for
-    details).
+    details)
 
 While Piazza’s overall all goal is to provide users with the ability to register and use existing
 RESTful user services, to work best with Piazza, there are some guidelines on writing user
-services. See the <<How to Write Your Own Services>> section for details on how to write a user
+services. See the <<How to Write Your Own Services>> section for details on how to write user
 services to be used by Piazza.
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
-    the future, the user service will be a deployable container, so Piazza can scale up and down
-    the number of instances needed.
+    the future, the user service will be a deployable container, so Piazza can scale the number of
+    instances needed.
 
 *TODO* - see the "end to end" section of this manual for an example
+
 The following sections will use a "Hello World" service. This service basically just says hello.
-It is deployed in our cloud for testing services
+It is deployed in our cloud for testing services.
 
 ## Registration
 
@@ -38,26 +39,24 @@ A user service must be _registered_ with Piazza before it can invoked or discove
 users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the
 URL of the service, a description of its parameters, and other metadata.
 
-### Registration JSON Payload Schema
-
-
 ### Hello Example registered with GET method.
 
 Registration Service registered by POSTing to service endpoint.
 A script registering the following service and returning the service ID can be found
-.link:scripts/6-register.sh[here].
+link:scripts/6-register.sh[here].
 
+[source,json]
 ----
 https://pz-gateway.venicegeo.io/service
 {
-  "url": "http://pzsvc-hello.venicegeo.io/",
-  "contractUrl": "http://helloContract",
-  "serviceId": "",
-  "resourceMetadata": {
-    "name": "pzsvc-hello service",
-    "description": "Hello World Example",
-    "method" : "GET"
-  }
+    "url": "http://pzsvc-hello.venicegeo.io/",
+    "contractUrl": "http://helloContract",
+    "serviceId": "",
+    "resourceMetadata": {
+        "name": "pzsvc-hello service",
+        "description": "Hello World Example",
+        "method" : "GET"
+    }
 }
 ----
 
@@ -74,10 +73,11 @@ NOTE: The description should be entered with some care because it will enable ot
     for your service.
 
 Return Value
+[source,json]
 ----
 {
-  "type": "service",
-  "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
+    "type": "service",
+    "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
 }
 ----
 The serviceId field should be noted since it will be used in invoking the service.
@@ -91,14 +91,16 @@ by the service.
 
 The service is invoked by POSTing to the pz-gateway job endpoint
 https://pz-gateway.venicegeo.io/v2/job
+
+[source,json]
 ----
 {
-  "type": "execute-service",
-  "data": {
-    "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
-    "dataInputs": {},
-    "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
-  }
+    "type": "execute-service",
+    "data": {
+        "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
+        "dataInputs": {},
+        "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
+    }
 }
 ----
 
@@ -107,7 +109,9 @@ dataInputs are specified. For dataOutput, the mimeType refers to the mimeType of
 output. The type refers to how the output will be stored until retrieved (See Below).
 
 The return value is not the result of the service call. The execute-service call creates a job and
-returns the id of that job
+returns the id of that job.
+
+[source,json]
 ----
 {
   "type": "job",
@@ -117,6 +121,7 @@ returns the id of that job
 
 ### Hello Example invoked with POST method.
 
+[source,json]
 ----
 {
   "type": "execute-service",
@@ -132,15 +137,18 @@ returns the id of that job
     "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
 }
 ----
+
 When executing a service that requires a POST body for input, the body message is specified in the
 content field, the type is "body" and the mimeType has to be specified. Getting the jobId is
 exactly the same as in the GET case.
 
 
-## Getting Status and Results (GET and POST cases are the same)
+## Getting Status and Results
 
 The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/job/{{jobId}}
 where jobId is the id returned when executing the service. On success the resulting status is
+
+[source,json]
 ----
 {
   "type": "status",
@@ -157,9 +165,10 @@ where jobId is the id returned when executing the service. On success the result
 ----
 
 Finally, the actual result is returned by sending a GET message to
-https://pz-gateway.venicegeo.io/data/{{dataId}} where the dataId is from the result.dataId field of the
-returned status. In this case the result is text.
+https://pz-gateway.venicegeo.io/data/{{dataId}} where the dataId is from the result.dataId field of
+the returned status. In this case the result is text.
 
+[source,json]
 ----
 {
   "type": "data",

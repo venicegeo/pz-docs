@@ -5,7 +5,7 @@ has happened. These events can be issued either from within Piazza or by an exte
 also allows for users to define _triggers_, containing both an event-condition and an action: when
 the condition is met, the action is performed. Taken together, _eventtypes_, _events_, and
 _triggers_ can be used to define _workflows_. A script that sets up the workflow described in this
-section can be found .link:scripts/7-example.sh[here].
+section can be found link:scripts/7-example.sh[here].
 
 NOTE: By design, events and triggers are fairly primitive, low-level constructs. As Piazza matures,
     richer support for defining workflows may be added.
@@ -98,7 +98,7 @@ Gateway/Dispatcher-style syntax. The `Trigger` also contains a system-generated 
 In this example, the job will be executed only when our "US data found" event occurs with the
 specific problem being that a US bounding box has been found with a severity of 4.
 
-NOTE: the `Job's Task` is a string that contains JSON. It can be templated and filled in with
+NOTE: the `job.Task` field is a string that contains JSON. It can be templated and filled in with
     values provided by the event data. To make a value variable, prefix it with a '$'.
 
 NOTE: the "type" field of the "condition" will likely be removed in the future, as the query DSL

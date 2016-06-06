@@ -13,7 +13,7 @@ Elasticsearch DSL directly to avoid inventing yet another query syntax language.
 ## Setup
 
 To demonstrate, we will first load three files into Piazza and set the metadata fields with some
-interesting strings. (We will use the same source .link:scripts/terrametrics.tif[GeoTIFF], since we
+interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we
 only care about the metadata.) And to do that, we will write a script that loads the file with a
 given name and description and returns the corresponding data resource id:
 
@@ -58,16 +58,7 @@ include::scripts/5-query.sh[tags=public]
 
 The Elasticsearch DSL can get very complicated. For more details, visit
 link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch
-Query DSL]. As an aid, here are some sample queries:
-
-[source,json]
-.name is "kitten"
-----
-{
-    "foo": "bar",
-    "boo": true
-}
-----
+Query DSL]. As an aid, here is an example query:
 
 [source,json]
 ----
@@ -75,12 +66,12 @@ Query DSL]. As an aid, here are some sample queries:
     "query": {
         "bool": {
             "must": [
-            { "match": { "title":   "Search"        }},
-            { "match": { "content": "Elasticsearch" }}
+                { "match": { "title":   "Search"        }},
+                { "match": { "content": "Elasticsearch" }}
             ],
             "filter": [
-            { "term":  { "status": "published" }},
-            { "range": { "publish_date": { "gte": "2015-01-01" }}}
+                { "term":  { "status": "published" }},
+                { "range": { "publish_date": { "gte": "2015-01-01" }}}
             ]
         }
     }

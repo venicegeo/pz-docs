@@ -1,8 +1,6 @@
 # End-to-End Example
 
-*TODO*
-
-_complete script for end-to-end example of cropped-preview-generation demo_
+*TODO: _complete script for end-to-end example of cropped-preview-generation demo_*
 
 The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to
 showcase Piazza's core capabilities. This app exposes a REST endpoint which takes a POST request
@@ -13,7 +11,8 @@ POST a request with a payload to the URL: https://pz-svcs-prevgen.venicegeo.io/c
 
 Sample working payload:
 
-....
+[source,json]
+----
 {
     "source": {
         "domain": "s3.amazonaws.com",
@@ -28,7 +27,7 @@ Sample working payload:
         "maxy": 70.00
     }
 }
-....
+----
 
 Service will download the file from "pz-svcs-prevgen" s3 bucket and crop it with given bounding box
 info. The cropped result tif will be uploaded back up to s3 bucket "pz-svcs-prevgen-output":
@@ -36,7 +35,8 @@ https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-
 
 If all goes well, the resulting received payload will be of DataResource type:
 
-....
+[source,json]
+----
 {
   "dataType": {
     "type": "raster",
@@ -56,5 +56,4 @@ If all goes well, the resulting received payload will be of DataResource type:
     "method": "POST"
   }
 }
-....
-
+----

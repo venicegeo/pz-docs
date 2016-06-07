@@ -2,12 +2,13 @@
 set -e
 
 # tag::public[]
-query='{
-    "query": {
-        "match": { "_all": "hipp" }
+term=$1
+
+query="{
+    \"query\": {
+        \"match\": { \"_all\": \"$term\" }
     }
-}
-'
+}"
 
 curl -X POST -S -s \
     -w "%{http_code}" \
@@ -19,6 +20,7 @@ curl -X POST -S -s \
 
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 # end::public[]
+cat response.txt
 
 echo pass.
 

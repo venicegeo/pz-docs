@@ -12,7 +12,7 @@ will be handled more cleanly in a future release.] You can find the complete scr
 `pz-docs` repository. Those scripts are regularly tested against the current Piazza build, so they
 should work as advertised: if they do not, please contact the Piazza team.
 
-NOTE: To set `$DOMAIN`, `$PZUSER` and `$PZPASS`, you can use the .link:scripts/setup.sh[setup.sh]
+NOTE: To set `$DOMAIN`, `$PZUSER` and `$PZPASS`, you can use the link:scripts/setup.sh[setup.sh]
     script. Run this script using `source setup.sh DOMAIN PZUSER PZPASS` to set these environment
     variables for the current shell and child processes (the `source` is necessary to export
     environment variables to the current shell). If your instance of Piazza requires no
@@ -21,10 +21,10 @@ NOTE: To set `$DOMAIN`, `$PZUSER` and `$PZPASS`, you can use the .link:scripts/s
     (this is done within most of the scripts, so it's wise to set these environment variables
     before continuing. These variables can also be set using the `export` command.
 
-TIP: If your username or password use special characters, be sure to surround them with 'single 
-    quotes' to ensure they aren't interpreted by the shell.
+TIP: If your username or password use special characters, be sure to surround them with \'single
+    quotes\' to ensure they aren't interpreted by the shell.
 
-WARNING: Be careful when using `export`s within files to set `$PZUSER` and `$PZPASS`, i.e. `export
+WARNING: Be careful when using `export` within files to set `$PZUSER` and `$PZPASS`, i.e. `export
     $PZPASS=password` in a shell configuration file. If these files are pushed to a remote pubic
     git repository, or are available online via public means, your username and password may be
     compromised. It is advised to use the `setup.sh` script as described in the previous section,

@@ -22,7 +22,8 @@ curl -S -s -X POST \
     -u "$PZUSER":"$PZPASS" \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
-    -F "file=@./terrametrics.tif" "https://pz-gateway.$DOMAIN/data/file" > status.txt
+    -F "file=@./terrametrics.tif" \
+    "https://pz-gateway.$DOMAIN/data/file" > status.txt
 
 # verify all worked successfully
 grep -q 200 status.txt || { cat response.txt; exit 1; }

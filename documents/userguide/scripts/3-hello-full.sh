@@ -8,7 +8,7 @@ curl -S -s -X GET -o response.txt -u "$PZUSER":"$PZPASS" "http://pz-gateway.$DOM
 
 # verify the response was "OK"
 # (because of set -e above, script exits with an error if the match fails)
-grep -q OK response.txt
+grep -q OK response.txt || { cat response.txt; exit 1; }
 
 # remove scratch file
 rm -f response.txt

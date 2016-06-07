@@ -2,16 +2,16 @@
 set -e
 
 # tag::public[]
-service='{
-    "url": "http://pzsvc-hello.venicegeo.io/",
-    "contractUrl": "http://helloContract",
-    "serviceId": "",
-    "resourceMetadata": {
-        "name": "pzsvc-hello service",
-        "description": "Hello World Example",
-        "method": "GET"
+service="{
+    \"url\": \"http://pzsvc-hello.$DOMAIN/\",
+    \"contractUrl\": \"http://helloContract\",
+    \"serviceId\": \"\",
+    \"resourceMetadata\": {
+        \"name\": \"pzsvc-hello service\",
+        \"description\": \"Hello World Example\",
+        \"method\": \"GET\"
     }
-}'
+}"
 
 curl -X POST -S -s \
     -u "$PZUSER":"$PZPASS" \

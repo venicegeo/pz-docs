@@ -17,6 +17,7 @@ the user will be generating. The `EventType` object is POSTed to `/eventtypes` a
 contains a `name` (string) and a map describing the event type's parameters. It also contains a
 system-generated ID. For example:
 
+[source,json]
 ----
 {
     "id": "17de4",
@@ -33,28 +34,6 @@ The available data types are `string`, `boolean`, `integer`, `double`, `date`, `
 `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
 
 
-## The Event
-
-The user may generate an `Event` of that `EventType` to indicate some interesting condition has
-occurred. The `Event` object is POSTed to `/event` and contains the ID of the `EventType`, the
-date the event occurred, and the parameters of the event. It also contains a system-generated ID.
-For example:
-
-----
-{
-    "id": "53dac"
-    "eventtype_id": "17de4",
-    "date": "2007-04-05T14:30:00Z",
-    "data": {
-        "ItemId": "eb872",  # in this case, the id of a data item loaded into Pz
-        "Severity": 4,
-        "Problem": "us-bbox",
-        "userName": "my-api-key-38n987",
-        "jobId": "43688858-b6d4-4ef9-a98b-163e1980bba8"
-    }
-}
-----
-
 ## The Trigger
 
 The user then defines a `Trigger` which defines what action is to be taken when a specific event
@@ -64,34 +43,24 @@ parameters of that event should be, expressed using Elasticsearch DSL query synt
 parameters in the event type. The `Job` defines what action is to be taken, expressed as using
 Gateway/Dispatcher-style syntax. The `Trigger` also contains a system-generated ID. For example:
 
+[source,json]
 ----
 {
-    "id": "987d6",
-    "title": "my found-a-bad-telephone-number trigger",
+    "title": "High Severity",
     "condition": {
-        "eventtype_ids": ["17de4"], # array of event type ids
+        "eventtype_ids": ["{{eventtype_id}}"],
         "query": {
-            "query" : { # the Elasticsearch query string
-            "bool": {
+            "query": {
+                "bool": {
                     "must": [
-                        {
-                            "match" : {
-                                "Severity" : 4
-                            }
-                        },
-                        {
-                            "match" : {
-                                "Problem" : "us-bbox"
-                            }
-                        }
+                        { "match": {"severity": 5} },
+                        { "match": {"code": "PHONE"} }
                     ]
                 }
             }
-        },
-        "job": {
-            "Task": "{\"userName\": \"$userName\", \"jobType\": {\"type\": \"get\", \"jobId\": \"$jobId\"}}"
         }
-    }
+    },
+    "job": { "task": "alert the user" }
 }
 ----
 
@@ -99,11 +68,36 @@ In this example, the job will be executed only when our "US data found" event oc
 specific problem being that a US bounding box has been found with a severity of 4.
 
 NOTE: the `job.Task` field is a string that contains JSON. It can be templated and filled in with
-    values provided by the event data. To make a value variable, prefix it with a '$'.
+values provided by the event data. To make a value variable, prefix it with a '$'.
 
 NOTE: the "type" field of the "condition" will likely be removed in the future, as the query DSL
-    allows us to specify the event type directly within it; this would open up the possibility of
-    having a condition based on multiple events.
+allows us to specify the event type directly within it; this would open up the possibility of
+having a condition based on multiple events.
+
+
+## The Event
+
+The user may generate an `Event` of that `EventType` to indicate some interesting condition has
+occurred. The `Event` object is POSTed to `/event` and contains the ID of the `EventType`, the
+date the event occurred, and the parameters of the event. It also contains a system-generated ID.
+For example:
+
+[source,json]
+----
+{
+    "eventtype_id": "{{eventtype_id}}",
+    "date": "2007-06-06T14:30:00Z",
+    "mapping": {
+        "datatype": "raster",
+        "espg": 0,
+        "minX": 0,
+        "minY": 0,
+        "maxX": 0,
+        "maxY": 0,
+        "hosted": true
+    }
+}
+----
 
 
 ## The Alert
@@ -113,6 +107,7 @@ can GET a list of alerts from `/alert`. The `Alert` object contains the ids of t
 was hit and the `Event` which caused it. It also contains the now ubiquitous system-generated ID.
 For example:
 
+[source,json]
 ----
 {
     "id": "8e6fa",

@@ -13,29 +13,6 @@ eventtype='{
     }
 }'
 
-event="{
-    \"id\": \"53dac\"
-    \"eventtype_id\": \"17de4\",
-    \"date\": \"2007-04-05T14:30:00Z\",
-    \"data\": {
-        \"ItemId\": \"eb872\",
-        \"Severity\": 4,
-        \"Problem\": \"us-bbox\",
-    }
-}"
-
-trigger='{
-    "id": "987d6",
-    "title": "my found-a-bad-telephone-number trigger",
-    "date": "123412341",
-    "condition": {
-        "eventtype_ids": ["17de4"],
-        "query" : { },
-        "job": { }
-    }
-}'
-
-
 # POST eventtype
 echo POSTING EVENTTYPE
 curl -X POST -S -s \
@@ -54,35 +31,67 @@ echo POSTED EVENTTYPE
 sleep 1
 
 
+trigger="{
+    \"title\": \"High Severity\",
+    \"condition\": {
+        \"eventtype_ids\": [\"$id\"],
+        \"query\": {
+            \"query\": {
+                \"bool\": {
+                    \"must\": [
+                        { \"match\": {\"severity\": 5} },
+                        { \"match\": {\"code\": \"PHONE\"} }
+                    ]
+                }
+            }
+        }
+    },
+    \"job\": { \"task\": \"alert the user\" }
+}"
+
 # POST trigger
 echo POSTING TRIGGER
 curl -X POST -S -s \
     -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
-    -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$trigger" \
-    "https://pz-gateway.$DOMAIN/trigger" > status.txt
+    "https://pz-workflow.$DOMAIN/v2/trigger" > status.txt
 
-grep -q 200 status.txt || { cat response.txt; exit 1; }
+echo CHECKING TRIGGER RESPONSE
+grep -q 20 status.txt || { cat response.txt; exit 1; }
 echo POSTED TRIGGER
 sleep 1
 
 
-# POST event
-# echo POSTING EVENT
-# curl -X POST -S -s \
-#     -u "$PZUSER":"$PZPASS" \
-#     -w "%{http_code}" \
-#     -H 'Content-Type: application/json' \
-#     -o response.txt \
-#     -d "$event" \
-#     "https://pz-gateway.$DOMAIN/event/" > status.txt
+event="{
+    \"eventtype_id\": \"$id\",
+    \"date\": \"2007-06-06T14:30:00Z\",
+    \"mapping\": {
+        \"datatype\": \"raster\",
+        \"espg\": 0,
+        \"minX\": 0,
+        \"minY\": 0,
+        \"maxX\": 0,
+        \"maxY\": 0,
+        \"hosted\": true
+    }
+}"
 
-# echo CHECKING EVENT RESPONSE
-# grep -q 200 status.txt || { cat response.txt; exit 1; }
-# echo POSTED EVENT
-# sleep 1
+# POST event
+echo POSTING EVENT
+curl -X POST -S -s \
+    -u "$PZUSER":"$PZPASS" \
+    -w "%{http_code}" \
+    -H 'Content-Type: application/json' \
+    -o response.txt \
+    -d "$event" \
+    "https://pz-gateway.$DOMAIN/event" > status.txt
+
+echo CHECKING EVENT RESPONSE
+grep -q 200 status.txt || { cat response.txt; exit 1; }
+echo POSTED EVENT
+sleep 1
 
 
 # GET alerts
@@ -98,7 +107,6 @@ grep -q 200 status.txt || { cat response.txt; exit 1; }
 cat response.txt
 echo GOT ALERTS
 sleep 1
-
 
 # end::public[]
 

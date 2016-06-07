@@ -1,7 +1,7 @@
 #!/bin/bash
 #set -e
 
-[[ -f "$scripts/setup.sh" ]] && . "$scripts/setup.sh"
+[[ -f "$scripts/setup.sh" ]] && source "$scripts/setup.sh"
 
 pushd "$(dirname "$0")/.." > /dev/null
 root=$(pwd -P)
@@ -54,6 +54,9 @@ function run_tests {
     echo
     echo "Checking examples."
 
+    # Check our environment variables
+    sh "$scripts/setup.sh"
+
     echo
     echo "Checking section 3 examples"
     echo "- Checking 3-hello.sh"
@@ -81,19 +84,34 @@ function run_tests {
     # # check to make sure our wms gets set up
     # $scripts/4-job.sh $jobid
 
-    # echo
-    # echo "Checking section 5 examples"
+    echo
+    echo "Checking section 5 examples"
+    echo "- Checking 5-load-file.sh"
+    # Load manually because relative paths are hard ...
+    sh "$scripts/5-load-file.sh" "one" "The quick, brown fox."
+    sh "$scripts/5-load-file.sh" "two" "The lazy dog."
+    sh "$scripts/5-load-file.sh" "three" "The hungry hungry hippo."
+    echo "- Checking 5-filtered-get.sh"
+    sh "$scripts/5-filtered-get.sh" "dog"
+    echo "- Checking 5-query.sh"
+    sh "$scripts/5-query.sh" "fox"
 
-    # echo
-    # echo "Checking section 6 examples"
+    echo
+    echo "Checking section 6 examples"
+    reg=$(sh "$scripts/6-register.sh")
+    exe=$(sh "$scripts/6-execute-get.sh" "$reg")
+    stat=$(sh "$scripts/6-get-status.sh" "$exe")
+    sh "$scripts/6-get-result.sh" "$stat"
 
-    # echo
-    # echo "Checking section 7 examples"
+    echo
+    echo "Checking section 7 examples"
+    sh "$scripts/7-example.sh"
 
-    # echo
-    # echo "Checking section 8 examples"
+    echo
+    echo "Checking section 8 examples"
+    sh "$scripts/8-endtoend.sh"
 
-    # echo
+    echo
     echo "Examples checked."
 }
 

@@ -14,6 +14,7 @@ curl -X GET -S -s \
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 # print dataId
 grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4
+
 # end::public[]
 
 rm -f response.txt status.txt

@@ -12,7 +12,7 @@ curl -S -s -X GET \
 
 # verify all worked successfully
 grep -q 200 status.txt || { cat response.txt; exit 1; }
-grep -E -q '"status"\s?:\s?"Success"' response.txt
+grep -E -q '"status"\s?:\s?"Success"' response.txt || { cat response.txt; exit 1; }
 
 # print the data's resource id
 grep -E -o '"dataId"\s?:\s?".*"' response.txt | cut -d \" -f 4

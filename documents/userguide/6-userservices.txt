@@ -6,7 +6,7 @@ applications over a network, such as the Internet. Web technologies such as HTTP
 are used because they allow for data to be exchanged in a platform-independent manner.
 
 Using Piazza, users can combine user services to perform complex tasks automatically such as
-orthrorectifying an image, running statistical analysis on the image and then notifying an analyst
+orthorectifying an image, running statistical analysis on the image and then notifying an analyst
 that image has finished processing and is ready for review.
 
 Piazza provides a RESTful API allowing users to perform user service management activities such as:
@@ -33,7 +33,7 @@ It is deployed in our cloud for testing services.
 
 ## Registration
 
-A user service must be _registered_ with Piazza before it can invoked or discovered by Piazza
+A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza
 users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the
 URL of the service, a description of its parameters, and other metadata.
 

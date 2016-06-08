@@ -33,7 +33,7 @@ It is deployed in our cloud for testing services.
 
 ## Registration
 
-A user service must be _registered_ with Piazza before it can invoked or discovered by Piazza
+A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza
 users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the
 URL of the service, a description of its parameters, and other metadata.
 

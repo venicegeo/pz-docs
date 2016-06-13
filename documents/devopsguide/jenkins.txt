@@ -24,7 +24,7 @@ image::images/jenkins-webhook.png[title="Jenkins Webhook"]
     ]
 ----
 
-* All jobs will only build master by default, but you can specify branches useing the `branch` key in your project map:
+* All jobs will only build master by default, but you can specify branches using the `branch` key in your project map:
   - `branch: '**'` will build all branches.
 
 ## Special Sauce

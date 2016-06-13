@@ -2,13 +2,14 @@
 set -e
 
 # tag::public[]
-term=$1
+dataId=$1
 
 curl -X GET -S -s \
-    -w "%{http_code}" \
-    -o response.txt \
     -u "$PZUSER":"$PZPASS" \
-    "https://pz-gateway.$DOMAIN/data?keyword=$term&page=0&per_page=100" > status.txt
+    -w "%{http_code}" \
+    -H 'Content-Type: application/json' \
+    -o response.txt \
+    "https://pz-gateway.$DOMAIN/data/$dataId" > status.txt
 
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 cat response.txt

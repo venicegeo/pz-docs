@@ -91,7 +91,7 @@ To get a status of a job, submit a GET request to the pz-gateway.  For example, 
 }  
 ....
 
-The job manager returns the status of the submitted job.  In this case, the result of the registered user service is returned with the resourceId of the registered service.  the resourceID is used to manage the registered user service.
+The job manager returns the status of the submitted job.  In this case, the result of the registered user service is returned with the resourceId of the registered service.  The resourceID is used to manage the registered user service.
 
 ....
 {

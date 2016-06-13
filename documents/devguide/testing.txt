@@ -1,1 +1,3 @@
-# Testing
+## Testing
+
+Testing is done in two stages. First, each project contains its own set of isolated unit tests that must succeed before any build/compilation of the code succeeds. Any unit tests failed will mark the build as failure and no code will be pushed to any Cloud Foundry environment. Once the Unit Tests pass, then the application can be pushed to a Cloud Foundry environment. At this point, automated integration tests take place. These integration tests will test the Gateway API (and other internal component APIs) via REST requests. This integration test collection is handled using Postman/Newman as run through Jenkins. Any failures in the Integration tests will alert that the integrated environment is "failing" and no elevation of that environment will take place.

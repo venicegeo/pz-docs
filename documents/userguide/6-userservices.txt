@@ -25,7 +25,7 @@ services. See the <<How to Write Your Own Services>> section for details on how 
 services to be used by Piazza.
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
-    the future, the user service will be a deployable container, so Piazza can scale the number of
+    the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of
     instances needed.
 
 The following sections will use a "Hello World" service. This service basically just says hello.

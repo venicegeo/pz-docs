@@ -6,7 +6,7 @@ applications over a network, such as the Internet. Web technologies such as HTTP
 are used because they allow for data to be exchanged in a platform-independent manner.
 
 Using Piazza, users can combine user services to perform complex tasks automatically such as
-orthrorectifying an image, running statistical analysis on the image and then notifying an analyst
+orthorectifying an image, running statistical analysis on the image and then notifying an analyst
 that image has finished processing and is ready for review.
 
 Piazza provides a RESTful API allowing users to perform user service management activities such as:
@@ -33,7 +33,7 @@ It is deployed in our cloud for testing services.
 
 ## Registration
 
-A user service must be _registered_ with Piazza before it can invoked or discovered by Piazza
+A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza
 users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the
 URL of the service, a description of its parameters, and other metadata.
 
@@ -187,6 +187,42 @@ of the returned status. In this case the result is text.
 Run the link:scripts/6-get-result.sh[6-get-result.sh] script to check the result of the previous
 job. This script also takes a single argument: the dataId returned by the previous script.
 
-## How to Write Your Own Services
+## How to Write Your Own User Services
 
-*TODO*
+**User Services** are external web services that Piazza users write to be discovered and used by other Piazza users.  For example suppose a developer has created an algorithm that does processing of point cloud data and wants to share it with others to use.  He or she would create a user service and then register it with Piazza so that others may use it.  Once a user service is registered with Piazza, other Piazza users will be able to discover and invoke it to support the workflow in the applications that need it.  
+
+If a registered user service has additional security and access requirements (e.g. client certificate required, pre-authorization to use, etc.), users should contact the user service provider to negotiate access for use.
+
+The contact information for each user service is located in the resourceMetadata section of the service payload.
+[source,json]
+----
+{
+  "serviceId" : "f406b427-7ba0-4c9c-a780-b834464072f7",
+  "url" : "https://pz-svcs-prevgen.stage.geointservices.io/crop",
+  "resourceMetadata" : {
+    "name" : "pz-svcs-prevgen",
+    "description" : "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+    "method" : "POST",
+    "contact" : "Agent Smith 703-555-1212 agentsmith@thematrix.com"
+  }
+}
+----
+### Creating Your User Service
+
+When you write your own service,services should be written as a RESTful web service.  REST (Representational State Transfer) is an architectural concept for creating client/server networked applications.  Clients and servers exchange data using a stateless communication protocol such as HTTP (Hypertext Transfer Protocol).  
+
+#### Establishing an API
+To establish an API for exchanging data to and from your user service, consider using the JSON standard because data payloads are smaller, are easy to read and works with programmatically (e.g. using JavaScript). 
+
+XML (Extensible Markup Language) is also used to exchange data with RESTful web services.  With XML, data is very structured and is stored in a markup language that is readable.  As a result of the formatting, XML payloads are much larger than JSON payloads.  With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format.   When using XML, a well documented schema should be used to validate and to describe the responses that may be sent from your service.
+
+For guidance on best practices when creating the RESTful API to your web service, see the https://github.com/18F/api-standard[18F API standard] for details.
+
+#### What to do About Existing Services
+
+
+
+
+### Output from Your Service
+
+### Registering Your Service

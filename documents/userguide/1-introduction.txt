@@ -13,23 +13,23 @@ GeoInt applications and services. These services are exposed via REST endpoints,
 developers with the ability to:
 
 Load data into the system:: Given a reference to an external data source, Piazza can extract
-metadata and other information about that data and record it locally. Piazza now "knows" about that
+metadata and other information about that data and record it locally under a unique ID. Piazza now "knows" about that
 data. These data sources can be files, such as a GeoTIFF in an S3 bucket, or features, such as from
 a Shapefile or PostGIS database. (Note that while Piazza typically needs to read the data source's
 contents, it does not need to store a copy of it locally.)
 
 Access data from the system:: Having loaded data into the system, Piazza can create access points
-such as OGC endpoints or download links, so users can access the data.
+such as OGC endpoints or download links. Users can access the data by passing requests
+to Piazza, using the data resource's ID.
 
 Search data within the system:: Piazza stores the metadata about the data sources, allowing users
 to submit queries and receive in return a list of data resources matching the criteria.
 
-Execute external services:: Users will wish to execute external services, such as querying a
+Execute external services:: Users will wish to execute external web services, such as querying a
 gazetteer for a given location or extracting vector features from an image. Services can be
-registered by providing endpoints, descriptions, and parameter lists, and then Piazza can execute
-these services on the user's behalf. The services can reference data loaded into Piazza or
-externally via URL. Through its use of Cloud Foundry, Piazza will also be able to autoscale user
-services for best performance.
+registered by providing REST endpoints, descriptions, and parameter lists, and then Piazza can execute
+these services on the user's behalf. The services can reference data loaded into Piazza (using the
+data resource ID) or externally via URL.
 
 Detect events and trigger actions:: Piazza allows users to define "types" of events, such as the
 loading of a new file within a certain bounding box or the successful completion of an external

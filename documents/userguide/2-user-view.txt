@@ -48,7 +48,7 @@ Your application will need to perform the following operations:
     contains any coastal regions (using the bounding box) and if the image's quality (using the
     cloud cover) is high enough.
 . If the new imagery is usable, it must be sent to each of the shoreline extraction algorithms.
-. When all three have completed, the vectors must be either sent to a user for manual inspection
+. As each algorithm completes, its returned vectors must be either sent to a user for manual inspection
     (if confidence is low) or inserted into the shoreline database (if confidence is high).
 
 Piazza can be used to help implement all of these operations.
@@ -65,7 +65,7 @@ Piazza can be used to help implement all of these operations.
 .. When _all three algorithms have completed and if the confidence is low_, then _issue a
     manual-check-needed alert, whose payload consists of the data resource id, the candidate
     vector, and the confidence value_.
-.. When _all three algorithms have completed and if the confidence is high_, then _perform a
+.. When _each of the algorithms completes and if the confidence is high_, then _perform a
     database insert_.
 . Within some UI application, poll Piazza for manual-check-needed alerts: when found, present the
     data to the user for evaluation.

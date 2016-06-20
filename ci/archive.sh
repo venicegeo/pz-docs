@@ -1,6 +1,7 @@
 #!/bin/bash
 #set -e
 
+# shellcheck disable=SC1090
 [[ -f "$scripts/setup.sh" ]] && source "$scripts/setup.sh"
 
 pushd "$(dirname "$0")/.." > /dev/null
@@ -14,6 +15,7 @@ scripts="$root/documents/userguide/scripts"
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 
+# shellcheck disable=SC1090
 source "$root/ci/vars.sh"
 
 function doit {
@@ -53,6 +55,8 @@ function run_tests {
     # verify the example scripts
     echo
     echo "Checking examples."
+    # Needed for some tests
+    cp "$scripts/terrametrics.tif" "$root"
 
     # Check our environment variables
     sh "$scripts/setup.sh"
@@ -66,51 +70,51 @@ function run_tests {
 
     echo
     echo "Checking section 4 examples"
-    cp "$scripts/terrametrics.tif" "$root"
     echo "- Checking 4-hosted-load.sh"
     jobid=$(sh "$scripts/4-hosted-load.sh")
     echo "- Checking 4-job.sh"
     dataid=$(sh "$scripts/4-job.sh" "$jobid")
     echo "- Checking 4-hosted-download.sh"
     sh "$scripts/4-hosted-download.sh" "$dataid"
-    rm "$root/terrametrics.tif"
 
-    # echo "- Checking 4-nonhosted-load.sh"
-    # jobid=`$scripts/4-nonhosted-load.sh`
-    # echo "- Checking 4-job.sh"
-    # dataid=`$scripts/4-job.sh $jobid`
-    # echo "- Checking 4-nonhosted-wms.sh"
-    # jobid=`$scripts/4-nonhosted-wms.sh $dataid`
-    # # check to make sure our wms gets set up
-    # $scripts/4-job.sh $jobid
+    echo "- Checking 4-nonhosted-load.sh"
+    jobid=$("$scripts/4-nonhosted-load.sh")
+    dataid=$("$scripts/4-job.sh" "$jobid")
+    echo "- Checking 4-nonhosted-wms.sh"
+    jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
+    # check to make sure our wms gets set up
+    "$scripts/4-job.sh" "$jobid"
 
     echo
     echo "Checking section 5 examples"
     echo "- Checking 5-load-file.sh"
     # Load manually because relative paths are hard ...
-    sh "$scripts/5-load-file.sh" "one" "The quick, brown fox."
-    sh "$scripts/5-load-file.sh" "two" "The lazy dog."
-    sh "$scripts/5-load-file.sh" "three" "The hungry hungry hippo."
+    sh "$scripts/5-load-file.sh" "one" "The quick, brown fox." > /dev/null
+    sh "$scripts/5-load-file.sh" "two" "The lazy dog." > /dev/null
+    sh "$scripts/5-load-file.sh" "three" "The hungry hungry hippo." > /dev/null
     echo "- Checking 5-filtered-get.sh"
-    sh "$scripts/5-filtered-get.sh" "dog"
+    sh "$scripts/5-filtered-get.sh" "dog" > /dev/null
     echo "- Checking 5-query.sh"
-    sh "$scripts/5-query.sh" "fox"
+    sh "$scripts/5-query.sh" "fox" > /dev/null
 
     echo
     echo "Checking section 6 examples"
     reg=$(sh "$scripts/6-register.sh")
     exe=$(sh "$scripts/6-execute-get.sh" "$reg")
     stat=$(sh "$scripts/6-get-status.sh" "$exe")
-    sh "$scripts/6-get-result.sh" "$stat"
+    sleep 2
+    sh "$scripts/6-get-result.sh" "$stat" > /dev/null
 
     echo
     echo "Checking section 7 examples"
-    sh "$scripts/7-example.sh"
+    sh "$scripts/7-example.sh" > /dev/null
 
     echo
     echo "Checking section 8 examples"
     sh "$scripts/8-endtoend.sh"
 
+    # Cleanup
+    rm "$root/terrametrics.tif"
     echo
     echo "Examples checked."
 }
@@ -125,6 +129,7 @@ doit "$ins/devguide"    "$outs/devguide"
 doit "$ins/devopsguide" "$outs/devopsguide"
 
 mkdir "$outs/presentations"
+# shellcheck disable=SC2086
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
 run_tests

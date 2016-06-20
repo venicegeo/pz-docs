@@ -4,7 +4,7 @@ set -e
 # tag::public[]
 data='{
     "type": "ingest",
-    "host": "false",
+    "host": false,
     "data": {
         "dataType": {
             "type": "raster",

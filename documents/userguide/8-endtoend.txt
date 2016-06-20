@@ -12,11 +12,12 @@ to the Piazza service.
 
 To begin, clone the pzsvc-file-watcher from https://github.com/venicegeo/pzsvc-file-watcher:
 
-`git clone https://github.com/venicegeo/pzsvc-file-watcher`
+`$ git clone https://github.com/venicegeo/pzsvc-file-watcher`
 
 Next, install pzsvc-file-watcher's dependencies:
 
-`pip2 install -r requirements.txt`
+`$ cd pzsvc-file-watcher`
+`$ (sudo) pip2 install -r requirements.txt`
 
 pzsvc-file-watcher takes a few command line arguments, including the s3 bucket location, the user's
 AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS
@@ -30,7 +31,7 @@ Piazza).
 
 An example of running filewatcher.py via the command line:
 
-`python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.DOMAIN' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'`
+`$ python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.DOMAIN' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'`
 
 This will set up the pzsvc-file-watcher to poll continuously for new files in the `aws_bucket_name`
 bucket, and ingest those files (without hosting them!) to the Piazza service.
@@ -55,13 +56,13 @@ A script to register this service is located link:scripts/8-register-crop.sh[her
 execute this service using raster files uploaded to an s3 bucket is located
 link:scripts/8-crop-file.sh[here]. Registering the cropping service is easy:
 
-`sh 8-register-crop.sh`
+`$ sh 8-register-crop.sh`
 
 The `8-crop-file.sh` script takes a few more parameters: the serviceId returned from registering
 the previous service (if the previous script is successful, it will print out the serviceId), the
 AWS bucket name where the file is located, and the filename to crop. For example:
 
-`sh 8-crop-file.sh {{serviceId}} bucketname filename`
+`$ sh 8-crop-file.sh {{serviceId}} bucketname filename`
 
 The script does the equivalent of POSTing a request with a payload to the URL:
 https://pz-svcs-prevgen.int.geointservices.io/crop.
@@ -93,12 +94,12 @@ https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-
 The script should return a JobID that can then be passed as an argument to
 link:scripts/job-info.sh[job-info.sh]:
 
-`sh job-info.sh {{JobID}}`
+`$ sh job-info.sh {{JobID}}`
 
 When the job is complete, the resulting data can be queried from the dataID returned by the
 job-info.sh script using link:scripts/file-info.sh[file-info.sh]:
 
-`sh file-info.sh {{dataID}}`
+`$ sh file-info.sh {{dataID}}`
 
 If all goes well, the resulting received payload will be of DataResource type:
 

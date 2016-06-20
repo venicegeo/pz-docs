@@ -62,7 +62,7 @@ The response from this request will contain the ID of the Job that was submitted
 }
 ----
 
-[source,sh]
+[source,bash]
 .link:scripts/4-hosted-load.sh[4-hosted-load.sh]
 ----
 include::scripts/4-hosted-load.sh[tags=public]
@@ -90,7 +90,7 @@ the specified Job, including progress %, job status, and the submitting user inf
 A client can now periodically check the status of the job, waiting for it to be completed. This
 script takes as a single command-line parameter, the job id string:
 
-[source,sh]
+[source,bash]
 .link:scripts/job-info.sh[job-info.sh]
 ----
 include::scripts/job-info.sh[tags=public]
@@ -99,7 +99,7 @@ include::scripts/job-info.sh[tags=public]
 Once the job is complete, we can retrieve the metadata about the image. Here too the script takes
 an argument: this time, the id of the data resource (displayed by the previous script).
 
-[source,sh]
+[source,bash]
 .link:scripts/file-info.sh[file-info.sh]
 ----
 include::scripts/file-info.sh[tags=public]
@@ -131,7 +131,7 @@ reference the Data.
 
 Next, we can retrieve the file:
 
-[source,sh]
+[source,bash]
 .link:scripts/4-hosted-download.sh[4-hosted-download.sh]
 ----
 include::scripts/4-hosted-download.sh[tags=public]
@@ -139,7 +139,7 @@ include::scripts/4-hosted-download.sh[tags=public]
 
 And, finally, we can create a WMS endpoint for our GeoTIFF:
 
-[source,sh]
+[source,bash]
 .link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh]
 ----
 include::scripts/4-nonhosted-wms.sh[tags=public]
@@ -202,7 +202,7 @@ Note the _dataType.location_ field now present. This key tells Piazza where to f
 file. For files in s3, this depends on the _bucketName_, _fileName_ (sometimes called key), and
 _domainName_ parameters. Piazza must have access to this s3 bucket in order for load to succeed.
 
-[source,sh]
+[source,bash]
 .link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
 ----
 include::scripts/4-nonhosted-load.sh[tags=public]

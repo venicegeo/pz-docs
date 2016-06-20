@@ -1,8 +1,7 @@
 # pz-logger
 
-The Logger provides a system-wide, common way to record log messages.
-
-The log messages are only stored in-memory today, but eventually they will be sent to `logstash`.
+The Logger provides a system-wide, common way to record log messages. The log messages are stored
+in Elasticsearch.
 
 ## Command Line App
 
@@ -12,7 +11,7 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### POST /v1/messages
+### POST /v2/message
 
 Sends a message to be logged. The message is given in the POST body as a JSON object:
 
@@ -36,26 +35,23 @@ All five fields are required.
 * **"Error"** - _I can’t do this. I've handled the exception so I’m not going to crash or anything, but I want you to know that I may not be in a happy place right now._
 * **"Fatal"** - _I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely to crash very soon._
 
-### GET /v1/messages?size=N&from=N
+### GET /v2/message
 
-Returns a JSON array of log messages:
+Returns a JSON object of log messages:
 
-    [
-        {"service":"noservice","address":"1.2.3.4","stamp":123456789,"severity":"Debug","message":"Yow!"},
-        {"service":"noservice","address":"01.2.3.4","stamp":123456788,"severity":"Debug","message":"Yow!"}
-    ]
+    {
+        "data": [
+            {"service":"noservice","address":"1.2.3.4","stamp":123456789,"severity":"Debug","message":"Yow!"},
+            {"service":"noservice","address":"01.2.3.4","stamp":123456788,"severity":"Debug","message":"Yow!"}
+        ],
+        "pagination": ...
+    }
 
 This endpoint supports pagination, as described in [[General Pz Service Operations]].
 
 ### Common operations
 
 This service includes the common endpoints described in [[General Pz Service Operations]].
-
-The `admin settings` supported are:
-
-    {
-        "debug": "true"
-    }
 
 The `admin stats` supported are:
 

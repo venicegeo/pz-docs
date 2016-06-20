@@ -34,7 +34,7 @@ WARNING: Be careful when using `export` within files to set `$PZUSER` and `$PZPA
 We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning
 instance of Piazza to talk to.
 
-[source,sh]
+[source,bash]
 .link:scripts/3-hello-full.sh[3-hello-full.sh]
 ----
 include::scripts/3-hello-full.sh[]
@@ -43,7 +43,7 @@ include::scripts/3-hello-full.sh[]
 In the examples that follow, we will only show the portions of the script that are relevant,
 typically omitting the setup and teardown code. The above script might be shown as just this:
 
-[source,sh]
+[source,bash]
 .link:scripts/3-hello.sh[3-hello.sh]
 ----
 include::scripts/3-hello.sh[tags=public]

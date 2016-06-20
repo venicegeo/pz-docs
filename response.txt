@@ -1,8 +1,0 @@
-{
-  "timestamp" : 1466436495369,
-  "status" : 400,
-  "error" : "Bad Request",
-  "exception" : "org.springframework.http.converter.HttpMessageNotReadableException",
-  "message" : "Could not read document: Illegal unquoted character ((CTRL-CHAR, code 10)): has to be escaped using backslash to be included in string value\n at [Source: java.io.PushbackInputStream@5210e3ec; line: 5, column: 26] (through reference chain: model.job.type.ExecuteServiceJob[\"data\"]->model.service.metadata.ExecuteServiceData[\"dataInputs\"]); nested exception is com.fasterxml.jackson.databind.JsonMappingException: Illegal unquoted character ((CTRL-CHAR, code 10)): has to be escaped using backslash to be included in string value\n at [Source: java.io.PushbackInputStream@5210e3ec; line: 5, column: 26] (through reference chain: model.job.type.ExecuteServiceJob[\"data\"]->model.service.metadata.ExecuteServiceData[\"dataInputs\"])",
-  "path" : "/v2/job"
-}

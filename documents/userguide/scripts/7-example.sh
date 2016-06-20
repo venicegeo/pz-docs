@@ -4,11 +4,11 @@ set -e
 # tag::public[]
 
 eventtype='{
-    "id": "17de4",
-    "name": "USDataFound",
+    "id": "new id",
+    "name": "TESTING",
     "mapping": {
         "ItemId": "string",
-        "Severity": "integer",
+        "Severity": "long",
         "Problem": "string"
     }
 }'
@@ -26,27 +26,53 @@ curl -X POST -S -s \
 echo CHECKING EVENTTYPE RESPONSE
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 id=$(grep -E -o '"id"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-echo "$id"
 echo POSTED EVENTTYPE
 sleep 1
+echo
+
+
+# service
+service="{
+    \"url\": \"http://pzsvc-hello.$DOMAIN/\",
+    \"contractUrl\": \"http://helloContract\",
+    \"method\": \"GET\",
+    \"serviceId\": \"\",
+    \"rescurceMetadata\": {
+        \"name\": \"pzsvc-hello service\",
+        \"description\": \"Hello World Example\"
+    }
+}"
+
+# post service
+curl -X POST -S -s \
+    -u "$PZUSER":"$PZPASS" \
+    -w "%{http_code}" \
+    -H 'Content-Type: application/json' \
+    -o response.txt \
+    -d "$service" \
+    "https://pz-gateway.$DOMAIN/service" > status.txt
+
+grep -q 200 status.txt || { cat response.txt; exit 1; }
+serviceId=$(grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
 
 trigger="{
     \"title\": \"High Severity\",
     \"condition\": {
         \"eventtype_ids\": [\"$id\"],
-        \"query\": {
-            \"query\": {
-                \"bool\": {
-                    \"must\": [
-                        { \"match\": {\"severity\": 5} },
-                        { \"match\": {\"code\": \"PHONE\"} }
-                    ]
-                }
+        \"query\": { \"query\": { \"match_all\": {} } }
+    },
+    \"job\": {
+        \"userName\": \"test\",
+        \"jobType\": {
+            \"type\": \"execute-service\",
+            \"data\": {
+                \"serviceId\": \"$serviceId\",
+                \"dataInputs\": {},
+                \"dataOutput\": [ { \"mimeType\": \"application/json\", \"type\": \"text\" } ]
             }
         }
-    },
-    \"job\": { \"task\": \"alert the user\" }
+    }
 }"
 
 # POST trigger
@@ -55,26 +81,26 @@ curl -X POST -S -s \
     -u "$PZUSER":"$PZPASS" \
     -w "%{http_code}" \
     -o response.txt \
+    -H 'Content-Type: application/json' \
     -d "$trigger" \
-    "https://pz-workflow.$DOMAIN/v2/trigger" > status.txt
+    "https://pz-gateway.$DOMAIN/trigger" > status.txt
 
 echo CHECKING TRIGGER RESPONSE
 grep -q 20 status.txt || { cat response.txt; exit 1; }
+triggerId=$(grep -E -o '"id"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 echo POSTED TRIGGER
 sleep 1
+echo
 
 
 event="{
     \"eventtype_id\": \"$id\",
-    \"date\": \"2007-06-06T14:30:00Z\",
+    \"date\": \"2007-06-08T14:30:00Z\",
     \"mapping\": {
-        \"datatype\": \"raster\",
-        \"espg\": 0,
-        \"minX\": 0,
-        \"minY\": 0,
-        \"maxX\": 0,
-        \"maxY\": 0,
-        \"hosted\": true
+        \"ItemId\": \"test\",
+        \"Severity\": 200,
+        \"Problem\": \"us-bbox\",
+        \"jobId\": \"$id\"
     }
 }"
 
@@ -89,9 +115,10 @@ curl -X POST -S -s \
     "https://pz-gateway.$DOMAIN/event" > status.txt
 
 echo CHECKING EVENT RESPONSE
-grep -q 200 status.txt || { cat response.txt; exit 1; }
+grep -q 20 status.txt || { cat response.txt; exit 1; }
 echo POSTED EVENT
 sleep 1
+echo
 
 
 # GET alerts
@@ -107,6 +134,7 @@ grep -q 200 status.txt || { cat response.txt; exit 1; }
 cat response.txt
 echo GOT ALERTS
 sleep 1
+echo
 
 # end::public[]
 

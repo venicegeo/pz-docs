@@ -4,12 +4,10 @@ set -e
 # tag::public[]
 service="{
     \"url\": \"http://pzsvc-hello.$DOMAIN/\",
-    \"contractUrl\": \"http://helloContract\",
-    \"serviceId\": \"\",
+    \"method\": \"GET\",
     \"resourceMetadata\": {
         \"name\": \"pzsvc-hello service\",
-        \"description\": \"Hello World Example\",
-        \"method\": \"GET\"
+        \"description\": \"Hello World Example\"
     }
 }"
 

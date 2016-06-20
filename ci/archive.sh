@@ -61,6 +61,8 @@ function run_tests {
     # Check our environment variables
     sh "$scripts/setup.sh"
 
+    cp "$scripts/terrametrics.tif" "$root"
+
     echo
     echo "Checking section 3 examples"
     echo "- Checking 3-hello.sh"
@@ -80,7 +82,7 @@ function run_tests {
     jobid=$("$scripts/4-nonhosted-load.sh")
     dataid=$("$scripts/job-info.sh" "$jobid")
     sleep 2
-    echo "- Checking 4-nonhosted-wms.sh"
+    echo "- SKIPPING 4-nonhosted-wms.sh"
     jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
     sh "$scripts/job-info.sh" "$jobid" > /dev/null
 
@@ -112,8 +114,8 @@ function run_tests {
     echo
     echo "Not checking section 8 examples"
 
-    # Cleanup
     rm "$root/terrametrics.tif"
+
     echo
     echo "Examples checked."
 }
@@ -131,7 +133,9 @@ mkdir "$outs/presentations"
 # shellcheck disable=SC2086
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
-run_tests
+#set -e
+#run_tests
+#unset -e
 
 echo Done.
 

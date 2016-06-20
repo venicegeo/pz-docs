@@ -1,17 +1,15 @@
-Piazza Documentation (WORK IN PROGRESS)
-=======================================
+Piazza Documentation
+====================
 The Piazza Team <venice@radiantblue.com>
-v0.0, 21 April 2016
+20 June 2016
 
 include::common/intro.txt[tabsize=4]
 
-Manuals
--------
+Documentation
+-------------
 
-* link:userguide/index.html[Users Guide (WORK IN PROGRESS)]
-* link:devguide/index.html[Developers Guide (WORK IN PROGRESS)]
-* link:devopsguide/index.html[DevOps Guide (WORK IN PROGRESS)]
-
+* link:userguide/index.html[Users Guide]
+* link:devguide/index.html[Developers Guide]
 
 Additional Links
 ----------------
@@ -20,7 +18,3 @@ Additional Links
 * http://pz-swagger.venicegeo.io[Swagger API Reference]
 * https://github.com/venicegeo[GitHub repository]
 * http://pz-sak.venicegeo.io[UI for Piazza internal development]
-* Videos
-** 03-29-2016 - https://youtu.be/eFuq-t7kQgM[Piazza Sprint 3 Status]
-** 03-15-2016 - https://www.youtube.com/watch?v=eyLPKhqDOvc[Piazza Core - Service Controller]
-

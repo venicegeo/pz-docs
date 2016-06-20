@@ -49,10 +49,10 @@ link:scripts/6-register.sh[here].
     "url": "http://pzsvc-hello.venicegeo.io/",
     "contractUrl": "http://helloContract",
     "serviceId": "",
+    "method" : "GET”,
     "resourceMetadata": {
         "name": "pzsvc-hello service",
-        "description": "Hello World Example",
-        "method" : "GET"
+        "description": "Hello World Example"
     }
 }
 ----
@@ -187,6 +187,10 @@ of the returned status. In this case the result is text.
 Run the link:scripts/file-info.sh[file-info.sh] script to check the result of the previous job.
 This script also takes a single argument: the dataId returned by the previous script.
 
+## Other Examples
+
+For more examples on how to register and execute your service, see the Piazza Developer’s Guide http://pz-docs.int.geointservices.io/devguide/index.html[Piazza Developers Guide].
+
 ## How to Write Your Own User Services
 
 **User Services** are external web services that Piazza users write to be discovered and used by other Piazza users.  For example suppose a developer has created an algorithm that does processing of point cloud data and wants to share it with others to use.  He or she would create a user service and then register it with Piazza so that others may use it.  Once a user service is registered with Piazza, other Piazza users will be able to discover and invoke it to support the workflow in the applications that need it.  
@@ -199,10 +203,10 @@ The contact information for each user service is located in the resourceMetadata
 {
   "serviceId" : "f406b427-7ba0-4c9c-a780-b834464072f7",
   "url" : "https://pz-svcs-prevgen.stage.geointservices.io/crop",
+  "method" : "POST",
   "resourceMetadata" : {
     "name" : "pz-svcs-prevgen",
     "description" : "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
-    "method" : "POST",
     "contact" : "Agent Smith 703-555-1212 agentsmith@thematrix.com"
   }
 }
@@ -220,9 +224,8 @@ For guidance on best practices when creating the RESTful API to your web service
 
 #### What to do About Existing Services
 
-
-
-
+If you have an existing service, consider following the https://github.com/18F/api-standard[18F API standard] for guidance on best practices.  For existing services that are not RESTful consider wrapping these services with a REST representation.  For example the first generation of web services included heavy weight approaches such as SOAP (Simple Object Access Protocol) where messages were transmitted using XML over HTTP.  For services such as these, if converting the service to a REST representation is not possible, then consider wrapping these services.
+ 
 ### Output from Your Service
 
 ### Registering Your Service

@@ -134,82 +134,92 @@ The ServiceController comes with some sample services to help with getting start
 
 To become familiar with the ServiceController, use data transfer tools such as **cURL** or UI data transfer tools such as **Postman** ( https://www.getpostman.com/) to interact with the ServiceController REST API.
 
-The ServiceController leverages Java object definitions defined the pz-jobcommon github repo (https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/job/metadata) as definitions of the JSON used in the ServiceController REST API.
+The API and end points  used for working with the ServiceController are documented in Swagger at: http://pz-swagger.venicegeo.io/#!/Service
 
-Piazza Core Resources are represented as _**ResourceMetadata**_ within the Piazza Core.
+Metadata about Piazza Core Resources are represented as _**ResourceMetadata**_ within the Piazza Core.  Please look at the ResourceMetadata model, documented as part of registering a user service, in swagger ( http://pz-swagger.venicegeo.io/#!/Service/post_service) for descriptions of these metadata fields. 
 
-### Registering a Service
+The following examples on registering and executing user services are the payloads for interacting directly with the ServiceController.  These same payloads can also be used within registration and execution requests going through the Gateway.   Refer to the Swagger API documentation and the <<_gateway_api>> section of this document to determine what additional items need to be specified.
 
-Before the ServiceController can manage a service, the service has to be registered. To do this, utilize the ServiceController's _**registerService**_ service passing in ResourceMetadata JSON.  As of now, there are no mandatory fields, but at a bare minimum register enough information so that other developers can discover and use the service.
 
-Below is an example of how to register a web service that uses the **POST** method, specifies the input parameters via URL key value pairs - in this case using the parameter aString.  This example registers the toLower Service  
+### Registering a User Service
 
-....
-http://pz-servicecontroller.stage.geointservices.io/servicecontroller/registerService  
-{   "userName" : "my-api-key-38n987",  
-	"jobType" : {
-		"id" : "",
-		"url":"http://pz-servicecontroller.cf.piazzageo.io/jumpstart/string/toLower",
-		"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/toLowerContract",
-		"resourceMetadata" : {  
-			   "name":"The toLower Service",  
-			  "description":"Service to convert string to lower case",   
-			  "method":"POST"
-		}
+Before the ServiceController can manage a user service, the service has to be registered. To do this, utilize the ServiceController's _**registerService**_ service passing in ResourceMetadata JSON.  As of now, there are no mandatory fields, but at a bare minimum register enough information so that other developers can discover and use the service.
+
+#### Registering a User Service that uses POST with Query Parameters
+
+Piazza user services register user services using the following endpoint: https://pz-gateway.venicegeo.io/service
+Piazza developers can build and test registering user services using localhost.  When running or testing the ServiceController internally, the following endpoint can be used:  https://<the-hostname-you-are-running-from>/servicecontroller/registerService.
+
+Below is an example of how to register a web service that uses the **POST** method, specifies the input parameters via URL key value pairs - in this case using the parameter aString.  This example registers the toLower Service: 
+https://pz-gateway.venicegeo.io/service 
+[source,json]
+---- 
+{   
+	"url":"http://pz-servicecontroller.venicegeo.io/jumpstart/string/toLower",
+	"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/toLowerContract",
+        "method":"POST",
+	 "resourceMetadata" : {  
+	  	"name":"The toLower Service",  
+		"description":"Service to convert string to lower case"
 	}
 }
-....
+----
 
 The response from the ServiceController will be a JSON message providing the serviceId for the toLower Service.  
 
-....
-{"serviceId":"123-345-456846434418332"}
-....
+[source,json]
+---- 
+{
+  "type": "service-id“,
+  "serviceId": "304e4ef3-f6a0-4f91-98c3-447a4f62d0af"
+}
 
-_Once registered, users, should utilize the ResourceID to perform any functions on the registered service._
+----
+_Once registered, users, should utilize the serviceId to perform any functions on the registered service._
 
-_**A response of {"service`Id":""} means that the service was not properly registered within the ServiceController.  Be sure MongoDB and other required software is up and running.**_
+_**If you receive a response with an empty serviceId, it may mean that the service was not properly registered within the ServiceController.  Be sure MongoDB and other required software is up and running.**_
+
+#### Registering a User Service that uses POST with JSON Payload
 
 To register a service that uses the **POST** method requiring JSON as the RequestBody, send the following payload to the registerService:
 
-....
-{	"userName" : "my-api-key-38n987",  
-	"jobType" : {
-		"id" : "",
-		"url":"http://localhost:8086/jumpstart/string/convert",
-		"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/convertContract",		
-		"resourceMetadata" : {  
-			   "name":"The toLower Service",  
-			  "description":"Service to convert string to upper or lower case",  
-			  "method":"POST"
-		}
+[source,json]
+---- 
+{ 
+	"url":"http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert",
+	"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/convertContract",
+	"method":"POST",		
+	"resourceMetadata" : {  
+		"name":"The toLower Service",  
+		"description":"Service to convert string to upper or lower case" 
+			  
 	}
 }
-....
+---- 
 
+#### Registering a User Service that uses GET without any parameters
 To register a service that uses the **GET** example without URL parameters (as per a "pure" REST case), the process is the same but be sure to specify **GET** as the method.
 
-....
-{   "userName" : "my-api-key-38n987",  
-	"jobType" : {
-		"id" : "",
-		"url":"http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome",
-        "contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/moviequotewelcomeContract",		
-		"resourceMetadata" : {  
-			   "name":"Movie Quote Welcome",  
-			  "description":"A web service that welcomes you to pz-servicecontroller",  
-			  "method":"GET"
-		}
+[source,json]
+----
+{   
+
+	"url":"http://pz-servicecontroller.venicegeo.io//jumpstart/moviequotewelcome",
+       "contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/jumpstart/moviequotewelcomeContract",	
+	"method":"GET”,	
+	"resourceMetadata" : {  
+		"name":"Movie Quote Welcome",  
+		 "description":"A web service that welcomes you to pz-servicecontroller"
 	}
 
 }
-....
+---- 
 ### Executing a Service
 
 To execute a service, utilize the ServiceControllers _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section.
 
-....
-http://pz-servicecontroller.venicegeo.io/servicecontroller/executeService
+[source,json]
+----
 {
   "serviceId" : "{{serviceId}}",
   "dataInputs" : {
@@ -225,42 +235,50 @@ http://pz-servicecontroller.venicegeo.io/servicecontroller/executeService
     ] 
   }
 }
-....
+----
 
 The response will be:  
 
-....
+[source,json]
+----
 <200 OK,{"result":"it is raining today."},{Server=[Apache-Coyote/1.1], Content-Type=[application/json;charset=UTF-8], Content-Length=[33], Date=[Tue, 19 Jan 2016 13:27:33 GMT]}>
-....
+----
 
 Executing the _moviequotewelcome_ previously registered would be done as follows:
 
-....
+[source,json]
+----
 {
-  "serviceId" : "21e84123-6a50-4118-b600-d0721b19dd7d",
-  "dataInputs" : {}
+  "serviceId" : “{{serviceId}}”,
+  "dataInputs" : {},
+  "dataOutput" : [         
+        {          
+            "mimeType" : "application/json",          
+            "type" : "text"        
+        }       
+    ] 
 }
-....
+----
 
 The response will be:
 
-....
+[source,json]
+----
 <200 OK,{"message":"I'm Ron Burgandyyyy?
 
-HELLO Marge!!!!
 Welcome to the piazza pz-servicecontroller!
 Details on using pz-servicecontrollers are located on the github venice wiki!
 "},{Server=[Apache-Coyote/1.1], Content-Type=[application/json;charset=UTF-8], Content-Length=[140], Date=[Tue, 19 Jan 2016 13:31:17 GMT]}>
-....
+----
 
-### Executing a Service Sending JSON
+#### Executing a Service Sending JSON
 
 To execute the convert service, do the following:
 
-....
-http://pz-servicecontroller.venicegeo.io/servicecontroller/executeService
+[source,json]
+----
 {
-  "serviceId" : "235e0e2d-5586-4ed2-898d-df78395151f7",
+  "serviceId" : “{{serviceId}}”,
   "dataInputs" : {
     "" : {
       "content" : "{\"theString\":\"MARGE test\", \"conversionType\":\"UPPER\"}",
@@ -275,8 +293,26 @@ http://pz-servicecontroller.venicegeo.io/servicecontroller/executeService
     ] 
   }
 }
-....
+----
 
+
+### Getting Description of a User Service
+To get a description of a user service registered with Piazza perform the following call:
+**GET**
+----
+ https://pz-servicecontroller.int.geointservices.io/service/{{serviceId}}
+----
+
+The response will be the metadata associated with the specified serviceId.
+
+### Getting a List of Registered User Services
+
+To get a list of the user services registered with Piazza, perform the following call:
+**GET**
+----
+ https://pz-servicecontroller.int.geointservices.io/service/
+----
+The response will be a service-list containing metadata for each of the registered user services.
 
 
 ### General Pz Service Operations  
@@ -300,8 +336,3 @@ Provides statistics on the Pz-ServiceController.
 {"mem":382464,"mem.free":159813,"processors":2,"instance.uptime":18151962,"uptime":18166991,"systemload.average":1.05,"heap.committed":382464,"heap.init":382976,"heap.used":222650,"heap":382464,"threads.peak":31,"threads.daemon":27,"threads.totalStarted":37,"threads":31,"classes":11529,"classes.loaded":11529,"classes.unloaded":0,"gc.ps_scavenge.count":4900,"gc.ps_scavenge.time":13789,"gc.ps_marksweep.count":0,"gc.ps_marksweep.time":0,"httpsessions.max":-1,"httpsessions.active":0,"gauge.response.admin.stats":7.0,"gauge.response.root":102.0,"counter.status.200.root":1,"counter.status.302.admin.stats":1}
 ....
 
-### Submitting User Service Requests
-
-User Service requests can be submitted to Piazza via the [Pz Gateway](https://github.com/venicegeo/venice/wiki/Pz-Gateway).  All User Service requests are submitted using **POST /job**
-
-For details on how to submit user service requests via the gateway, see [User Service Requests via the Gateway](https://github.com/venicegeo/venice/wiki/User-Service-Requests-via-the-Gateway)

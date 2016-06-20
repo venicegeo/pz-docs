@@ -92,19 +92,17 @@ _Note: because we do not yet support an actual `Job` to execute in the `Trigger`
 
 _Note: the `?trigger=id` and `?after=date` query params will soon be provided to make this polling process somewhat more palatable._
 
-## Internal Design Notes
+## Elasticsearch and Percolation
 
-* Elasticsearch indexes are used to store the event types, the events, the triggers, and the alerts.
-* When a new trigger is added, it's query is registered with the events index's percolation system.
-* When a new event is added, the event index's percolation system is checked to see if any trigger's query has matched. If so, the trigger's job is executed.
+Elasticsearch indexes are used to store the event types, the events, the triggers, and the alerts.
+
+When a new trigger is added, it's condition is entered into the events index's percolation index. When a new event is added, that percolation index is checked to see if any of the stored trigger conditions match. For those triggers that do match, their jobs are executed.
 
 ## Command Line App
 
 The service is started as a command line app:
 
     $ pz-workflow
-
-In local mode, the workflow service depends on finding the logger, uuidgen, and elasticsearch.
 
 
 ## HTTP API
@@ -258,12 +256,6 @@ Whacks the trigger specified by the `:id` value and returns 200.
 ### Common operations
 
 This service includes the common endpoints described in [[General Pz Service Operations]].
-
-The `admin settings` supported are:
-
-    {
-        "debug": "true"
-    }
 
 The `admin stats` supported are:
 

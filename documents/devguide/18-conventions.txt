@@ -37,7 +37,7 @@ New GitHub Repositories within the **_github.com/venicegeo_** community should b
  
 
 
-include::http.txt[]
+include::18_1-http.txt[]
 
 
 ## Endpoint/Resource Conventions

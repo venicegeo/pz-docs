@@ -1,7 +1,7 @@
-Piazza Users Guide (WORK IN PROGRESS)
-=====================================
+Piazza Users Guide
+==================
 The Piazza Team <venice@radiantblue.com>
-v0.0, 28 April 2016
+20 June 2016
 :doctype: book
 :toc: left
 :source-highlighter: prettify

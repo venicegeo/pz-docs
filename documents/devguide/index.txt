@@ -1,60 +1,63 @@
-Piazza Developers Guide (WORK IN PROGRESS)
-==========================================
+Piazza Developers Guide
+=======================
 The Piazza Team <venice@radiantblue.com>
-v0.0, 13 April 2016
+20 June 2016
 :doctype: book
 :toc: left
+:source-highlighter: prettify
 link:index.pdf[_PDF_]
+
+:sectnums:
 
 :leveloffset: +1
 
 include::../common/intro.txt[]
 
-include::introduction.txt[]
+include::01-introduction.txt[]
 
-include::process.txt[]
+include::01_1-process.txt[]
 
-include::requirements.txt[]
+include::01_2-requirements.txt[]
 
-include::development.txt[]
+include::01_3-development.txt[]
 
-include::configuration-management.txt[]
+include::01_4-configuration-management.txt[]
 
-include::testing.txt[]
+include::01_5-testing.txt[]
 
-include::pz-core.txt[]
+include::02-pz-core.txt[]
 
-include::jobs.txt[]
+include::03-jobs.txt[]
 
-include::job-workflow.txt[]
+include::04-job-workflow.txt[]
 
-include::pz-jobmanager.txt[]
+include::05-pz-jobmanager.txt[]
 
-include::pz-logger.txt[]
+include::06-pz-logger.txt[]
 
-include::pz-gateway.txt[]
+include::07-pz-gateway.txt[]
 
-include::pz-sak.txt[]
+include::08-pz-sak.txt[]
 
-include::pz-access.txt[]
+include::09-pz-access.txt[]
 
-include::pz-ingest.txt[]
+include::10-pz-ingest.txt[]
 
-include::pz-search-metadata-ingest.txt[]
+include::11-pz-search-metadata-ingest.txt[]
 
-include::pz-search-services.txt[]
+include::12-pz-search-services.txt[]
 
-include::pz-security.txt[]
+include::13-pz-security.txt[]
 
-include::pz-servicecontroller.txt[]
+include::14-pz-servicecontroller.txt[]
 
-include::pz-uuidgen.txt[]
+include::15-pz-uuidgen.txt[]
 
-include::pz-workflow.txt[]
+include::16-pz-workflow.txt[]
 
-include::job-common.txt[]
+include::17-job-common.txt[]
 
-include::conventions.txt[]
+include::18-conventions.txt[]
 
 include::../common/support.txt[]
 

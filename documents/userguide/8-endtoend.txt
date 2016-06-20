@@ -1,13 +1,14 @@
 # End-to-End Example
 
-In this section, a workflow will be described to make use of pzsvc-file-watcher, pzsvc-preview-generator
-and other Piazza components to automatically crop files uploaded to a given s3 bucket.
+In this section, a workflow will be described to make use of pzsvc-file-watcher,
+pzsvc-preview-generator and other Piazza components to automatically crop files uploaded to a given
+s3 bucket.
 
 
 ## Setting up pzsvc-file-watcher
 
-The pzsvc-file-watcher automatically watches for uploaded files to the s3 bucket and ingests them to the
-Piazza service.
+The pzsvc-file-watcher automatically watches for uploaded files to the s3 bucket and ingests them
+to the Piazza service.
 
 To begin, clone the pzsvc-file-watcher from https://github.com/venicegeo/pzsvc-file-watcher:
 
@@ -85,9 +86,19 @@ Sample working payload:
 }
 ----
 
-Service will download the file from "pz-svcs-prevgen" s3 bucket and crop it with given bounding box
-info. The cropped result tif will be uploaded back up to s3 bucket "pz-svcs-prevgen-output":
+The service will download the file from "pz-svcs-prevgen" s3 bucket and crop it with given bounding
+box info. The cropped result tif will be uploaded back up to s3 bucket "pz-svcs-prevgen-output":
 https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=
+
+The script should return a JobID that can then be passed as an argument to
+link:scripts/job-info.sh[job-info.sh]:
+
+`sh job-info.sh {{JobID}}`
+
+When the job is complete, the resulting data can be queried from the dataID returned by the
+job-info.sh script using link:scripts/file-info.sh[file-info.sh]:
+
+`sh file-info.sh {{dataID}}`
 
 If all goes well, the resulting received payload will be of DataResource type:
 
@@ -98,7 +109,7 @@ If all goes well, the resulting received payload will be of DataResource type:
         "type": "raster",
         "location": {
             "type": "s3",
-            "bucketName": "pz-svcs-prevgen",
+            "bucketName": "pz-svcs-prevgen-output",
             "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
             "domainName": "s3.amazonaws.com"
         },
@@ -113,3 +124,5 @@ If all goes well, the resulting received payload will be of DataResource type:
     }
 }
 ----
+
+The resulting file can be retrieved from the bucket, with the bounding box applied to it.

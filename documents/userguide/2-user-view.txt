@@ -48,8 +48,9 @@ Your application will need to perform the following operations:
     contains any coastal regions (using the bounding box) and if the image's quality (using the
     cloud cover) is high enough.
 . If the new imagery is usable, it must be sent to each of the shoreline extraction algorithms.
-. As each algorithm completes, its returned vectors must be either sent to a user for manual inspection
-    (if confidence is low) or inserted into the shoreline database (if confidence is high).
+. As each algorithm completes, its returned vectors must be either sent to a user for manual
+    inspection (if confidence is low) or inserted into the shoreline database (if confidence is
+    high).
 
 Piazza can be used to help implement all of these operations.
 

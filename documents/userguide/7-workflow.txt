@@ -13,7 +13,7 @@ NOTE: By design, events and triggers are fairly primitive, low-level constructs.
 ## The EventType
 
 The user (or some service) first defines an _EventType_ which is the "schema" for the events that
-the user will be generating. The _EventType_ object is POSTed to `/eventtypes` and contains
+the user will be generating. The _EventType_ object is POSTed to `/eventType` and contains
 contains a _name_ (string) and a map describing the event type's parameters. It also contains a
 system-generated ID. For example:
 
@@ -60,7 +60,17 @@ Gateway/Dispatcher-style syntax. The _Trigger_ also contains a system-generated 
             }
         }
     },
-    "job": { "task": "alert the user" }
+    "job": {
+        "userName": "test",
+        "jobType": {
+            "type": "execute-service",
+            "data": {
+                "serviceId": "{{serviceId}}",
+                "dataInputs": {},
+                "dataOutput": [ { "mimeType": "application/json", "type": "text" } ]
+            }
+        }
+    }
 }
 ----
 
@@ -117,9 +127,6 @@ For example:
 ----
 
 NOTE: in the future the `event_id` may become an array of event IDs.
-
-NOTE: because we do not yet support an actual _Job_ to execute in the _Trigger_ definition, the
-    user can poll the `/alerts` endpoint and perform the required job action manually.
 
 NOTE: the `?trigger=id` and `?after=date` query params will soon be provided to make this polling
     process somewhat more palatable.

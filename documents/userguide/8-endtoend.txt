@@ -1,11 +1,50 @@
 # End-to-End Example
 
-*TODO: _complete script for end-to-end example of cropped-preview-generation demo_*
+In this section, a workflow will be described to make use of pzsvc-file-watcher, pzsvc-preview-generator
+and other Piazza components to automatically crop files uploaded to a given s3 bucket.
+
+
+## Setting up pzsvc-file-watcher
+
+The pzsvc-file-watcher automatically watches for uploaded files to the s3 bucket and ingests them to the
+Piazza service.
+
+To begin, clone the pzsvc-file-watcher from https://github.com/venicegeo/pzsvc-file-watcher:
+
+`git clone https://github.com/venicegeo/pzsvc-file-watcher`
+
+Next, install pzsvc-file-watcher's dependencies:
+
+`pip2 install -r requirements.txt`
+
+pzsvc-file-watcher takes a few command line arguments, including the s3 bucket location, the user's
+AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS
+credentials are checked for in the `s3.key.access` and `s3.key.private` environment variables, and
+can also be supplied via command line. Additionally, the s3 bucket name can be specified in the
+`s3.bucket.name` environment variable, and the `PZUSER` environment variable is checked for the
+value of the user's Piazza UserName. In addition, the Piazza Gateway Host should be specified.
+
+An example of running filewatcher.py via the command line:
+
+`python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.DOMAIN' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'`
+
+This will set up the pzsvc-file-watcher to poll continuously for new files in the `aws_bucket_name`
+bucket, and ingest those files (without hosting them!) to the Piazza service.
+
+The output of running the filewatcher will look something like the following:
+
+`Listening for new files. This will continuously poll until the         process is terminated.`
+`Successful request for ingest of file 0272f68b-b979-4f5f-95d0-1e2d0f96133a-elevation.tif of type raster`
+
+This response means that the ingest request was received by the Piazza Gateway.
+
+
+## Registering the pzsvc-preview-generator service
 
 The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to
 showcase Piazza's core capabilities. This app exposes a REST endpoint which takes a POST request
 containing payload of required parameters. Given an s3 location, it downloads a raster file, crops
-the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
+the image, uploads the cropped raster back up to s3 bucket, and returns a DataResource.
 
 POST a request with a payload to the URL: https://pz-svcs-prevgen.venicegeo.io/crop
 
@@ -38,22 +77,24 @@ If all goes well, the resulting received payload will be of DataResource type:
 [source,json]
 ----
 {
-  "dataType": {
-    "type": "raster",
-    "location": {
-      "type": "s3",
-      "bucketName": "pz-svcs-prevgen",
-      "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
-      "domainName": "s3.amazonaws.com"
+    "dataType": {
+        "type": "raster",
+        "location": {
+            "type": "s3",
+            "bucketName": "pz-svcs-prevgen",
+            "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+            "domainName": "s3.amazonaws.com"
+        },
+        "mimeType": "image/tiff"
     },
-    "mimeType": "image/tiff"
-  },
-  "metadata": {
-    "name": "External Crop Raster Service",
-    "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
-    "description": "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
-    "url": "http://host:8086/crop",
-    "method": "POST"
-  }
+    "metadata": {
+        "name": "External Crop Raster Service",
+        "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+        "description": "Service that takes payload containing s3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+        "url": "http://host:8086/crop",
+        "method": "POST"
+    }
 }
 ----
+
+

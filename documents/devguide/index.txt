@@ -54,8 +54,6 @@ include::pz-workflow.txt[]
 
 include::job-common.txt[]
 
-include::user-service-requests.txt[]
-
 include::conventions.txt[]
 
 include::../common/support.txt[]

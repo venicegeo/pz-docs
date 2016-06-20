@@ -57,6 +57,8 @@ function run_tests {
     # Check our environment variables
     sh "$scripts/setup.sh"
 
+    cp "$scripts/terrametrics.tif" "$root"
+
     echo
     echo "Checking section 3 examples"
     echo "- Checking 3-hello.sh"
@@ -66,20 +68,18 @@ function run_tests {
 
     echo
     echo "Checking section 4 examples"
-    cp "$scripts/terrametrics.tif" "$root"
     echo "- Checking 4-hosted-load.sh"
     jobid=$(sh "$scripts/4-hosted-load.sh")
     echo "- Checking 4-job.sh"
     dataid=$(sh "$scripts/4-job.sh" "$jobid")
     echo "- Checking 4-hosted-download.sh"
     sh "$scripts/4-hosted-download.sh" "$dataid"
-    rm "$root/terrametrics.tif"
 
-    # echo "- Checking 4-nonhosted-load.sh"
+    echo "- SKIPPING 4-nonhosted-load.sh"
     # jobid=`$scripts/4-nonhosted-load.sh`
-    # echo "- Checking 4-job.sh"
+    echo "- SKIPPING 4-job.sh"
     # dataid=`$scripts/4-job.sh $jobid`
-    # echo "- Checking 4-nonhosted-wms.sh"
+    echo "- SKIPPING 4-nonhosted-wms.sh"
     # jobid=`$scripts/4-nonhosted-wms.sh $dataid`
     # # check to make sure our wms gets set up
     # $scripts/4-job.sh $jobid
@@ -110,6 +110,8 @@ function run_tests {
     echo
     echo "Checking section 8 examples"
     sh "$scripts/8-endtoend.sh"
+
+    rm "$root/terrametrics.tif"
 
     echo
     echo "Examples checked."

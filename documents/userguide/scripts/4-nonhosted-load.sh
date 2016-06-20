@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # tag::public[]
 data='{
     "type": "ingest",
-    "host": false,
+    "host": "false",
     "data": {
         "dataType": {
             "type": "raster",
@@ -16,7 +16,7 @@ data='{
             }
         },
         "metadata": {
-            "name": "terrametrics",
+            "name": "elevation",
             "description": "geotiff_test"
         }
     }
@@ -28,7 +28,7 @@ curl -S -s -X POST \
     -H "Content-Type: application/json" \
     -d "$data" \
     -u "$PZUSER":"$PZPASS" \
-    "https://pz-gateway.$DOMAIN/data/file" > status.txt
+    "https://pz-gateway.$DOMAIN/data" > status.txt
 
 # verify all worked successfully
 grep -q 200 status.txt || { cat response.txt; exit 1; }

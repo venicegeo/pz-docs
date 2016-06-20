@@ -64,26 +64,25 @@ function run_tests {
     echo
     echo "Checking section 3 examples"
     echo "- Checking 3-hello.sh"
-    sh "$scripts/3-hello.sh"
+    sh "$scripts/3-hello.sh" > /dev/null
     echo "- Checking 3-hello-full.sh"
-    sh "$scripts/3-hello-full.sh"
+    sh "$scripts/3-hello-full.sh" > /dev/null
 
     echo
     echo "Checking section 4 examples"
     echo "- Checking 4-hosted-load.sh"
     jobid=$(sh "$scripts/4-hosted-load.sh")
-    echo "- Checking 4-job.sh"
-    dataid=$(sh "$scripts/4-job.sh" "$jobid")
+    dataid=$(sh "$scripts/job-info.sh" "$jobid")
     echo "- Checking 4-hosted-download.sh"
-    sh "$scripts/4-hosted-download.sh" "$dataid"
+    sh "$scripts/4-hosted-download.sh" "$dataid" > /dev/null
 
     echo "- Checking 4-nonhosted-load.sh"
     jobid=$("$scripts/4-nonhosted-load.sh")
-    dataid=$("$scripts/4-job.sh" "$jobid")
+    dataid=$("$scripts/job-info.sh" "$jobid")
+    sleep 2
     echo "- Checking 4-nonhosted-wms.sh"
     jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
-    # check to make sure our wms gets set up
-    "$scripts/4-job.sh" "$jobid"
+    sh "$scripts/job-info.sh" "$jobid" > /dev/null
 
     echo
     echo "Checking section 5 examples"
@@ -99,19 +98,19 @@ function run_tests {
 
     echo
     echo "Checking section 6 examples"
+    echo "- Checking 6-register.sh"
     reg=$(sh "$scripts/6-register.sh")
+    echo "- Checking 6-execute-get.sh"
     exe=$(sh "$scripts/6-execute-get.sh" "$reg")
-    stat=$(sh "$scripts/6-get-status.sh" "$exe")
-    sleep 2
-    sh "$scripts/6-get-result.sh" "$stat" > /dev/null
+    job=$(sh "$scripts/job-info.sh" "$exe")
+    sh "$scripts/file-info.sh" "$job" > /dev/null
 
     echo
     echo "Checking section 7 examples"
     sh "$scripts/7-example.sh" > /dev/null
 
     echo
-    echo "Checking section 8 examples"
-    sh "$scripts/8-endtoend.sh"
+    echo "Not checking section 8 examples"
 
     # Cleanup
     rm "$root/terrametrics.tif"

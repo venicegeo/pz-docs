@@ -91,18 +91,18 @@ A client can now periodically check the status of the job, waiting for it to be 
 script takes as a single command-line parameter, the job id string:
 
 [source,sh]
-.link:scripts/4-job.sh[4-job.sh]
+.link:scripts/job-info.sh[job-info.sh]
 ----
-include::scripts/4-job.sh[tags=public]
+include::scripts/job-info.sh[tags=public]
 ----
 
 Once the job is complete, we can retrieve the metadata about the image. Here too the script takes
 an argument: this time, the id of the data resource (displayed by the previous script).
 
 [source,sh]
-.link:scripts/4-file-info.sh[4-file-info.sh]
+.link:scripts/file-info.sh[file-info.sh]
 ----
-include::scripts/4-file-info.sh[tags=public]
+include::scripts/file-info.sh[tags=public]
 ----
 
 When the Job is done, the response for the Job status request will now contain the _result_ field,

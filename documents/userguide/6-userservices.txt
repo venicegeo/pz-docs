@@ -163,7 +163,7 @@ where jobId is the id returned when executing the service. On success the result
 ----
 
 A script that checks the status of the job can be found at
-link:scripts/6-get-status.sh[6-get-status.sh]. The script takes the jobId returned from the
+link:scripts/job-info.sh[job-info.sh]. The script takes the jobId returned from the
 6-execute-get.sh script as it's only argument.
 
 Finally, the actual result is returned by sending a GET message to
@@ -184,8 +184,8 @@ of the returned status. In this case the result is text.
 }
 ----
 
-Run the link:scripts/6-get-result.sh[6-get-result.sh] script to check the result of the previous
-job. This script also takes a single argument: the dataId returned by the previous script.
+Run the link:scripts/file-info.sh[file-info.sh] script to check the result of the previous job.
+This script also takes a single argument: the dataId returned by the previous script.
 
 ## How to Write Your Own User Services
 

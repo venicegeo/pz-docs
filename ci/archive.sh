@@ -129,9 +129,9 @@ doit "$ins/devopsguide" "$outs/devopsguide"
 mkdir "$outs/presentations"
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
-set -e
-run_tests
-unset -e
+#set -e
+#run_tests
+#unset -e
 
 echo Done.
 

@@ -7,9 +7,9 @@ external data, stored within Piazza, and a resource ID is returned. The metadata
 into Piazza's search index. Piazza supports several data formats today -- including GeoJSON,
 Shapefiles, and GeoTIFFs -- with more to come as users require them.
 
-For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded,
+For example, the URL of a GeoTIFF stored in an s3 bucket can be sent to Piazza and, once loaded,
 Piazza can perform other operations on the data such as generating a WMS layer or sending the data
-to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be
+to a user service. The metadata for the file will include the s3 URL, and so the resource ID can be
 used as a global, unique reference to the data.
 
 Piazza is not intended to be a storage system for user data and so normally only the metadata is
@@ -62,7 +62,7 @@ The response from this request will contain the ID of the Job that was submitted
 }
 ----
 
-[source,sh]
+[source,bash]
 .link:scripts/4-hosted-load.sh[4-hosted-load.sh]
 ----
 include::scripts/4-hosted-load.sh[tags=public]
@@ -90,19 +90,19 @@ the specified Job, including progress %, job status, and the submitting user inf
 A client can now periodically check the status of the job, waiting for it to be completed. This
 script takes as a single command-line parameter, the job id string:
 
-[source,sh]
-.link:scripts/4-job.sh[4-job.sh]
+[source,bash]
+.link:scripts/job-info.sh[job-info.sh]
 ----
-include::scripts/4-job.sh[tags=public]
+include::scripts/job-info.sh[tags=public]
 ----
 
 Once the job is complete, we can retrieve the metadata about the image. Here too the script takes
 an argument: this time, the id of the data resource (displayed by the previous script).
 
-[source,sh]
-.link:scripts/4-file-info.sh[4-file-info.sh]
+[source,bash]
+.link:scripts/file-info.sh[file-info.sh]
 ----
-include::scripts/4-file-info.sh[tags=public]
+include::scripts/file-info.sh[tags=public]
 ----
 
 When the Job is done, the response for the Job status request will now contain the _result_ field,
@@ -131,7 +131,7 @@ reference the Data.
 
 Next, we can retrieve the file:
 
-[source,sh]
+[source,bash]
 .link:scripts/4-hosted-download.sh[4-hosted-download.sh]
 ----
 include::scripts/4-hosted-download.sh[tags=public]
@@ -139,7 +139,7 @@ include::scripts/4-hosted-download.sh[tags=public]
 
 And, finally, we can create a WMS endpoint for our GeoTIFF:
 
-[source,sh]
+[source,bash]
 .link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh]
 ----
 include::scripts/4-nonhosted-wms.sh[tags=public]
@@ -199,13 +199,13 @@ multipart, as no file attachment is specified in the request.
 ----
 
 Note the _dataType.location_ field now present. This key tells Piazza where to find the external
-file. For files in S3, this depends on the _bucketName_, _fileName_ (sometimes called key), and
-_domainName_ parameters. Piazza must have access to this S3 bucket in order for load to succeed.
+file. For files in s3, this depends on the _bucketName_, _fileName_ (sometimes called key), and
+_domainName_ parameters. Piazza must have access to this s3 bucket in order for load to succeed.
 
-[source,sh]
-.link:scripts/4-file-load-external.sh[4-file-load-external.sh]
+[source,bash]
+.link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
 ----
-include::scripts/4-file-load-external.sh[tags=public]
+include::scripts/4-nonhosted-load.sh[tags=public]
 ----
 
 From this point on, the workflow is identical to hosted files.

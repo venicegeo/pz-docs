@@ -12,8 +12,6 @@ curl -S -s -X GET \
 
 # verify all worked successfully
 grep -q 200 status.txt || { cat response.txt; exit 1; }
-grep -E -q '"name"\s?:\s?"terrametrics"' response.txt
-
 cat response.txt
 # end::public[]
 

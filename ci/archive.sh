@@ -50,18 +50,16 @@ function doit {
     cp -R "$indir/scripts" "$outdir"
 }
 
-
 function run_tests {
     # verify the example scripts
     echo
     echo "Checking examples."
+
     # Needed for some tests
     cp "$scripts/terrametrics.tif" "$root"
 
     # Check our environment variables
     sh "$scripts/setup.sh"
-
-    cp "$scripts/terrametrics.tif" "$root"
 
     echo
     echo "Checking section 3 examples"
@@ -79,12 +77,11 @@ function run_tests {
     sh "$scripts/4-hosted-download.sh" "$dataid" > /dev/null
 
     echo "- Checking 4-nonhosted-load.sh"
-    jobid=$("$scripts/4-nonhosted-load.sh")
-    dataid=$("$scripts/job-info.sh" "$jobid")
-    sleep 2
+    jobid=$(sh "$scripts/4-nonhosted-load.sh")
+    dataid=$(sh "$scripts/job-info.sh" "$jobid")
     echo "- SKIPPING 4-nonhosted-wms.sh"
-    jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
-    sh "$scripts/job-info.sh" "$jobid" > /dev/null
+    # jobid=$(sh "$scripts/4-nonhosted-wms.sh" "$dataid")
+    # sh "$scripts/job-info.sh" "$jobid" > /dev/null
 
     echo
     echo "Checking section 5 examples"
@@ -109,7 +106,14 @@ function run_tests {
 
     echo
     echo "Checking section 7 examples"
-    sh "$scripts/7-example.sh" > /dev/null
+    echo "- Checking 7-eventtype.sh"
+    eventtype=$(sh "$scripts/7-eventtype.sh")
+    echo "- Checking 7-trigger.sh"
+    sh "$scripts/7-trigger.sh" "$eventtype" > /dev/null
+    echo "- Checking 7-event.sh"
+    sh "$scripts/7-event.sh" "$eventtype" > /dev/null
+    echo "- Checking 7-get-alerts.sh"
+    sh "$scripts/7-get-alerts.sh" > /dev/null
 
     echo
     echo "Not checking section 8 examples"
@@ -135,7 +139,7 @@ cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
 #set -e
 #run_tests
-#unset -e
+#set +e
 
 echo Done.
 

@@ -17,7 +17,7 @@ NOTE: To set `$DOMAIN`, `$PZUSER` and `$PZPASS`, you can use the link:scripts/se
     variables for the current shell and child processes (the `source` is necessary to export
     environment variables to the current shell). If your instance of Piazza requires no
     authentication, simply replace PZUSER and PZPASS with blank strings: `source setup.sh DOMAIN ''
-    ''`. You can also run the setup.sh script to ensure that these variables are set: `sh setup.sh`
+    ''`. You can also run the setup.sh script to ensure that these variables are set: `./setup.sh`
     (this is done within most of the scripts, so it's wise to set these environment variables
     before continuing. These variables can also be set using the `export` command.
 
@@ -33,6 +33,9 @@ WARNING: Be careful when using `export` within files to set `$PZUSER` and `$PZPA
 
 We will begin with a simple "health check" ping to the Gateway to verify that we have a functioning
 instance of Piazza to talk to.
+
+[source,bash]
+$ ./3-hello-full.sh
 
 [source,bash]
 .link:scripts/3-hello-full.sh[3-hello-full.sh]

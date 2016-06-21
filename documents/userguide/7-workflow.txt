@@ -21,11 +21,11 @@ system-generated ID. For example:
 ----
 {
     "id": "17de4",
-    "name": "USDataFound",     # short, id-like string
+    "name": "USDataFound",
     "mapping": {
-        "ItemId": "string",    # the uuid of the bad data
-        "Severity": "integer", # level of offense, 1..5
-        "Problem": "string"    # nature of the issue, e.g. US bbox, US phone number, etc
+        "ItemId": "string",
+        "Severity": "integer",
+        "Problem": "string"
     }
 }
 ----
@@ -35,7 +35,8 @@ The available data types are `string`, `boolean`, `integer`, `double`, `date`, `
 
 The following script shows an example of registering an EventType. Run it using:
 
-`$ sh 7-trigger.sh`
+[source,bash]
+$ ./7-eventtype.sh
 
 [source,bash]
 .link:scripts/7-eventtype.sh[7-eventtype.sh]
@@ -85,7 +86,8 @@ having a condition based on multiple events.
 Pass the following script an EventType ID, and it will create a generic Trigger for the given
 EventType:
 
-`$ sh 7-trigger.sh {{eventtype_id}}`
+[source,bash]
+$ ./7-trigger.sh {{eventtype_id}}
 
 [source,bash]
 .link:scripts/7-trigger.sh[7-trigger.sh]
@@ -116,7 +118,8 @@ For example:
 
 The following script POSTs an event with an EventType ID passed in by the user:
 
-`$ sh 7-event.sh {{eventtype_id}}`
+[source,bash]
+$ ./7-event.sh {{eventtype_id}}
 
 [source,bash]
 .link:scripts/7-event.sh[7-event.sh]
@@ -137,7 +140,7 @@ For example:
 {
     "id": "8e6fa",
     "trigger_id": "987d6",
-    "event_id": "53dac"
+    "event_id": "53dac",
     "job_id": "1da28b90-cc23-85bf-f28c-a215980bc9e4"
 }
 ----
@@ -145,7 +148,8 @@ For example:
 The following script gets the list of alerts currently in the Piazza system, with default
 pagination and per_page settings:
 
-`$ sh 7-get-alerts.sh`
+[source,bash]
+$ ./7-get-alerts.sh
 
 [source,bash]
 .link:scripts/7-get-alerts.sh[7-get-alerts.sh]

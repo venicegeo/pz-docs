@@ -153,7 +153,7 @@ mkdir "$outs/presentations"
 # shellcheck disable=SC2086
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
-run_tests
+#run_tests
 
 echo Done.
 

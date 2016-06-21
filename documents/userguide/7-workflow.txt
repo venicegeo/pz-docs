@@ -33,6 +33,10 @@ system-generated ID. For example:
 The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`,
 `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
 
+The following script shows an example of registering an EventType. Run it using:
+
+`$ sh 7-trigger.sh`
+
 [source,bash]
 .link:scripts/7-eventtype.sh[7-eventtype.sh]
 ----
@@ -78,6 +82,11 @@ NOTE: the "type" field of the "condition" will likely be removed in the future, 
 allows us to specify the event type directly within it; this would open up the possibility of
 having a condition based on multiple events.
 
+Pass the following script an EventType ID, and it will create a generic Trigger for the given
+EventType:
+
+`$ sh 7-trigger.sh {{eventtype_id}}`
+
 [source,bash]
 .link:scripts/7-trigger.sh[7-trigger.sh]
 ----
@@ -105,6 +114,10 @@ For example:
 }
 ----
 
+The following script POSTs an event with an EventType ID passed in by the user:
+
+`$ sh 7-event.sh {{eventtype_id}}`
+
 [source,bash]
 .link:scripts/7-event.sh[7-event.sh]
 ----
@@ -128,6 +141,11 @@ For example:
     "job_id": "1da28b90-cc23-85bf-f28c-a215980bc9e4"
 }
 ----
+
+The following script gets the list of alerts currently in the Piazza system, with default
+pagination and per_page settings:
+
+`$ sh 7-get-alerts.sh`
 
 [source,bash]
 .link:scripts/7-get-alerts.sh[7-get-alerts.sh]

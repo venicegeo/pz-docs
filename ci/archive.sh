@@ -50,35 +50,32 @@ function doit {
     cp -R "$indir/scripts" "$outdir"
 }
 
-
 function run_tests {
     # verify the example scripts
     echo
     echo "Testing started"
-    # Needed for some tests
-    cp "$scripts/terrametrics.tif" "$root"
 
     # Check our environment variables
-    sh "$scripts/setup.sh"
+    "$scripts/setup.sh"
 
     cp "$scripts/terrametrics.tif" "$root"
 
     echo -n "  3-hello.sh... "
-    sh "$scripts/3-hello.sh" > /dev/null
+    "$scripts/3-hello.sh" > /dev/null
     echo pass
 
     echo -n "  3-hello-full.sh... "
-    sh "$scripts/3-hello-full.sh" > /dev/null
+    "$scripts/3-hello-full.sh" > /dev/null
     echo pass
 
     echo -n "  4-hosted-load.sh... "
-    jobid=$(sh "$scripts/4-hosted-load.sh")
+    jobid=$("$scripts/4-hosted-load.sh")
     sleep 5
-    dataid=$(sh "$scripts/job-info.sh" "$jobid")
+    dataid=$("$scripts/job-info.sh" "$jobid")
     echo pass
 
     echo -n "  4-hosted-download.sh... "
-    sh "$scripts/4-hosted-download.sh" "$dataid" > /dev/null
+    "$scripts/4-hosted-download.sh" "$dataid" > /dev/null
     echo pass
 
     echo -n "  4-nonhosted-load.sh... "
@@ -90,37 +87,49 @@ function run_tests {
     echo -n "  4-nonhosted-wms.sh... "
     jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
     sleep 5
-    sh "$scripts/job-info.sh" "$jobid" > /dev/null
+    "$scripts/job-info.sh" "$jobid" > /dev/null
     echo pass
 
     echo -n "  5-load-file.sh... "
     # Load manually because relative paths are hard ...
-    sh "$scripts/5-load-file.sh" "one" "The quick, brown fox." > /dev/null
-    sh "$scripts/5-load-file.sh" "two" "The lazy dog." > /dev/null
-    sh "$scripts/5-load-file.sh" "three" "The hungry hungry hippo." > /dev/null
+    "$scripts/5-load-file.sh" "one" "The quick, brown fox." > /dev/null
+    "$scripts/5-load-file.sh" "two" "The lazy dog." > /dev/null
+    "$scripts/5-load-file.sh" "three" "The hungry hungry hippo." > /dev/null
     echo pass
 
     echo -n "  5-filtered-get.sh... "
-    sh "$scripts/5-filtered-get.sh" "dog" > /dev/null
+    "$scripts/5-filtered-get.sh" "dog" > /dev/null
     echo pass
 
     echo -n "  5-query.sh... "
-    sh "$scripts/5-query.sh" "fox" > /dev/null
+    "$scripts/5-query.sh" "fox" > /dev/null
     echo pass
 
     echo -n "  6-register.sh... "
-    reg=$(sh "$scripts/6-register.sh")
+    reg=$("$scripts/6-register.sh")
     echo pass
 
     echo -n "  6-execute-get.sh... "
-    exe=$(sh "$scripts/6-execute-get.sh" "$reg")
+    exe=$("$scripts/6-execute-get.sh" "$reg")
     sleep 5
-    job=$(sh "$scripts/job-info.sh" "$exe")
-    sh "$scripts/file-info.sh" "$job" > /dev/null
+    job=$("$scripts/job-info.sh" "$exe")
+    "$scripts/file-info.sh" "$job" > /dev/null
     echo pass
 
-    echo -n "  7-example.sh... "
-    sh "$scripts/7-example.sh" > /dev/null
+    echo -n "  7-eventtype.sh... "
+    eventtype=$("$scripts/7-eventtype.sh")
+    echo pass
+
+    echo -n "  7-trigger.sh... "
+    "$scripts/7-trigger.sh" "$eventtype" > /dev/null
+    echo pass
+
+    echo -n "  7-event.sh... "
+    "$scripts/7-event.sh" "$eventtype" > /dev/null
+    echo pass
+
+    echo -n "  7-get-alerts.sh... "
+    "$scripts/7-get-alerts.sh" > /dev/null
     echo pass
 
     echo -n "  8 (end-to-end)... "
@@ -144,7 +153,7 @@ mkdir "$outs/presentations"
 # shellcheck disable=SC2086
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
-#run_tests
+run_tests
 
 echo Done.
 

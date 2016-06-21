@@ -21,17 +21,28 @@ system-generated ID. For example:
 ----
 {
     "id": "17de4",
-    "name": "USDataFound",     # short, id-like string
+    "name": "USDataFound",
     "mapping": {
-        "ItemId": "string",    # the uuid of the bad data
-        "Severity": "integer", # level of offense, 1..5
-        "Problem": "string"    # nature of the issue, e.g. US bbox, US phone number, etc
+        "ItemId": "string",
+        "Severity": "integer",
+        "Problem": "string"
     }
 }
 ----
 
 The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`,
 `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
+
+The following script shows an example of registering an EventType. Run it using:
+
+[source,bash]
+$ ./7-eventtype.sh
+
+[source,bash]
+.link:scripts/7-eventtype.sh[7-eventtype.sh]
+----
+include::scripts/7-eventtype.sh[tags=public]
+----
 
 
 ## The Trigger
@@ -49,16 +60,7 @@ Gateway/Dispatcher-style syntax. The _Trigger_ also contains a system-generated 
     "title": "High Severity",
     "condition": {
         "eventtype_ids": ["{{eventtype_id}}"],
-        "query": {
-            "query": {
-                "bool": {
-                    "must": [
-                        { "match": {"severity": 5} },
-                        { "match": {"code": "PHONE"} }
-                    ]
-                }
-            }
-        }
+        "query": { "query": { "match_all": {} } }
     },
     "job": {
         "userName": "test",
@@ -77,12 +79,21 @@ Gateway/Dispatcher-style syntax. The _Trigger_ also contains a system-generated 
 In this example, the job will be executed only when our "US data found" event occurs with the
 specific problem being that a US bounding box has been found with a severity of 4.
 
-NOTE: the `job.Task` field is a string that contains JSON. It can be templated and filled in with
-values provided by the event data. To make a value variable, prefix it with a '$'.
-
 NOTE: the "type" field of the "condition" will likely be removed in the future, as the query DSL
 allows us to specify the event type directly within it; this would open up the possibility of
 having a condition based on multiple events.
+
+Pass the following script an EventType ID, and it will create a generic Trigger for the given
+EventType:
+
+[source,bash]
+$ ./7-trigger.sh {{eventtype_id}}
+
+[source,bash]
+.link:scripts/7-trigger.sh[7-trigger.sh]
+----
+include::scripts/7-trigger.sh[tags=public]
+----
 
 
 ## The Event
@@ -98,15 +109,22 @@ For example:
     "eventtype_id": "{{eventtype_id}}",
     "date": "2007-06-06T14:30:00Z",
     "mapping": {
-        "datatype": "raster",
-        "espg": 0,
-        "minX": 0,
-        "minY": 0,
-        "maxX": 0,
-        "maxY": 0,
-        "hosted": true
+        "ItemId": "test",
+        "Severity": 200,
+        "Problem": "us-bbox"
     }
 }
+----
+
+The following script POSTs an event with an EventType ID passed in by the user:
+
+[source,bash]
+$ ./7-event.sh {{eventtype_id}}
+
+[source,bash]
+.link:scripts/7-event.sh[7-event.sh]
+----
+include::scripts/7-event.sh[tags=public]
 ----
 
 
@@ -122,8 +140,21 @@ For example:
 {
     "id": "8e6fa",
     "trigger_id": "987d6",
-    "event_id": "53dac"
+    "event_id": "53dac",
+    "job_id": "1da28b90-cc23-85bf-f28c-a215980bc9e4"
 }
+----
+
+The following script gets the list of alerts currently in the Piazza system, with default
+pagination and per_page settings:
+
+[source,bash]
+$ ./7-get-alerts.sh
+
+[source,bash]
+.link:scripts/7-get-alerts.sh[7-get-alerts.sh]
+----
+include::scripts/7-get-alerts.sh[tags=public]
 ----
 
 NOTE: in the future the `event_id` may become an array of event IDs.

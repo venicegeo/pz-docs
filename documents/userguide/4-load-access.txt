@@ -23,6 +23,7 @@ performance penalty.
 Although not intended for long-term use, Piazza does also support a _hosted_ model in which the
 data is copied locally for metadata extraction but _not_ deleted.
 
+
 ## Hosted Image File Example
 
 NOTE: The GeoTIFF file used in these examples can be found at
@@ -30,6 +31,19 @@ link:scripts/terrametrics.tif[terrametrics.tif].
 
 This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host`
 set to `true`. The script will print out the id of the _job_ that was submitted.
+
+[source,bash]
+.link:scripts/4-hosted-load.sh[4-hosted-load.sh]
+----
+include::scripts/4-hosted-load.sh[tags=public]
+----
+
+On the command line:
+
+[source,bash]
+$ ./4-hosted-load.sh
+
+The important JSON here is as follows:
 
 [source,json]
 ----
@@ -62,11 +76,6 @@ The response from this request will contain the ID of the Job that was submitted
 }
 ----
 
-[source,bash]
-.link:scripts/4-hosted-load.sh[4-hosted-load.sh]
-----
-include::scripts/4-hosted-load.sh[tags=public]
-----
 
 The ID of the Job is used to fetch the status of the load, as Piazza opens the file and validates
 the data. Requesting the status of a Job is performed by executing a simple GET request to the
@@ -91,13 +100,19 @@ A client can now periodically check the status of the job, waiting for it to be 
 script takes as a single command-line parameter, the job id string:
 
 [source,bash]
+$ ./job-info.sh {{jobId}}
+
+[source,bash]
 .link:scripts/job-info.sh[job-info.sh]
 ----
 include::scripts/job-info.sh[tags=public]
 ----
 
 Once the job is complete, we can retrieve the metadata about the image. Here too the script takes
-an argument: this time, the id of the data resource (displayed by the previous script).
+an argument: this time, the id of the data resource (displayed by the job-info.sh script).
+
+[source,bash]
+$ ./file-info.sh {{dataId}}
 
 [source,bash]
 .link:scripts/file-info.sh[file-info.sh]
@@ -132,12 +147,18 @@ reference the Data.
 Next, we can retrieve the file:
 
 [source,bash]
+$ ./4-hosted-download.sh {{dataId}}
+
+[source,bash]
 .link:scripts/4-hosted-download.sh[4-hosted-download.sh]
 ----
 include::scripts/4-hosted-download.sh[tags=public]
 ----
 
 And, finally, we can create a WMS endpoint for our GeoTIFF:
+
+[source,bash]
+$ ./4-nonhosted-wms.sh {{dataId}}
 
 [source,bash]
 .link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh]
@@ -167,6 +188,7 @@ _result_ field in the Job Response.
 The information will contain the host, port, and layer name of the data as hosted on the Piazza
 GeoServer instance. The capabilities URL and be copied-and-pasted into a browser to view the
 capabilities of the service. This can then be used as would any other typical WMS service.
+
 
 ## Non-hosted Image File
 
@@ -203,12 +225,16 @@ file. For files in s3, this depends on the _bucketName_, _fileName_ (sometimes c
 _domainName_ parameters. Piazza must have access to this s3 bucket in order for load to succeed.
 
 [source,bash]
+$ ./4-nonhosted-load.sh
+
+[source,bash]
 .link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
 ----
 include::scripts/4-nonhosted-load.sh[tags=public]
 ----
 
 From this point on, the workflow is identical to hosted files.
+
 
 ## Hosted GeoJSON File
 

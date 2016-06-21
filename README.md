@@ -18,7 +18,7 @@ Linking:
     $ gem install --pre asciidoctor-pdf
     $ git clone https://github.com/venicegeo/pz-docs.git
     $ cd pz-docs
-    $ sh ci/archive.sh
+    $ ./ci/archive.sh
     $ open out/index.html
     $ open out/index.pdf
 

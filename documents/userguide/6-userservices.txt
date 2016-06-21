@@ -211,7 +211,7 @@ The contact information for each user service is located in the resourceMetadata
   }
 }
 ----
-### Creating Your User Service
+### Designing Your User Service
 
 When you write your own service, services should be written as a RESTful web service. REST (Representational State Transfer) is an architectural concept for creating client/server networked applications.  Clients and servers exchange data using a stateless communication protocol such as HTTP (Hypertext Transfer Protocol).  
 
@@ -222,10 +222,64 @@ XML (Extensible Markup Language) is also used to exchange data with RESTful web 
 
 For guidance on best practices when creating the RESTful API to your web service, see the https://github.com/18F/api-standard[18F API standard] for details.
 
+#### Output From Your User Service
+
+Piazza supports a number of output formats generated from user services registered within Piazza.  User services should generate a Piazza **DataResource** JSON payload as output conforming to defined Piazza Data Types defined within Piazza.  For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a **DataResource** with a **TextDataType**.  
+
+Piazza does not store data such as raster images, large geojson payloads, etc. so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated form the user service.  
+
+For example, if a user service generates a raster image, the output from service would be in a JSON payload format similar to the JSON payload below:
+
+[source,json]
+----
+
+{
+    "dataType": {
+        "type": "raster",
+        "location": {
+            "type": "s3",
+            "bucketName": "pz-svcs-prevgen-output",
+            "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+            "domainName": "s3.amazonaws.com"
+        },
+        "mimeType": "image/tiff"
+    },
+    "metadata": {
+        "name": "External Crop Raster Service",
+        "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+        "description": "Service that takes payload containing s3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+        "url": "http://host:8086/crop",
+        "method": "POST"
+    }
+}
+
+----
+
+This output format is a DataResource payload that indicates the location of a cropped raster image Amazon Web Service (AWS) Simple Storage Service (s3) directory.   Metadata about the user service that generated the image along with other data is indicated in the metadata section of the payload.  The mimeType indicates the type of raster image that was generated.  
+
+When generating a DataResource payload, type and mimeType are required for all DataTypes.  Additional fields are required depending on the type of data that is generated from the user service.
+
+For details no the DataResource payload and the available DataTypes, see the http://pz-swagger.int.geointservices.io/#!/Data/getMetadataUsingGET[Piazza Data API] for details.
+
 #### What to do About Existing Services
 
 If you have an existing service, consider following the https://github.com/18F/api-standard[18F API standard] for guidance on best practices.  For existing services that are not RESTful consider wrapping these services with a REST representation.  For example the first generation of web services included heavy weight approaches such as SOAP (Simple Object Access Protocol) where messages were transmitted using XML over HTTP.  For services such as these, if converting the service to a REST representation is not possible, then consider wrapping these services.
  
-### Output from Your Service
+### Your User Service in Piazza
 
-### Registering Your Service
+image::images/sc-architecture.png[title=“Service Controller in Piazza“]
+
+#### Registering Your User Service
+
+When registering your service, provide enough metadata about your service so it can be searched and discovered using Piazza’s search capability.  
+When registering a service, the following fields are required
+1. url
+2. method 
+
+For a description of the fields and the resourceMetadata associated with these fields, see http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza Swagger API] for details.
+
+
+
+
+
+

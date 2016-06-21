@@ -1,5 +1,5 @@
 #!/bin/bash
-#set -e
+set -e
 
 # shellcheck disable=SC1090
 [[ -f "$scripts/setup.sh" ]] && source "$scripts/setup.sh"
@@ -53,75 +53,91 @@ function doit {
 function run_tests {
     # verify the example scripts
     echo
-    echo "Checking examples."
-
-    # Needed for some tests
-    cp "$scripts/terrametrics.tif" "$root"
+    echo "Testing started"
 
     # Check our environment variables
     sh "$scripts/setup.sh"
 
-    echo
-    echo "Checking section 3 examples"
-    echo "- Checking 3-hello.sh"
+    cp "$scripts/terrametrics.tif" "$root"
+
+    echo -n "  3-hello.sh... "
     sh "$scripts/3-hello.sh" > /dev/null
-    echo "- Checking 3-hello-full.sh"
+    echo pass
+
+    echo -n "  3-hello-full.sh... "
     sh "$scripts/3-hello-full.sh" > /dev/null
+    echo pass
 
-    echo
-    echo "Checking section 4 examples"
-    echo "- Checking 4-hosted-load.sh"
+    echo -n "  4-hosted-load.sh... "
     jobid=$(sh "$scripts/4-hosted-load.sh")
+    sleep 5
     dataid=$(sh "$scripts/job-info.sh" "$jobid")
-    echo "- Checking 4-hosted-download.sh"
+    echo pass
+
+    echo -n "  4-hosted-download.sh... "
     sh "$scripts/4-hosted-download.sh" "$dataid" > /dev/null
+    echo pass
 
-    echo "- Checking 4-nonhosted-load.sh"
-    jobid=$(sh "$scripts/4-nonhosted-load.sh")
-    dataid=$(sh "$scripts/job-info.sh" "$jobid")
-    echo "- SKIPPING 4-nonhosted-wms.sh"
-    # jobid=$(sh "$scripts/4-nonhosted-wms.sh" "$dataid")
-    # sh "$scripts/job-info.sh" "$jobid" > /dev/null
+    echo -n "  4-nonhosted-load.sh... "
+    jobid=$("$scripts/4-nonhosted-load.sh")
+    sleep 5
+    dataid=$("$scripts/job-info.sh" "$jobid")
+    echo pass
 
-    echo
-    echo "Checking section 5 examples"
-    echo "- Checking 5-load-file.sh"
+    echo -n "  4-nonhosted-wms.sh... "
+    jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
+    sleep 5
+    sh "$scripts/job-info.sh" "$jobid" > /dev/null
+    echo pass
+
+    echo -n "  5-load-file.sh... "
     # Load manually because relative paths are hard ...
     sh "$scripts/5-load-file.sh" "one" "The quick, brown fox." > /dev/null
     sh "$scripts/5-load-file.sh" "two" "The lazy dog." > /dev/null
     sh "$scripts/5-load-file.sh" "three" "The hungry hungry hippo." > /dev/null
-    echo "- Checking 5-filtered-get.sh"
-    sh "$scripts/5-filtered-get.sh" "dog" > /dev/null
-    echo "- Checking 5-query.sh"
-    sh "$scripts/5-query.sh" "fox" > /dev/null
+    echo pass
 
-    echo
-    echo "Checking section 6 examples"
-    echo "- Checking 6-register.sh"
+    echo -n "  5-filtered-get.sh... "
+    sh "$scripts/5-filtered-get.sh" "dog" > /dev/null
+    echo pass
+
+    echo -n "  5-query.sh... "
+    sh "$scripts/5-query.sh" "fox" > /dev/null
+    echo pass
+
+    echo -n "  6-register.sh... "
     reg=$(sh "$scripts/6-register.sh")
-    echo "- Checking 6-execute-get.sh"
+    echo pass
+
+    echo -n "  6-execute-get.sh... "
     exe=$(sh "$scripts/6-execute-get.sh" "$reg")
+    sleep 5
     job=$(sh "$scripts/job-info.sh" "$exe")
     sh "$scripts/file-info.sh" "$job" > /dev/null
+    echo pass
 
-    echo
-    echo "Checking section 7 examples"
-    echo "- Checking 7-eventtype.sh"
+    echo -n "  7-eventtype.sh... "
     eventtype=$(sh "$scripts/7-eventtype.sh")
-    echo "- Checking 7-trigger.sh"
-    sh "$scripts/7-trigger.sh" "$eventtype" > /dev/null
-    echo "- Checking 7-event.sh"
-    sh "$scripts/7-event.sh" "$eventtype" > /dev/null
-    echo "- Checking 7-get-alerts.sh"
-    sh "$scripts/7-get-alerts.sh" > /dev/null
+    echo pass
 
-    echo
-    echo "Not checking section 8 examples"
+    echo -n "  7-trigger.sh... "
+    sh "$scripts/7-trigger.sh" "$eventtype" > /dev/null
+    echo pass
+
+    echo -n "  7-event.sh... "
+    sh "$scripts/7-event.sh" "$eventtype" > /dev/null
+    echo pass
+
+    echo -n "  7-get-alerts.sh... "
+    sh "$scripts/7-get-alerts.sh" > /dev/null
+    echo pass
+
+    echo -n "  8 (end-to-end)... "
+    echo "*** SKIPPED ***"
 
     rm "$root/terrametrics.tif"
 
-    echo
-    echo "Examples checked."
+    echo "Testing completed"
 }
 
 [[ -d "$outs" ]] && rm -rf "$outs"
@@ -137,9 +153,7 @@ mkdir "$outs/presentations"
 # shellcheck disable=SC2086
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
-#set -e
-#run_tests
-#set +e
+run_tests
 
 echo Done.
 

@@ -7,7 +7,7 @@ if [[ $# -eq 0 ]]; then
     # $PZUSER and $PZPASS can be '' if no authentication needed, so ? -> :?
     : "${PZUSER?"PZUSER is not set"}"
     : "${PZPASS?"PZPASS is not set"}"
-    echo 'Environment variables checked'
+    echo '  Environment variables set'
 elif [[ $# -eq 3 ]]; then
     export DOMAIN=$1
     export PZUSER=$2

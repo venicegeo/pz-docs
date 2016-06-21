@@ -10,12 +10,7 @@ The Piazza Core ServiceController manages and executes web services external to 
 
 The figure below shows the high level architecture of Piazza and how the ServiceController interacts with different components.
 
-![alt text](https://cloud.githubusercontent.com/assets/12052181/13731572/c6d3e148-e942-11e5-9fab-12b51a48fd4f.jpg "ServiceController in Piazza")
-
-## API Overviews
-
-[Sprint 3 - ServiceController API Overview - 3/31/2016](https://github.com/venicegeo/pz-servicecontroller/files/199832/Piazza-ServiceController-Overview.pptx)
-
+image::images/sc-architecture.png[title=“Service Controller in Piazza“]
 
 ## How to Use
 
@@ -23,7 +18,7 @@ The figure below shows the high level architecture of Piazza and how the Service
 
 The ServiceContoller, version 1.0, uses the following to build and run:
 
-1. Java Development Kit 1.8 (http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+1. http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Java Development Kit 1.8]
 2. Maven
 3. MongoDB
 4. *Oracle VM VirtualBox (for running the ServiceController on individual VMs)

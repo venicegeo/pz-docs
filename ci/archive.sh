@@ -88,10 +88,10 @@ function run_tests {
     echo pass
 
     echo -n "  4-nonhosted-wms.sh... "
-    ##jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
-    ##sleep 5
-    ##sh "$scripts/job-info.sh" "$jobid" > /dev/null
-    echo "*** SKIPPED ***"
+    jobid=$("$scripts/4-nonhosted-wms.sh" "$dataid")
+    sleep 5
+    sh "$scripts/job-info.sh" "$jobid" > /dev/null
+    echo pass
 
     echo -n "  5-load-file.sh... "
     # Load manually because relative paths are hard ...

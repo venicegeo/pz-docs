@@ -12,17 +12,16 @@ that image has finished processing and is ready for review.
 Piazza provides a RESTful API allowing users to perform user service management activities such as:
 
 . Register user services for search/discovery (See the <<Search>> section for details)
-. Update information on the web service (e.g. URL, name, version and other metadata)
-. Remove a web service from the registry
-. View details about registered web services
-. Execute a registered user service
+. Update information on the user service (e.g. URL, name, version and other metadata)
+. Remove a user service from the registry
+. View details about registered user services
+. Invoke a registered user service
 . Combine user services to perform various tasks (See the <<Workflow Service>> section for
     details)
 
-While Piazza’s overall all goal is to provide users with the ability to register and use existing
+While Piazza’s overall goal is to provide users with the ability to register and use existing
 RESTful user services, to work best with Piazza, there are some guidelines on writing user
-services. See the <<How to Write Your Own Services>> section for details on how to write user
-services to be used by Piazza.
+services. See the <<How to Write Your Own User Services>> section for details on how to write user services to be used by Piazza.
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
     the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of
@@ -63,6 +62,7 @@ Registration Service registered by POSTing to service endpoint.
 ** The url field is the URL for invoking the service.
 ** The contractUrl is an optional field containing additional detail information about the service.
 ** The serviceId will be filled in by Piazza.
+** The method used to indicate the desired action to be performed on the user service. (GET, POST, PUT, DELETE, etc.)
 ** The resourceMetadata fields has 3 subfields with the name, description of the service and the
 invocation method for the service.
 
@@ -74,7 +74,7 @@ Return Value
 [source,json]
 ----
 {
-    "type": "service",
+    "type": "service-id”,
     "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
 }
 ----
@@ -297,3 +297,8 @@ When registering a service, the following fields are required
 2. method
 
 For a description of the fields and the resourceMetadata associated with these fields, see http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza Swagger API] for details.
+
+## Future User Service Work
+
+Future enhancements to User Services may include monitoring user service activity and status.  Callbacks incoporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.   
+

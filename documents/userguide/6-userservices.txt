@@ -236,7 +236,7 @@ The contact information for each user service is located in the resourceMetadata
 When you write your own service, services should be written as a RESTful web service. REST (Representational State Transfer) is an architectural concept for creating client/server networked applications.  Clients and servers exchange data using a stateless communication protocol such as HTTP (Hypertext Transfer Protocol).
 
 #### Establishing an API
-To establish an API for exchanging data to and from your user service, consider using the JSON standard because data payloads are smaller, are easy to read and works with programmatically (e.g. using JavaScript).
+To establish an API for exchanging data to and from your user service, consider using the JSON standard because data payloads are smaller, are easy to read and work with programmatically (e.g. using JavaScript).
 
 XML (Extensible Markup Language) is also used to exchange data with RESTful web services.  With XML, data is very structured and is stored in a markup language that is readable.  As a result of the formatting, XML payloads are much larger than JSON payloads.  With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format.   When using XML, a well documented schema should be used to validate and to describe the responses that may be sent from your service.
 
@@ -246,7 +246,7 @@ For guidance on best practices when creating the RESTful API to your web service
 
 Piazza supports a number of output formats generated from user services registered within Piazza.  User services should generate a Piazza **DataResource** JSON payload as output conforming to defined Piazza Data Types defined within Piazza.  For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a **DataResource** with a **TextDataType**.
 
-Piazza does not store data such as raster images, large geojson payloads, etc. so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated form the user service.
+Piazza does not store data such as raster images, large geojson payloads, etc. so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated from the user service.
 
 For example, if a user service generates a raster image, the output from service would be in a JSON payload format similar to the JSON payload below:
 

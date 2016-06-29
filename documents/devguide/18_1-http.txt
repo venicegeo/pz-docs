@@ -35,46 +35,49 @@ sorted by creation date:
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
     GET /messages?perPage=60&page=1&key=createdOn&order=asc
 
-`GET`, `POST`, and `PUT` should typically support `?pretty=BOOL` for formatting
-returned JSON payloads.
-
 
 ### Response Payloads
 
 For success responses (`200` or `201`) from `GET`, `POST`, or `PUT`,
 the JSON object returned will be:
 
-    {
-        // required
-	    data: OBJECT
-
-        // used only if data is a map or an array
-        pagination: {
-            // all fields required
-            count: INT
-            page: INT
-            perPage: INT
-            sortBy: STRING
-            order: STRING    // must be either "asc" or "desc"
-        }
-        
-        // optional, for information about the request itself
-    	metadata: OBJECT
+[source,json]
+----
+{
+    // required
+    data: OBJECT
+    
+    // used only if data is a map or an array
+    pagination: {
+        // all fields required
+        count: INT
+        page: INT
+        perPage: INT
+        sortBy: STRING
+        order: STRING    // must be either "asc" or "desc"
     }
+
+    // optional, for information about the request itself
+    metadata: OBJECT
+}
+----
 
 For error responses (`4xx` or `5xx`), the response is:
 
-    {
-        // required
-        message: string
+[source,json]
+----
+{
+    // required
+    message: string
 
-	    // any other fields allowed as needed, based on nature of error, such as:
-    	origin: string
-	    metadata: // opt
-	    stackTrace: // opt
-	    jobId: // opt
-	    frobNitz: // opt
-    }
+    // any other fields allowed as needed, based on nature of error, such as:
+    origin: string
+    metadata: // opt
+    stackTrace: // opt
+    jobId: // opt
+    frobNitz: // opt
+}
+----
 
 Note that `DELETE` requests will return a `204 No Content` and no payload.
 

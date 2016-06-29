@@ -13,7 +13,7 @@ Our field names will use `lowerCamelCase`, not `under_scores`.
 ### JSON Fields
 
 Fields containing resource ids should be named according to the resource type.
-For example, use `event_id`, not just `id`.
+For example, use `eventId`, not just `id`.
 
 For fields containing "timestamps", use names of the form "<op>edOn",
 e.g. `createdOn` or `updatedOn`. The values should be ISO 8601 strings;

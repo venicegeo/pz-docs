@@ -79,7 +79,7 @@ For error responses (`4xx` or `5xx`), the response is:
 }
 ----
 
-Note that `DELETE` requests will return a `204 No Content` and no payload.
+Note that `DELETE` requests will return a `200` and a success payload.
 
 
 ### HTTP Status Codes

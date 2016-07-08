@@ -6,7 +6,7 @@ set -e
 curl -u "$PZUSER":"$PZPASS" -S -s -X GET -o response.txt "http://pz-gateway.$DOMAIN/"
 
 # verify the response was "OK"
-grep -q OK response.txt
+grep -q Hello response.txt
 # end::public[]
 
 rm -f response.txt

@@ -300,5 +300,5 @@ For a description of the fields and the resourceMetadata associated with these f
 
 ## Future User Service Work
 
-Future enhancements to User Services may include monitoring user service activity and status.  Callbacks incoporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.   
+Future enhancements to User Services may include monitoring user service activity and status.  Callbacks incoporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.
 

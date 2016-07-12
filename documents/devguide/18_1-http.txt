@@ -48,7 +48,8 @@ the JSON object returned will be:
 {
     // required
     data: OBJECT
-    
+    type: STRING
+
     // used only if data is a map or an array
     pagination: {
         // all fields required
@@ -63,6 +64,9 @@ the JSON object returned will be:
     metadata: OBJECT
 }
 ----
+
+The `type` field is a string that indicates the structure of the object in `data`.
+The valid strings are documented with the APIs.
 
 For error responses (`4xx` or `5xx`), the response is:
 
@@ -81,7 +85,7 @@ For error responses (`4xx` or `5xx`), the response is:
 }
 ----
 
-Note that `DELETE` requests will return a `200` and a success payload.
+Note that `DELETE` requests will return a `200` and a success payload which may be empty.
 
 
 ### HTTP Status Codes

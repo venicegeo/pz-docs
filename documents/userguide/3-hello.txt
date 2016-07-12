@@ -25,7 +25,7 @@ TIP: If your username or password use special characters, be sure to surround th
     quotes\' to ensure they aren't interpreted by the shell.
 
 WARNING: Be careful when using `export` within files to set `$PZUSER` and `$PZPASS`, i.e. `export
-    $PZPASS=password` in a shell configuration file. If these files are pushed to a remote pubic
+    $PZPASS=password` in a shell configuration file. If these files are pushed to a remote public
     git repository, or are available online via public means, your username and password may be
     compromised. It is advised to use the `setup.sh` script as described in the previous section,
     or `export $PZUSER=user` and `export $PZPASS=password` in the current shell, using your

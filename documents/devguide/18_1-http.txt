@@ -24,7 +24,7 @@ not `underscore_style`.
 
 ### Query Parameters
 
-`GET` requests should typically support these query parameters for pagination:
+`GET` requests that return arrays (or maps) of objects should typically support these query parameters for pagination:
 
 * `?page=INT`
 * `?perPage=INT`

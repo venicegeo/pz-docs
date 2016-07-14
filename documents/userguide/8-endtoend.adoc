@@ -1,0 +1,120 @@
+# End-to-End Example
+
+In this section, a workflow will be described to make use of pzsvc-file-watcher, pzsvc-preview-generator and other Piazza components to automatically crop files uploaded to a given s3 bucket.
+
+
+## Setting Up pzsvc-file-watcher
+
+The pzsvc-file-watcher automatically watches for uploaded files to the s3 bucket and ingests them to the Piazza service.
+
+To begin, clone the pzsvc-file-watcher from https://github.com/venicegeo/pzsvc-file-watcher:
+
+[source,bash]
+$ git clone https://github.com/venicegeo/pzsvc-file-watcher
+
+Next, install pzsvc-file-watcher's dependencies:
+
+[source,bash]
+$ cd pzsvc-file-watcher
+$ [sudo] pip2 install -r requirements.txt
+
+pzsvc-file-watcher takes a few command line arguments, including the s3 bucket location, the user's AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS credentials are checked for in the `s3.key.access` and `s3.key.private` environment variables, and can also be supplied via command line. Additionally, the s3 bucket name can be specified in the `s3.bucket.name` environment variable, and the `PZUSER` environment variable is checked for the value of the user's Piazza UserName. In addition, the Piazza Gateway Host should be specified. The script also expects the `PZUSER` and `PZPASS` environment variables to be set, in order to interface with Piazza (these can remain unset if authentication is not needed for your instance of Piazza).
+
+An example of running filewatcher.py via the command line:
+
+[source,bash]
+$ python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.DOMAIN' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'
+
+This will set up the pzsvc-file-watcher to poll continuously for new files in the `aws_bucket_name` bucket, and ingest those files (without hosting them!) to the Piazza service.
+
+The output of running the filewatcher will look something like the following:
+
+[source]
+----
+Listening for new files in AWS bucket test_bucket.
+Piazza Gateway: https://pz-gateway.venicegeo.io
+Successful request for ingest of file 0272f68b-b979-4f5f-95d0-1e2d0f96133a-elevation.tif of type raster
+----
+
+This response means that the ingest request was received by the Piazza Gateway.
+
+
+## Registering the pzsvc-preview-generator Service
+
+The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilities. This app exposes a REST endpoint which takes a POST request containing payload of required parameters. Given an s3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to s3 bucket, and returns a DataResource.
+
+A script to register this service is located link:scripts/8-register-crop.sh[here]. Registering the cropping service is easy:
+
+[source,bash]
+$ ./8-register-crop.sh
+
+
+## Executing the Service
+
+The link:scripts/8-crop-file.sh[8-crop-file.sh] script takes a few more parameters: the serviceId returned from registering the previous service (if the previous script is successful, it will print out the serviceId), the AWS bucket name where the file is located, and the filename to crop. For example:
+
+[source,bash]
+$ ./8-crop-file.sh {{serviceId}} bucketname filename
+
+The script does the equivalent of POSTing a request with a payload to the URL: https://pz-svcs-prevgen.int.geointservices.io/crop.
+
+Sample working payload:
+
+[source,json]
+----
+{
+    "source": {
+        "domain": "s3.amazonaws.com",
+        "bucketName": "pz-svcs-prevgen",
+        "fileName": "NASA-GDEM-10km-colorized.tif"
+    },
+    "function": "crop",
+    "bounds": {
+        "minx": -140.00,
+        "miny": 10.00,
+        "maxx": -60.00,
+        "maxy": 70.00
+    }
+}
+----
+
+## Retrieving Results
+
+The service will download the file from "pz-svcs-prevgen" s3 bucket and crop it with given bounding box info. The cropped result tif will be uploaded back up to s3 bucket "pz-svcs-prevgen-output": https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=
+
+The 8-crop-file.sh script should return a jobID that can then be passed as an argument to link:scripts/job-info.sh[job-info.sh]:
+
+[source,bash]
+$ ./job-info.sh {{jobID}}
+
+When the job is complete, the resulting data can be queried from the dataID returned by the job-info.sh script using link:scripts/file-info.sh[file-info.sh]:
+
+[source,bash]
+$ ./file-info.sh {{dataID}}
+
+If all goes well, the resulting received payload will be of DataResource type:
+
+[source,json]
+----
+{
+    "dataType": {
+        "type": "raster",
+        "location": {
+            "type": "s3",
+            "bucketName": "pz-svcs-prevgen-output",
+            "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+            "domainName": "s3.amazonaws.com"
+        },
+        "mimeType": "image/tiff"
+    },
+    "metadata": {
+        "name": "External Crop Raster Service",
+        "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+        "description": "Service that takes payload containing s3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+        "url": "http://host:8086/crop",
+        "method": "POST"
+    }
+}
+----
+
+The resulting file can be retrieved from the bucket, with the bounding box applied to it.

@@ -1,13 +1,8 @@
 # User Services
 
-Piazza allows users to discover, manage and invoke external web services known as *User Services*.
-A user service is defined as a set of web technologies used for exchanging data between software
-applications over a network, such as the Internet. Web technologies such as HTTP, JSON and XML
-are used because they allow for data to be exchanged in a platform-independent manner.
+Piazza allows users to discover, manage and invoke external web services known as *User Services*. A user service is defined as a set of web technologies used for exchanging data between software applications over a network, such as the Internet. Web technologies such as HTTP, JSON and XML are used because they allow for data to be exchanged in a platform-independent manner.
 
-Using Piazza, users can combine user services to perform complex tasks automatically such as
-orthorectifying an image, running statistical analysis on the image and then notifying an analyst
-that image has finished processing and is ready for review.
+Using Piazza, users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image and then notifying an analyst that image has finished processing and is ready for review.
 
 Piazza provides a RESTful API allowing users to perform user service management activities such as:
 
@@ -16,26 +11,18 @@ Piazza provides a RESTful API allowing users to perform user service management 
 . Remove a user service from the registry
 . View details about registered user services
 . Invoke a registered user service
-. Combine user services to perform various tasks (See the <<Workflow Service>> section for
-    details)
+. Combine user services to perform various tasks (See the <<Workflow Service>> section for details)
 
-While Piazza’s overall goal is to provide users with the ability to register and use existing
-RESTful user services, to work best with Piazza, there are some guidelines on writing user
-services. See the <<How to Write Your Own User Services>> section for details on how to write user services to be used by Piazza.
+While Piazza’s overall goal is to provide users with the ability to register and use existing RESTful user services, to work best with Piazza, there are some guidelines on writing user services. See the <<How to Write Your Own User Services>> section for details on how to write user services to be used by Piazza.
 
-NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In
-    the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of
-    instances needed.
+NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of instances needed.
 
-The following sections will use a "Hello World" service. This service basically just says hello.
-It is deployed in our cloud for testing services.
+The following sections will use a "Hello World" service. This service basically just says hello. It is deployed in our cloud for testing services.
 
 
 ## Registration
 
-A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza
-users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the
-URL of the service, a description of its parameters, and other metadata.
+A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
 
 
 ### Hello Example registered with GET method.
@@ -63,28 +50,24 @@ Registration Service registered by POSTing to service endpoint.
 ** The contractUrl is an optional field containing additional detail information about the service.
 ** The serviceId will be filled in by Piazza.
 ** The method used to indicate the desired action to be performed on the user service. (GET, POST, PUT, DELETE, etc.)
-** The resourceMetadata fields has 3 subfields with the name, description of the service and the
-invocation method for the service.
+** The resourceMetadata fields has 3 subfields with the name, description of the service and the invocation method for the service.
 
-NOTE: The description should be entered with some care because it will enable other users to search
-    for your service.
+NOTE: The description should be entered with some care because it will enable other users to search for your service.
 
 
 Return Value
 [source,json]
 ----
 {
-    "type": "service-id”,
+    "type": "service-id",
     "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
 }
 ----
 The serviceId field should be noted since it will be used in invoking the service.
 
-Note that the method field can be changed as needed, depending on the intended operation performed
-by the service.
+Note that the method field can be changed as needed, depending on the intended operation performed by the service.
 
-A script registering the aforementioned service and returning the service ID can be found at
-link:scripts/6-register.sh[6-register.sh]. Run it in the following way:
+A script registering the aforementioned service and returning the service ID can be found at link:scripts/6-register.sh[6-register.sh]. Run it in the following way:
 
 [source,bash]
 $ ./6-register.sh
@@ -94,12 +77,10 @@ $ ./6-register.sh
 
 ### Hello Example invoked with GET method.
 
-The service is invoked by POSTing to the pz-gateway job endpoint
-https://pz-gateway.venicegeo.io/v2/job. A script that does this can be found at
-link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the serviceId returned by the register
-script as the first argument to the script:
+The service is invoked by POSTing to the pz-gateway job endpoint https://pz-gateway.venicegeo.io/v2/job. A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the serviceId returned by the register script as the first argument to the script:
 
-`$ ./6-execute-get.sh {{serviceId}}`
+[source,bash]
+$ ./6-execute-get.sh {{serviceId}}
 
 [source,json]
 ----
@@ -113,12 +94,9 @@ script as the first argument to the script:
 }
 ----
 
-The serviceId is set to the return value from registering the service. In this example, no
-dataInputs are specified. For dataOutput, the mimeType refers to the mimeType of the service
-output. The type refers to how the output will be stored until retrieved (see below).
+The serviceId is set to the return value from registering the service. In this example, no dataInputs are specified. For dataOutput, the mimeType refers to the mimeType of the service output. The type refers to how the output will be stored until retrieved (see below).
 
-The return value is not the result of the service call. The execute-service call creates a job and
-returns the id of that job.
+The return value is not the result of the service call. The execute-service call creates a job and returns the id of that job.
 
 [source,json]
 ----
@@ -130,9 +108,7 @@ returns the id of that job.
 
 ### Hello Example invoked with POST method.
 
-When executing a service that requires a POST body for input, the body message is specified in the
-content field, the type is "body" and the mimeType has to be specified. Getting the jobId is
-exactly the same as in the GET case.
+When executing a service that requires a POST body for input, the body message is specified in the content field, the type is "body" and the mimeType has to be specified. Getting the jobId is exactly the same as in the GET case.
 
 [source,json]
 ----
@@ -155,8 +131,7 @@ exactly the same as in the GET case.
 
 ## Getting Status and Results
 
-The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/job/{{jobId}}
-where jobId is the id returned when executing the service. On success the resulting status is
+The status is returned by sending a GET message to https://pz-gateway.venicegeo.io/job/{{jobId}} where jobId is the id returned when executing the service. On success the resulting status is
 
 [source,json]
 ----
@@ -174,16 +149,12 @@ where jobId is the id returned when executing the service. On success the result
 }
 ----
 
-A script that checks the status of the job can be found at
-link:scripts/job-info.sh[job-info.sh]. The script takes the jobId returned from the
-6-execute-get.sh script as it's only argument:
+A script that checks the status of the job can be found at link:scripts/job-info.sh[job-info.sh]. The script takes the jobId returned from the 6-execute-get.sh script as it's only argument:
 
 [source,bash]
 $ ./job-info.sh {{jobId}}
 
-Finally, the actual result is returned by sending a GET message to
-https://pz-gateway.venicegeo.io/data/{{dataId}} where the dataId is from the result.dataId field
-of the returned status. In this case the result is text.
+Finally, the actual result is returned by sending a GET message to https://pz-gateway.venicegeo.io/data/{{dataId}} where the dataId is from the result.dataId field of the returned status. In this case the result is text.
 
 [source,json]
 ----
@@ -199,8 +170,7 @@ of the returned status. In this case the result is text.
 }
 ----
 
-Run the link:scripts/file-info.sh[file-info.sh] script to check the result of the previous job.
-This script also takes a single argument: the dataId returned by the previous script:
+Run the link:scripts/file-info.sh[file-info.sh] script to check the result of the previous job. This script also takes a single argument: the dataId returned by the previous script:
 
 [source,bash]
 $ ./file-info.sh {{dataId}}
@@ -218,6 +188,7 @@ For more examples on how to register and execute your service, see the Piazza De
 If a registered user service has additional security and access requirements (e.g. client certificate required, pre-authorization to use, etc.), users should contact the user service provider to negotiate access for use.
 
 The contact information for each user service is located in the resourceMetadata section of the service payload.
+
 [source,json]
 ----
 {
@@ -231,11 +202,13 @@ The contact information for each user service is located in the resourceMetadata
   }
 }
 ----
+
 ### Designing Your User Service
 
 When you write your own service, services should be written as a RESTful web service. REST (Representational State Transfer) is an architectural concept for creating client/server networked applications.  Clients and servers exchange data using a stateless communication protocol such as HTTP (Hypertext Transfer Protocol).
 
 #### Establishing an API
+
 To establish an API for exchanging data to and from your user service, consider using the JSON standard because data payloads are smaller, are easy to read and work with programmatically (e.g. using JavaScript).
 
 XML (Extensible Markup Language) is also used to exchange data with RESTful web services.  With XML, data is very structured and is stored in a markup language that is readable.  As a result of the formatting, XML payloads are much larger than JSON payloads.  With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format.   When using XML, a well documented schema should be used to validate and to describe the responses that may be sent from your service.
@@ -292,13 +265,12 @@ image::images/sc-architecture.png[title=“Service Controller in Piazza“]
 #### Registering Your User Service
 
 When registering your service, provide enough metadata about your service so it can be searched and discovered using Piazza’s search capability.
-When registering a service, the following fields are required
-1. url
-2. method
+When registering a service, the following fields are required:
+    1. url
+    2. method
 
 For a description of the fields and the resourceMetadata associated with these fields, see http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza Swagger API] for details.
 
 ## Future User Service Work
 
-Future enhancements to User Services may include monitoring user service activity and status.  Callbacks incoporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.
-
+Future enhancements to User Services may include monitoring user service activity and status.  Callbacks incorporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.

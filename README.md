@@ -25,12 +25,12 @@ Linking:
 #### HOWTO for Windows people:
 
 1. Install Ruby from http://rubyinstaller.org/downloads/
-2. cmd window with Ruby in path available for launch from Start menu (or add Ruby bin directory to Windows Path environment variable so cmd window for OS-launched batch file will have it)
-3. now available from cmd prompt:
+2. Open a cmd window with Ruby in path available for launch from Start menu (or add Ruby bin directory to Windows Path environment variable so cmd window for OS-launched batch file will have it)
+3. From the cmd prompt:
 
   * `$ gem install asciidoctor`
   * `$ gem install --pre asciidoctor-pdf`
 
-4. clone by your favorite method pz-docs repo: https://github.com/venicegeo/pz-docs.git
-5. add the Ruby bin directory to Windows Path environment variable (so cmd window for batch file will have it)
+4. Clone the pz-docs repo via your favorite git cloning method: https://github.com/venicegeo/pz-docs.git
+5. Add the Ruby bin directory to Windows Path environment variable (so cmd window for the batch file will have it)
 6. ci/archive.bat will create the index.html and index.pdf files

@@ -28,8 +28,8 @@ Linking:
 2. cmd window with Ruby in path available for launch from Start menu (or add Ruby bin directory to Windows Path environment variable so cmd window for OS-launched batch file will have it)
 3. now available from cmd prompt:
 
-    > gem install asciidoctor
-    > gem install --pre asciidoctor-pdf
+  * `$ gem install asciidoctor`
+  * `$ gem install --pre asciidoctor-pdf`
 
 4. clone by your favorite method pz-docs repo: https://github.com/venicegeo/pz-docs.git
 5. add the Ruby bin directory to Windows Path environment variable (so cmd window for batch file will have it)

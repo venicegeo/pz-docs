@@ -11,15 +11,16 @@ The user (or some service) first defines an _EventType_ which is the "schema" fo
 [source,json]
 ----
 {
-    "id": "17de4",
-    "name": "USDataFound",
+    "name": "testevent-1468849135",
     "mapping": {
-        "ItemId": "string",
-        "Severity": "integer",
-        "Problem": "string"
+        "filename": "string",
+        "code":     "string",
+        "severity": "integer"
     }
 }
 ----
+
+The `name` must be unique across all event types in the system.
 
 The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
 
@@ -43,25 +44,34 @@ The user then defines a _Trigger_ which defines what action is to be taken when 
 ----
 {
     "title": "High Severity",
+    "disabled": false,
     "condition": {
-        "eventtype_ids": ["{{eventtype_id}}"],
-        "query": { "query": { "match_all": {} } }
+        "eventTypeIds": ["98fc25e8-bd97-4444-a972-c06aa0f0edf1"],
+        "query": {
+            "query": {
+                "bool": {
+                    "must": [
+                        { "match": {"severity": 5} },
+                        { "match": {"code": "PHONE"} }
+                    ]
+                }
+            }
+        }
     },
     "job": {
-        "userName": "test",
+        "task": "alert the user",
+        "createdBy": "test",
         "jobType": {
             "type": "execute-service",
             "data": {
-                "serviceId": "{{serviceId}}",
-                "dataInputs": {},
-                "dataOutput": [ { "mimeType": "application/json", "type": "text" } ]
+                "serviceId": "a2898bcb-2646-4ffd-9da7-2308cb7e77d7"
             }
         }
     }
 }
 ----
 
-In this example, the job will be executed only when our "US data found" event occurs with the specific problem being that a US bounding box has been found with a severity of 4.
+In this example, the job will be executed only when our "test" event occurs with the `severity` equal to `5` and the `code` equal to `"PHONE"`.
 
 NOTE: the "type" field of the "condition" will likely be removed in the future, as the query DSL allows us to specify the event type directly within it; this would open up the possibility of having a condition based on multiple events.
 
@@ -84,12 +94,11 @@ The user may generate an _Event_ of that _EventType_ to indicate some interestin
 [source,json]
 ----
 {
-    "eventtype_id": "{{eventtype_id}}",
-    "date": "2007-06-06T14:30:00Z",
-    "mapping": {
-        "ItemId": "test",
-        "Severity": 200,
-        "Problem": "us-bbox"
+    "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
+    "data": {
+        "filename": "dataset-c",
+        "severity": 5,
+        "code": "PHONE"
     }
 }
 ----
@@ -113,10 +122,25 @@ Whenever the condition of a _Trigger_ is met, the system will create an _Alert_ 
 [source,json]
 ----
 {
-    "id": "8e6fa",
-    "trigger_id": "987d6",
-    "event_id": "53dac",
-    "job_id": "1da28b90-cc23-85bf-f28c-a215980bc9e4"
+  "statusCode": 200,
+  "type": "alert-list",
+  "data": [
+    {
+      "alertId": "58d1ad21-75d0-4ee4-8429-c687b9249cc5",
+      "triggerId": "170619d6-8f4e-4dc4-bcb6-8b0862e0138f",
+      "eventId": "baa98fc7-f282-4caf-b35d-c2050eca010c",
+      "jobId": "ab62ae7e-432b-4b61-a831-4a80b6ce836e",
+      "createdBy": "",
+      "createdOn": "2016-07-18T13:41:28.571761514Z"
+    }
+  ],
+  "pagination": {
+    "count": 1,
+    "page": 0,
+    "perPage": 10,
+    "sortBy": "alertId",
+    "order": "asc"
+  }
 }
 ----
 
@@ -131,6 +155,4 @@ $ ./7-get-alerts.sh
 include::scripts/7-get-alerts.sh[tags=public]
 ----
 
-NOTE: in the future the `event_id` may become an array of event IDs.
-
-NOTE: the `?trigger=id` and `?after=date` query params will soon be provided to make this polling process somewhat more palatable.
+The query parameter `?triggerId=id` is provided to allow the list to be filtered to only the alerts of interest.

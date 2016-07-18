@@ -11,21 +11,28 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### POST /v2/message
+### `GET /`
+
+Requests a "health check" for the service.
+
+### POST /message
 
 Sends a message to be logged. The message is given in the POST body as a JSON object:
 
-    {
-        "service":  "log-tester",
-        "address":  "128.1.2.3",
-        "stamp":    123456789,
-        "severity": "Info",
-        "message":  "The quick brown fox" 
-    }
+[source,json]
+----
+{
+    "service":  "log-tester",
+    "address":  "128.1.2.3",
+    "createdOn": "2006-01-02T15:04:05+07:00",
+    "severity": "Info",
+    "message":  "The quick brown fox" 
+}
+----
 
 All five fields are required.
 
-`stamp` is an `int64` value representing the number of seconds since the Unix epoch. In Go, `time.Now().Unix()`.
+`createdOn` is a `string` representing the message creation time, expressed in RFC_3339. (In Go, `time.Now().Format(time.RFC1339)`).
 
 `severity` must be one of the following strings:
 
@@ -35,17 +42,39 @@ All five fields are required.
 * **"Error"** - _I can’t do this. I've handled the exception so I’m not going to crash or anything, but I want you to know that I may not be in a happy place right now._
 * **"Fatal"** - _I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely to crash very soon._
 
-### GET /v2/message
+### GET /message
 
 Returns a JSON object of log messages:
 
-    {
+[source,json]
+----
+{
+    "statusCode": 200,
         "data": [
-            {"service":"noservice","address":"1.2.3.4","stamp":123456789,"severity":"Debug","message":"Yow!"},
-            {"service":"noservice","address":"01.2.3.4","stamp":123456788,"severity":"Debug","message":"Yow!"}
+            {
+                "service": "notset",
+                "address": "0.0.0.0",
+                "createdOn": "2016-07-18T12:43:10.079582675Z",
+                "severity": "Info",
+                "message": "..."
+            },
+            {
+                "service": "notset",
+                "address": "0.0.0.0",
+                "createdOn": "2016-07-18T12:43:09.865052883Z",
+                "severity": "Info",
+                "message": "..."
+            }
         ],
-        "pagination": ...
+        "pagination": {
+            "count": 123,
+            "page": 1,
+            "perPage": 2,
+            "sortBy": "createdOn",
+            "order": "desc"
+        }
     }
+----
 
 This endpoint supports pagination, as described in [[General Pz Service Operations]].
 
@@ -55,6 +84,10 @@ This service includes the common endpoints described in [[General Pz Service Ope
 
 The `admin stats` supported are:
 
-    {
-        "starttime": "....",
-    }
+[source,json]
+----
+{
+    "createdOn": "2016-07-18T12:43:09.865052883Z",
+    "numMessages": 1234
+}
+----

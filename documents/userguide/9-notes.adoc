@@ -19,3 +19,70 @@ The requested resource could not be found but may be available again in the futu
 The server encountered an unexpected condition which prevented it from fulfilling the request.
 
 ## Structure of returned objects
+
+// TODO (???)
+
+## Elasticsearch Query Syntax
+
+The Elasticsearch DSL can get very complicated. Attempting to explain the entirety of the Elasticsearch DSL syntax is beyond the scope of this document. However, the Elasticsearch documentation is well-written and a good source of quality examples of DSL syntax. For more details, visit the link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch Query DSL docs].
+
+Some helpful links for constructing Elasticsearch DSL queries include:
+
+* Elasticsearch Query information
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html[Query and Filter Context docs]
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html[Fields Parameter docs]
+* Elasticsearch Query Types (non-exhaustive)
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html[Match Query docs]
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html[Term Query docs]
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html[Exists Query docs]
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html[Type Query docs]
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html[Ids Query docs]
+** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html[Bool Query docs]
+
+As an aid, here are a few example queries:
+
+* Example Query 1
+[source,json]
+----
+{
+    "query": {
+        "bool": {
+            "must": [
+                { "match": { "title":   "Search"        }},
+                { "match": { "content": "Elasticsearch" }}
+            ],
+            "filter": [
+                { "term":  { "status": "published" }},
+                { "range": { "publish_date": { "gte": "2015-01-01" }}}
+            ]
+        }
+    }
+}
+----
+
+* Example Query 2
+[source,json]
+----
+{
+    "query": {
+        "bool": {
+            "must": [
+                { "match": { "severity": 5   }},
+                { "match": { "code": "PHONE" }}
+            ]
+        }
+    }
+}
+----
+
+* Example Query 3
+[source,json]
+----
+{
+    "query": {
+        "term": {
+            "exact_value": "Quick Foxes!"
+        }
+    }
+}
+----

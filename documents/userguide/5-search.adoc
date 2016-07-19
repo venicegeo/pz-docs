@@ -56,36 +56,4 @@ $ ./5-query.sh "kitten"
 include::scripts/5-query.sh[tags=public]
 ----
 
-
-### The Query Syntax
-
-The Elasticsearch DSL can get very complicated. For more details, visit link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch Query DSL].
-
-Some possible helpful links for constructing Elasticsearch DSL queries include:
-
-* link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html[Match Query]
-* link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html[Term Query]
-* link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html[Exists Query]
-* link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html[Type Query]
-* link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html[Ids Query]
-* link:https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html[Fields Parameter]
-
-As an aid, here is an example query:
-
-[source,json]
-----
-{
-    "query": {
-        "bool": {
-            "must": [
-                { "match": { "title":   "Search"        }},
-                { "match": { "content": "Elasticsearch" }}
-            ],
-            "filter": [
-                { "term":  { "status": "published" }},
-                { "range": { "publish_date": { "gte": "2015-01-01" }}}
-            ]
-        }
-    }
-}
-----
+Visit the <<Elasticsearch Query Syntax>> section for more details on the Elasticsearch DSL.

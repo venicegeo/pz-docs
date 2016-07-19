@@ -73,7 +73,7 @@ The request payload looks like this:
 ----
 {
     "title": "High Severity",
-    "disabled": false,
+    "enabled": true,
     "condition": {
         "eventTypeIds": ["98fc25e8-bd97-4444-a972-c06aa0f0edf1"],
         "query": {
@@ -88,7 +88,6 @@ The request payload looks like this:
         }
     },
     "job": {
-        "task": "alert the user",
         "createdBy": "test",
         "jobType": {
             "type": "execute-service",
@@ -100,60 +99,59 @@ The request payload looks like this:
 }
 ----
 
-`disabled` is a boolean value indicating whether the trigger should be "active" or not.
+`enabled` is a boolean value indicating whether the trigger should be "active" or not.
 
 The caller supplies both the `eventTypeIds` and the `serviceIds`.
 
-In this example, the job will be executed only when an event of our previosuly defined `testevent-1468847218` event type 
-occurs with its `severity` and `code` fields set to `5` and `"PHONE"`, respectively.
+In this example, the job will be executed only when an event of our previously defined `testevent-1468847218` event type occurs with its `severity` and `code` fields set to `5` and `"PHONE"`, respectively.
 
 The response payload looks like this:
 
 [source,json]
 ----
 {
-  "statusCode": 201,
-  "type": "trigger",
-  "data": {
-    "triggerId": "6c9ce128-55c5-4aa0-80b2-a45f7f2bd367",
-    "title": "High Severity",
-    "condition": {
-      "eventTypeIds": [
-        "98fc25e8-bd97-4444-a972-c06aa0f0edf1"
-      ],
-      "query": {
-        "query": {
-          "bool": {
-            "must": [
-              {
-                "match": {
-                  "severity": 5
+    "statusCode": 201,
+    "type": "trigger",
+    "data": {
+        "triggerId": "6c9ce128-55c5-4aa0-80b2-a45f7f2bd367",
+        "title": "High Severity",
+        "condition": {
+            "eventTypeIds": [
+                "98fc25e8-bd97-4444-a972-c06aa0f0edf1"
+            ],
+            "query": {
+                "query": {
+                    "bool": {
+                        "must": [
+                        {
+                            "match": {
+                                "severity": 5
+                            }
+                        },
+                        {
+                            "match": {
+                                "code": "PHONE"
+                            }
+                        }
+                        ]
+                    }
                 }
-              },
-              {
-                "match": {
-                  "code": "PHONE"
-                }
-              }
-            ]
-          }
-        }
-      }
-    },
-    "job": {
-      "createdBy": "test",
-      "jobType": {
-        "data": {
-          "serviceId": "a2898bcb-2646-4ffd-9da7-2308cb7e77d7"
+            }
         },
-        "type": "execute-service"
-      }
-    },
-   "percolationId": "6c9ce128-55c5-4aa0-80b2-a45f7f2bd367",
-    "createdBy": "",
-    "createdOn": "2016-07-18T13:11:51.163279767Z",
-    "disabled": false
-  }
+        "job": {
+            "createdBy": "test",
+            "jobType": {
+                "data": {
+                    "serviceId": "a2898bcb-2646-4ffd-9da7-2308cb7e77d7"
+                },
+                "type": "execute-service"
+            }
+        },
+        "percolationId": "6c9ce128-55c5-4aa0-80b2-a45f7f2bd367",
+        "createdBy": "",
+        "createdOn": "2016-07-18T13:11:51.163279767Z",
+        "enabled": true
+    }
 }
 ----
 
@@ -161,7 +159,7 @@ The response payload looks like this:
 
 The user may generate an `Event` of that `EventType` to indicate some interesting condition has
 occurred. The `Event` object is POSTed to `/event` and contains the ID of the `EventType`, the date
-the event occurred, and the parameters of the event. 
+the event occurred, and the parameters of the event.
 
 The request payload looks like this:
 

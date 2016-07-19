@@ -101,7 +101,7 @@ The request payload looks like this:
 
 `enabled` is a boolean value indicating whether the trigger should be "active" or not.
 
-The caller supplies both the `eventTypeIds` and the `serviceIds`.
+The caller supplies both the `eventTypeIds` and the `serviceId`.
 
 In this example, the job will be executed only when an event of our previously defined `testevent-1468847218` event type occurs with its `severity` and `code` fields set to `5` and `"PHONE"`, respectively.
 
@@ -353,7 +353,7 @@ _Delete should not be used unless you know what you are doing._
 
 ### `POST /trigger`
 
-Sends a Trigger to the workflow service with a request payload as shon above.
+Sends a Trigger to the workflow service with a request payload as shown above.
 
 
 ### `GET /trigger`

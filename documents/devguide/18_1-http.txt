@@ -94,7 +94,7 @@ We generally only use these HTTP status codes.
 
 200 OK::
 The request has succeeded. The information returned with the response is
-dependent on the method used in the request. For `GET`, the rsepsonse 
+dependent on the method used in the request. For `GET`, the response 
 is an entity containing the requested resource. For `POST`, it is entity
 containing the result of the action.
 
@@ -158,7 +158,7 @@ field names. For example:
 ### Common Endpoints
 
 `GET /`:: requests a "health check" for the service. The returned status code is `200`
-with a response payload containg a short, friendly text string.
+with a response payload containing a short, friendly text string.
 
 `GET /admin/stats`:: requests the current metrics for the service. The returned
 payload will contain an object with the metric data. Such data might include

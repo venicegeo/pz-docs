@@ -14,7 +14,7 @@ Sprints
 ### Sprint Review/Retrospective
 
     The PzCore Sprint Review/Retrospective is held at the end of the Sprint along with demonstrations of all work (User Stories) completed during the sprint.
-    The accomplishments and goals of each sprint are captured on the Redime Wiki.
+    The accomplishments and goals of each sprint are captured on the Redmine Wiki.
     PzCore Sprint Planning is scheduled on Tuesdays at the beginning of each sprint (10:30am EST), where we work as a team to discuss the following:
 
         Review any stories that are not complete from the previous sprint

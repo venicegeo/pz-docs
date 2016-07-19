@@ -87,7 +87,7 @@ been requested.
 #### Loader
 
 The loader allows the upload of text and files into the Piazza system. Currently
-supported through the UI, the user may choose Text to load or Select a GeoTIff
+supported through the UI, the user may choose Text to load or Select a GeoTIFF
 that they have locally.  The metadata field can be a JSON object such as the
 following:
 
@@ -108,7 +108,7 @@ The Piazza service support more file types - like shapefiles and geojson - as
 well as links to outside files
 (not necessarily in local storage).  Also supported is files that won't be
 hosted by Piazza, but just linked to another source.  SAK will support all of
-these use cases in the future but currently only supports Text and GeoTiff.
+these use cases in the future but currently only supports Text and GeoTIFF.
 
 #### User Service Registry
 

@@ -16,7 +16,7 @@ image::images/sc-architecture.png[title=“Service Controller in Piazza“]
 
 ### Prerequisites
 
-The ServiceContoller, version 1.0, uses the following to build and run:
+The ServiceController, version 1.0, uses the following to build and run:
 
 1. http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Java Development Kit 1.8]
 2. Maven
@@ -211,7 +211,7 @@ To register a service that uses the **GET** example without URL parameters (as p
 ---- 
 ### Executing a Service
 
-To execute a service, utilize the ServiceControllers _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section.
+To execute a service, utilize the ServiceController's _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section.
 
 [source,json]
 ----

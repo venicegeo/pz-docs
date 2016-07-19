@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Piazza enables the NSG community to exploit and disseminate GeoINT in an open source cloud-based platform.  GeoINT developers and analyst can build and share apps, UI’s, data layers, analytic services, and analytic products in an unclassified secure environment.  Developers using Piazza will reach across agencies to access geo data, services (alerts, searches, re-formatting), GeoINT algorithms, and products.  Piazza offers a common baseline and common reference libraries with open interfaces like OGC, REST, CRUD, and Geo JSON.  Piazza is currently deployed on the CACI/BITS GeoINT Services Cloud.
+Piazza enables the NGS community to exploit and disseminate GeoINT in an open source cloud-based platform.  GeoINT developers and analyst can build and share apps, UI’s, data layers, analytic services, and analytic products in an unclassified secure environment.  Developers using Piazza will reach across agencies to access geo data, services (alerts, searches, re-formatting), GeoINT algorithms, and products.  Piazza offers a common baseline and common reference libraries with open interfaces like OGC, REST, CRUD, and Geo JSON.  Piazza is currently deployed on the CACI/BITS GeoINT Services Cloud.
 
 Piazza will provide developers a REST API to:
 

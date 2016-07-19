@@ -41,7 +41,7 @@ Some helpful links for constructing Elasticsearch DSL queries include:
 
 As an aid, here are a few example queries:
 
-* Example Query 1
+### Example Query 1
 [source,json]
 ----
 {
@@ -60,7 +60,7 @@ As an aid, here are a few example queries:
 }
 ----
 
-* Example Query 2
+### Example Query 2
 [source,json]
 ----
 {
@@ -75,7 +75,7 @@ As an aid, here are a few example queries:
 }
 ----
 
-* Example Query 3
+### Example Query 3
 [source,json]
 ----
 {

@@ -71,6 +71,8 @@ The user then defines a _Trigger_ which defines what action is to be taken when 
 }
 ----
 
+For details on constructing valid Elasticsearch DSL queries, see the <<Elasticsearch Query Syntax>> section.
+
 In this example, the job will be executed only when our "test" event occurs with the `severity` equal to `5` and the `code` equal to `"PHONE"`.
 
 NOTE: the "type" field of the "condition" will likely be removed in the future, as the query DSL allows us to specify the event type directly within it; this would open up the possibility of having a condition based on multiple events.

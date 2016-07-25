@@ -87,7 +87,7 @@ The Ingest of metadata will be coincidental with a Piazza data Ingest job.  Thou
 https://pz-gateway.venicegeo.io/job:
 
 ....
-{   
+{
   "userName": "my-api-key-38n987",     "jobType": { "type": "search-metadata-ingest", "data":{
   "dataId": "dc1787d7-7a5e-4d51-a86c-a171ee103723",
   "dataType": {

@@ -8,15 +8,15 @@ Piazza components are hosted in GitHub repositories at github.com/venicegeo. Eac
 
 ### Environments
 
-Piazza defines multiple environments used for elevating levels of stability and readiness - from development environments up to production. This allows multiple instances of Piazza to be running at the same time, while being completely separated. Each environment is Piazza contains every core component and service, in isolation to other environments (environments do NOT talk to one another - they are completely separate). In our Cloud Foundry deployment, this is achieved by using different `stages`. 
+Piazza defines multiple environments used for elevating levels of stability and readiness - from development environments up to production. This allows multiple instances of Piazza to be running at the same time, while being completely separated. Each environment is Piazza contains every core component and service, in isolation to other environments (environments do NOT talk to one another - they are completely separate). In our Cloud Foundry deployment, this is achieved by using different `stages`.
 
-The `int` or integration stage is what the master branch currently pushes to. This is the latest, unstable code. 
+The `int` or integration stage is what the master branch currently pushes to. This is the latest, unstable code.
 The `stage` or staging environment is considered stable and has regular integration tests being run to verify functionality. Ideally, code is elevated from `int` to `stage` when tests have fully passed on the environment in `int`.
 The `prod` or production environment is pushed to from stage, manually, when the `stage` code is fully tested and functional, and when a new *version* is ready to be created. This would be accompanied by an announcement in appropriate RocketChat channel `pz-announce` and should also be paired with a series of release notes and potential breaking changes.
 
 ### Jenkins
 
-Jenkins sets up a GitHub webhook, so that each Piazza repository in GitHub will alert Jenkins when master receives a new commit. This will then trigger the Jenkins pipeline for that repository. The pipeline for each project will 1) Compile the code 2) Stage the application 3) Deploy the application to Cloud Foundry. Cloud Foundry deployments are achieved by each project defining a *.manifest.yml file in the root directory of its repository that will contain information for the Cloud Foundry deployment. Jenkins will automatically push to `int` on any commits to master. Jenkins can also, manually, be told to push an individual project to a specific environment - or push the entire Piazza set of components to a specific environment. 
+Jenkins sets up a GitHub webhook, so that each Piazza repository in GitHub will alert Jenkins when master receives a new commit. This will then trigger the Jenkins pipeline for that repository. The pipeline for each project will 1) Compile the code 2) Stage the application 3) Deploy the application to Cloud Foundry. Cloud Foundry deployments are achieved by each project defining a *.manifest.yml file in the root directory of its repository that will contain information for the Cloud Foundry deployment. Jenkins will automatically push to `int` on any commits to master. Jenkins can also, manually, be told to push an individual project to a specific environment - or push the entire Piazza set of components to a specific environment.
 
 
 

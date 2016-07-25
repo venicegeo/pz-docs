@@ -94,7 +94,7 @@ We generally only use these HTTP status codes.
 
 200 OK::
 The request has succeeded. The information returned with the response is
-dependent on the method used in the request. For `GET`, the response 
+dependent on the method used in the request. For `GET`, the response
 is an entity containing the requested resource. For `POST`, it is entity
 containing the result of the action.
 

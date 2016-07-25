@@ -16,7 +16,7 @@ The Tomcat server will be listening on port 8080. The roles are stored in a file
 
 ## Code Organization
 
-The Pz-Security project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Pz-Security API provides. These are located in the org.venice.piazza.security.controller package, and are broken up into separate objects by their functionality. 
+The Pz-Security project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Pz-Security API provides. These are located in the org.venice.piazza.security.controller package, and are broken up into separate objects by their functionality.
 
 ## Endpoints
 
@@ -73,7 +73,7 @@ Example output:
 ### Adding Data:
 
 Adds a list of one or more usernames and their respective roles
-    
+
     POST /users/roles
 
 Example payload:

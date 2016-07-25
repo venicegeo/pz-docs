@@ -18,11 +18,11 @@ The `pz-jobcommon` project contains a variety of Spring Beans that are used to w
 public class Application extends SpringBootServletInitializer {
 ....
 
-In the above syntax, the `@ComponentScan()` annotation was added. This is required in order to tell Spring to search for `@Components` in additional namespaces to your own. In this case, we are telling Spring to look in the `MY_NAMESPACE` package, which is a placeholder for your projects own namespace (such as `gateway` or `jobmanager`) -- this will ensure your own project Components get picked up. Additionally, we tell Spring to look for Components in the `util` namespace which is defined in the `pz-jobcommon` project and contains the `PiazzaLogger` and `UUIDFactory` classes. 
+In the above syntax, the `@ComponentScan()` annotation was added. This is required in order to tell Spring to search for `@Components` in additional namespaces to your own. In this case, we are telling Spring to look in the `MY_NAMESPACE` package, which is a placeholder for your projects own namespace (such as `gateway` or `jobmanager`) -- this will ensure your own project Components get picked up. Additionally, we tell Spring to look for Components in the `util` namespace which is defined in the `pz-jobcommon` project and contains the `PiazzaLogger` and `UUIDFactory` classes.
 
 The above lines are required because, if not specified, Spring would only look for Components in the default project namespaces (represented by the placeholder `MY_NAMESPACE`) and would not find the components located in the `util` package, and thus you would receive errors when attempting to Autowire something like the `PiazzaLogger`.
 
-If you do not wish to use the `PiazzaLogger` or `UUIDFactory` classes as Autowired Components in your application (which is highly recommended!) then you are free to instantiate them as normal using the provided constructors. However, this is discouraged because you will have to inject the `url` values for each component directly from the constructor in order for these classes to function. It is much preferred to Autowire these components with appropriate `url` values (described in the below sections for each component) and letting Spring instantiate this for you. 
+If you do not wish to use the `PiazzaLogger` or `UUIDFactory` classes as Autowired Components in your application (which is highly recommended!) then you are free to instantiate them as normal using the provided constructors. However, this is discouraged because you will have to inject the `url` values for each component directly from the constructor in order for these classes to function. It is much preferred to Autowire these components with appropriate `url` values (described in the below sections for each component) and letting Spring instantiate this for you.
 
 ### PiazzaLogger
 
@@ -53,7 +53,7 @@ Incorporating the `PiazzaLogger` class as a Component is simple.
 	private PiazzaLogger logger;
 ....
 
-Logs can then be sent using the `.log(message, severity)` method. The `message` is simply the message you wish to Log. The `severity` is a list of acceptable severity levels defined in the `PiazzaLogger` class. 
+Logs can then be sent using the `.log(message, severity)` method. The `message` is simply the message you wish to Log. The `severity` is a list of acceptable severity levels defined in the `PiazzaLogger` class.
 
 ....
 	public static final String DEBUG = "Debug";

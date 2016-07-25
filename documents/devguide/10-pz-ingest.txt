@@ -1,16 +1,16 @@
 # pz-ingest (Loader)
 
-Inspects and loads data & metadata into the Piazza system. 
+Inspects and loads data & metadata into the Piazza system.
 
 ## Running Locally
 
-To run the Loader service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run the application on port 8084 of the machine. 
+To run the Loader service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run the application on port 8084 of the machine.
 
 ## S3 Credentials
 
-The Loader component inspects files uploaded to S3 by the Gateway. As such, the `pz-ingest` component is also dependent on the `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key` ENV variables. 
+The Loader component inspects files uploaded to S3 by the Gateway. As such, the `pz-ingest` component is also dependent on the `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key` ENV variables.
 
-## Source Organization 
+## Source Organization
 
 The `messaging` package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The `IngestWorker.java` class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the `inspect` package. There is an inspector for each type of data (GeoJSON, GeoTIFF, Point Cloud, GeoJSON). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the `DataResource` objects and store them into the MongoDB instance.
 
@@ -18,7 +18,7 @@ The `controller` package contains the administrative REST endpoints for this com
 
 ## Interface
 
-In order to Load data, a message will be posted to the Gateway to create an Load job. There are two Gateway API endpoints to load data. 
+In order to Load data, a message will be posted to the Gateway to create an Load job. There are two Gateway API endpoints to load data.
 
 ....
 POST /data
@@ -39,19 +39,19 @@ The JSON payload for either of the above endpoints will look like:
     "host": true,
 	"data" : {
 		// Description of the Data Here
-	}, 
+	},
 	"metadata": {}
 ....
 
-The metadata fields under the `jobType.data` tag are defined in the [DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) POJO object. This object contains the `ResourceType` interface, which is listed in the `model.data.type` package. This package defines format types for each type of Data that Piazza currently supports: Shapefiles, Text, PostGIS Tables, etc. 
+The metadata fields under the `jobType.data` tag are defined in the [DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) POJO object. This object contains the `ResourceType` interface, which is listed in the `model.data.type` package. This package defines format types for each type of Data that Piazza currently supports: Shapefiles, Text, PostGIS Tables, etc.
 
-The `host` parameter is set to true if Piazza should host the data internally. This should be the default behavior. If this is set to false, then Piazza will not store the data in its internal storage. It will merely provide a link to wherever this external data resides, and attempt to read whatever metadata it can. If you specify a `file` in the Multipart POST, and set the ingest flag `host` to `false`, then an error will be raised - this is because setting `host` to `false` is explicitly stating to the Ingest component that no data should be stored - only metadata. 
+The `host` parameter is set to true if Piazza should host the data internally. This should be the default behavior. If this is set to false, then Piazza will not store the data in its internal storage. It will merely provide a link to wherever this external data resides, and attempt to read whatever metadata it can. If you specify a `file` in the Multipart POST, and set the ingest flag `host` to `false`, then an error will be raised - this is because setting `host` to `false` is explicitly stating to the Ingest component that no data should be stored - only metadata.
 
 When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the [ResourceMetadata](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java) POJO.
 
 ## Ingest Process
 
-The Gateway will receive the Ingest Job request and then forward the request along, via Kafka, to the Dispatcher, where the Job Creation message is then forwarded along to the Ingest component. If a File is specified in the initial request, the Gateway will store this file on disk immediately and then upload to AWS S3 storage. The file path information is then attached to the message that the Ingest receives. 
+The Gateway will receive the Ingest Job request and then forward the request along, via Kafka, to the Dispatcher, where the Job Creation message is then forwarded along to the Ingest component. If a File is specified in the initial request, the Gateway will store this file on disk immediately and then upload to AWS S3 storage. The file path information is then attached to the message that the Ingest receives.
 
 As the message is consumed by the Ingest component, the first thing is to parse out any available metadata from the user request. Additionally, any other available metadata is also automatically extracted based on File paths or resource URLs specified. This metadata information is stored in the Mongo Database in the Resources collection. This collection stores all information for each bit of data Ingested into Piazza.
 
@@ -107,7 +107,7 @@ Great for testing! This will upload some Text into Piazza and will be stored wit
 
 ### GeoTIFF Ingest
 
-GeoTIFF Raster files can be ingested. 
+GeoTIFF Raster files can be ingested.
 
 ....
 	"type": "ingest",
@@ -189,7 +189,7 @@ Upon the successful Ingest of any type of Data into Piazza (internal or external
 
 ## Administrative API
 
-The Ingest Component contains various REST Endpoints that can be used for query for run-time information on specific instances of this component. 
+The Ingest Component contains various REST Endpoints that can be used for query for run-time information on specific instances of this component.
 
 Administrative Statistic -- `GET /admin/stats`
 

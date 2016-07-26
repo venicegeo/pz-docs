@@ -91,3 +91,5 @@ The `admin stats` supported are:
     "numMessages": 1234
 }
 ----
+
+// vim: set syntax=asciidoc wrap:

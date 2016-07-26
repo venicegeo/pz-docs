@@ -89,3 +89,5 @@ Example JSON docs for ingest:
         }
     }
 ....
+
+// vim: set syntax=asciidoc wrap:

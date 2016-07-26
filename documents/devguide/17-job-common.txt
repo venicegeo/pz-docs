@@ -122,3 +122,5 @@ By using the `KafkaClientFactory` to instantiate producers and consumers, then t
 ## Models
 
 `pz-jobcommon` also contains a variety of models that map all of the JSON payload information that is passed throughout the Gateway and other internal components. These models are located in the `model.*` namespace. These models are documented in the Swagger documentation, with regards to their usage in the Gateway API.
+
+// vim: set syntax=asciidoc wrap:

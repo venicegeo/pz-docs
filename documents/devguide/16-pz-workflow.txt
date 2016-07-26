@@ -392,5 +392,4 @@ The response object for a "stats" request looks like this:
 }
 ----
 
-
-// vim: set syntax=asciidoc:
+// vim: set syntax=asciidoc wrap:

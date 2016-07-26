@@ -38,3 +38,5 @@ New GitHub Repositories within the **_github.com/venicegeo_** community should b
 
 
 include::18_1-http.txt[]
+
+// vim: set syntax=asciidoc wrap:

@@ -81,3 +81,5 @@ Endpoints related to setting up events and event types, and defining triggers fo
 * Get all alerts: `GET /alert`
 * Get a specific alert: `GET /alert/{alertId}`
 * Delete a specific alert: `DELETE /alert/{alertId}`
+
+// vim: set syntax=asciidoc wrap:

@@ -163,3 +163,5 @@ with a response payload containing a short, friendly text string.
 `GET /admin/stats`:: requests the current metrics for the service. The returned
 payload will contain an object with the metric data. Such data might include
 things like the time the service started, how many requests it has served, etc.
+
+// vim: set syntax=asciidoc:

@@ -331,3 +331,4 @@ Provides statistics on the Pz-ServiceController.
 {"mem":382464,"mem.free":159813,"processors":2,"instance.uptime":18151962,"uptime":18166991,"systemload.average":1.05,"heap.committed":382464,"heap.init":382976,"heap.used":222650,"heap":382464,"threads.peak":31,"threads.daemon":27,"threads.totalStarted":37,"threads":31,"classes":11529,"classes.loaded":11529,"classes.unloaded":0,"gc.ps_scavenge.count":4900,"gc.ps_scavenge.time":13789,"gc.ps_marksweep.count":0,"gc.ps_marksweep.time":0,"httpsessions.max":-1,"httpsessions.active":0,"gauge.response.admin.stats":7.0,"gauge.response.root":102.0,"counter.status.200.root":1,"counter.status.302.admin.stats":1}
 ....
 
+// vim: set syntax=asciidoc wrap:

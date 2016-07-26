@@ -112,3 +112,5 @@ The Access component provides a series of REST Endpoints that can be used to que
   "jobs": ["job-id-1", "job-id-2"]
 }
 ....
+
+// vim: set syntax=asciidoc wrap:

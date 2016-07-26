@@ -66,3 +66,4 @@ Low
     An unclear or incomplete error message, but no impact to software use
 
 Bugs are assigned to the Piazza Backlog and assigned to the appropriate developer if known. Any bug marked as High will be reported at the Standup and communicated immediately to the dev team (verbal notification, rocket chat).
+// vim: set syntax=asciidoc wrap:

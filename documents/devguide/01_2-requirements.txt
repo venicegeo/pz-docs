@@ -9,3 +9,5 @@ For a template on capturing Epics, please see link:docs/PZ-Epic-Analysis-Templat
 The PZ Core team also drives user stories for technical trends to meet the emerging needs of users in order to be responsive to the changing geospatial technology domain.
 
 Incoming change requests such defects and feature requests are continuously reviewed and triaged by the team.  The team works closely with the product owner and the technical lead to prioritize backlog and plan upcoming sprints.
+
+// vim: set syntax=asciidoc wrap:

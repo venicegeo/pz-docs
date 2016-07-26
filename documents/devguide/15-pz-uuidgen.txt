@@ -56,3 +56,5 @@ The `admin stats` supported are:
     "numRequests": 234
 }
 ----
+
+// vim: set syntax=asciidoc wrap:

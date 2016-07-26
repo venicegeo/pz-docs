@@ -66,3 +66,5 @@ DELETE /job/{jobId}
 ## REST API
 
 Please see the Jobs section in this document for more information on the specific endpoints that the Gateway provides. For live documentation, see the Swagger files.
+
+// vim: set syntax=asciidoc wrap:

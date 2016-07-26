@@ -155,3 +155,5 @@ SAK uses AngularJS and Bootstrap to create a simple UI for accessing REST endpoi
 
 ### UI mockups
 image::images/sak-tree-branches.png[title="SAK TREE Branches"]
+
+// vim: set syntax=asciidoc wrap:

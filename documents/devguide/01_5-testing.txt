@@ -55,3 +55,5 @@ An unclear or incomplete error message, but no impact to software use
 
 
 
+
+// vim: set syntax=asciidoc wrap:

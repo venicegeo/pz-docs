@@ -170,3 +170,5 @@ Example payload:
 Example output:
 
     true
+
+// vim: set syntax=asciidoc wrap:

@@ -12,7 +12,9 @@ The figure below shows the high level architecture of Piazza and how the Service
 
 image::images/sc-architecture.png[title=“Service Controller in Piazza“]
 
+
 ## How to Use
+
 
 ### Prerequisites
 
@@ -33,13 +35,17 @@ The ServiceController, version 1.0, uses the following to build and run:
 _* Software needed to use Vagrant to standup a mock Piazza Core cluster_
 
 _**These services are part of the Piazza Core. When these services are not available, the ServiceController defaults to standalone behavior._
+
+
 ## Obtaining the ServiceController
 The repo containing the ServiceController is located in github at the following location: https://github.com/venicegeo/pz-servicecontroller
 Clone this repo to obtain the latest copy.  The ServiceController can be built and run standalone or from within predefined virtual machines using Vagrant.
 
+
 ## Building the Source
 
 Before using the ServiceController, decide whether you want to run the ServiceController with supporting Piazza Core Services and VirtualBox VMs (with MongoDB, Kafka, etc..), or if you want to run the ServiceController standalone.
+
 
 ### Standalone Option
 
@@ -49,9 +55,11 @@ This will build the ServiceController and produce an executable jar which is pla
 
 The name of the jar will be **_piazzaServiceController-(version number).BUILD-SNAPSHOT.jar_**.
 
+
 ### Vagrant
 
 Start up a Windows PowerShell **as administrator**.  Navigate to the mainServiceController/conf directory.  Issue the command **Vagrant up**. This command will create the serviceregistry and serviceregistrydb VMs.
+
 
 ## Running the ServiceController
 
@@ -91,9 +99,6 @@ mongo.host=localhost
 mongo.port=27017
 ....
 
-
-
-
 To run the ServiceController from the _**mainServiceController/conf**_ directory, run the following command:
 
 _> java –jar <path to the location of the servicecontroller.jar>/ piazzaServiceController-(version number).BUILD-SNAPSHOT.jar_
@@ -101,6 +106,7 @@ _> java –jar <path to the location of the servicecontroller.jar>/ piazzaServic
 This will run the ServiceController, after initializing, the following message will be displayed:
 
 `_o.v.p.servicecontroller.Application : Started Application in 8.994 seconds (JVM running for 9.658)_`
+
 
 ### Running with the Discover Service
 
@@ -118,6 +124,7 @@ When the Piazza core [[Logger|Pz-Logger]] service is available, the ServiceContr
 ## Getting Started With the REST API
 
 The ServiceController comes with some sample services to help with getting started with using the ServiceController API.
+
 |===
 | Jumpstart Service | Description | Example URL |
 | toLower | Converts a string to lowercase. **POST** method | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toLower?aString=testing |
@@ -139,6 +146,7 @@ The following examples on registering and executing user services are the payloa
 ### Registering a User Service
 
 Before the ServiceController can manage a user service, the service has to be registered. To do this, utilize the ServiceController's _**registerService**_ service passing in ResourceMetadata JSON.  As of now, there are no mandatory fields, but at a bare minimum register enough information so that other developers can discover and use the service.
+
 
 #### Registering a User Service that uses POST with Query Parameters
 
@@ -174,6 +182,7 @@ _Once registered, users, should utilize the serviceId to perform any functions o
 
 _**If you receive a response with an empty serviceId, it may mean that the service was not properly registered within the ServiceController.  Be sure MongoDB and other required software is up and running.**_
 
+
 #### Registering a User Service that uses POST with JSON Payload
 
 To register a service that uses the **POST** method requiring JSON as the RequestBody, send the following payload to the registerService:
@@ -190,6 +199,7 @@ To register a service that uses the **POST** method requiring JSON as the Reques
     }
 }
 ----
+
 
 #### Registering a User Service that uses GET without any parameters
 To register a service that uses the **GET** example without URL parameters (as per a "pure" REST case), the process is the same but be sure to specify **GET** as the method.
@@ -208,6 +218,8 @@ To register a service that uses the **GET** example without URL parameters (as p
 
 }
 ----
+
+
 ### Executing a Service
 
 To execute a service, utilize the ServiceController's _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section.
@@ -291,7 +303,9 @@ To get a description of a user service registered with Piazza perform the follow
  https://pz-servicecontroller.int.geointservices.io/service/{{serviceId}}
 ----
 
+
 The response will be the metadata associated with the specified serviceId.
+
 
 ### Getting a List of Registered User Services
 

@@ -2,9 +2,11 @@
 
 Inspects and loads data and metadata into the Piazza system.
 
+
 ## Running Locally
 
 To run the Loader service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run the application on port 8084 of the machine.
+
 
 ## S3 Credentials
 
@@ -15,6 +17,7 @@ The Loader component inspects files uploaded to S3 by the Gateway. As such, the 
 The `messaging` package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The `IngestWorker.java` class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the `inspect` package. There is an inspector for each type of data (GeoJSON, GeoTIFF, Point Cloud, GeoJSON). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the `DataResource` objects and store them into the MongoDB instance.
 
 The `controller` package contains the administrative REST endpoints for this component.
+
 
 ## Interface
 

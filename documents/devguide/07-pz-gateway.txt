@@ -2,27 +2,33 @@
 
 Handles all user-facing requests to Piazza via REST endpoints. The purpose of this component is to allow for external users to be able to interact with Piazza data, services, events, and other core Piazza functionality.
 
+
 ## Running Locally
 
 To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8081.
 
 Check the `application.properties` file if any port or host information needs to change for certain components. Since the Gateway proxies to all internal Piazza components, then depending on what you are attempting to debug locally, you may need to set one or many of these parameters. For example, if you are debugging `pz-ingest` as well, then you would change the `ingest.url` property in `application.properties` to your own local machine.
 
+
 ## S3 Credentials
 
 The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers will require environment variables to be established for passing in the values for the S3 Access key and the S3 Private Access key to be used. These values are referenced in the ENV variables `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key`. If you are a developer and you do not have these values on your host, you will not be able to Ingest files into the Gateway.
+
 
 ## Code Organization
 
 The Gateway uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Gateway API provides. These are located in the `controller` package, and are broken up into separate objects by their functionality. The `auth` package defines how Gateway authenticates users through the `pz-security` project. The logic for turning on Authentication is located in the `Application.java` class - this is handled by either enabling or disabling the `secure` Spring profile. If this profile is enabled, then authentication is active and will point to `pz-security` for basic authentication credentials. If this profile is disabled, then the Gateway will not require any authentication for incoming requests.
 
+
 ## Interface
 
 The Gateway API provides a series of REST endpoints that enable users to work with data, services, events, and triggers. See the Swagger documentation for a complete documentation and listing for all available Gateway API endpoints. See Swagger documentation for the Gateway for specific endpoints, payloads and responses.
 
+
 ## Authentication and Authorization
 
 Authentication and authorization is handled via the `pz-security` component. This authentication becomes active when the `secure` Spring profile is enabled in the Gateway. When authentication, all requests to the Gateway will require basic authentication (standard base64-encoded) with usernames and passwords defined in `pz-security`.
+
 
 ### Job Request
 
@@ -55,6 +61,7 @@ This will return any progress, or status information. When the job is done, this
 The resulting JSON will contain the current status information for that Job. The ``status`` and ``progress`` objects contain information to the Job's current status.
 
 If the Job has encountered an error, then this information will also be available in the resulting JSON.
+
 
 ### Job Abort
 

@@ -8,6 +8,7 @@ inside of http://nginx.org/[NGINX].
 The UI is unit tested using https://karma-runner.github.io/0.13/index.html[Karma]
 and http://jasmine.github.io/2.4/introduction.html[Jasmine].
 
+
 ## Source Organization
 
 This app is setup as a static web application and is a single module AngularJS
@@ -23,6 +24,7 @@ app.  The important sections include:
 
 * Code cloned from https://github.com/venicegeo/pz-sak.git
 * Nginx 1.8.1 http://nginx.org/en/download.html
+
 
 ### Steps
 
@@ -50,10 +52,12 @@ network for dynamic proxies to work properly.
 
 * Web-browser (we typically test in Chrome but any modern browser should work)
 
+
 ### Steps
 
 . Open your web-browser
 . Go to: http://pz-sak.geointservices.io/
+
 
 ## Using SAK
 
@@ -64,11 +68,13 @@ If you already have credentials for this space, your username and password shoul
 already work within SAK.  If you do not yet have a username and password, you
 can contact us and request credentials.
 
+
 ### Sections of SAK
 
 Upon login, you are redirected to the Home page where you are given a list of
 commonly used links and locations of services.  Here are further details on
 using these services through SAK.
+
 
 #### Access
 
@@ -78,11 +84,13 @@ object by it's Data ID.  All data is returned in it's raw JSON format, so you
 can view the response as close to what services that connect to Piazza would
 be seeing.
 
+
 #### Jobs
 
 Here you can check the status of specific jobs using the Job ID, retrieve
 resource data with a Data ID, or just browse through all the jobs that have
 been requested.
+
 
 #### Loader
 
@@ -110,6 +118,7 @@ well as links to outside files
 (not necessarily in local storage).  Also supported is files that won't be
 hosted by Piazza, but just linked to another source.  SAK will support all of
 these use cases in the future but currently only supports Text and GeoTIFF.
+
 
 #### User Service Registry
 

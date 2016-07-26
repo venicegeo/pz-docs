@@ -2,6 +2,7 @@
 
 Internal component that provides persistence for long-running Jobs (processes) as they pass throughout the application. This contains a https://www.mongodb.org/[MongoDB] instance that stores all Jobs. Internally, this component also routes certain Kafka messages for when Jobs are requested to be created.
 
+
 ## Running Locally
 
 To run the Job Manager service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8083. Even if running the Job Manager locally, you should still run the MongoDB instance inside of Vagrant by running ``vagrant up jobdb`` from the /config directory.
@@ -10,11 +11,13 @@ To run the Job Manager service locally, perhaps through Eclipse or through CLI, 
 
 The main logic of the Job Manager is split between two package. The `controller` package contains the REST controller that contains the REST endpoints for querying job status, etc. This is a simple Spring RestController that contains the endpoints defined as simple functions. The `messaging` package declares the Kafka logic, where the JobManager defines Kafka consumers to poll for incoming messages. The messages pertain to 1) Creating new Jobs and 2) Updating the status of Jobs. The Jobs are persisted in the MongoDB and interaction code to handle the MongoDB commits is located in the `database` package.
 
+
 ## Interface
 
 The main communication with the Job Manager is via Kafka from messages. The Gateway sends "Request-Job" messages to the Job Manager in order to index the running of new jobs. The components that process Jobs will also send Kafka messages to the Job Manager in order to update the status of running jobs.
 
 The Job Manager also contains a series of REST endpoints that are used for obtaining Job Status, or lists of Jobs.
+
 
 ## Piazza Database & Jobs Collection
 
@@ -35,6 +38,7 @@ The MongoDB instance uses a database titled `Piazza` with a single `Jobs` collec
     }
 }
 ----
+
 
 ## Repeating Jobs
 
@@ -63,13 +67,16 @@ The response for a Repeat Job is simply the ID of the new Job that has been crea
 
 The Job ID can be extracted from the Result and can then be queried for Status as usual.
 
+
 ## Administrative API
 
 The Job Manager provides a series of REST Endpoints that can be used to query the Job Manager for certain information useful to utilities like the Swiss-Army-Knife (SAK). The requests are as follows.
 
+
 ### Job Model
 
 Jobs returned through REST Endpoints will follow the JSON Model defined in the https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java[Job Class].
+
 
 ### REST Endpoints
 

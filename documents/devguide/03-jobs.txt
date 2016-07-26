@@ -4,9 +4,11 @@ The Gateway API is the single point-of-contact for external users to interact wi
 
 See the Swagger documentation for a full explanation of all of these endpoints.
 
+
 ### Authentication
 
 Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-security` security component which handles authentication and authorization.
+
 
 ### Jobs
 
@@ -24,6 +26,7 @@ Endpoints that return a Job ID are documented and outlined in the Swagger docume
 The response may look something like the above. In this case, the requesting user can then take the Job ID and re-query the Gateway with the Job ID in order to get the latest status and progress of that Job.
 
 When the Job has been completed, the result of the associated Job (being a data ID, or service, or whatever the end result of the Job was) will be contained in the status of that Job, including the time it was completed and how long it took.
+
 
 ## Endpoints
 

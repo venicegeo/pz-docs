@@ -37,19 +37,19 @@ The response payload looks like this:
 [source,json]
 ----
 {
-  "statusCode": 201,
-  "type": "eventtype",
-  "data": {
-    "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
-    "name": "testevent-1468847218",
-    "mapping": {
-      "code": "string",
-      "filename": "string",
-      "severity": "integer"
-    },
-    "createdBy": "xyzzy",
-    "createdOn": "2016-07-18T13:06:58.983944263Z"
-  }
+    "statusCode": 201,
+    "type": "eventtype",
+    "data": {
+        "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
+        "name": "testevent-1468847218",
+        "mapping": {
+            "code": "string",
+            "filename": "string",
+            "severity": "integer"
+        },
+        "createdBy": "xyzzy",
+        "createdOn": "2016-07-18T13:06:58.983944263Z",
+    }
 }
 ----
 

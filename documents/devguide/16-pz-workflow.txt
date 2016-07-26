@@ -185,14 +185,56 @@ The response payload looks like this:
 }
 ----
 
+In addition, an _Event_ can specify a `cronSchedule` field, which alters the mechanics of the _Event_ slightly. The `cronSchedule` field specifies a schedule at which to repeat the specified event. This schedule is created as a cron expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron related resources. Some helpful resources might include http://www.cronmaker.com[cronmaker.com] and http://crontab.guru[crontab.guru]. However, it is critical to note that the cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go, with the crucial difference being that our cron flavor designates the first asterisk as the *seconds* field. This means:
+
+* `"cronSchedule": "* * * * * *"` sends the event every second;
+* `"cronSchedule": "30 * * * * *"` sends the event every minute at the 30 second mark;
+* `"cronSchedule": "* 30 * * * *"` sends the event every hour at the 30 minute mark, etc.
+
+For reference, the 6 stars in the cronSchedule stand for:
+
+*seconds | minutes | hours | (day of month) | month | (day of week)*
+
+In some cron implementations, the rightmost asterisks can be omitted from the notation; this is not the case with the particular flavor of cron we are using.
+
+Additionally, the `cronSchedule` field can be spelled out using shorthand notation. These shorthands include:
+
+.Shorthands
+|===
+|Entry |Description |Equivalent To
+
+|@yearly (or @annually)
+|Run once a year, midnight, Jan. 1st
+|0 0 0 1 1 *
+
+|@monthly
+|Run once a month, midnight, first of month
+|0 0 0 1 * *
+
+|@weekly
+|Run once a week, midnight on Sunday
+|0 0 0 * * 0
+
+|@daily (or @midnight)
+|Run once a day, midnight
+|0 0 0 * * *
+
+|@hourly
+|Run once an hour, beginning of hour
+|0 0 * * * *
+|===
+
+Lastly, cronSchedule can be specified using the `@every duration` notation, where duration is replaced by a Golang parsable time.Duration. Examples include:
+
+* `"cronSchedule": "@every 1h30m10s"`: send event every 1 hour, 30 minutes, 10 seconds
+* `"cronSchedule": "@every 30s"`: send event every 30 seconds
+* `"cronSchedule": "@every 5m"`: send event every 5 minutes
+
+It is crucial to understand that an *Event that is sent with a `cronSchedule` field does not trigger the system in the same way that a typical event does*. Rather, it sets up a recurring Event that will be sent according to the schedule specified. If you require both an Event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating Event and a repeating Event.
+
 ## The Alert
 
-Whenever the condition of a `Trigger` is met, the system will create an `Alert` object. The user
-can GET a list of alerts from `/alert`. The `Alert` object contains the ids of the `Trigger` that
-was hit and the `Event` which caused it. It also contains the now ubiquitous system-generated ID,
-and the id of the `Job` that was triggered by the event (note that at the current time, this is
-sent as a JobRequest, which may or may not become an actual job if the request is malformed).
-
+Whenever the condition of a `Trigger` is met, the system will create an `Alert` object. The user can GET a list of alerts from `/alert`. The `Alert` object contains the ids of the `Trigger` that was hit and the `Event` which caused it. It also contains the now ubiquitous system-generated ID, and the id of the `Job` that was triggered by the event (note that at the current time, this is sent as a JobRequest, which may or may not become an actual job if the request is malformed).
 
 Users do not create Alerts, so we do not show a request payload example.
 

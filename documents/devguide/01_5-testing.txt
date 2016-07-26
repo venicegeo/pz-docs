@@ -44,16 +44,18 @@ Testing engineers use swagger and postman unit test to build API and Integration
 ### Bug Reports and Change Requests
 
 Bugs and issues will be report in the Redmine Piazza project for review by the developer team.  The severity of each issue will be marked as high, normal, or low.
-|===
-|Severity|Description
-|High|Error causes system crash or data loss.
-Error causes abnormal return to user or generates system failure message with no workaround.  Error prevents vital functionality.  Error found but feasible
-|Normal|An unclear or incomplete error message, with minimal impact to software use
-|Low|Cosmetic Error
-An unclear or incomplete error message, but no impact to software use
-|===
 
+High::
+* Error causes system crash or data loss.
+* Error causes abnormal return to user or generates system failure message with no workaround.
+* Error prevents vital functionality.
+* Error found but feasible
 
+Normal::
+* An unclear or incomplete error message, with minimal impact to software use
 
+Low::
+* Cosmetic error
+* An unclear or incomplete error message, but no impact to software use
 
 // vim: set syntax=asciidoc wrap:

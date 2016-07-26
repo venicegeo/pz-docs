@@ -68,15 +68,13 @@ This command will create the serviceregistry and serviceregistrydb VMs.
 
 ## Running the ServiceController
 
-The ServiceController is a Spring Boot application and can be run directly from the command line.
-It uses an _**application.properties**_ file which contains port, hostname, database name and other information used by the ServiceController.  When the Piazza Discover Service is not available, the Service Controller utilizes information in the application.properties file to connect to supporting services.
+The ServiceController is a Spring Boot application and can be run directly from the command line. It uses an _**application.properties**_ file which contains port, hostname, database name and other information used by the ServiceController.  When the Piazza Discover Service is not available, the Service Controller utilizes information in the application.properties file to connect to supporting services.
 
 _**application.properties**_ files are located in the mainServiceController/conf directory.  To run the ServiceController, locally, you have to choose _**application-local.properties**_ and place it in the location that the ServiceController is started from, in the _src/main/resources_ directory or in the classpath used by the ServiceController.
 
-When the Piazza [[Discover|Pz-Discover]] service is running and the location/api is specified in the application.properties file, the ServiceController uses the values registered in the Discover service to communicate with things such as Kafka, MongoDB and other Piazza Core Services.
+When the pz-discover service is running and the location/api is specified in the application.properties file, the ServiceController uses the values registered in the Discover service to communicate with things such as Kafka, MongoDB and other Piazza Core Services.
 
-
-**Values provided by the Discover service supersede values defined in the application.properties file. **
+*Values provided by the Discover service supersede values defined in the application.properties file.*
 
 ....
 server.port=8082
@@ -124,7 +122,8 @@ The ServiceController provides logging messages at an **INFO** level displaying 
 
     > java -jar -Dlogging.level.org.venice.piazza.servicecontroller=DEBUG piazzaServiceController-(version number).BUILD-SNAPSHOT.jar
 
-When the Piazza core [[Logger|Pz-Logger]] service is available, the ServiceController uses it to log additional messages.
+When the pz-logger service is available, the ServiceController uses it to log additional messages.
+
 
 ## Getting Started With the REST API
 
@@ -138,14 +137,13 @@ The ServiceController comes with some sample services to help with getting start
 | moviequotewelcome | Takes an optional name as a parameter and provides a movie quote greeting to ServiceController users.  **GET** method | hhttp://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome?name=Marge or http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome |
 |===
 
+To become familiar with the ServiceController, use data transfer tools such as **cURL** or UI data transfer tools such as **Postman** (https://www.getpostman.com/) to interact with the ServiceController REST API.
 
-To become familiar with the ServiceController, use data transfer tools such as **cURL** or UI data transfer tools such as **Postman** ( https://www.getpostman.com/) to interact with the ServiceController REST API.
+The API and end points used for working with the ServiceController are documented in Swagger at: http://pz-swagger.venicegeo.io/#!/Service
 
-The API and end points  used for working with the ServiceController are documented in Swagger at: http://pz-swagger.venicegeo.io/#!/Service
+Metadata about Piazza Core Resources are represented as _**ResourceMetadata**_ within the Piazza Core.  Please look at the ResourceMetadata model, documented as part of registering a user service, in swagger (http://pz-swagger.venicegeo.io/#!/Service/post_service) for descriptions of these metadata fields.
 
-Metadata about Piazza Core Resources are represented as _**ResourceMetadata**_ within the Piazza Core.  Please look at the ResourceMetadata model, documented as part of registering a user service, in swagger ( http://pz-swagger.venicegeo.io/#!/Service/post_service) for descriptions of these metadata fields.
-
-The following examples on registering and executing user services are the payloads for interacting directly with the ServiceController.  These same payloads can also be used within registration and execution requests going through the Gateway.   Refer to the Swagger API documentation and the <<_gateway_api>> section of this document to determine what additional items need to be specified.
+The following examples on registering and executing user services are the payloads for interacting directly with the ServiceController. These same payloads can also be used within registration and execution requests going through the Gateway. Refer to the Swagger API documentation and the <<_gateway_api>> section of this document to determine what additional items need to be specified.
 
 
 ### Registering a User Service
@@ -156,9 +154,10 @@ Before the ServiceController can manage a user service, the service has to be re
 #### Registering a User Service that uses POST with Query Parameters
 
 Piazza user services register user services using the following endpoint: https://pz-gateway.venicegeo.io/service
-Piazza developers can build and test registering user services using localhost.  When running or testing the ServiceController internally, the following endpoint can be used:  https://<the-hostname-you-are-running-from>/servicecontroller/registerService.
+Piazza developers can build and test registering user services using localhost. When running or testing the ServiceController internally, the following endpoint can be used: `https://<the-hostname-you-are-running-from>/servicecontroller/registerService`.
 
-Below is an example of how to register a web service that uses the **POST** method, specifies the input parameters via URL key value pairs - in this case using the parameter aString.  This example registers the toLower Service:
+Below is an example of how to register a web service that uses the **POST** method, specifies the input parameters via URL key value pairs - in this case using the parameter aString. This example registers the toLower Service:
+
 https://pz-gateway.venicegeo.io/service
 [source,json]
 ----

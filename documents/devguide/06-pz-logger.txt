@@ -10,7 +10,7 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### POST /message
+### `POST /message`
 
 Sends a message to be logged. The message is given in the POST body as a JSON object:
 
@@ -37,7 +37,7 @@ All five fields are required.
 "Error":: I can't do this. I've handled the exception so I'm not going to crash or anything, but I want you to know that I may not be in a happy place right now.
 "Fatal":: I'm sorry, Dave. I'm afraid I can't do that. System crashing, or likely to crash very soon.
 
-### GET /message
+### `GET /message`
 
 Returns a JSON object of log messages:
 

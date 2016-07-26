@@ -5,7 +5,7 @@ Piazza defines a Configuration Management process to streamline the building, te
 
 ### Source Control
 
-Piazza components are hosted in GitHub repositories at https://github.com/venicegeo. Each of the core components are separated into a different repository. Common projects exist for Java and Go languages, for used in other components of that language that may depend on common calls, for example to the Piazza Logger component. Work done for specific tasks is done under branches, and when work is complete, it is generally reviewed by a peer and then merged into the master branch. Upon merging to the master branch, a Jenkins pipeline is initialized that will build and deploy this version to an initial testing environment.
+Piazza components are hosted in GitHub repositories at https://github.com/venicegeo[github.com/venicegeo]. Each of the core components are separated into a different repository. Common projects exist for Java and Go languages, for used in other components of that language that may depend on common calls, for example to the Piazza Logger component. Work done for specific tasks is done under branches, and when work is complete, it is generally reviewed by a peer and then merged into the master branch. Upon merging to the master branch, a Jenkins pipeline is initialized that will build and deploy this version to an initial testing environment.
 
 
 ### Environments

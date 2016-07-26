@@ -60,13 +60,14 @@ As the message is consumed by the Ingest component, the first thing is to parse 
 
 ## Supported Data Types
 
-| Data Type           | Ingest and Hosted                 | Ingest and Not Hosted                         |
-|---------------------|-----------------------------------|-----------------------------------------------|
-| Text                | Yes, stored in MongoDB, or file   | Not Applicable                                |
-| Shapefile           | Yes, stored in PostGIS + raw file | Possibly, if we have credentials passed to us |
-| GeoTIFF             | Yes, stored in S3                 | Possibly, if we have credentials passed to us |
-| PointCloud          | Yes, stored in S3                 | Possibly, if we have credentials passed to us |
-| Web Feature Service | Yes, stored in PostGIS            | Yes, referenced via external URL              |
+|===
+| Data Type           | Ingest and Hosted                 | Ingest and Not Hosted
+| Text                | Yes, stored in MongoDB, or file   | Not Applicable
+| Shapefile           | Yes, stored in PostGIS + raw file | Possibly, if we have credentials passed to us
+| GeoTIFF             | Yes, stored in S3                 | Possibly, if we have credentials passed to us
+| PointCloud          | Yes, stored in S3                 | Possibly, if we have credentials passed to us
+| Web Feature Service | Yes, stored in PostGIS            | Yes, referenced via external URL
+|===
 
 ## Example Ingest Requests
 

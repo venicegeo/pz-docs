@@ -1,6 +1,6 @@
 # pz-ingest (Loader)
 
-Inspects and loads data & metadata into the Piazza system.
+Inspects and loads data and metadata into the Piazza system.
 
 ## Running Locally
 

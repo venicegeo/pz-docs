@@ -98,7 +98,8 @@ Subsequently, this simple DSL query will return the stored record:
 ## Search through the Piazza Workflow
 
 The Ingest of metadata will be coincidental with a Piazza data Ingest job.  Though not the norm, an explicit search-metadata-ingest-job is available through the Gateway:
-https://pz-gateway.venicegeo.io/job:
+
+    https://pz-gateway.venicegeo.io/job
 
 [source,json]
 ----

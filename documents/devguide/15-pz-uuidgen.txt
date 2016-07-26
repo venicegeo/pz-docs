@@ -1,7 +1,6 @@
 # UUID Generator
 
-The UUID Generator provides a system-wide, common way to generate IDs for various object in the system.
-It can be used to generate up to 255 UUIDs at a time.
+The UUID Generator provides a system-wide, common way to generate IDs for various object in the system. It can be used to generate up to 255 UUIDs at a time.
 
 UUIDs are represented as strings, as per https://www.ietf.org/rfc/rfc4122.txt[RFC 4122].
 

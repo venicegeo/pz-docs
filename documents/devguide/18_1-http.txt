@@ -36,7 +36,7 @@ For example, these two calls will return the 60 most recent log messages, in bat
 sorted by creation date:
 
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
-    GET /messages?perPage=60&page=1&key=createdOn&order=asc
+    GET /messages?perPage=30&page=1&key=createdOn&order=asc
 
 
 ### Response Payloads

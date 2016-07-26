@@ -9,16 +9,16 @@ SAK will be used by developers as an easy way to test the functionality of the s
 
 This app is setup as a static web application and is a single module AngularJS app. The important sections include:
 
-* /conf - This contains an example config file for a local version of nginx
-* /public - This contains all of the source code and what actually gets deployed to nginx
-* /public/nginx.conf - This is the config file that nginx uses on the deployed server
+* `/conf` - This contains an example config file for a local version of nginx
+* `/public` - This contains all of the source code and what actually gets deployed to nginx
+* `/public/nginx.conf` - This is the config file that nginx uses on the deployed server
 
 ## Running SAK locally
 
 ### Requirements
 
-* Code cloned from https://github.com/venicegeo/pz-sak.git
-* Nginx 1.8.1 http://nginx.org/en/download.html
+* Code cloned from https://github.com/venicegeo/pz-sak
+* http://nginx.org/en/download.html[Nginx 1.8.1]
 
 
 ### Steps

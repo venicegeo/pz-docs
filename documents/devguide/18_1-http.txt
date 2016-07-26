@@ -5,7 +5,7 @@
 
 All input and output payloads will be JSON.
 
-Our default JSON style guide is https://google.github.io/styleguide/jsoncstyleguide.xml.
+Our default JSON style guide is the https://google.github.io/styleguide/jsoncstyleguide.xml[Google JSON style guide].
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 
@@ -22,7 +22,8 @@ do not use Unix-style milliseconds-since-epoch.
 Field names should be spelled with `lowerCamelCase`. Not `UpperCamelCase` and
 not `underscore_style`.
 
-### Query Parameters
+
+### Pagination
 
 `GET` requests that return arrays (or maps) of objects should typically support these query parameters for pagination:
 
@@ -35,7 +36,7 @@ For example, these two calls will return the 60 most recent log messages, in bat
 sorted by creation date:
 
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
-    GET /messages?perPage=60&page=1&key=createdOn&order=asc
+    GET /messages?perPage=30&page=1&key=createdOn&order=asc
 
 
 ### Response Payloads
@@ -94,7 +95,7 @@ We generally only use these HTTP status codes.
 
 200 OK::
 The request has succeeded. The information returned with the response is
-dependent on the method used in the request. For `GET`, the response 
+dependent on the method used in the request. For `GET`, the response
 is an entity containing the requested resource. For `POST`, it is entity
 containing the result of the action.
 
@@ -112,7 +113,6 @@ The request requires user authentication, e.g. due to missing or invalid
 authentication token.
 
 403 Forbidden::
-
 The server understood the request, but is refusing to fulfill it and retrying with
 different authorization will not help. For example, use `403` when a resource does
 not support the requested operation, e.g. `PUT`. `403` may also be used in cases
@@ -124,7 +124,6 @@ The requested resource could not be found but may be available again in the futu
 Subsequent requests by the client are permissible.
 
 500 Internal Server Error::
-
 The server encountered an unexpected condition which prevented it from
 fulfilling the request.
 
@@ -163,3 +162,5 @@ with a response payload containing a short, friendly text string.
 `GET /admin/stats`:: requests the current metrics for the service. The returned
 payload will contain an object with the metric data. Such data might include
 things like the time the service started, how many requests it has served, etc.
+
+// vim: set syntax=asciidoc:

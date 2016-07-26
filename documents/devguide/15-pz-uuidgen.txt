@@ -1,9 +1,8 @@
 # UUID Generator
 
-The UUID Generator provides a system-wide, common way to generate IDs for various object in the system.
-It can be used to generate up to 255 UUIDs at a time.
+The UUID Generator provides a system-wide, common way to generate IDs for various object in the system. It can be used to generate up to 255 UUIDs at a time.
 
-UUIDs are represented as strings, as per [[RFC 4122|https://www.ietf.org/rfc/rfc4122.txt]].
+UUIDs are represented as strings, as per https://www.ietf.org/rfc/rfc4122.txt[RFC 4122].
 
 ## Command Line App
 
@@ -12,12 +11,6 @@ The service is started as a command line app:
     $ pz-uuidgen
 
 ## HTTP API
-
-### `GET /`
-
-Requests a "health check" for the service.
-
-The returned status code is `200` and a body with a short, friendly text string.
 
 ### `POST /uuids?count=$n`
 
@@ -44,7 +37,7 @@ Pagination is not supported.
 
 ### Common operations
 
-This service includes the common endpoints described in [[General Pz Service Operations]].
+This service includes the common endpoints described in the <<Common Endpoints>> section.
 
 The `admin stats` supported are:
 
@@ -56,3 +49,5 @@ The `admin stats` supported are:
     "numRequests": 234
 }
 ----
+
+// vim: set syntax=asciidoc wrap:

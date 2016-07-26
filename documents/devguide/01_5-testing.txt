@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Piazza enables the NGS community to exploit and disseminate GeoINT in an open source cloud-based platform.  GeoINT developers and analyst can build and share apps, UI’s, data layers, analytic services, and analytic products in an unclassified secure environment.  Developers using Piazza will reach across agencies to access geo data, services (alerts, searches, re-formatting), GeoINT algorithms, and products.  Piazza offers a common baseline and common reference libraries with open interfaces like OGC, REST, CRUD, and Geo JSON.  Piazza is currently deployed on the CACI/BITS GeoINT Services Cloud.
+Piazza enables the NSG community to exploit and disseminate GeoINT in an open source cloud-based platform.  GeoINT developers and analyst can build and share apps, UI’s, data layers, analytic services, and analytic products in an unclassified secure environment.  Developers using Piazza will reach across agencies to access geo data, services (alerts, searches, re-formatting), GeoINT algorithms, and products.  Piazza offers a common baseline and common reference libraries with open interfaces like OGC, REST, CRUD, and Geo JSON.  Piazza is currently deployed on the CACI/BITS GeoINT Services Cloud.
 
 Piazza will provide developers a REST API to:
 
@@ -17,41 +17,45 @@ Piazza will provide developers a REST API to:
 This Test Plan for Piazza supports the following objectives:
 
 * Defines the activities required to prepare for and conduct Piazza agile software testing
-* Defines various dependencies 
+* Defines various dependencies
 * Defines the scope of testing
 * Defines the Test Strategy
 
 ### Scope
-This test plan covers unit, integration and system, security testing, application/user acceptance, and regressions testing of Pizza micro services.  Piazza software testing engineers are embedded with developers in an agile development process.  This is a plan to recursively test Piazza micro service functionality while adding tests for emerging functionality to meet fluid customer requirements.  Performance and load testing are not included at this time. Unit testing is done by developers in the developer space (int).  Integration, application, and a regressions testing is done by the testing team in the testing space (stage).  All spaces are deployed in the unclassified testing environment of the CACI/BITs cloud.  
+This test plan covers unit, integration and system, security testing, application/user acceptance, and regressions testing of Pizza micro services.  Piazza software testing engineers are embedded with developers in an agile development process.  This is a plan to recursively test Piazza micro service functionality while adding tests for emerging functionality to meet fluid customer requirements.  Performance and load testing are not included at this time. Unit testing is done by developers in the developer space (int).  Integration, application, and a regressions testing is done by the testing team in the testing space (stage).  All spaces are deployed in the unclassified testing environment of the CACI/BITs cloud.
 
 ### Test Strategy
 
 #### Unit Test
-Unit test are written and maintained by developers.  For details on unit tests see the developers section for details. 
+Unit test are written and maintained by developers.  For details on unit tests see the developers section for details.
 
 #### Integration and System Tests
 Testing engineers use the unit test to start building integration and systems tests including boundary cases and exploratory testing on individual services.  Integration and systems tests are written and maintained by the testing team.  Integrated test strings service calls together to accomplish a task.  Integration test failure results in email notification to the testing team and blocks deployment to the production space (prod).
 
 #### Regression and Stress Tests
-A suite of automated tests will be developed to test the basic functionality of Piazza services and test for previously reported perform regression testing.  Postman collections used in the integrated and API tests are used with Newman to run periodically in the cloud testing environment.  The test engineer’s Postman collections are kept in https://github.com/venicegeo/pztest-integration/tree/master/ci .
+A suite of automated tests will be developed to test the basic functionality of Piazza services and test for previously reported perform regression testing. Postman collections used in the integrated and API tests are used with Newman to run periodically in the cloud testing environment. The test engineer’s Postman collections are kept in https://github.com/venicegeo/pztest-integration/tree/master/ci.
 
 #### Application/User Acceptance Test
 User Acceptance testing requires a register service and user interface to test the end user experience.  This should only be conducted when all immediate, urgent, and high level bug reports from Piazza integration tests have been closed.  The purpose of these tests is to confirm the system is developed according to the specified user requirements and is ready for operational use.
 
 ### Environment Requirements
-Testing engineers use swagger and postman unit test to build API and Integration Postman Collections.  This requires Postman app, Newman shell running in CACI/Bits cloud, and GitHub for a testing repository.  Testing also requires an environment that is stable throughout the duration of a sprint and separate from the developing environment.  
+Testing engineers use swagger and postman unit test to build API and Integration Postman Collections.  This requires Postman app, Newman shell running in CACI/Bits cloud, and GitHub for a testing repository.  Testing also requires an environment that is stable throughout the duration of a sprint and separate from the developing environment.
 
 ### Bug Reports and Change Requests
 
-Bugs and issues will be report in the Redmine Piazza project for review by the developer team.  The severity of each issue will be marked as high, normal, or low. 
-|===
-|Severity|Description
-|High|Error causes system crash or data loss. 
-Error causes abnormal return to user or generates system failure message with no workaround.  Error prevents vital functionality.  Error found but feasible
-|Normal|An unclear or incomplete error message, with minimal impact to software use
-|Low|Cosmetic Error
-An unclear or incomplete error message, but no impact to software use
-|===
+Bugs and issues will be report in the Redmine Piazza project for review by the developer team.  The severity of each issue will be marked as high, normal, or low.
 
+High::
+* Error causes system crash or data loss.
+* Error causes abnormal return to user or generates system failure message with no workaround.
+* Error prevents vital functionality.
+* Error found but feasible
 
+Normal::
+* An unclear or incomplete error message, with minimal impact to software use
 
+Low::
+* Cosmetic error
+* An unclear or incomplete error message, but no impact to software use
+
+// vim: set syntax=asciidoc wrap:

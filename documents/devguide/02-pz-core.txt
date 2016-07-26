@@ -1,5 +1,3 @@
 # Piazza Core Overview
 This is a place for the overview of Piazza
 
-
-

@@ -64,3 +64,5 @@ include::../common/support.txt[]
 include::../common/legal.txt[]
 
 :leveloffset: -1
+
+// vim: set syntax=asciidoc wrap:

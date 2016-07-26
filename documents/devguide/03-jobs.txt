@@ -4,9 +4,11 @@ The Gateway API is the single point-of-contact for external users to interact wi
 
 See the Swagger documentation for a full explanation of all of these endpoints.
 
+
 ### Authentication
 
 Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-security` security component which handles authentication and authorization.
+
 
 ### Jobs
 
@@ -14,15 +16,17 @@ For most requests handled through the Piazza Gateway, the response will contain 
 
 Endpoints that return a Job ID are documented and outlined in the Swagger documentation.
 
-....
+[source,json]
+----
 {
-	"jobId": "my-job-id"
+    "jobId": "my-job-id"
 }
-....
+----
 
-The response may look something like the above. In this case, the requesting user can then take the Job ID and re-query the Gateway with the Job ID in order to get the latest status and progress of that Job. 
+The response may look something like the above. In this case, the requesting user can then take the Job ID and re-query the Gateway with the Job ID in order to get the latest status and progress of that Job.
 
 When the Job has been completed, the result of the associated Job (being a data ID, or service, or whatever the end result of the Job was) will be contained in the status of that Job, including the time it was completed and how long it took.
+
 
 ## Endpoints
 
@@ -30,54 +34,58 @@ When the Job has been completed, the result of the associated Job (being a data 
 
 Endpoints related to managing long-running jobs processed by Piazza.
 
-* Get Job Status _GET_ `/job/{jobId}`
-* Abort _DELETE_ `/job/{jobId}`
-* Repeat _PUT_ `/job/{jobId}`
+`GET /job/{{jobId}}`:: Get Job Status
+`DELETE /job/{{jobId}}`:: Abort Job
+`PUT /job/{{jobId}}`:: Repeat Job
+
 
 ### Data Management Jobs
 
 Endpoints related to managing geospatial data within Piazza.
 
-* Access Data _GET_ `/data`
-* Ingest _POST_ `/data`
-* Ingest with File _POST_ `/data/file`
-* Get Resource _GET_ `/data/{dataId}`
-* Search Query _GET_ | _POST_ `/data/query`
-* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case?*
-* Access Request _POST_ `/deployment`
-* Access Fetch _GET_ `/deployment/{deploymentId}`
-* Access File _GET_ `/file/{dataId}`
-* Search Metadata Ingest _POST_ `/data/metadata` *Where is the use case? TBD*
+`GET /data`:: Access Data
+`POST /data`:: Ingest Data
+`POST /data/file`:: Ingest File
+`GET /data/{{dataId}}`:: Get Resource
+`GET or POST /data/query`:: Search Query
+`POST /data/metadata`:: Search Metadata Ingest *Where is the use case?*
+`POST /deployment`:: Access Request
+`GET /deployment/{{deploymentId}}`:: Access Fetch
+`GET /file/{dataId}`:: Access File
+`POST /data/metadata`:: Search Metadata Ingest *Where is the use case? TBD*
+
 
 ### Service Controller Jobs
 
 Endpoints related to external service registrations and executions.
 
-* Register Service _POST_ `/service`
-* Describe Service _GET_ `/service/{serviceId}`
-* List Services _GET_ `/service`
-* Search Service _GET_ `/service?keywords=beachfront` _with query string_
-* Delete Service _DELETE_ `/service/{serviceId}`
-* Update Service _PUT_ `/service/{serviceId}`
-* Execute Service _POST_ `/job`
+`POST /service`:: Register Service
+`GET /service/{serviceId}`:: Describe Service
+`GET /service`:: List Services
+`GET /service?keywords=beachfront`:: Search service with query string
+`DELETE /service/{{serviceId}}`:: Delete Service
+`PUT /service/{{serviceId}}`:: Update Service
+`POST /job`:: Execute Service
+
 
 ### Workflow
 
-Endpoints related to setting up events and event types, and defining triggers for when certain events occur.
+Endpoints related to setting up Events and EventTypes, and defining Triggers for when certain Events occur.
 
-* Get all events: `GET /event`
-* Add an event: `POST /event/{eventType}`
-* Get all events of a specific type: `GET /event/{eventType}`
-* Get a specific event: `GET /event/{eventTypeId}/{eventId}`
-* Delete a specific event: `DELETE /event/{eventTypeId}/{eventId}`
-* Add an event type: `POST /eventType`
-* Get all event types: `GET /eventType`
-* Get a specific event type: `GET /eventType/{eventTypeId}`
-* Delete a specific event type: `DELETE /eventType/{eventTypeId}`
-* Add a trigger: `POST /trigger`
-* Get all triggers: `GET /trigger`
-* Get a specific trigger: `GET /trigger/{triggerId}`
-* Delete a specific trigger: `DELETE /trigger/{triggerId}`
-* Get all alerts: `GET /alert`
-* Get a specific alert: `GET /alert/{alertId}`
-* Delete a specific alert: `DELETE /alert/{alertId}`
+`GET /event`:: Get all Events
+`POST /event/{{eventType}}`:: Add an Event
+`GET /event/{{eventType}}`:: Get all Events of a specific EventType
+`GET /event/{{eventId}}`:: Get a specific Event
+`DELETE /event/{{eventId}}`:: Delete a specific Event
+`POST /eventType`:: Add an EventType
+`GET /eventType`:: Get all EventTypes
+`GET /eventType/{{eventTypeId}}`:: Get a specific EventType
+`DELETE /eventType/{{eventTypeId}}`:: Delete a specific EventType (only allowed when all Triggers and Events referring to EventType have been deleted)
+`POST /trigger`:: Add a Trigger
+`GET /trigger`:: Get all Triggers
+`GET /trigger/{{triggerId}}`:: Get a specific Trigger
+`DELETE /trigger/{{triggerId}}`:: Delete a specific Trigger
+`GET /alert`:: Get all Alerts
+`GET /alert/{{alertId}}`:: Get a specific Alert
+
+// vim: set syntax=asciidoc wrap:

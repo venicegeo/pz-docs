@@ -77,7 +77,7 @@ $ ./6-register.sh
 
 ### Hello Example invoked with GET method.
 
-The service is invoked by POSTing to the pz-gateway job endpoint https://pz-gateway.venicegeo.io/v2/job. A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the serviceId returned by the register script as the first argument to the script:
+The service is invoked by POSTing to the pz-gateway job endpoint https://pz-gateway.venicegeo.io/job. A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the serviceId returned by the register script as the first argument to the script:
 
 [source,bash]
 $ ./6-execute-get.sh {{serviceId}}

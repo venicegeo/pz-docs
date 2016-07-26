@@ -1,7 +1,6 @@
 # pz-logger
 
-The Logger provides a system-wide, common way to record log messages. The log messages are stored
-in Elasticsearch.
+The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch.
 
 ## Command Line App
 

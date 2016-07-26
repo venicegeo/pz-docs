@@ -106,11 +106,11 @@ The Access component provides a series of REST Endpoints that can be used to que
 
 ### REST Endpoints
 
-* Getting Data Count -- `/data/count`
-** Gets a count of the Resources held in the Piazza system.
+Getting Data Count -- `/data/count`::
+Gets a count of the Resources held in the Piazza system.
 
-* Administrative Statistics -- `GET /admin/stats`
-** Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
+Administrative Statistics -- `GET /admin/stats`::
+Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
 
 [source,json]
 ----

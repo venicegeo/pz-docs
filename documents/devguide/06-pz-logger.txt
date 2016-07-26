@@ -11,10 +11,6 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### `GET /`
-
-Requests a "health check" for the service.
-
 ### POST /message
 
 Sends a message to be logged. The message is given in the POST body as a JSON object:

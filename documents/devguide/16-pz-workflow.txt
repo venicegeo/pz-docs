@@ -255,12 +255,6 @@ $ pz-workflow
 
 ## HTTP API
 
-### `GET /`
-
-Requests a "health check" for the service.
-
-The returned status code is `200` and a body with a short, friendly text string.
-
 ### `POST /eventType`
 
 Sends an EventType to the workflow service.

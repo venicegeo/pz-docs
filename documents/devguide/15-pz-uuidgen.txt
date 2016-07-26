@@ -13,12 +13,6 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### `GET /`
-
-Requests a "health check" for the service.
-
-The returned status code is `200` and a body with a short, friendly text string.
-
 ### `POST /uuids?count=$n`
 
 Requests `$n` UUIDs from the service.

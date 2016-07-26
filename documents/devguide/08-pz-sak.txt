@@ -26,10 +26,10 @@ app.  The important sections include:
 
 ### Steps
 
-1. Copy pz-sak/conf/nginx.conf to nginx-1.8.1/conf
-2. Modify nginx.conf to point root to your local copy of the repos /public directory (line 50)
-3. From a command line run `start nginx.exe`
-4. Go to http://localhost
+. Copy pz-sak/conf/nginx.conf to nginx-1.8.1/conf
+. Modify nginx.conf to point root to your local copy of the repos /public directory (line 50)
+. From a command line run `start nginx.exe`
+. Go to http://localhost
 
 Note: The following commands are helpful as well:
 
@@ -52,8 +52,8 @@ network for dynamic proxies to work properly.
 
 ### Steps
 
-1. Open your web-browser
-2. Go to: http://pz-sak.geointservices.io/
+. Open your web-browser
+. Go to: http://pz-sak.geointservices.io/
 
 ## Using SAK
 

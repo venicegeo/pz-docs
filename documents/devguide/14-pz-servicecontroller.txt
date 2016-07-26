@@ -2,11 +2,11 @@
 
 The Piazza Core ServiceController manages and executes web services external to the Piazza core architecture (User Services).  It provides a REST API allowing developers to perform web service management activities.  The ServiceController also listens to Kafka topics dispatched from the Piazza Core Dispatcher, responds and handles web service management and execution Kafka messages.  Using the ServiceController, developers can:
 
-1. Register web services for search/discovery (See pz-search for details)
-2. Update information on the web service (e.g. URL, name, version and other metadata)
-3. Remove a web service from the registry
-4. View details about registered web services
-5. Execute a registered web service
+. Register web services for search/discovery (See pz-search for details)
+. Update information on the web service (e.g. URL, name, version and other metadata)
+. Remove a web service from the registry
+. View details about registered web services
+. Execute a registered web service
 
 The figure below shows the high level architecture of Piazza and how the ServiceController interacts with different components.
 
@@ -18,17 +18,17 @@ image::images/sc-architecture.png[title=“Service Controller in Piazza“]
 
 The ServiceController, version 1.0, uses the following to build and run:
 
-1. http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Java Development Kit 1.8]
-2. Maven
-3. MongoDB
-4. *Oracle VM VirtualBox (for running the ServiceController on individual VMs)
-5. *Vagrant
-6. **[[UUID Generator|Pz-UuidGen]]
-7. **[[Logger|Pz-Logger]]
-8. **[[Alerter|Pz-Alerter]]
-9. **[[Discover|Pz-Discover]]
-10. **[[Kafka|Pz-Kafka]]
-11. **[[Gateway/Dispatch/JobManager|Pz-Gateway]]
+* http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html[Java Development Kit 1.8]
+* https://maven.apache.org[Maven]
+* https://www.mongodb.com/download-center[MongoDB]
+* https://www.virtualbox.org/wiki/Downloads[Oracle VM VirtualBox] (for running the ServiceController on individual VMs)*
+* https://www.vagrantup.com/downloads.html[Vagrant]*
+* https://www.github.com/venicegeo/pz-uuidgen[pz-uuidgen]**
+* https://www.github.com/venicegeo/pz-logger[pz-logger]**
+* https://www.github.com/venicegeo/pz-alerter[pz-alerter]**
+* https://www.github.com/venicegeo/pz-discover[pz-discover]**
+* https://www.github.com/venicegeo/pz-gateway[pz-gateway]**
+* https://www.github.com/venicegeo/pz-jobmanager[pz-jobmanager]**
 
 _* Software needed to use Vagrant to standup a mock Piazza Core cluster_
 

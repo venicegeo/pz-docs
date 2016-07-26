@@ -113,7 +113,6 @@ The request requires user authentication, e.g. due to missing or invalid
 authentication token.
 
 403 Forbidden::
-
 The server understood the request, but is refusing to fulfill it and retrying with
 different authorization will not help. For example, use `403` when a resource does
 not support the requested operation, e.g. `PUT`. `403` may also be used in cases
@@ -125,7 +124,6 @@ The requested resource could not be found but may be available again in the futu
 Subsequent requests by the client are permissible.
 
 500 Internal Server Error::
-
 The server encountered an unexpected condition which prevented it from
 fulfilling the request.
 

@@ -4,7 +4,7 @@ The purpose of this page is to document the Workflow of the Piazza Core Job proc
 
 The concept of a Job is used internally by Piazza to manage long-running processes that are not able to immediately be returned to a user. The cases for when Jobs and Job IDs are generated are currently for:
 
-* Service Execution via the `/v2/job` endpoint.
+* Service Execution via the `/job` endpoint.
 * Data Loading via the `/data` and `/data/file` endpoints.
 * GeoServer deployments for Data using the `/deployment` endpoint.
 

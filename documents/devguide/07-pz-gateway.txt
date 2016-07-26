@@ -5,7 +5,11 @@ Handles all user-facing requests to Piazza via REST endpoints. The purpose of th
 
 ## Running Locally
 
-To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8081.
+To run the Gateway service locally (without Vagrant), perhaps through Eclipse or through CLI, navigate to the project directory and run
+
+    mvn clean install -U spring-boot:run
+
+This will run a Tomcat server locally with the Gateway service running on port 8081.
 
 Check the `application.properties` file if any port or host information needs to change for certain components. Since the Gateway proxies to all internal Piazza components, then depending on what you are attempting to debug locally, you may need to set one or many of these parameters. For example, if you are debugging `pz-ingest` as well, then you would change the `ingest.url` property in `application.properties` to your own local machine.
 
@@ -36,11 +40,9 @@ In the case of long-running Jobs, such as Data loading, or Service execution - t
 
 Each Job sent to the Piazza system through the Gateway is assigned a UUID. This UUID is then used to uniquely identify the Job within the system. This Job ID can then be used to check the status of the long-running Job process in order to get information such as status, progress, or time remaining.
 
-The typical response for getting the status of a Job to the Gateway will look like:
+The typical request for getting the status of a Job to the Gateway will look like:
 
-....
-http://gateway/job/{jobId}
-....
+    GET /job/{{jobId}}
 
 This will return any progress, or status information. When the job is done, this will also contain a `result` field which will contain a reference to the resulting objects of the Job. The result will look like the following:
 
@@ -67,9 +69,8 @@ If the Job has encountered an error, then this information will also be availabl
 
 Users who submit a Job that is currently running, can request that Job be cancelled using the DELETE operation on the `job` endpoint. This will dispatch the event throughout the Piazza application that all components handling this Job should stop immediately.
 
-....
-DELETE /job/{jobId}
-....
+    DELETE /job/{{jobId}}
+
 
 ## REST API
 

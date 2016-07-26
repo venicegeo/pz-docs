@@ -4,7 +4,9 @@ Handles the deployment of Geospatial Data Resources currently held within the Pi
 
 ## Running Locally
 
-To run the Gateway service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``.
+To run the Gateway service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run:
+
+    mvn clean install -U spring-boot:run
 
 The `application.properties` file controls URL information for the components it connects to - mainly GeoServer. If you are intending to debug a local instance of GeoServer, then simply changing the appropriate `vcap.services.pz-geoserver.*` configuration values.
 
@@ -26,9 +28,7 @@ For users requesting deployments, the Access service listens to Kafka messages. 
 
 After processing a Job through the `Loader` component, a Data Resource will be added to the Piazza system. The Access component provides a Gateway API Endpoint Job which will allow users to query the metadata for the data that has been ingested into Piazza.
 
-....
-/data/{dataId}
-....
+    /data/{dataId}
 
 The response for this request will be all of the metadata currently held in Piazza for this Resource:
 
@@ -61,9 +61,7 @@ Currently, there are two ways to get data out of Piazza. The first is retrieving
 
 This will simply retrieve the file for a Resource item. The Gateway API Endpoint is:
 
-....
-/data/file/{dataId}
-....
+    /data/file/{dataId}
 
 The response for this request will be the actual bytes of the file.
 
@@ -71,9 +69,7 @@ The response for this request will be the actual bytes of the file.
 
 A better way to Access data, instead of accessing the raw file, is to have Piazza stand up a GeoServer service that can be used to access vector data as Web Feature Services (WFS) or raster data as Web Coverage Services (WCS). This is handled by POSTing to the `/deployment` Gateway API endpoint.
 
-....
-/deployment
-....
+    POST /deployment
 
 [source,json]
 ----

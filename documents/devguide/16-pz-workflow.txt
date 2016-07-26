@@ -235,10 +235,7 @@ When a new trigger is added, it's condition is entered into the events index's p
 
 The service is started as a command line app:
 
-[source,bash]
-----
-$ pz-workflow
-----
+    $ pz-workflow
 
 ## HTTP API
 

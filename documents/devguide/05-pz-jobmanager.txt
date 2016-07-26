@@ -5,7 +5,16 @@ Internal component that provides persistence for long-running Jobs (processes) a
 
 ## Running Locally
 
-To run the Job Manager service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. This will run a Tomcat server locally with the Gateway service running on port 8083. Even if running the Job Manager locally, you should still run the MongoDB instance inside of Vagrant by running ``vagrant up jobdb`` from the /config directory.
+To run the Job Manager service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run:
+
+    mvn clean install -U spring-boot:run
+
+This will run a Tomcat server locally with the Gateway service running on port 8083. Even if running the Job Manager locally, you should still run the MongoDB instance inside of Vagrant by running
+
+    vagrant up jobdb
+
+from the `/config` directory.
+
 
 ## Source Organization
 
@@ -42,11 +51,9 @@ The MongoDB instance uses a database titled `Piazza` with a single `Jobs` collec
 
 ## Repeating Jobs
 
-The Job Manager, for the most part, acts like a metadata store that simply marks the statuses of Jobs in the Mongo database. However, the Job Manager does handle one specific Job type: Repeating Jobs. Jobs that have been previously processed into the Piazza system (including Jobs that have previously failed) can be re-run..
+The Job Manager, for the most part, acts like a metadata store that simply marks the statuses of Jobs in the Mongo database. However, the Job Manager does handle one specific Job type: Repeating Jobs. Jobs that have been previously processed into the Piazza system (including Jobs that have previously failed) can be re-run via:
 
-....
-PUT /job/{jobId}
-....
+    PUT /job/{jobId}
 
 The Repeat job endpoint takes in a single parameter `jobId` which is used to find the Job to repeat. The Job will then be repeated based on the initial request parameters of that Job (all stored in the Job Table). The Job will be re-run with identical parameters to its initial request, except for one difference: the API Key of the user who requested the Repeat Job will be attached to the new Job being repeated. This ensures that users who do not have permissions to create the initial Job, also do not have permissions to Repeat someone else's Job.
 

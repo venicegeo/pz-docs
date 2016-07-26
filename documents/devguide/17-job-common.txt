@@ -49,29 +49,32 @@ If you want the `PiazzaLogger` class to also write to your local console (useful
 
 Incorporating the `PiazzaLogger` class as a Component is simple.
 
-....
-	@Autowired
-	private PiazzaLogger logger;
-....
+[source,java]
+----
+@Autowired
+private PiazzaLogger logger;
+----
 
 Logs can then be sent using the `.log(message, severity)` method. The `message` is simply the message you wish to Log. The `severity` is a list of acceptable severity levels defined in the `PiazzaLogger` class.
 
-....
-	public static final String DEBUG = "Debug";
-	public static final String ERROR = "Error";
-	public static final String FATAL = "Fatal";
-	public static final String INFO = "Info";
-	public static final String WARNING = "Warning";
-....
+[source,java]
+----
+public static final String DEBUG = "Debug";
+public static final String ERROR = "Error";
+public static final String FATAL = "Fatal";
+public static final String INFO = "Info";
+public static final String WARNING = "Warning";
+----
 
 Please reference these static variables when sending your Logs. For example:
 
-....
-	@Autowired
-	private PiazzaLogger logger;
+[source,java]
+----
+@Autowired
+private PiazzaLogger logger;
 
-	logger.log("Something went wrong!", PiazzaLogger.ERROR);
-....
+logger.log("Something went wrong!", PiazzaLogger.ERROR);
+----
 
 ### UUID Gen (UUIDFactory)
 
@@ -91,19 +94,21 @@ This `uuid.url` should point to the UUIDGen endpoint that hosts this service. Th
 
 Incorporating the `UUIDFactory` class as a Component is simple.
 
-....
-	@Autowired
-	private UUIDFactory uuidFactory;
-....
+[source,java]
+----
+@Autowired
+private UUIDFactory uuidFactory;
+----
 
 This class supports two methods for obtaining UUIDs. One method for getting a single UUID, another for generating a list.
 
-....
+[source,java]
+----
 // Getting a single UUID
 String uuid = uuidFactory.getUUID();
 // Getting a list of 5 UUIDs
 List<String> uuids = uuidFactory.getUUID(5);
-....
+----
 
 Each of these methods throw a `RestClientException` which occurs when the REST Endpoint for the UUIDGen service is not able to be found.
 
@@ -113,10 +118,11 @@ Each of these methods throw a `RestClientException` which occurs when the REST E
 
 For internal components wishing to use Kafka, `pz-jobcommon` provides some simple factories to get Kafka consumers and producers.
 
-....
-	consumer = KafkaClientFactory.getConsumer(KAFKA_HOST, KAFKA_PORT, KAFKA_GROUP);
-	producer = KafkaClientFactory.getProducer(KAFKA_HOST, KAFKA_PORT);
-....
+[source,java]
+----
+consumer = KafkaClientFactory.getConsumer(KAFKA_HOST, KAFKA_PORT, KAFKA_GROUP);
+producer = KafkaClientFactory.getProducer(KAFKA_HOST, KAFKA_PORT);
+----
 
 By using the `KafkaClientFactory` to instantiate producers and consumers, then there is a consistent guarantee that the configuration properties and parameters for all clients are in tune with what the Piazza Kafka broker is expecting.
 

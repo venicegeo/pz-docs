@@ -76,11 +76,11 @@ Returns a JSON object of log messages:
     }
 ----
 
-This endpoint supports pagination, as described in [[General Pz Service Operations]].
+This endpoint supports pagination, as described in <<Pagination>>.
 
 ### Common operations
 
-This service includes the common endpoints described in [[General Pz Service Operations]].
+This service includes the common endpoints described in <<Common Endpoints>>.
 
 The `admin stats` supported are:
 

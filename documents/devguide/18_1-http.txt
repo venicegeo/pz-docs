@@ -22,7 +22,8 @@ do not use Unix-style milliseconds-since-epoch.
 Field names should be spelled with `lowerCamelCase`. Not `UpperCamelCase` and
 not `underscore_style`.
 
-### Query Parameters
+
+### Pagination
 
 `GET` requests that return arrays (or maps) of objects should typically support these query parameters for pagination:
 

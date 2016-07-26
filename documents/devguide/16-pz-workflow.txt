@@ -279,7 +279,7 @@ The return will be a 201 with the response payload shown above.
 
 Returns 200 with a payload of an array of all the event types registered.
 
-This endpoint supports pagination, as described in [[General Pz Service Operations]].
+This endpoint supports pagination, as described in the <<Pagination>> section.
 
 
 ### `GET /eventType/:id`
@@ -305,7 +305,7 @@ The return will be a 201 with the response payload shown above.
 
 Requests all the Events (of all EventTypes). Returns 200 with an array of `Event` objects.
 
-This endpoint supports pagination, as described in [[General Pz Service Operations]].
+This endpoint supports pagination, as described in the <<Pagination>> section.
 
 
 ### `GET /event/:id`
@@ -331,7 +331,7 @@ _POST support is for testing only; only the workflow service should generate ale
 
 Requests all the Alerts.
 
-This endpoint supports pagination, as described in [[General Pz Service Operations]].
+This endpoint supports pagination, as described in the <<Pagination>> section.
 
 The query parameter `triggerId=id` filters the response set to only those Alerts with arising from the given Trigger.
 
@@ -360,7 +360,7 @@ Sends a Trigger to the workflow service with a request payload as shown above.
 
 Requests all the Triggers. Returns 200 with an array of `Trigger` objects of the form shown above.
 
-This endpoint supports pagination, as described in [[General Pz Service Operations]].
+This endpoint supports pagination, as described in the <<Pagination>> section.
 
 
 ### `GET /trigger/:id`
@@ -377,7 +377,7 @@ _Delete should not be used unless you know what you are doing._
 
 ### Common operations
 
-This service includes the common endpoints described in [[General Pz Service Operations]].
+This service includes the common endpoints described in the <<Common Endpoints>> section.
 
 The response object for a "stats" request looks like this:
 

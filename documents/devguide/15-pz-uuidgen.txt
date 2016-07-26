@@ -44,7 +44,7 @@ Pagination is not supported.
 
 ### Common operations
 
-This service includes the common endpoints described in [[General Pz Service Operations]].
+This service includes the common endpoints described in the <<Common Endpoints>> section.
 
 The `admin stats` supported are:
 

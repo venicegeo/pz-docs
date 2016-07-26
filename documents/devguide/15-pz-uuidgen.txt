@@ -3,7 +3,7 @@
 The UUID Generator provides a system-wide, common way to generate IDs for various object in the system.
 It can be used to generate up to 255 UUIDs at a time.
 
-UUIDs are represented as strings, as per [[RFC 4122|https://www.ietf.org/rfc/rfc4122.txt]].
+UUIDs are represented as strings, as per https://www.ietf.org/rfc/rfc4122.txt[RFC 4122].
 
 ## Command Line App
 

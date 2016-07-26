@@ -32,7 +32,7 @@ Sends a message to be logged. The message is given in the POST body as a JSON ob
 
 All five fields are required.
 
-`createdOn` is a `string` representing the message creation time, expressed in RFC_3339. (In Go, `time.Now().Format(time.RFC1339)`).
+`createdOn` is a `string` representing the message creation time, expressed in https://www.ietf.org/rfc/rfc3339.txt[RFC 3339]. (In Go, `time.Now().Format(time.RFC3339)`).
 
 `severity` must be one of the following strings:
 

@@ -2,7 +2,7 @@
 
 A web service project for metadata ingest within Piazza (for subsequent search: https://github.com/venicegeo/pz-search-query) into AWS Elasticsearch service.
 
-AWS-hosted endpoint "http://pz-search-metadata-ingest.cf.piazzageo.io/api/v1/data/" consumes JSON document via HTTP POST according to the following class definition in common code:"https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java".  A better, JSON schema description to follow soon.
+AWS-hosted endpoint `http://pz-search-metadata-ingest.cf.piazzageo.io/api/v1/data/` consumes JSON document via HTTP POST according to the following class definition in common code: https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java[DataResource.java].  A better, JSON schema description to follow soon.
 
 Example JSON docs for ingest:
 

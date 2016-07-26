@@ -5,7 +5,7 @@
 
 All input and output payloads will be JSON.
 
-Our default JSON style guide is https://google.github.io/styleguide/jsoncstyleguide.xml.
+Our default JSON style guide is the https://google.github.io/styleguide/jsoncstyleguide.xml[Google JSON style guide].
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 

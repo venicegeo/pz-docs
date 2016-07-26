@@ -4,7 +4,7 @@ The Job Common (or Java Common) project is a Java library that contains various 
 
 ## Maven Artifact
 
-For instructions on how to include this library in your Java project, through Maven, please see the [Repo Documentation](https://github.com/venicegeo/pz-jobcommon/). This contains all information needed to connect to the Piazza S3 Maven repository and include the Common library as a dependency in your `pom.xml` file.
+For instructions on how to include this library in your Java project, through Maven, please see the https://github.com/venicegeo/pz-jobcommon[Repo Documentation]. This contains all information needed to connect to the Piazza S3 Maven repository and include the Common library as a dependency in your `pom.xml` file.
 
 ## Spring Beans
 
@@ -27,7 +27,7 @@ If you do not wish to use the `PiazzaLogger` or `UUIDFactory` classes as Autowir
 
 ### PiazzaLogger
 
-Provides a Java API to the [pz-logger](https://github.com/venicegeo/Pz-Logger) component.
+Provides a Java API to the https://github.com/venicegeo/pz-logger[pz-logger] component.
 
 The PiazzaLogger Bean has two required property values. These must be placed in your `application.properties` or `application-cloud.properties` file in order for these components to work when Autowired.
 
@@ -75,7 +75,7 @@ Please reference these static variables when sending your Logs. For example:
 
 ### UUID Gen (UUIDFactory)
 
-Provides a Java API to the [pz-uuidgen](https://github.com/venicegeo/Pz-UuidGen) component.
+Provides a Java API to the https://github.com/venicegeo/pz-uuidgen[pz-uuidgen] component.
 
 The UUIDFactory Bean has one required property value. This must be placed in your `application.properties` or `application-cloud.properties` file in order for this component to work when Autowired.
 

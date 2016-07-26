@@ -46,11 +46,11 @@ The JSON payload for either of the above endpoints will look like:
 }
 ----
 
-The metadata fields under the `jobType.data` tag are defined in the [DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) POJO object. This object contains the `ResourceType` interface, which is listed in the `model.data.type` package. This package defines format types for each type of Data that Piazza currently supports: Shapefiles, Text, PostGIS Tables, etc.
+The metadata fields under the `jobType.data` tag are defined in the https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java[DataResource.java] POJO object. This object contains the `ResourceType` interface, which is listed in the `model.data.type` package. This package defines format types for each type of Data that Piazza currently supports: Shapefiles, Text, PostGIS Tables, etc.
 
 The `host` parameter is set to true if Piazza should host the data internally. This should be the default behavior. If this is set to false, then Piazza will not store the data in its internal storage. It will merely provide a link to wherever this external data resides, and attempt to read whatever metadata it can. If you specify a `file` in the Multipart POST, and set the ingest flag `host` to `false`, then an error will be raised - this is because setting `host` to `false` is explicitly stating to the Ingest component that no data should be stored - only metadata.
 
-When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the [ResourceMetadata](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java) POJO.
+When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java[ResourceMetadata.java] POJO.
 
 ## Ingest Process
 
@@ -181,7 +181,7 @@ Web Feature Services can be ingested and hosted within Piazza. If `host` is set 
 
 ## Workflow Events
 
-In support of the [Workflow](https://github.com/venicegeo/venice/wiki/Pz-Workflow) service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
+In support of the https://github.com/venicegeo/venice/wiki/Pz-Workflow[Workflow] service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
 
 ### Event Type
 

@@ -18,7 +18,7 @@
 
 ## Java
 
-For general Java coding, follow the Google Java Style coding standards: http://google.github.io/styleguide/javaguide.html#s2-source-file-basics
+For general Java coding, follow the Google Java Style coding standards: http://google.github.io/styleguide/javaguide.html
 
 The package naming convention should be:
 

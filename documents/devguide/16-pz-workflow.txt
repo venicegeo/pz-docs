@@ -1,7 +1,6 @@
 # Workflow Service
 
-The pz-workflow service enables the construction and use of "event" notifications to enable simple
-"if-this-happens-then-do-that" workflows.
+The pz-workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows.
 
 A user will follow these general steps:
 
@@ -14,9 +13,7 @@ A user will follow these general steps:
 
 ## The EventType
 
-The user (or some service) first defines an `EventType` which is the "schema" for the events that
-the user will be generating. The `EventType` object is POSTed to `/eventType` and contains contains
-a `name` (string) and a map describing the event type's parameters.
+The user (or some service) first defines an `EventType` which is the "schema" for the events that the user will be generating. The `EventType` object is POSTed to `/eventType` and contains contains a `name` (string) and a map describing the event type's parameters.
 
 The request payload looks like this:
 
@@ -33,8 +30,7 @@ The request payload looks like this:
 ----
 The `name` must be unique across all event types.
 
-The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`,
-`short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
+The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
 
 The response payload looks like this:
 
@@ -60,12 +56,7 @@ The response payload looks like this:
 
 ## The Trigger
 
-The user then defines a `Trigger` which defines what action is to be taken when a specific event
-occurs. The `Trigger` is POSTed to `/trigger` and contains two parts, the `Condition` and the
-`Job`. The `Condition` defines what type of event is to be watched for and what the specific
-parameters of that event should be, expressed using Elasticsearch DSL query syntax against the
-parameters in the event type. The `Job` defines what action is to be taken, expressed as using
-Gateway/Dispatcher-style syntax.
+The user then defines a `Trigger` which defines what action is to be taken when a specific event occurs. The `Trigger` is POSTed to `/trigger` and contains two parts, the `Condition` and the `Job`. The `Condition` defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type. The `Job` defines what action is to be taken, expressed as using Gateway/Dispatcher-style syntax.
 
 The request payload looks like this:
 
@@ -157,9 +148,7 @@ The response payload looks like this:
 
 ## The Event
 
-The user may generate an `Event` of that `EventType` to indicate some interesting condition has
-occurred. The `Event` object is POSTed to `/event` and contains the ID of the `EventType`, the date
-the event occurred, and the parameters of the event.
+The user may generate an `Event` of that `EventType` to indicate some interesting condition has occurred. The `Event` object is POSTed to `/event` and contains the ID of the `EventType`, the date the event occurred, and the parameters of the event.
 
 The request payload looks like this:
 
@@ -239,9 +228,7 @@ For `GET` requests, the `?triggerId=...` query parameter is supported to allow f
 
 Elasticsearch indexes are used to store the event types, the events, the triggers, and the alerts.
 
-When a new trigger is added, it's condition is entered into the events index's percolation index.
-When a new event is added, that percolation index is checked to see if any of the stored trigger
-conditions match. For those triggers that do match, their jobs are executed.
+When a new trigger is added, it's condition is entered into the events index's percolation index. When a new event is added, that percolation index is checked to see if any of the stored trigger conditions match. For those triggers that do match, their jobs are executed.
 
 
 ## Command Line App
@@ -261,8 +248,7 @@ Sends an EventType to the workflow service.
 
 The POST body is a JSON request object, as shown above.
 
-The available data types are: `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`,
-`short`, and `long`.
+The available data types are: `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`.
 
 The return will be a 201 with the response payload shown above.
 

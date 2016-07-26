@@ -150,13 +150,13 @@ https://pz-gateway.venicegeo.io/service
 [source,json]
 ----
 {
-	"url":"http://pz-servicecontroller.venicegeo.io/jumpstart/string/toLower",
-	"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/toLowerContract",
-        "method":"POST",
-	 "resourceMetadata" : {
-	  	"name":"The toLower Service",
-		"description":"Service to convert string to lower case"
-	}
+    "url": "http://pz-servicecontroller.venicegeo.io/jumpstart/string/toLower",
+    "contractUrl": "http://pz-servicecontroller.cf.piazzageo.io/toLowerContract",
+    "method": "POST",
+    "resourceMetadata": {
+        "name": "The toLower Service",
+        "description": "Service to convert string to lower case"
+    }
 }
 ----
 
@@ -165,8 +165,8 @@ The response from the ServiceController will be a JSON message providing the ser
 [source,json]
 ----
 {
-  "type": "service-id“,
-  "serviceId": "304e4ef3-f6a0-4f91-98c3-447a4f62d0af"
+    "type": "service-id",
+    "serviceId": "304e4ef3-f6a0-4f91-98c3-447a4f62d0af"
 }
 
 ----
@@ -181,14 +181,13 @@ To register a service that uses the **POST** method requiring JSON as the Reques
 [source,json]
 ----
 {
-	"url":"http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert",
-	"contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/convertContract",
-	"method":"POST",
-	"resourceMetadata" : {
-		"name":"The toLower Service",
-		"description":"Service to convert string to upper or lower case"
-
-	}
+    "url": "http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert",
+    "contractUrl": "http://pz-servicecontroller.cf.piazzageo.io/convertContract",
+    "method": "POST",
+    "resourceMetadata": {
+        "name": "The toLower Service",
+        "description": "Service to convert string to upper or lower case"
+    }
 }
 ----
 
@@ -199,13 +198,13 @@ To register a service that uses the **GET** example without URL parameters (as p
 ----
 {
 
-	"url":"http://pz-servicecontroller.venicegeo.io//jumpstart/moviequotewelcome",
-       "contractUrl":"http://pz-servicecontroller.cf.piazzageo.io/jumpstart/moviequotewelcomeContract",
-	"method":"GET”,
-	"resourceMetadata" : {
-		"name":"Movie Quote Welcome",
-		 "description":"A web service that welcomes you to pz-servicecontroller"
-	}
+    "url": "http://pz-servicecontroller.venicegeo.io//jumpstart/moviequotewelcome",
+    "contractUrl": "http://pz-servicecontroller.cf.piazzageo.io/jumpstart/moviequotewelcomeContract",
+    "method": "GET",
+    "resourceMetadata": {
+        "name": "Movie Quote Welcome",
+         "description": "A web service that welcomes you to pz-servicecontroller"
+    }
 
 }
 ----
@@ -216,19 +215,17 @@ To execute a service, utilize the ServiceController's _**executeService**_ API. 
 [source,json]
 ----
 {
-  "serviceId" : "{{serviceId}}",
-  "dataInputs" : {
-    "aString" : {
-      "type" : "urlparameter",
-      "content" : "The rain in Spain"
-    },
-    "dataOutput" : [
-        {
-            "mimeType" : "application/json",
-            "type" : "text"
-        }
-    ]
-  }
+    "serviceId": "{{serviceId}}",
+    "dataInputs": {
+        "aString": {
+            "type": "urlparameter",
+            "content": "The rain in Spain"
+        },
+        "dataOutput": [{
+            "mimeType": "application/json",
+            "type": "text"
+        }]
+    }
 }
 ----
 
@@ -244,14 +241,12 @@ Executing the _moviequotewelcome_ previously registered would be done as follows
 [source,json]
 ----
 {
-  "serviceId" : “{{serviceId}}”,
-  "dataInputs" : {},
-  "dataOutput" : [
-        {
-            "mimeType" : "application/json",
-            "type" : "text"
-        }
-    ]
+    "serviceId": "{{serviceId}}",
+    "dataInputs": {},
+    "dataOutput": [{
+        "mimeType": "application/json",
+        "type": "text"
+    }]
 }
 ----
 
@@ -273,20 +268,18 @@ To execute the convert service, do the following:
 [source,json]
 ----
 {
-  "serviceId" : “{{serviceId}}”,
-  "dataInputs" : {
-    "" : {
-      "content" : "{\"theString\":\"MARGE test\", \"conversionType\":\"UPPER\"}",
-      "type" : "body",
-      "mimeType" : "application/json"
-    },
-    "dataOutput" : [
-        {
-            "mimeType" : "application/json",
-            "type" : "text"
-        }
-    ]
-  }
+    "serviceId": "{{serviceId}}",
+    "dataInputs": {
+        "": {
+            "content": "{\"theString\":\"MARGE test\", \"conversionType\":\"UPPER\"}",
+            "type": "body",
+            "mimeType": "application/json"
+        },
+        "dataOutput" : [{
+            "mimeType": "application/json",
+            "type": "text"
+        }]
+    }
 }
 ----
 
@@ -327,8 +320,37 @@ see Pz Service Controller for details.
 **GET /admin/stats**   on http://pz-servicecontroller.venicegeo.io/
 Provides statistics on the Pz-ServiceController.
 
-....
-{"mem":382464,"mem.free":159813,"processors":2,"instance.uptime":18151962,"uptime":18166991,"systemload.average":1.05,"heap.committed":382464,"heap.init":382976,"heap.used":222650,"heap":382464,"threads.peak":31,"threads.daemon":27,"threads.totalStarted":37,"threads":31,"classes":11529,"classes.loaded":11529,"classes.unloaded":0,"gc.ps_scavenge.count":4900,"gc.ps_scavenge.time":13789,"gc.ps_marksweep.count":0,"gc.ps_marksweep.time":0,"httpsessions.max":-1,"httpsessions.active":0,"gauge.response.admin.stats":7.0,"gauge.response.root":102.0,"counter.status.200.root":1,"counter.status.302.admin.stats":1}
-....
+[source,json]
+----
+{
+    "classes": 11529,
+    "classes.loaded": 11529,
+    "classes.unloaded": 0,
+    "counter.status.200.root": 1,
+    "counter.status.302.admin.stats": 1,
+    "gauge.response.admin.stats": 7.0,
+    "gauge.response.root": 102.0,
+    "gc.ps_marksweep.count": 0,
+    "gc.ps_marksweep.time": 0,
+    "gc.ps_scavenge.count": 4900,
+    "gc.ps_scavenge.time": 13789,
+    "heap": 382464,
+    "heap.committed": 382464,
+    "heap.init": 382976,
+    "heap.used": 222650,
+    "httpsessions.active": 0,
+    "httpsessions.max": -1,
+    "instance.uptime": 18151962,
+    "mem": 382464,
+    "mem.free": 159813,
+    "processors": 2,
+    "systemload.average": 1.05,
+    "threads": 31,
+    "threads.daemon": 27,
+    "threads.peak": 31,
+    "threads.totalStarted": 37,
+    "uptime": 18166991
+}
+----
 
 // vim: set syntax=asciidoc wrap:

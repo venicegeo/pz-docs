@@ -12,11 +12,12 @@ The `pz-jobcommon` project contains a variety of Spring Beans that are used to w
 
 *IMPORTANT*: `PiazzaLogger` and `UUIDFactory` are created with `@Component` annotations, and can thus be `@Autowired` into your classes as normal. However, since these Beans are defined in an external project (`pz-jobcommon`) then one slight change to your project annotation must be made to your Application file:
 
-....
+[source,java]
+----
 @SpringBootApplication
 @ComponentScan({ "MY_NAMESPACE, util" })
 public class Application extends SpringBootServletInitializer {
-....
+----
 
 In the above syntax, the `@ComponentScan()` annotation was added. This is required in order to tell Spring to search for `@Components` in additional namespaces to your own. In this case, we are telling Spring to look in the `MY_NAMESPACE` package, which is a placeholder for your projects own namespace (such as `gateway` or `jobmanager`) -- this will ensure your own project Components get picked up. Additionally, we tell Spring to look for Components in the `util` namespace which is defined in the `pz-jobcommon` project and contains the `PiazzaLogger` and `UUIDFactory` classes.
 

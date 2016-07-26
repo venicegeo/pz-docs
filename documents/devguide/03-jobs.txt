@@ -14,11 +14,12 @@ For most requests handled through the Piazza Gateway, the response will contain 
 
 Endpoints that return a Job ID are documented and outlined in the Swagger documentation.
 
-....
+[source,json]
+----
 {
-	"jobId": "my-job-id"
+    "jobId": "my-job-id"
 }
-....
+----
 
 The response may look something like the above. In this case, the requesting user can then take the Job ID and re-query the Gateway with the Job ID in order to get the latest status and progress of that Job.
 

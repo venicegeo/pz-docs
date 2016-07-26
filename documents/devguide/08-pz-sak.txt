@@ -91,12 +91,13 @@ supported through the UI, the user may choose Text to load or Select a GeoTIFF
 that they have locally.  The metadata field can be a JSON object such as the
 following:
 
-....
+[source,json]
+----
 {
   "name": "Metadata name",
   "key": "value"
 }
-....
+----
 
 When the user selects Text, the Content is the text to be loaded.  When the
 user selects File, the user should then use the file selector to choose the
@@ -123,27 +124,25 @@ Executing the service involves entering JSON for the system to know where the
 service is and what parameters to pass to the service.  The following is a
 very simple example of what to put in this field:
 
-....
+[source,json]
+----
 {
-  "type":"execute-service",
-  "data":{
-    // The unique identifier for your service
-    "serviceId": "00af1e83-167b-43c1-b60b-16c2b8d7be2f",
+    "type": "execute-service",
+    "data": {
+        // The unique identifier for your service
+        "serviceId": "00af1e83-167b-43c1-b60b-16c2b8d7be2f",
 
-    // Any inputs that your service will expect
-    "dataInputs": {},
+        // Any inputs that your service will expect
+        "dataInputs": {},
 
-    // A list of outputs that your service will be responding with
-    "dataOutput":
-      [
-          {
+        // A list of outputs that your service will be responding with
+        "dataOutput": [{
             "mimeType":"application/json",
             "type":"text"
-          }
-      ]
-  }
+        }]
+    }
 }
-....
+----
 
 Other options available for User Service registry include:
 * List - here you can list all services, update and delete services

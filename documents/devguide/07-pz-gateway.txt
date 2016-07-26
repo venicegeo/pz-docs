@@ -38,18 +38,19 @@ http://gateway/job/{jobId}
 
 This will return any progress, or status information. When the job is done, this will also contain a `result` field which will contain a reference to the resulting objects of the Job. The result will look like the following:
 
-....
+[source,json]
+----
 {
-	"type": "status",
-	"jobId": "8504ceff-2af6-405b-bd8a-6804e7759676",
-	"status": "Submitted",
-	"progress": {
-		"percentComplete": 50,
-		"timeRemaining": null,
-		"timeSpent": null
-	}
+    "type": "status",
+    "jobId": "8504ceff-2af6-405b-bd8a-6804e7759676",
+    "status": "Submitted",
+    "progress": {
+        "percentComplete": 50,
+        "timeRemaining": null,
+        "timeSpent": null
+    }
 }
-....
+----
 
 The resulting JSON will contain the current status information for that Job. The ``status`` and ``progress`` objects contain information to the Job's current status.
 

@@ -180,19 +180,19 @@ The response payload looks like this:
 [source,json]
 ----
 {
-  "statusCode": 201,
-  "type": "event",
-  "data": {
-    "eventId": "a765ea52-dac6-41e3-924e-19543f6f1100",
-    "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
+    "statusCode": 201,
+    "type": "event",
     "data": {
-      "code": "PHONE",
-      "filename": "dataset-c",
-      "severity": 5
-    },
-    "createdBy": "",
-    "createdOn": "2016-07-18T13:20:17.520047787Z"
-  }
+        "createdBy": "",
+        "createdOn": "2016-07-18T13:20:17.520047787Z",
+        "data": {
+            "code": "PHONE",
+            "filename": "dataset-c",
+            "severity": 5
+        },
+        "eventId": "a765ea52-dac6-41e3-924e-19543f6f1100",
+        "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1"
+    }
 }
 ----
 
@@ -212,25 +212,23 @@ The response payload looks like this:
 [source,json]
 ----
 {
-  "statusCode": 200,
-  "type": "alert-list",
-  "data": [
-    {
-      "alertId": "886af5eb-ad7e-4bc1-a4aa-4b7703d86a67",
-      "triggerId": "9b2db9f6-7cc4-4bfc-a14f-0949c87d5df2",
-      "eventId": "94043c8e-b154-4dbd-98ba-fff2847abe07",
-      "jobId": "2f773e8a-79b4-4115-9164-01f2d170e6c6",
-      "createdBy": "xyzzy",
-      "createdOn": "2016-07-18T12:43:10.25478657Z"
+    "statusCode": 200,
+    "type": "alert-list",
+    "data": [{
+        "alertId": "886af5eb-ad7e-4bc1-a4aa-4b7703d86a67",
+        "triggerId": "9b2db9f6-7cc4-4bfc-a14f-0949c87d5df2",
+        "eventId": "94043c8e-b154-4dbd-98ba-fff2847abe07",
+        "jobId": "2f773e8a-79b4-4115-9164-01f2d170e6c6",
+        "createdBy": "xyzzy",
+        "createdOn": "2016-07-18T12:43:10.25478657Z"
+    }],
+    "pagination": {
+        "count": 1,
+        "page": 0,
+        "perPage": 10,
+        "sortBy": "alertId",
+        "order": "asc"
     }
-  ],
-  "pagination": {
-    "count": 1,
-    "page": 0,
-    "perPage": 10,
-    "sortBy": "alertId",
-    "order": "asc"
-  }
 }
 ----
 

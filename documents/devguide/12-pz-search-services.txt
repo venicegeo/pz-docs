@@ -27,7 +27,8 @@ The Search services standardize on Java object definitions defined the pz-jobcom
 Mapping the DataResource as schema basis for ingest REST endpoint, for example:
 POST to https://pz-search-metadata-ingest.venicegeo.io/api/v1/data this raw JSON document:
 
-....
+[source,json]
+----
 "data":{
     "dataId": "Alfred E. Newman",
     "dataType": {
@@ -67,97 +68,115 @@ POST to https://pz-search-metadata-ingest.venicegeo.io/api/v1/data this raw JSON
         "maxX": 0.334
     }
 }
-....
+----
 
 Subsequently, this simple DSL query will return the stored record:
 
-....
-  {
-      "query" : {
-         "match" : {
-             "_all" : "kitten"
-          }
-       }
-  }
-....
+[source,json]
+----
+{
+    "query": {
+        "match": {
+            "_all": "kitten"
+        }
+    }
+}
+----
 
 ## Search through the Piazza Workflow
 
 The Ingest of metadata will be coincidental with a Piazza data Ingest job.  Though not the norm, an explicit search-metadata-ingest-job is available through the Gateway:
 https://pz-gateway.venicegeo.io/job:
 
-....
+[source,json]
+----
 {
-  "userName": "my-api-key-38n987",     "jobType": { "type": "search-metadata-ingest", "data":{
-  "dataId": "dc1787d7-7a5e-4d51-a86c-a171ee103723",
-  "dataType": {
-    "type": "shapefile",
-    "location": {
-      "type": "s3",
-      "bucketName": "external-public-access-test",
-      "fileName": "point-shapefile.zip",
-      "domainName": "s3.amazonaws.com"
-    }
-  },
-  "spatialMetadata": {
-    "coordinateReferenceSystem": "GEOGCS[\"GCS_WGS_1984\", \n  DATUM[\"D_WGS_1984\", \n    SPHEROID[\"WGS_1984\", 6378137.0, 298.257223563]], \n  PRIMEM[\"Greenwich\", 0.0], \n  UNIT[\"degree\", 0.017453292519943295], \n  AXIS[\"Longitude\", EAST], \n  AXIS[\"Latitude\", NORTH]]",
-    "epsgCode": 4326,
-    "minX": -109.86515258861945,
-    "minY": 32.47219946485272,
-    "maxX": -100.63284388599796,
-    "maxY": 40.6813399349672
-  },
-  "metadata": {
-    "description": "NOT Ingested automatically by FileWatcher.",
-    "classType": {
-      "classification": "unclassified"
-    }
-  }
-} } }
-....
+    "jobType": {
+        "data": {
+            "dataId": "dc1787d7-7a5e-4d51-a86c-a171ee103723",
+            "dataType": {
+                "location": {
+                    "bucketName": "external-public-access-test",
+                    "domainName": "s3.amazonaws.com",
+                    "fileName": "point-shapefile.zip",
+                    "type": "s3"
+                },
+                "type": "shapefile"
+            },
+            "metadata": {
+                "classType": {
+                    "classification": "unclassified"
+                },
+                "description": "NOT Ingested automatically by FileWatcher."
+            },
+            "spatialMetadata": {
+                "coordinateReferenceSystem": "GEOGCS[\"GCS_WGS_1984\", \n  DATUM[\"D_WGS_1984\", \n    SPHEROID[\"WGS_1984\", 6378137.0, 298.257223563]], \n  PRIMEM[\"Greenwich\", 0.0], \n  UNIT[\"degree\", 0.017453292519943295], \n  AXIS[\"Longitude\", EAST], \n  AXIS[\"Latitude\", NORTH]]",
+                "epsgCode": 4326,
+                "maxX": -100.63284388599796,
+                "maxY": 40.6813399349672,
+                "minX": -109.86515258861945,
+                "minY": 32.47219946485272
+            }
+        },
+        "type": "search-metadata-ingest"
+    },
+    "userName": "my-api-key-38n987"
+}
+----
 
 Subsequently and symmetrically, as examples:
 
-....
+[source,json]
+----
 // Gateway test data for search
 {
-	"userName" : "my-api-key-38n987",
-	"jobType" : {
-		"type" : "search-metadata-ingest",
-		"data" : {
-			"dataId" : "Alfred E. Newman"
-		}
-	}
+    "userName" : "my-api-key-38n987",
+    "jobType" : {
+        "type" : "search-metadata-ingest",
+        "data" : {
+            "dataId" : "Alfred E. Newman"
+        }
+    }
 }
+----
+
 or
+
+[source,json]
+----
 {
-	"userName" : "my-api-key-38n987",
-	"jobType" : {
-		"type" : "search-query",
-		"data" : {
-			"query" : {
-				"match" : {
-					"_all" : "kitten"
-				}
-			}
-		}
-	}
+    "userName" : "my-api-key-38n987",
+    "jobType" : {
+        "type" : "search-query",
+        "data" : {
+            "query" : {
+                "match" : {
+                    "_all" : "kitten"
+                }
+            }
+        }
+    }
 }
+----
+
 or
+
+[source,json]
+----
 {
-	"userName" : "my-api-key-38n987",
-	"jobType" : {
-		"type" : "search-query",
-		"data" : {
-			"query" : {
-				"fuzzy_like_this" : {
-					"like_text" : "kiten"
-				}
-			}
-		}
-	}
+    "userName" : "my-api-key-38n987",
+    "jobType" : {
+        "type" : "search-query",
+        "data" : {
+            "query" : {
+                "fuzzy_like_this" : {
+                    "like_text" : "kiten"
+                }
+            }
+        }
+    }
 }
-....
+----
 
 ## Exercising with Postman collections
 

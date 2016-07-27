@@ -8,6 +8,7 @@ The Piazza Team <venice@radiantblue.com>
 :icons: font
 // Don't wrap lines; horizontally scroll
 :prewrap!:
+:sectanchors:
 link:index.pdf[_PDF_]
 
 :sectnums:

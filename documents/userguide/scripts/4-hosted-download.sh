@@ -5,7 +5,7 @@ set -e
 id=$1
 
 curl -S -s -X GET \
-    -u "$PZUSER":"$PZPASS" \
+    -u "$PZKEY":"$PZPASS" \
     -w "%{http_code}" \
     -o response.txt \
     "https://pz-gateway.$DOMAIN/file/$id?fileName=terrametrics.tif" > status.txt

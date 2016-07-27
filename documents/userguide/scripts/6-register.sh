@@ -14,7 +14,7 @@ service="{
 }"
 
 curl -X POST -S -s \
-    -u "$PZUSER":"$PZPASS" \
+    -u "$PZKEY":"$PZPASS" \
     -w "%{http_code}" \
     -H 'Content-Type: application/json' \
     -o response.txt \

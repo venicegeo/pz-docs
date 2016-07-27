@@ -13,7 +13,7 @@ query="{
 curl -X POST -S -s \
     -w "%{http_code}" \
     -o response.txt \
-    -u "$PZUSER":"$PZPASS" \
+    -u "$PZKEY":"$PZPASS" \
     -H "Content-Type: application/json" \
     -d "$query" \
     "https://pz-gateway.$DOMAIN/data/query" > status.txt

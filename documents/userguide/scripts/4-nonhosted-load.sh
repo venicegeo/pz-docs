@@ -27,7 +27,7 @@ curl -S -s -X POST \
     -o response.txt \
     -H "Content-Type: application/json" \
     -d "$data" \
-    -u "$PZUSER":"$PZPASS" \
+    -u "$PZKEY":"$PZPASS" \
     "https://pz-gateway.$DOMAIN/data" > status.txt
 
 # verify all worked successfully

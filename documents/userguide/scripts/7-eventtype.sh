@@ -7,7 +7,7 @@ eventtype='{
     "name": "test-'"$(date +%s)"'",
     "mapping": {
         "ItemId": "string",
-        "Severity": "long",
+        "Severity": "integer",
         "Problem": "string"
     }
 }'

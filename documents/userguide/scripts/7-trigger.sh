@@ -67,7 +67,7 @@ triggerId=$(grep -E -o '"triggerId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 # end::public[]
 
 if [ -t 1 ]; then
-    echo Trigger ID: "$triggerId"
+    echo triggerId: "$triggerId"
 else
     echo "$triggerId"
 fi

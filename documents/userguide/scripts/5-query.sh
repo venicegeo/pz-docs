@@ -4,11 +4,11 @@ set -e
 # tag::public[]
 term=$1
 
-query="{
-    \"query\": {
-        \"match\": { \"_all\": \"$term\" }
+query='{
+    "query": {
+        "match": { "_all": "'"$term"'" }
     }
-}"
+}'
 
 curl -X POST -S -s \
     -w "%{http_code}" \
@@ -19,9 +19,11 @@ curl -X POST -S -s \
     "https://pz-gateway.$DOMAIN/data/query" > status.txt
 
 grep -q 200 status.txt || { cat response.txt; exit 1; }
+
 # end::public[]
+
 cat response.txt
 
-echo pass.
+echo Success!
 
 rm -f response.txt status.txt

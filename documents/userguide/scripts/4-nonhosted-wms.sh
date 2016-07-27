@@ -4,11 +4,11 @@ set -e
 # tag::public[]
 id=$1
 
-data="{
-    \"type\": \"access\",
-    \"dataId\": \"$id\",
-    \"deploymentType\": \"geoserver\"
-}"
+data='{
+    "type": "access",
+    "dataId": "'"$id"'",
+    "deploymentType": "geoserver"
+}'
 
 curl -S -s -X POST \
     -u "$PZKEY":"$PZPASS" \
@@ -18,11 +18,17 @@ curl -S -s -X POST \
     -o response.txt \
     "https://pz-gateway.$DOMAIN/deployment" > status.txt
 
-# verify all worked successfully
-grep -q 200 status.txt || { cat response.txt; exit 1; }
+# verify 2xx response code
+grep -q 20 status.txt || { cat response.txt; exit 1; }
 
-# print out the jobId
-grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4
+jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
+
 # end::public[]
+
+if [ -t 1 ]; then
+    echo jobId: "$jobId"
+else
+    echo "$jobId"
+fi
 
 rm -f response.txt status.txt

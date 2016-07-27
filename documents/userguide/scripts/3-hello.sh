@@ -11,4 +11,4 @@ grep -q Hello response.txt
 
 rm -f response.txt
 
-echo pass.
+echo Success!

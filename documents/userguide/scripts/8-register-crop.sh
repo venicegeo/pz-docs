@@ -21,8 +21,13 @@ curl -X POST -S -s \
 
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 serviceId=$(grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-echo "$serviceId"
 
 #end::public[]
+
+if [ -t 1 ]; then
+    echo serviceId: "$serviceId"
+else
+    echo "$serviceId"
+fi
 
 rm -f response.txt status.txt

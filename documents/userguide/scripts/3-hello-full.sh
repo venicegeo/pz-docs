@@ -14,4 +14,4 @@ grep -q Hello response.txt || { cat response.txt; exit 1; }
 rm -f response.txt
 
 # provide positive encouragement
-echo pass.
+echo Success!

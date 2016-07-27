@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Piazza User Guide. It contains descriptions of Piazza's main features and many pieces of example code showing how to use those features. This document is aimed at developers looking to build services and applications that use Piazza. (In contrast, the _Developer Guide_ is aimed at developers wishing to work on the Piazza codebase itself. The _DevOps Guide_ is for administrators looking to deploy and manage Piazza instances.)
+Welcome to the Piazza User Guide. It contains descriptions of Piazza's main features and many pieces of example code showing how to use those features. This document is aimed at developers looking to build services and applications that use Piazza. (In contrast, the link:../devguide/index.html[Developers Guide] is aimed at developers wishing to work on the Piazza codebase itself. The link:../devopsguide/index.html[DevOps Guide] is for administrators looking to deploy and manage Piazza instances.)
 
 ## Piazza In Brief
 

@@ -147,6 +147,10 @@ Lastly, cronSchedule can be specified using the `@every duration` notation, wher
 
 It is crucial to understand that an *Event that is sent with a cronSchedule does not trigger the system in the same way that a typical Event does*. Rather, it sets up a recurring Event that will be sent according to the schedule specified. If you require both an Event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating Event and a repeating Event.
 
+In order to stop repeating events, DELETE the initial repeating event by eventId.
+
+    DELETE /event/{{eventId}}
+
 The following script POSTs an event with an eventTypeId passed in by the user:
 
     $ ./7-event.sh {{eventTypeId}}

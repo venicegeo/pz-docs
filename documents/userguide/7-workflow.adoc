@@ -1,12 +1,12 @@
 # Workflow Service
 
-Piazza provides the ability for users to define and send _events_, representing some "thing" that has happened. These events can be issued either from within Piazza or by an external client. Piazza also allows for users to define _triggers_, containing both an event-condition and an action: when the condition is met, the action is performed. Taken together, _eventtypes_, _events_, and _triggers_ can be used to define _workflows_. A script that sets up the workflow described in this section can be found link:scripts/7-example.sh[here].
+Piazza provides the ability for users to define and send _Events_, representing some "thing" that has happened. These Events can be issued either from within Piazza or by an external client. Piazza also allows for users to define _Triggers_, containing both an event-condition and an action: when the condition is met, the action is performed. Taken together, _EventTypes_, _Events_, and _Triggers_ can be used to define _workflows_.
 
-NOTE: By design, events and triggers are fairly primitive, low-level constructs. As Piazza matures, richer support for defining workflows may be added.
+NOTE: By design, Events and Triggers are fairly primitive, low-level constructs. As Piazza matures, richer support for defining workflows may be added.
 
 ## The EventType
 
-The user (or some service) first defines an _EventType_ which is the "schema" for the events that the user will be generating. The _EventType_ object is POSTed to `/eventType` and contains contains a _name_ (string) and a map describing the event type's parameters. It also contains a system-generated ID. For example:
+The user (or some service) first defines an _EventType_ which is the "schema" for the Events that the user will be generating. The _EventType_ object is sent in a `POST` request to the `/eventType` endpoint and contains contains a unique `name` (string) and a mapping describing the EventType's parameters. For example:
 
 [source,json]
 ----
@@ -22,15 +22,14 @@ The user (or some service) first defines an _EventType_ which is the "schema" fo
 
 The `name` must be unique across all event types in the system.
 
-The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`. (By no coincidence, these are the basic types that Elasticsearch supports.)
+The available data types are `string`, `boolean`, `integer`, `double`, `date`, `float`, `byte`, `short`, and `long`. By no coincidence, these are the basic types that Elasticsearch supports.
 
 The following script shows an example of registering an EventType. Run it using:
 
-[source,bash]
-$ ./7-eventtype.sh
+    $ ./7-eventtype.sh
 
+link:scripts/7-eventtype.sh[7-eventtype.sh]
 [source,bash]
-.link:scripts/7-eventtype.sh[7-eventtype.sh]
 ----
 include::scripts/7-eventtype.sh[tags=public]
 ----
@@ -38,7 +37,7 @@ include::scripts/7-eventtype.sh[tags=public]
 
 ## The Trigger
 
-The user then defines a _Trigger_ which defines what action is to be taken when a specific event occurs. The _Trigger_ is POSTed to `/trigger` and contains two parts, the _Condition_ and the _Job_. The _Condition_ defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type. The _Job_ defines what action is to be taken, expressed as using Gateway/Dispatcher-style syntax. The _Trigger_ also contains a system-generated ID. For example:
+The user then defines a _Trigger_ which defines what action is to be taken when a specific event occurs. The _Trigger_ is sent as a `POST` request to the `/trigger` endpoint and contains four parts. The `condition` defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type. The `job` defines what action is to be taken, expressed as using Gateway/Dispatcher-style syntax. The `title` is a memorable string for describing what the _Trigger_ is meant to do, and the `enabled` field determines if the _Trigger_ should be listening for Events in order to send Alerts. For example:
 
 [source,json]
 ----
@@ -74,17 +73,12 @@ For details on constructing valid Elasticsearch DSL queries, see the <<Elasticse
 
 In this example, the job will be executed only when our "test" event occurs with the `severity` equal to `5` and the `code` equal to `"PHONE"`.
 
-`enabled` is a boolean value indicating whether the trigger should be "active" or not.
+Pass the following script an eventTypeId, and it will create a generic Trigger for the EventType associated with that eventTypeId:
 
-NOTE: the "type" field of the "condition" will likely be removed in the future, as the query DSL allows us to specify the event type directly within it; this would open up the possibility of having a condition based on multiple events.
+    $ ./7-trigger.sh {{eventTypeId}}
 
-Pass the following script an EventType ID, and it will create a generic Trigger for the given EventType:
-
+link:scripts/7-trigger.sh[7-trigger.sh]
 [source,bash]
-$ ./7-trigger.sh {{eventtype_id}}
-
-[source,bash]
-.link:scripts/7-trigger.sh[7-trigger.sh]
 ----
 include::scripts/7-trigger.sh[tags=public]
 ----
@@ -92,7 +86,7 @@ include::scripts/7-trigger.sh[tags=public]
 
 ## The Event
 
-The user may generate an _Event_ of that _EventType_ to indicate some interesting condition has occurred. The _Event_ object is POSTed to `/event` and contains the ID of the _EventType_, and the parameters of the event. For example:
+The user may generate an _Event_ of that _EventType_ to indicate some interesting condition has occurred. The _Event_ object is sent as a `POST` request to the `/event` endpoint and contains the `eventTypeId` of the _EventType_, and the parameters of the event. For example:
 
 [source,json]
 ----
@@ -106,15 +100,15 @@ The user may generate an _Event_ of that _EventType_ to indicate some interestin
 }
 ----
 
-In addition, an _Event_ can specify a `cronSchedule` field, which alters the mechanics of the _Event_ slightly. The `cronSchedule` field specifies a schedule at which to repeat the specified event. This schedule is created as a cron expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron related resources. Some helpful resources might include link:http://www.cronmaker.com/[cronmaker.com] and link:http://crontab.guru/[crontab.guru]. However, it is critical to note that the cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go, with the crucial difference being that our cron flavor designates the first asterisk as the *seconds* field. This means:
+In addition, an _Event_ can specify a `cronSchedule` field, which alters the mechanics of the _Event_ slightly. The `cronSchedule` field specifies a schedule at which to repeat the specified event. This schedule is created as a cron expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron related resources. Some helpful resources might include http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. However, it is critical to note that the cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go, with the crucial difference being that our cron flavor designates the first asterisk as the *seconds* field. This means:
 
-* `"cronSchedule": "* * * * * *"` sends the event every second;
-* `"cronSchedule": "30 * * * * *"` sends the event every minute at the 30 second mark;
-* `"cronSchedule": "* 30 * * * *"` sends the event every hour at the 30 minute mark, etc.
+* `"cronSchedule": "* * * * * *"` - send the event every second;
+* `"cronSchedule": "30 * * * * *"` - send the event every minute at the 30 second mark;
+* `"cronSchedule": "* 30 * * * *"` - send the event every hour at the 30 minute mark, etc.
 
 For reference, the 6 stars in the cronSchedule stand for:
 
-*seconds | minutes | hours | (day of month) | month | (day of week)*
+*seconds | minutes | hours | day of month | month | day of week*
 
 In some cron implementations, the rightmost asterisks can be omitted from the notation; this is not the case with the particular flavor of cron we are using.
 
@@ -122,44 +116,43 @@ Additionally, cronSchedules can be spelled out using shorthand notation. These s
 
 .Shorthands
 |===
-|Entry |Description |Equivalent To
+| Entry | Description | Equivalent To
 
-|@yearly (or @annually)
-|Run once a year, midnight, Jan. 1st
-|0 0 0 1 1 *
+| `@yearly` (or `@annually`)
+| Run once a year, midnight, Jan. 1st
+| `0 0 0 1 1 *`
 
-|@monthly
-|Run once a month, midnight, first of month
-|0 0 0 1 * *
+| `@monthly`
+| Run once a month, midnight, first of month
+| `0 0 0 1 * *`
 
-|@weekly
-|Run once a week, midnight on Sunday
-|0 0 0 * * 0
+| `@weekly`
+| Run once a week, midnight on Sunday
+| `0 0 0 * * 0`
 
-|@daily (or @midnight)
-|Run once a day, midnight
-|0 0 0 * * *
+| `@daily` (or `@midnight`)
+| Run once a day, midnight
+| `0 0 0 * * *`
 
-|@hourly
-|Run once an hour, beginning of hour
-|0 0 * * * *
+| `@hourly`
+| Run once an hour, beginning of hour
+| `0 0 * * * *`
 |===
 
-Lastly, cronSchedule can be specified using the `@every duration` notation, where duration is replaced by a Golang parsable time.Duration. Examples include:
+Lastly, cronSchedule can be specified using the `@every duration` notation, where duration is replaced by a Golang parsable https://golang.org/pkg/time/#Duration[time.Duration]. Examples include:
 
-* `"cronSchedule": "@every 1h30m10s"`: send event every 1 hour, 30 minutes, 10 seconds
-* `"cronSchedule": "@every 30s"`: send event every 30 seconds
-* `"cronSchedule": "@every 5m"`: send event every 5 minutes
+* `"cronSchedule": "@every 1h30m10s"` - send event every 1 hour, 30 minutes, 10 seconds
+* `"cronSchedule": "@every 30s"` - send event every 30 seconds
+* `"cronSchedule": "@every 5m"` - send event every 5 minutes
 
-It is crucial to understand that an *Event that is sent with a cronSchedule does not trigger the system in the same way that a typical event does*. Rather, it sets up a recurring Event that will be sent according to the schedule specified. If you require both an Event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating Event and a repeating Event.
+It is crucial to understand that an *Event that is sent with a cronSchedule does not trigger the system in the same way that a typical Event does*. Rather, it sets up a recurring Event that will be sent according to the schedule specified. If you require both an Event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating Event and a repeating Event.
 
-The following script POSTs an event with an EventType ID passed in by the user:
+The following script POSTs an event with an eventTypeId passed in by the user:
 
+    $ ./7-event.sh {{eventTypeId}}
+
+link:scripts/7-event.sh[7-event.sh]
 [source,bash]
-$ ./7-event.sh {{eventtype_id}}
-
-[source,bash]
-.link:scripts/7-event.sh[7-event.sh]
 ----
 include::scripts/7-event.sh[tags=public]
 ----
@@ -167,7 +160,7 @@ include::scripts/7-event.sh[tags=public]
 
 ## The Alert
 
-Whenever the condition of a _Trigger_ is met, the system will create an _Alert_ object. The user can GET a list of alerts from `/alert`. The _Alert_ object contains the ids of the _Trigger_ that was hit and the _Event_ which caused it. It also contains the now ubiquitous system-generated ID. For example:
+Whenever the condition of a _Trigger_ is met, the system will create an _Alert_ object. The user can GET a list of Alerts from the `/alert` endpoint. The _Alert_ object contains the ids of the _Trigger_ that was hit and the _Event_ which caused it. It also contains a generated `alertId`. For example:
 
 [source,json]
 ----
@@ -194,15 +187,14 @@ Whenever the condition of a _Trigger_ is met, the system will create an _Alert_ 
 }
 ----
 
-The following script gets the list of alerts currently in the Piazza system, with default pagination and per_page settings:
+The following script gets the list of Alerts currently in the Piazza system, with default pagination and per_page settings:
 
-[source,bash]
-$ ./7-get-alerts.sh
+    $ ./7-get-alerts.sh
 
+link:scripts/7-get-alerts.sh[7-get-alerts.sh]
 [source,bash]
-.link:scripts/7-get-alerts.sh[7-get-alerts.sh]
 ----
 include::scripts/7-get-alerts.sh[tags=public]
 ----
 
-The query parameter `?triggerId=id` is provided to allow the list to be filtered to only the alerts of interest.
+The query parameter `?triggerId=id` is provided to allow the list to be filtered to only Alerts set off by a specified Trigger.

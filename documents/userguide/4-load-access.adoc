@@ -89,12 +89,12 @@ include::scripts/job-info.sh[tags=public]
 
 Once the job is complete, we can retrieve the metadata about the image. Here too the script takes an argument: this time, the `dataId` of the data resource (displayed by the job-info.sh script).
 
-    $ ./file-info.sh {{dataId}}
+    $ ./data-info.sh {{dataId}}
 
-link:scripts/file-info.sh[file-info.sh]
+link:scripts/data-info.sh[data-info.sh]
 [source,bash]
 ----
-include::scripts/file-info.sh[tags=public]
+include::scripts/data-info.sh[tags=public]
 ----
 
 When the Job is done, the response for the Job status request will now contain the `result` field, and the `status` of the job will now be set to `Success`. For a Load job, the result type will be `data` because the result is data loaded into Piazza, and the `result.dataId` will be the unique identifier of the data that was loaded. This unique identifier can now be used to permanently reference the data.

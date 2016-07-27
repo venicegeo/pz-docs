@@ -165,9 +165,9 @@ Finally, the actual result is returned by sending a `GET` request to `https://pz
 }
 ----
 
-Run the link:scripts/file-info.sh[file-info.sh] script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
+Run the link:scripts/data-info.sh[data-info.sh] script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
 
-    $ ./file-info.sh {{dataId}}
+    $ ./data-info.sh {{dataId}}
 
 
 ## Other Examples

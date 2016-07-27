@@ -80,9 +80,9 @@ The 8-crop-file.sh script should return a jobId that can then be passed as an ar
 
     $ ./job-info.sh {{jobId}}
 
-When the job is complete, the resulting data can be queried from the dataId returned by the job-info.sh script using link:scripts/file-info.sh[file-info.sh]:
+When the job is complete, the resulting data can be queried from the dataId returned by the job-info.sh script using link:scripts/data-info.sh[data-info.sh]:
 
-    $ ./file-info.sh {{dataId}}
+    $ ./data-info.sh {{dataId}}
 
 If all goes well, the resulting received payload will be of DataResource type:
 

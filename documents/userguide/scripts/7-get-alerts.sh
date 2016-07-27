@@ -8,7 +8,7 @@ curl -X GET -S -s \
     -u "$PZKEY":"$PZPASS" \
     -w "%{http_code}" \
     -o response.txt \
-    "https://pz-gateway.$DOMAIN/alert" > status.txt
+    "https://pz-gateway.$PZDOMAIN/alert" > status.txt
 
 # Check for 2XX status code
 grep -q 20 status.txt || { cat response.txt; exit 1; }

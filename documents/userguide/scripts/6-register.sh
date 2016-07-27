@@ -4,7 +4,7 @@ set -e
 # tag::public[]
 
 service='{
-    "url": "http://pzsvc-hello.'"$DOMAIN"'/",
+    "url": "http://pzsvc-hello.'"$PZDOMAIN"'/",
     "contractUrl": "http://helloContract",
     "serviceId": "",
     "method": "GET",
@@ -21,7 +21,7 @@ curl -X POST -S -s \
     -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$service" \
-    "https://pz-gateway.$DOMAIN/service" > status.txt
+    "https://pz-gateway.$PZDOMAIN/service" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
 serviceId=$(grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4)

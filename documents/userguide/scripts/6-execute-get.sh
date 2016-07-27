@@ -20,7 +20,7 @@ curl -X POST -S -s \
     -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$job" \
-    "https://pz-gateway.$DOMAIN/job" > status.txt
+    "https://pz-gateway.$PZDOMAIN/job" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
 jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)

@@ -6,7 +6,7 @@ id=$1
 
 # service
 service='{
-    "url": "http://pzsvc-hello.'$DOMAIN'/",
+    "url": "http://pzsvc-hello.'$PZDOMAIN'/",
     "contractUrl": "http://helloContract",
     "method": "GET",
     "resourceMetadata": {
@@ -25,7 +25,7 @@ curl -X POST -S -s \
     -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$service" \
-    "https://pz-gateway.$DOMAIN/service" > status.txt
+    "https://pz-gateway.$PZDOMAIN/service" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
 serviceId=$(grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
@@ -59,7 +59,7 @@ curl -X POST -S -s \
     -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$trigger" \
-    "https://pz-gateway.$DOMAIN/trigger" > status.txt
+    "https://pz-gateway.$PZDOMAIN/trigger" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
 triggerId=$(grep -E -o '"triggerId"\s?:\s?".*"' response.txt | cut -d \" -f 4)

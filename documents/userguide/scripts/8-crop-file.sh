@@ -31,7 +31,7 @@ curl -X POST -S -s \
         -H 'Content-Type: application/json' \
         -o response.txt \
         -d "$job" \
-        "https://pz-gateway.$DOMAIN/job" > status.txt
+        "https://pz-gateway.$PZDOMAIN/job" > status.txt
 
 grep -q 200 status.txt || { cat response.txt; exit 1; }
 cat response.txt

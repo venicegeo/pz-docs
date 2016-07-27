@@ -16,7 +16,7 @@ curl -S -s -X POST \
     -d "$data" \
     -w "%{http_code}" \
     -o response.txt \
-    "https://pz-gateway.$DOMAIN/deployment" > status.txt
+    "https://pz-gateway.$PZDOMAIN/deployment" > status.txt
 
 # verify 2xx response code
 grep -q 20 status.txt || { cat response.txt; exit 1; }

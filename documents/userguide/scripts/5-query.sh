@@ -16,7 +16,7 @@ curl -X POST -S -s \
     -u "$PZKEY":"$PZPASS" \
     -H "Content-Type: application/json" \
     -d "$query" \
-    "https://pz-gateway.$DOMAIN/data/query" > status.txt
+    "https://pz-gateway.$PZDOMAIN/data/query" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
 

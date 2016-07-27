@@ -8,7 +8,7 @@ curl -X GET -S -s \
     -u "$PZKEY":"$PZPASS" \
     -w "%{http_code}" \
     -o response.txt \
-    "https://pz-gateway.$DOMAIN/job/$jobId" > status.txt
+    "https://pz-gateway.$PZDOMAIN/job/$jobId" > status.txt
 
 # verify all worked successfully
 grep -q 200 status.txt || { cat response.txt; exit 1; }

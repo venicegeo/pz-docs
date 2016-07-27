@@ -19,7 +19,7 @@ curl -X POST -S -s \
     -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$eventtype" \
-    "https://pz-gateway.$DOMAIN/eventType" > status.txt
+    "https://pz-gateway.$PZDOMAIN/eventType" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
 eventTypeId=$(grep -E -o '"eventTypeId"\s?:\s?".*"' response.txt | cut -d \" -f 4)

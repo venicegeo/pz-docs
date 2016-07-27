@@ -23,7 +23,7 @@ curl -S -s -X POST \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" \
-    "https://pz-gateway.$DOMAIN/data/file" > status.txt
+    "https://pz-gateway.$PZDOMAIN/data/file" > status.txt
 
 # verify 2xx response code
 grep -q 20 status.txt || { cat response.txt; exit 1; }

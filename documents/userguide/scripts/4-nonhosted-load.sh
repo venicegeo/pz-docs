@@ -28,7 +28,7 @@ curl -S -s -X POST \
     -H "Content-Type: application/json" \
     -d "$data" \
     -u "$PZKEY":"$PZPASS" \
-    "https://pz-gateway.$DOMAIN/data" > status.txt
+    "https://pz-gateway.$PZDOMAIN/data" > status.txt
 
 # verify 2xx response code
 grep -q 20 status.txt || { cat response.txt; exit 1; }

@@ -146,6 +146,7 @@ The response payload looks like this:
 }
 ----
 
+
 ## The Event
 
 The user may generate an `Event` of that `EventType` to indicate some interesting condition has occurred. The `Event` object is POSTed to `/event` and contains the ID of the `EventType`, the date the event occurred, and the parameters of the event.
@@ -231,6 +232,11 @@ Lastly, cronSchedule can be specified using the `@every duration` notation, wher
 * `"cronSchedule": "@every 5m"`: send event every 5 minutes
 
 It is crucial to understand that an *Event that is sent with a `cronSchedule` field does not trigger the system in the same way that a typical event does*. Rather, it sets up a recurring Event that will be sent according to the schedule specified. If you require both an Event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating Event and a repeating Event.
+
+In order to stop repeating events, DELETE the initial repeating event by eventId.
+
+    DELETE /event/{{eventId}}
+
 
 ## The Alert
 

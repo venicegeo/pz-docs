@@ -2,42 +2,66 @@
 
 ## Pagination
 
-## Common HTTP Error Codes
-**400 Bad Request**
+`GET` requests that return arrays (or maps) of objects should typically support these query parameters for pagination:
+
+* `?page=INT`
+* `?perPage=INT`
+* `?sortBy=STRING`
+* `?order=STRING` // must be either `asc` or `desc`
+
+For example, these two calls will return the 60 most recent log messages, in batches of 30, sorted by creation date:
+
+    GET /messages?perPage=30&page=0&key=createdOn&order=asc
+    GET /messages?perPage=30&page=1&key=createdOn&order=asc
+
+
+## HTTP Status Codes
+
+We generally only use these HTTP status codes.
+
+`200 OK`::
+The request has succeeded. The information returned with the response is dependent on the method used in the request. For `GET`, the response is an entity containing the requested resource. For `POST`, it is entity containing the result of the action.
+
+`201 Created`::
+The request has been fulfilled and resulted in a new resource being created. The newly created resource can be referenced by the URI(s) returned in the entity of the response. The origin server MUST create the resource before returning the 201 status code.
+
+`400 Bad Request`::
 The request could not be understood by the server due to malformed syntax.
 
-**401 Unauthorized**
+`401 Unauthorized`::
 The request requires user authentication, e.g. due to missing or invalid authentication token.
 
-**403 Forbidden**
+`403 Forbidden`::
 The server understood the request, but is refusing to fulfill it. Authorization will not help. May be used in cases where user is not authorized to perform the operation or the resource is unavailable for some reason (e.g. time constraints, etc.).
 
-**404 Not Found**
+`404 Not Found`::
 The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
 
-**500 Internal Server Error**
+`500 Internal Server Error`::
 The server encountered an unexpected condition which prevented it from fulfilling the request.
+
 
 ## Structure of returned objects
 
 // TODO (???)
 
+
 ## Elasticsearch Query Syntax
 
-The Elasticsearch DSL can get very complicated. Attempting to explain the entirety of the Elasticsearch DSL syntax is beyond the scope of this document. However, the Elasticsearch documentation is well-written and a good source of quality examples of DSL syntax. For more details, visit the link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch Query DSL docs].
+The Elasticsearch DSL can get very complicated. Attempting to explain the entirety of the Elasticsearch DSL syntax is beyond the scope of this document. However, the Elasticsearch documentation is well-written and a good source of quality examples of DSL syntax. For more details, visit the https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch Query DSL docs].
 
 Some helpful links for constructing Elasticsearch DSL queries include:
 
 * Elasticsearch Query information
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html[Query and Filter Context docs]
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html[Fields Parameter docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html[Query and Filter Context docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html[Fields Parameter docs]
 * Elasticsearch Query Types (non-exhaustive)
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html[Match Query docs]
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html[Term Query docs]
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html[Exists Query docs]
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html[Type Query docs]
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html[Ids Query docs]
-** link:https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html[Bool Query docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html[Match Query docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html[Term Query docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html[Exists Query docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html[Type Query docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html[Ids Query docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html[Bool Query docs]
 
 As an aid, here are a few example queries:
 

@@ -60,7 +60,7 @@ This will return any progress, or status information. When the job is done, this
 }
 ----
 
-The resulting JSON will contain the current status information for that Job. The ``status`` and ``progress`` objects contain information to the Job's current status.
+The resulting JSON will contain the current status information for that Job. The `status` and `progress` objects contain information to the Job's current status.
 
 If the Job has encountered an error, then this information will also be available in the resulting JSON.
 

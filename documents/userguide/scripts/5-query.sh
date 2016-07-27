@@ -18,7 +18,7 @@ curl -X POST -S -s \
     -d "$query" \
     "https://pz-gateway.$DOMAIN/data/query" > status.txt
 
-grep -q 200 status.txt || { cat response.txt; exit 1; }
+grep -q 20 status.txt || { cat response.txt; exit 1; }
 
 # end::public[]
 

@@ -15,8 +15,6 @@ service='{
     }
 }'
 
-echo "$service"
-
 curl -X POST -S -s \
     -u "$PZKEY":"$PZPASS" \
     -w "%{http_code}" \

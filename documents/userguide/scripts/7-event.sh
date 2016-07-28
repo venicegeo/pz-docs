@@ -10,8 +10,7 @@ event='{
         "ItemId": "test",
         "Severity": 200,
         "Problem": "us-bbox"
-    },
-    "cronSchedule": "@every 1s"
+    }
 }'
 
 curl -X POST -S -s \

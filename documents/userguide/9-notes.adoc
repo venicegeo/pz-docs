@@ -7,7 +7,7 @@
 * `?page=INT`
 * `?perPage=INT`
 * `?sortBy=STRING`
-* `?order=STRING` // must be either `asc` or `desc`
+* `?order=STRING` - must be either `asc` or `desc`
 
 For example, these two calls will return the 60 most recent log messages, in batches of 30, sorted by creation date:
 

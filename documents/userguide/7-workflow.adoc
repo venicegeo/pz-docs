@@ -36,7 +36,7 @@ include::scripts/7-eventtype.sh[tags=public]
 
 ### System EventTypes
 
-The Workflow provides some system level EventTypes: `piazza:ingest` and `piazza:executionComplete`.  These two system event types can be used to set up Triggers when something is ingested or an execution has finished. Those two event types look like the following:
+The Workflow provides some system level EventTypes: `piazza:ingest` and `piazza:executionComplete`.  These two system EventTypes can be used to set up Triggers when something is ingested or an execution has finished. Those two EventTypes look like the following:
 
 [source,json]
 ----
@@ -61,7 +61,7 @@ and
 }
 ----
 
-In order to use this you can look up the event type id for the system event type by hitting the `/eventTypeByName/piazza:ingest` endpoint (or whichever EventType name you want returned).  You can get the event type id from the event type that is returned.  Then you can create your trigger with that event type ID.
+In order to use this you can look up the EventTypeId for the system EventType by hitting the `/eventTypeByName/piazza:ingest` endpoint (or whichever EventType name you want returned).  You can get the eventTypeId from the EventType that is returned.  Then you can create your Trigger with that EventTypeId.
 
 
 ## The Trigger

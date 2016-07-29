@@ -79,11 +79,21 @@ The request payload looks like this:
         }
     },
     "job": {
-        "createdBy": "test",
         "jobType": {
             "type": "execute-service",
             "data": {
-                "serviceId": "a2898bcb-2646-4ffd-9da7-2308cb7e77d7"
+                "serviceId": "a2898bcb-2646-4ffd-9da7-2308cb7e77d7",
+                "dataInputs": {
+                    "test": {
+                        "content": "{ \"log\": \"Received code $code with severity $severity\" }",
+                        "type": "body",
+                        "mimeType": "application/json"
+                    }
+                },
+                "dataOutput": [ {
+                    "mimeType":"image/tiff",
+                    "type":"raster"
+                } ]
             }
         }
     }
@@ -95,6 +105,8 @@ The request payload looks like this:
 The caller supplies both the `eventTypeIds` and the `serviceId`.
 
 In this example, the job will be executed only when an event of our previously defined `testevent-1468847218` event type occurs with its `severity` and `code` fields set to `5` and `"PHONE"`, respectively.
+
+It's important to note that the "job" field uses substitution by replacing all instances of `$field` (where `field` is the name of a JSON field in the EventType `mapping` (and thus subsequently in the Event's `data` field)) with the `field` in the event that sets off the Trigger. This substitution occurs in all of the fields in `job`, so it is important to be conscious of this.
 
 The response payload looks like this:
 

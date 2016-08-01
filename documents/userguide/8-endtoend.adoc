@@ -20,7 +20,7 @@ pzsvc-file-watcher takes a few command line arguments, including the s3 bucket l
 
 An example of running `filewatcher.py` via the command line:
 
-    $ python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.DOMAIN' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'
+    $ python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.{{PZDOMAIN}}' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'
 
 This will set up the pzsvc-file-watcher to poll continuously for new files in the `aws_bucket_name` bucket, and ingest those files (without hosting them!) to the Piazza service.
 
@@ -71,6 +71,7 @@ Sample working payload:
     }
 }
 ----
+
 
 ## Retrieving Results
 

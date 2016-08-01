@@ -169,25 +169,25 @@ Whenever the condition of a _Trigger_ is met, the system will create an _Alert_ 
 [source,json]
 ----
 {
-  "statusCode": 200,
-  "type": "alert-list",
-  "data": [
+    "statusCode": 200,
+    "type": "alert-list",
+    "data": [
     {
-      "alertId": "58d1ad21-75d0-4ee4-8429-c687b9249cc5",
-      "triggerId": "170619d6-8f4e-4dc4-bcb6-8b0862e0138f",
-      "eventId": "baa98fc7-f282-4caf-b35d-c2050eca010c",
-      "jobId": "ab62ae7e-432b-4b61-a831-4a80b6ce836e",
-      "createdBy": "",
-      "createdOn": "2016-07-18T13:41:28.571761514Z"
+        "alertId": "58d1ad21-75d0-4ee4-8429-c687b9249cc5",
+        "triggerId": "170619d6-8f4e-4dc4-bcb6-8b0862e0138f",
+        "eventId": "baa98fc7-f282-4caf-b35d-c2050eca010c",
+        "jobId": "ab62ae7e-432b-4b61-a831-4a80b6ce836e",
+        "createdBy": "",
+        "createdOn": "2016-07-18T13:41:28.571761514Z"
     }
-  ],
-  "pagination": {
-    "count": 1,
-    "page": 0,
-    "perPage": 10,
-    "sortBy": "alertId",
-    "order": "asc"
-  }
+    ],
+    "pagination": {
+        "count": 1,
+        "page": 0,
+        "perPage": 10,
+        "sortBy": "alertId",
+        "order": "asc"
+    }
 }
 ----
 
@@ -202,3 +202,7 @@ include::scripts/7-get-alerts.sh[tags=public]
 ----
 
 The query parameter `?triggerId=id` is provided to allow the list to be filtered to only Alerts set off by a specified Trigger.
+
+## Workflow API Documentation
+
+See http://pz-swagger.geointservices.io/#/Workflow

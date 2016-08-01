@@ -55,8 +55,10 @@ The response from this request will contain the `jobId` of the job that was subm
 [source,json]
 ----
 {
-    "type": "job",
-    "jobId": "ee5c8b6-300-43a-886-5b824150941"
+  "type" : "job",
+  "data" : {
+    "jobId" : "24019b46-f92f-412d-8877-9fc3c114dd6e"
+  }
 }
 ----
 
@@ -67,12 +69,14 @@ The `jobId` is used to fetch the status of the load, as Piazza opens the file an
 ----
 {
     "type": "status",
-    "jobId": "ee5cb26-300-f3a-896-5bb82150941",
-    "status": "Running",
-    "jobType": "ingest",
-    "submittedBy": "user",
-    "progress": {
-        "percentComplete": 50
+    "data": {
+        "jobId": "ee5cb26-300-f3a-896-5bb82150941",
+        "status": "Running",
+        "jobType": "IngestJob",
+        "createdBy": "{{PZUSER}}",
+        "progress": {
+            "percentComplete": 50
+        }
     }
 }
 ----
@@ -87,6 +91,28 @@ link:scripts/job-info.sh[job-info.sh]
 include::scripts/job-info.sh[tags=public]
 ----
 
+When the Job is done, the response for the Job status request will now contain the `result` field, and the `status` of the job will now be set to `Success`. For a Load job, the result type will be `data` because the result is data loaded into Piazza, and the `result.dataId` will be the unique identifier of the data that was loaded. This unique identifier can now be used to permanently reference the data.
+
+[source,json]
+----
+{
+    "type": "status",
+    "data": {
+        "jobId": "ee5c8b26-3900-4f3a-8986-5bb824150941",
+        "result": {
+            "type": "data",
+            "dataId": "0acfec67-6def-44da-9b03-b605d913c2ef"
+        },
+        "status": "Success",
+        "jobType": "IngestJob",
+        "createdBy": "{{PZUSER}}",
+        "progress": {
+            "percentComplete": 100
+        }
+    }
+}
+----
+
 Once the job is complete, we can retrieve the metadata about the image. Here too the script takes an argument: this time, the `dataId` of the data resource (displayed by the job-info.sh script).
 
     $ ./data-info.sh {{dataId}}
@@ -95,26 +121,6 @@ link:scripts/data-info.sh[data-info.sh]
 [source,bash]
 ----
 include::scripts/data-info.sh[tags=public]
-----
-
-When the Job is done, the response for the Job status request will now contain the `result` field, and the `status` of the job will now be set to `Success`. For a Load job, the result type will be `data` because the result is data loaded into Piazza, and the `result.dataId` will be the unique identifier of the data that was loaded. This unique identifier can now be used to permanently reference the data.
-
-[source,json]
-----
-{
-    "type": "status",
-    "jobId": "ee5c8b26-3900-4f3a-8986-5bb824150941",
-    "result": {
-        "type": "data",
-        "dataId": "0acfec67-6def-44da-9b03-b605d913c2ef"
-    },
-    "status": "Success",
-    "jobType": "ingest",
-    "submittedBy": "user",
-    "progress": {
-        "percentComplete": 100
-    }
-}
 ----
 
 Next, we can retrieve the file:
@@ -142,14 +148,24 @@ The response from this request will return a `jobId`. Checking the status of the
 [source,json]
 ----
 {
-    "type": "deployment",
-    "deployment": {
-        "id": "{id of the deployment}",
-        "dataId": "{id of the data}",
-        "host": "http://geoserver.piazza",
-        "port": 80,
-        "layer": "{id of the data}",
-        "capabilitiesUrl": "http://geoserver.piazza:8080/{data}?request=GetCapabilities"
+    "type" : "status",
+    "data" : {
+        "result" : {
+            "type" : "deployment",
+            "deployment" : {
+                "deploymentId" : "{{deploymentId}}",
+                "dataId" : "{{dataId}}",
+                "host" : "http://geoserver.piazza",
+                "port" : "80",
+                "layer" : "{{dataId}}",
+                "capabilitiesUrl" : "http://geoserver.piazza:8080/{data}?request=GetCapabilities"
+            }
+        },
+        "status" : "Success",
+        "jobType" : "AccessJob",
+        "createdBy" : "{{PZUSER}}",
+        "progress" : { },
+        "jobId" : "{{jobId}}"
     }
 }
 ----
@@ -175,7 +191,7 @@ Loading a non-hosted image file is nearly identical to loading a hosted image fi
             "type": "raster",
             "location": {
                 "type": "s3",
-                "bucketName": "my-bucket",
+                "bucketName": "external-public-access-test",
                 "fileName": "elevation.tif",
                 "domainName": "s3.amazonaws.com"
             }
@@ -228,3 +244,8 @@ Other than those changes, the entire process is identical.
 ----
 
 Job status, downloads, and GeoServer (WFS/WMS) deployments are identical to the image-based examples as described above.
+
+
+## Data API Documentation
+
+See http://pz-swagger.geointservices.io/#/Data

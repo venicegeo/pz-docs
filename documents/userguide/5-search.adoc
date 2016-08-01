@@ -54,3 +54,7 @@ include::scripts/5-query.sh[tags=public]
 ----
 
 Visit the <<Elasticsearch Query Syntax>> section for more details on the Elasticsearch DSL.
+
+## Search API Documentation
+
+See http://pz-swagger.geointservices.io/#/Search

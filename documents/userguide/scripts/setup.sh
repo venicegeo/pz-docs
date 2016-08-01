@@ -19,9 +19,9 @@ else
     echo 'Usage:'
     echo '    ./setup.sh "PZDOMAIN" "PZUSER" "PZPASS"'
     echo 'Number of arguments passed: ' $#
-        # $DOMAIN should always be set
-    : "${DOMAIN:?"DOMAIN is not set"}"
-    # $PZUSER and $PZPASS can be '' if no authentication needed, so ? -> :?
+    # $PZDOMAIN should always be set
+    : "${PZDOMAIN:?"PZDOMAIN is not set"}"
+    # $PZUSER and $PZPASS can be '' if no authentication needed, so :? -> ?
     : "${PZUSER?"PZUSER is not set"}"
     : "${PZPASS?"PZPASS is not set"}"
     echo '  Environment variables set'

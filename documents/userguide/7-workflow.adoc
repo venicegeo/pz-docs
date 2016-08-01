@@ -65,7 +65,7 @@ An Event of type `piazza:ingest` will be automatically POSTed by the system afte
 
 An Event of type `piazza:executionComplete` will be automatically POSTed by the system when the User Service Registry completes an execution of a service.
 
-In order to use this you can look up the EventTypeId for the system EventType by hitting the `/eventTypeByName/piazza:ingest` endpoint (or whichever EventType name you want returned).  You can get the eventTypeId from the EventType that is returned.  Then you can create your Trigger with that EventTypeId.
+In order to use this you can look up the EventTypeId for the system EventType by hitting the `/eventType?name=piazza:ingest` endpoint (or whichever EventType name you want returned).  You can get the eventTypeId from the EventType that is returned.  Then you can create your Trigger with that EventTypeId.
 
 
 ## The Trigger

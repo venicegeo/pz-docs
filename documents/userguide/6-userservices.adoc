@@ -34,11 +34,11 @@ The service is registered by performing a `POST` request to the `/service` endpo
 {
     "url": "http://pzsvc-hello.venicegeo.io/",
     "contractUrl": "http://helloContract",
-    "serviceId": "",
     "method" : "GET",
     "resourceMetadata": {
         "name": "pzsvc-hello service",
-        "description": "Hello World Example"
+        "description": "Hello World Example",
+        "classType": "unclassified"
     }
 }
 ----
@@ -84,7 +84,7 @@ The service is invoked by sending a `POST` request to the pz-gateway job endpoin
     "type": "execute-service",
     "data": {
         "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
-        "dataInputs": {},
+        "dataInputs": { },
         "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
     }
 }
@@ -133,15 +133,17 @@ The status is returned by sending a `GET` request to `https://pz-gateway.veniceg
 ----
 {
     "type": "status",
-    "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847",
-    "result": {
-        "type": "data",
-        "dataId": "b92e7cc5-310e-4a72-a4ab-21661b58d601"
-    },
-    "status": "Success",
-    "jobType": "execute-service",
-    "submittedBy": "UNAUTHENTICATED",
-    "progress": {}
+    "data": {
+        "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847",
+        "result": {
+            "type": "data",
+            "dataId": "b92e7cc5-310e-4a72-a4ab-21661b58d601"
+        },
+        "status": "Success",
+        "jobType": "ExecuteServiceJob",
+        "createdBy": "{{PZUSER}}",
+        "progress": {}
+    }
 }
 ----
 
@@ -160,6 +162,9 @@ Finally, the actual result is returned by sending a `GET` request to `https://pz
         "dataType": {
             "content": "Hi. I'm pzsvc-hello.",
             "type": "text"
+        }
+        "metadata": {
+            ...
         }
     }
 }
@@ -272,6 +277,12 @@ When registering a service, the following fields are required:
 
 For a description of the fields and the resourceMetadata associated with these fields, see http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza Swagger API] for details.
 
+
 ## Future User Service Work
 
 Future enhancements to User Services may include monitoring user service activity and status. Callbacks incorporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.
+
+
+## Service API Documentation
+
+See http://pz-swagger.geointservices.io/#/Service

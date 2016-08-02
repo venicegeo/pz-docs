@@ -16,8 +16,6 @@ service='{
     }
 }'
 
-echo $service
-
 # POST service
 curl -X POST -S -s \
     -u "$PZKEY":"$PZPASS" \
@@ -31,7 +29,7 @@ grep -q 20 status.txt || { cat response.txt; exit 1; }
 serviceId=$(grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
 trigger='{
-    "title": "High Severity",
+    "name": "High Severity",
     "condition": {
         "eventTypeIds": ["'"$id"'"],
         "query": { "query": { "match_all": {} } }
@@ -49,8 +47,6 @@ trigger='{
     },
     "enabled": true
 }'
-
-echo $trigger
 
 # POST trigger
 curl -X POST -S -s \

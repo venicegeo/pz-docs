@@ -27,10 +27,10 @@ curl -S -s -X POST \
 
 # verify 2xx response code
 grep -q 20 status.txt || { cat response.txt; exit 1; }
-jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
 # end::public[]
 
+jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 if [ -t 1 ]; then
     echo jobId: "$jobId"
 else

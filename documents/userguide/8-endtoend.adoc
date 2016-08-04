@@ -46,7 +46,7 @@ A script to register this service is located at link:scripts/8-register-crop.sh[
 
 ## Executing the Service
 
-The link:scripts/8-crop-file.sh[8-crop-file.sh] script takes a few more parameters: the serviceId returned from registering the previous service (if the previous script is successful, it will print out the serviceId), the AWS bucket name where the file is located, and the filename to crop. For example:
+The link:scripts/8-crop-file.sh[8-crop-file.sh] script takes a few more parameters: the `serviceId` returned from registering the previous service (if the previous script is successful, it will print out the `serviceId`), the AWS bucket name where the file is located, and the filename to crop. For example:
 
     $ ./8-crop-file.sh {{serviceId}} {{bucketname}} {{filename}}
 
@@ -77,11 +77,11 @@ Sample working payload:
 
 The service will download the file from pz-svcs-prevgen s3 bucket and crop it with given bounding box info. The cropped result tif will be uploaded back up to the https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=[pz-svcs-prevgen-output s3 bucket].
 
-The 8-crop-file.sh script should return a jobId that can then be passed as an argument to link:scripts/job-info.sh[job-info.sh]:
+The 8-crop-file.sh script should return a `jobId` that can then be passed as an argument to link:scripts/job-info.sh[job-info.sh]:
 
     $ ./job-info.sh {{jobId}}
 
-When the job is complete, the resulting data can be queried from the dataId returned by the job-info.sh script using link:scripts/data-info.sh[data-info.sh]:
+When the job is complete, the resulting data can be queried from the `dataId` returned by the job-info.sh script using link:scripts/data-info.sh[data-info.sh]:
 
     $ ./data-info.sh {{dataId}}
 

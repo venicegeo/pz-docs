@@ -1,0 +1,288 @@
+# User Services
+
+Piazza allows users to discover, manage and invoke external web services known as *User Services*. A user service is defined as a set of web technologies used for exchanging data between software applications over a network, such as the Internet. Web technologies such as HTTP, JSON and XML are used because they allow for data to be exchanged in a platform-independent manner.
+
+Using Piazza, users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image and then notifying an analyst that image has finished processing and is ready for review.
+
+Piazza provides a RESTful API allowing users to perform user service management activities such as:
+
+. Register user services for search/discovery (See the <<Search>> section for details)
+. Update information on the user service (e.g. URL, name, version and other metadata)
+. Remove a user service from the registry
+. View details about registered user services
+. Invoke a registered user service
+. Combine user services to perform various tasks (See the <<Workflow Service>> section for details)
+
+While Piazza’s overall goal is to provide users with the ability to register and use existing RESTful user services, to work best with Piazza, there are some guidelines on writing user services. See the <<How to Write Your Own User Services>> section for details on how to write user services to be used by Piazza.
+
+NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of instances needed.
+
+The following sections will use a "Hello World" service. This service basically just says hello. It is deployed in our cloud for testing services.
+
+
+## Registration
+
+A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
+
+
+### Hello Example service registered with `GET` method
+
+The service is registered by performing a `POST` request to the `/service` endpoint.
+
+[source,json]
+----
+{
+    "url": "http://pzsvc-hello.venicegeo.io/",
+    "contractUrl": "http://helloContract",
+    "method" : "GET",
+    "resourceMetadata": {
+        "name": "pzsvc-hello service",
+        "description": "Hello World Example",
+        "classType": "unclassified"
+    }
+}
+----
+
+* https://pz-gateway.venicegeo.io/service is the endpoint for registering the service.
+* Inside the curly brackets is a JSON object describing the service.
+** The `url` field is the URL for invoking the service.
+** The `contractUrl` is an optional field containing additional detail information about the service.
+** The `serviceId` will be filled in by Piazza.
+** The `method` used to indicate the desired action to be performed on the user service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
+** The `resourceMetadata` fields has 3 subfields with the name, description of the service and the invocation method for the service.
+
+NOTE: The description should be entered with some care because it will enable other users to search for your service.
+
+Successfully registering a service will return JSON of the following schema:
+
+[source,json]
+----
+{
+    "type": "service-id",
+    "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9"
+}
+----
+
+The `serviceId` field should be noted since it will be used in invoking the service.
+
+A script registering the aforementioned service and returning the `serviceId` can be found at link:scripts/6-register.sh[6-register.sh]. Run it in the following way:
+
+    $ ./6-register.sh
+
+
+## Invocation
+
+### Hello Example service invoked with `GET` method
+
+The service is invoked by sending a `POST` request to the pz-gateway job endpoint `https://pz-gateway.venicegeo.io/job`. A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the `serviceId` returned by the register script as the first argument to the script:
+
+    $ ./6-execute-get.sh {{serviceId}}
+
+[source,json]
+----
+{
+    "type": "execute-service",
+    "data": {
+        "serviceId": "a04e274c-f929-4507-9174-dd24722d89d9",
+        "dataInputs": { },
+        "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
+    }
+}
+----
+
+The `serviceId` is set to the return value from registering the service. In this example, no `dataInputs` are specified. For `dataOutput`, the `mimeType` refers to the *mimeType* of the service output. The type refers to how the output will be stored until retrieved (see below).
+
+The return value is not the result of the service call. The execute-service call creates a job and returns the jobId of that job.
+
+[source,json]
+----
+{
+    "type": "job",
+    "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847"
+}
+----
+
+### Hello Example service invoked with `POST` method
+
+When executing a service that requires a POST body for input, the body message is specified in the content field, the `type` is `"body"` and the `mimeType` has to be specified. Getting the `jobId` is exactly the same as with the `GET` request.
+
+[source,json]
+----
+{
+    "type": "execute-service",
+    "data": {
+        "serviceId": "{{serviceId}}",
+        "dataInputs": {
+            "test" : {
+                "content" : "{ \"name\": \"Fred\", \"count\": 4 }",
+                "type" : "body",
+                "mimeType" : "application/json"
+            }
+        },
+        "dataOutput": [{ "mimeType":"application/json", "type":"text" }]
+    }
+}
+----
+
+
+## Getting Status and Results
+
+The status is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId` is the id returned when executing the service. On success the resulting status is
+
+[source,json]
+----
+{
+    "type": "status",
+    "data": {
+        "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847",
+        "result": {
+            "type": "data",
+            "dataId": "b92e7cc5-310e-4a72-a4ab-21661b58d601"
+        },
+        "status": "Success",
+        "jobType": "ExecuteServiceJob",
+        "createdBy": "{{PZUSER}}",
+        "progress": {}
+    }
+}
+----
+
+A script that checks the status of the job can be found at link:scripts/job-info.sh[job-info.sh]. The script takes the `jobId` returned from the 6-execute-get.sh script as it's only argument:
+
+    $ ./job-info.sh {{jobId}}
+
+Finally, the actual result is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/data/{{dataId}}` where the `dataId` is from the `result.data.dataId` field of the returned status. In this case the result is text.
+
+[source,json]
+----
+{
+    "type": "data",
+    "data": {
+        "dataId": "b92e7cc5-310e-4a72-a4ab-21661b58d601",
+        "dataType": {
+            "content": "Hi. I'm pzsvc-hello.",
+            "type": "text"
+        }
+        "metadata": {
+            ...
+        }
+    }
+}
+----
+
+Run the link:scripts/data-info.sh[data-info.sh] script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
+
+    $ ./data-info.sh {{dataId}}
+
+
+## Other Examples
+
+For more examples on how to register and execute your service, see the http://pz-docs.int.geointservices.io/devguide/index.html[Piazza Developer's Guide].
+
+
+## How to Write Your Own User Services
+
+**User Services** are external web services that Piazza users write to be discovered and used by other Piazza users. For example, suppose a developer has created an algorithm that does processing of point cloud data and wants to share it with others to use. He or she would create a user service and then register it with Piazza so that others may use it. Once a user service is registered with Piazza, other Piazza users will be able to discover and invoke it to support the workflow in the applications that need it.
+
+If a registered user service has additional security and access requirements (e.g. client certificate required, pre-authorization to use, etc.), users should contact the user service provider to negotiate access for use.
+
+The contact information for each user service is located in the `resourceMetadata` field of the service payload.
+
+[source,json]
+----
+{
+    "serviceId": "f406b427-7ba0-4c9c-a780-b834464072f7",
+    "url": "https://pz-svcs-prevgen.stage.geointservices.io/crop",
+    "method": "POST",
+    "resourceMetadata": {
+        "contact": "Agent Smith 703-555-1212 agentsmith@thematrix.com",
+        "description": "Service that takes payload containing S3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+        "name": "pz-svcs-prevgen"
+    }
+}
+----
+
+
+### Designing Your User Service
+
+When you write your own service, services should be written as a RESTful web service. REST (Representational State Transfer) is an architectural concept for creating client/server networked applications. Clients and servers exchange data using a stateless communication protocol such as HTTP (Hypertext Transfer Protocol).
+
+
+#### Establishing an API
+
+To establish an API for exchanging data to and from your user service, consider using the JSON standard because data payloads are smaller, are easy to read and work with programmatically (e.g. using JavaScript).
+
+XML (Extensible Markup Language) is also used to exchange data with RESTful web services. With XML, data is very structured and is stored in a markup language that is readable. As a result of the formatting, XML payloads are much larger than JSON payloads. With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format. When using XML, a well documented schema should be used to validate and to describe the responses that may be sent from your service.
+
+For guidance on best practices when creating the RESTful API to your web service, see the https://github.com/18F/api-standard[18F API standard] for details.
+
+
+#### Output From Your User Service
+
+Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza **DataResource** JSON payload as output conforming to defined Piazza Data Types defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a **DataResource** with the `dataType.type` field set to `text`.
+
+Piazza does not store data such as raster images, large GeoJSON payloads, etc. so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated from the user service.
+
+For example, if a user service generates a raster image, the output from service would be in a JSON payload format similar to the JSON payload below:
+
+[source,json]
+----
+
+{
+    "dataType": {
+        "type": "raster",
+        "location": {
+            "type": "s3",
+            "bucketName": "pz-svcs-prevgen-output",
+            "fileName": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+            "domainName": "s3.amazonaws.com"
+        },
+        "mimeType": "image/tiff"
+    },
+    "metadata": {
+        "name": "External Crop Raster Service",
+        "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
+        "description": "Service that takes payload containing s3 location and bounding box for some raster file, downloads, crops and uploads the crop back up to s3.",
+        "url": "http://host:8086/crop",
+        "method": "POST"
+    }
+}
+
+----
+
+This output format is a DataResource payload that indicates the location of a cropped raster image Amazon Web Service (AWS) Simple Storage Service (s3) directory. Metadata about the user service that generated the image along with other data is indicated in the `metadata` field of the payload. The `mimeType` field indicates the type of raster image that was generated.
+
+When generating a DataResource payload, `type` and `mimeType` are required for all DataTypes. Additional fields are required depending on the type of data that is generated from the user service.
+
+For details on the DataResource payload and the available DataTypes, see the http://pz-swagger.int.geointservices.io/#!/Data/getMetadataUsingGET[Piazza Data API].
+
+
+#### What to do About Existing Services
+
+If you have an existing service, consider following the https://github.com/18F/api-standard[18F API standard] for guidance on best practices. For existing services that are not RESTful consider wrapping these services with a REST representation. For example, the first generation of web services included heavy weight approaches such as SOAP (Simple Object Access Protocol) where messages were transmitted using XML over HTTP. For services such as these, if converting the service to a REST representation is not possible, then consider wrapping these services.
+
+
+### Your User Service in Piazza
+
+image::images/sc-architecture.png[title=“Service Controller in Piazza“]
+
+
+#### Registering Your User Service
+
+When registering your service, provide enough metadata about your service so it can be searched and discovered using Piazza's search capability.
+When registering a service, the following fields are required:
+
+. `url`
+. `method`
+
+For a description of the fields and the resourceMetadata associated with these fields, see http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza Swagger API] for details.
+
+
+## Future User Service Work
+
+Future enhancements to User Services may include monitoring user service activity and status. Callbacks incorporated into Piazza may be called by user services to provide a "heartbeat" for long running user services along with status of the user service.
+
+
+## Service API Documentation
+
+See http://pz-swagger.geointservices.io/#/Service

@@ -11,12 +11,12 @@ To run the pz-security REST endpoints locally, run the following commands to ret
 
 The Tomcat server will be listening on port 8080. The roles are stored in a file: `src/main/resources/roles.txt`. To prevent this file from being overwritten with the default values every time the pz-security application runs, do the following:
 
-1. Copy the file to a readable and writable location on the filesystem, e.g., `/data/roles.txt`
-2. Update the `pz.security.fileurl` property in the `src/main/resources/application.properties` file with this new location.
+. Copy the file to a readable and writable location on the filesystem, e.g., `/data/roles.txt`
+. Update the `pz.security.fileurl` property in the `src/main/resources/application.properties` file with this new location.
 
 ## Code Organization
 
-The Pz-Security project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Pz-Security API provides. These are located in the org.venice.piazza.security.controller package, and are broken up into separate objects by their functionality. 
+The Pz-Security project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Pz-Security API provides. These are located in the org.venice.piazza.security.controller package, and are broken up into separate objects by their functionality.
 
 ## Endpoints
 
@@ -73,7 +73,7 @@ Example output:
 ### Adding Data:
 
 Adds a list of one or more usernames and their respective roles
-    
+
     POST /users/roles
 
 Example payload:
@@ -170,3 +170,5 @@ Example payload:
 Example output:
 
     true
+
+// vim: set syntax=asciidoc wrap:

@@ -1,9 +1,8 @@
 # UUID Generator
 
-The UUID Generator provides a system-wide, common way to generate IDs for various object in the system.
-It can be used to generate up to 255 UUIDs at a time.
+The UUID Generator provides a system-wide, common way to generate IDs for various object in the system. It can be used to generate up to 255 UUIDs at a time.
 
-UUIDs are represented as strings, as per [[RFC 4122|https://www.ietf.org/rfc/rfc4122.txt]].
+UUIDs are represented as strings, as per https://www.ietf.org/rfc/rfc4122.txt[RFC 4122].
 
 ## Command Line App
 
@@ -13,13 +12,7 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### `GET /`
-
-Requests a "health check" for the service.
-
-The returned status code is `200` and a body with a short, friendly text string.
-
-### `POST /v1/uuids?count=$n`
+### `POST /uuids?count=$n`
 
 Requests `$n` UUIDs from the service.
 
@@ -27,16 +20,34 @@ The optional `count` parameter specifies the number of UUIDs to generate. `$n` m
 
 The returned value is a JSON object containing an array of UUIDs (as strings):
 
-    { "data": ["xxxx", "yyyy", ...] }
+[source,json]
+----
+{
+    "statusCode": 201,
+    "type": "string-list",
+    "data": [
+        "0507b093-1e12-4ffc-8a12-b705610a8336"
+    ]
+}
+----
 
 Note that if `$n` is zero, the result will be `{ "data": [] }`
 
+Pagination is not supported.
+
 ### Common operations
 
-This service includes the common endpoints described in [[General Pz Service Operations]].
+This service includes the common endpoints described in the <<Common Endpoints>> section.
 
 The `admin stats` supported are:
 
-    {
-        "starttime": "....",
-    }
+[source,json]
+----
+{
+    "createdOn": "2006-01-02T15:04:05+07:00",
+    "numUuids": 123,
+    "numRequests": 234
+}
+----
+
+// vim: set syntax=asciidoc wrap:

@@ -113,7 +113,7 @@ function run_tests {
     exe=$("$scripts/6-execute-get.sh" "$reg")
     sleep 5
     job=$("$scripts/job-info.sh" "$exe")
-    "$scripts/file-info.sh" "$job" > /dev/null
+    "$scripts/data-info.sh" "$job" > /dev/null
     echo pass
 
     echo -n "  7-eventtype.sh... "

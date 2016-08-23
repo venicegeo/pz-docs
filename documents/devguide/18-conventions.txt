@@ -3,38 +3,31 @@
 ## General
 
 * Piazza APIs SHALL use https://www.ietf.org/rfc/rfc4122.txt[RFC 4122] for UUIDs.
-
 * Piazza APIs SHALL use https://www.w3.org/TR/NOTE-datetime[ISO 8601] for time/date formatting.
-
 * At the root of every https://github.com/venicegeo[VeniceGeo] open source repo, please include this file: https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt
-
 * In the header of every piece of source code in an open source repo, include this snippet:  https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt
-
 * For documentation, videos, slide decks, etc, you must add this line:
+** `“Sprint 3 Demo Video” by {{YourNameHere}} is licensed under CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/us/)`
 
-....
-“Sprint 3 Demo Video” by YourNameHere is licensed under CC-BY 3.0 (https://creativecommons.org/licenses/by/3.0/us/)
-....    
-    
 ## Java
 
-For general Java coding, follow the Google Java Style coding standards: http://google.github.io/styleguide/javaguide.html#s2-source-file-basics   
-  
-The package naming convention should be:  
+For general Java coding, follow the Google Java Style coding standards: http://google.github.io/styleguide/javaguide.html
 
-* Piazza Project - _org.venice.piazza.[component name]_
+The package naming convention should be:
+
+* Piazza Project: `org.venice.piazza.[component name]`
 
 ## Go
 
 ## Unit Testing
 
-## GitHub  
+## GitHub
 
-New GitHub Repositories within the **_github.com/venicegeo_** community should be named using following convention:   
+New GitHub Repositories within the https://github.com/venicegeo[github.com/venicegeo] community should be named using following convention:
 
-        Core Piazza Components: pz-[COMPONENT NAME]  
-        VeniceGeo Services: pzsvc-[COMPONENT NAME] 
- 
-
+* Core Piazza Components: `pz-[COMPONENT NAME]`
+* VeniceGeo Services: `pzsvc-[COMPONENT NAME]`
 
 include::18_1-http.txt[]
+
+// vim: set syntax=asciidoc wrap:

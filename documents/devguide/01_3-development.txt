@@ -1,68 +1,74 @@
 ## Design and Development
 
 Our efforts to structure an Agile Framework, with internal processes that work for the RB GeoINT Services development teams are consistent across the program. We follow traditional Agile/Scrum ceremonies. We strive to meet our sprint commitments, however we believe that being responsive to our customer and external user is our highest priority.
-Sprints
 
-    The PzCore team conducts 2-weeks development sprints, which run from Tues- Tues (10 working days). Typically we estimate approximately 64-70 hours of pure development time for the sprint.
+
+### Sprints
+
+* The PzCore team conducts 2-weeks development sprints, which run Tuesday-Tuesday (10 working days). Typically we estimate approximately 64-70 hours of pure development time for the sprint.
+
 
 ### Daily Standup
 
-    The Daily Standup is at 10:00 am (EST) hosted in the RB Lounge and via google hangout.
-    The Standup is 15 minutes and starts on-time.
-    The team describes what they did yesterday, what they plan to do today and calls out any blockers/impediments.
+* The Daily Standup is at 10:00 am (EST) hosted in the RB Lounge and via Google hangout.
+* The Standup is 15 minutes and starts on-time.
+* The team describes what they did yesterday, what they plan to do today and calls out any blockers/impediments.
+
 
 ### Sprint Review/Retrospective
 
-    The PzCore Sprint Review/Retrospective is held at the end of the Sprint along with demonstrations of all work (User Stories) completed during the sprint.
-    The accomplishments and goals of each sprint are captured on the Redime Wiki.
-    PzCore Sprint Planning is scheduled on Tuesdays at the beginning of each sprint (10:30am EST), where we work as a team to discuss the following:
+* The PzCore Sprint Review/Retrospective is held at the end of the Sprint along with demonstrations of all work (User Stories) completed during the sprint.
+* The accomplishments and goals of each sprint are captured on the Redmine Wiki.
+* PzCore Sprint Planning is scheduled on Tuesdays at the beginning of each sprint (10:30am EST), where we work as a team to discuss the following:
+** Review any stories that are not complete from the previous sprint
+** Review priorities in the Product Backlog
+** Bug Scrub / Prioritization
+** Discuss the complexity and verify understanding of what the User Story entails
 
-        Review any stories that are not complete from the previous sprint
-        Review priorities in the Product Backlog
-        Bug Scrub/Prioritization
-        Discuss the complexity and verify understanding of what the User Story entails
 
 ### Redmine and PzCore Agile Process
 
-    We use Redmine to document, prioritize, and track all of our development work.
-    Tickets in Redmine are Tracked as: Epics, User Stories, Tasks, Bugs
-    Piazza has a roadmap that is developed around Epics and capabilities; then User Stories are derived, broken down and entered into our product backlog (currently we have a Redmine Version called "Backlog").
-    User Stories and requirements are discussed at Product Owner Meetings (Wednesdays at 9:00). The user stories are discussed during Backlog Grooming sessions and prioritized before Sprint Planning.
-    Redmine is scrubbed daily by the Scrum Master for bugs and current Sprint progress.
-    Once User Stories are accepted into a Sprint, the assigned developer will write/add Tasks to the story in order to identify all work that needs to be done to complete the User Story.
+* We use Redmine to document, prioritize, and track all of our development work.
+* Tickets in Redmine are tracked as: Epics, User Stories, Tasks, Bugs
+* Piazza has a roadmap that is developed around Epics and capabilities; then User Stories are derived, broken down and entered into our product backlog (currently we have a Redmine Version called "Backlog").
+* User Stories and requirements are discussed at Product Owner Meetings (Wednesdays at 9:00). The user stories are discussed during Backlog Grooming sessions and prioritized before Sprint Planning.
+* Redmine is scrubbed daily by the Scrum Master for bugs and current Sprint progress.
+* Once User Stories are accepted into a Sprint, the assigned developer will write/add Tasks to the story in order to identify all work that needs to be done to complete the User Story.
+* All user stories in an active sprint must have Acceptance Criteria, indicated by "A/C:" in the Description field. And, the developer is responsible for adding "Tasks" to the User Story before the Sprint begins; simply do this clicking the Add link in the SubTask area of the display.
+** Each day, the developer will update the status of a Task or User Story in Redmine and also report progress at the Daily Standup.
+** Once all tasks for a Story are completed, the developer can move the Story to Resolved.
+** The Product Owner and/or Team will verify that the story is complete and then move the Story to Closed.
+** All completed User Stories are wrapped up into an end-of-sprint demo for the team at the Sprint Review.
+** Research stories are documented with a webpage/wiki entry or some type of artifact.
 
-    All user stories in an active sprint must have Acceptance Criteria, indicated by "A/C:" in the Description field. And, the developer is responsible for adding "Tasks" to the User Story before the Sprint begins; simply do this clicking the Add link in the SubTask area of the display.
 
-        Each day, the developer will update the status of a Task or User Story in Redmine and also report progress at the Daily Standup.
-        Once all tasks for a Story are completed, the developer can move the Story to Resolved.
-        The Product Owner and/or Team will verify that the story is complete and then move the Story to Closed.
-        All completed User Stories are wrapped up into an end-of-sprint demo for the team at the Sprint Review.
-        Research stories are documented with a webpage/wiki entry or some type of artifact.
+#### Redmine 'Rules' for our Agile Process
+* All tickets are initially entered into the system in the following manner:
+** Tracker = Story, Bug
+** Status = New
+** Start date = empty
+** Due date = empty
+** Version = Backlog footnote:[Unless a Tech Lead/Prod Owner/Scrum Master has approved it for the current sprint]
+** Description = Contains the User Story in the traditional Scrum format: "As a User, I need to do X, so that I can do Y."
+** Description = Also contains acceptance criteria denoted as "A/C:" for the User Story.
 
-    Redmine 'Rules' for our Agile Process *
-    All tickets are initially entered into the system in the following manner:
-    Tracker = Story, Bug
-    Status = New
-    Start date = empty (you must remove this)
-    Due date = empty (you must remove this)
-    Version = Backlog *Unless a Tech Lead/Prod Owner/Scrum Master has approved it for the current sprint
-    Description = Contains the User Story in the traditional Scrum format: "As a User, I need to do X, so that I can do Y."
-    Description = Also contains acceptance criteria denoted as "A/C:" for the User Story.
 
 ## Redmine Bug Process
 Bugs and issues will be reported in the Redmine Piazza project for review by the developer team. The severity of each issue will be marked as immediate, urgent, high, normal, or low.
-High
 
-    Error causes system crash or data loss.
-    Error causes abnormal return to user or generates system failure message with no workaround. Error prevents vital functionality. Error found but feasible work around defined. Error prevents other services from being tested, but those services can be tested independently.
+High::
+* Error causes system crash or data loss.
+* Error causes abnormal return to user or generates system failure message with no workaround.
+* Error prevents vital functionality.
+* Error found but feasible
 
-Normal
+Normal::
+* An unclear or incomplete error message, with minimal impact to software use
 
-    An unclear or incomplete error message, with minimal impact to software use
+Low::
+* Cosmetic error
+* An unclear or incomplete error message, but no impact to software use
 
-Low
+Bugs are assigned to the Piazza Backlog and assigned to the appropriate developer if known. Any bug marked as High will be reported at the Standup and communicated immediately to the dev team (verbal notification, RocketChat).
 
-    Cosmetic Error
-    An unclear or incomplete error message, but no impact to software use
-
-Bugs are assigned to the Piazza Backlog and assigned to the appropriate developer if known. Any bug marked as High will be reported at the Standup and communicated immediately to the dev team (verbal notification, rocket chat).
+// vim: set syntax=asciidoc wrap:

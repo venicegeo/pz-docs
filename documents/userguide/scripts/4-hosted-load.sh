@@ -19,18 +19,22 @@ data='{
 curl -S -s -X POST \
     -w "%{http_code}" \
     -o response.txt \
-    -u "$PZUSER":"$PZPASS" \
+    -u "$PZKEY":"$PZPASS" \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" \
-    "https://pz-gateway.$DOMAIN/data/file" > status.txt
+    "https://pz-gateway.$PZDOMAIN/data/file" > status.txt
 
-# verify all worked successfully
-grep -q 200 status.txt || { cat response.txt; exit 1; }
-grep -q jobId response.txt
+# verify 2xx response code
+grep -q 20 status.txt || { cat response.txt; exit 1; }
 
-# print out the jobId
-grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 # end::public[]
+
+jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
+if [ -t 1 ]; then
+    echo jobId: "$jobId"
+else
+    echo "$jobId"
+fi
 
 rm -f response.txt status.txt

@@ -27,15 +27,20 @@ curl -S -s -X POST \
     -o response.txt \
     -H "Content-Type: application/json" \
     -d "$data" \
-    -u "$PZUSER":"$PZPASS" \
-    "https://pz-gateway.$DOMAIN/data" > status.txt
+    -u "$PZKEY":"$PZPASS" \
+    "https://pz-gateway.$PZDOMAIN/data" > status.txt
 
-# verify all worked successfully
-grep -q 200 status.txt || { cat response.txt; exit 1; }
-grep -q jobId response.txt
+# verify 2xx response code
+grep -q 20 status.txt || { cat response.txt; exit 1; }
+jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
-# print out the JobId
-grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4
 # end::public[]
+
+if [ -t 1 ]; then
+    echo jobId: "$jobId"
+else
+    echo "$jobId"
+fi
+
 
 rm -f response.txt status.txt

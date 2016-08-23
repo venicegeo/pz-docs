@@ -1,0 +1,251 @@
+# Data Load and Access
+
+## Load
+
+Piazza provides the ability to load external data into the system: metadata is extracted from external data, stored within Piazza, and a resource ID is returned. The metadata is also entered into Piazza's search index. Piazza supports several data formats today -- including GeoJSON, Shapefiles, and GeoTIFFs -- with more to come as users require them.
+
+For example, the URL of a GeoTIFF stored in an s3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the s3 URL, and so the resource ID can be used as a global, unique reference to the data.
+
+Piazza is not intended to be a storage system for user data and so normally only the metadata is stored -- not the file itself. We refer to this as the _no-host_ model.
+
+In the no-host case, Piazza will need to have read-access to the file and in some cases will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
+
+Although not intended for long-term use, Piazza does also support a _hosted_ model in which the data is copied locally for metadata extraction but _not_ deleted.
+
+
+## Hosted Image File Example
+
+NOTE: The GeoTIFF file used in these examples can be found at link:scripts/terrametrics.tif[terrametrics.tif].
+
+This example shows how to load a GeoTIFF file from your local file system into Piazza, with `host` set to `true`. The script will print out the `jobId` of the job that was submitted.
+
+link:scripts/4-hosted-load.sh[4-hosted-load.sh]
+[source,bash]
+----
+include::scripts/4-hosted-load.sh[tags=public]
+----
+
+On the command line:
+
+    $ ./4-hosted-load.sh
+
+The important JSON here is as follows:
+
+[source,json]
+----
+{
+    "type": "ingest",
+    "host": true,
+    "data": {
+        "dataType": {
+            "type": "raster"
+        },
+        "metadata": {
+            "name": "terrametrics",
+            "description": "geotiff`test"
+        }
+    }
+}
+----
+
+The `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
+
+The response from this request will contain the `jobId` of the job that was submitted.
+
+[source,json]
+----
+{
+  "type" : "job",
+  "data" : {
+    "jobId" : "24019b46-f92f-412d-8877-9fc3c114dd6e"
+  }
+}
+----
+
+
+The `jobId` is used to fetch the status of the load, as Piazza opens the file and validates the data. Requesting the status of a Job is performed by executing a GET request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified Job, including percent progress, job status, and the submitting user information.
+
+[source,json]
+----
+{
+    "type": "status",
+    "data": {
+        "jobId": "ee5cb26-300-f3a-896-5bb82150941",
+        "status": "Running",
+        "jobType": "IngestJob",
+        "createdBy": "{{PZUSER}}",
+        "progress": {
+            "percentComplete": 50
+        }
+    }
+}
+----
+
+A client can now periodically check the status of the job, waiting for it to be completed. This script takes as a single command-line parameter, the `jobId` string:
+
+    $ ./job-info.sh {{jobId}}
+
+link:scripts/job-info.sh[job-info.sh]
+[source,bash]
+----
+include::scripts/job-info.sh[tags=public]
+----
+
+When the Job is done, the response for the Job status request will now contain the `result` field, and the `status` of the job will now be set to `Success`. For a Load job, the result type will be `data` because the result is data loaded into Piazza, and the `result.dataId` will be the unique identifier of the data that was loaded. This unique identifier can now be used to permanently reference the data.
+
+[source,json]
+----
+{
+    "type": "status",
+    "data": {
+        "jobId": "ee5c8b26-3900-4f3a-8986-5bb824150941",
+        "result": {
+            "type": "data",
+            "dataId": "0acfec67-6def-44da-9b03-b605d913c2ef"
+        },
+        "status": "Success",
+        "jobType": "IngestJob",
+        "createdBy": "{{PZUSER}}",
+        "progress": {
+            "percentComplete": 100
+        }
+    }
+}
+----
+
+Once the job is complete, we can retrieve the metadata about the image. Here too the script takes an argument: this time, the `dataId` of the data resource (displayed by the job-info.sh script).
+
+    $ ./data-info.sh {{dataId}}
+
+link:scripts/data-info.sh[data-info.sh]
+[source,bash]
+----
+include::scripts/data-info.sh[tags=public]
+----
+
+Next, we can retrieve the file:
+
+    $ ./4-hosted-download.sh {{dataId}}
+
+link:scripts/4-hosted-download.sh[4-hosted-download.sh]
+[source,bash]
+----
+include::scripts/4-hosted-download.sh[tags=public]
+----
+
+And, finally, we can create a WMS endpoint for our GeoTIFF:
+
+    $ ./4-nonhosted-wms.sh {{dataId}}
+
+link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh]
+[source,bash]
+----
+include::scripts/4-nonhosted-wms.sh[tags=public]
+----
+
+The response from this request will return a `jobId`. Checking the status of the `jobId` is done as normal. Once the Job is complete, the resulting Deployment information can be retrieved through the `deployment` field in the Job Response.
+
+[source,json]
+----
+{
+    "type" : "status",
+    "data" : {
+        "result" : {
+            "type" : "deployment",
+            "deployment" : {
+                "deploymentId" : "{{deploymentId}}",
+                "dataId" : "{{dataId}}",
+                "host" : "http://geoserver.piazza",
+                "port" : "80",
+                "layer" : "{{dataId}}",
+                "capabilitiesUrl" : "http://geoserver.piazza:8080/{data}?request=GetCapabilities"
+            }
+        },
+        "status" : "Success",
+        "jobType" : "AccessJob",
+        "createdBy" : "{{PZUSER}}",
+        "progress" : { },
+        "jobId" : "{{jobId}}"
+    }
+}
+----
+
+The information will contain the host, port, and layer name of the data as hosted on the Piazza GeoServer instance. The capabilities URL and be copied-and-pasted into a browser to view the capabilities of the service. This can then be used as would any other typical WMS service.
+
+
+## Non-hosted Image File
+
+Loading a non-hosted image file is nearly identical to loading a hosted image file. The differences are:
+
+. `host` field is set to false
+. `data.dataType.location` is now populated and will point to the external location of the file
+. The POST request is `application/json` content type - not multipart, as no file attachment is specified in the request
+
+[source,json]
+----
+{
+    "type": "ingest",
+    "host": false,
+    "data": {
+        "dataType": {
+            "type": "raster",
+            "location": {
+                "type": "s3",
+                "bucketName": "external-public-access-test",
+                "fileName": "elevation.tif",
+                "domainName": "s3.amazonaws.com"
+            }
+        },
+        "metadata": {
+            "name": "terrametrics",
+            "description": "geotiff_test"
+        }
+    }
+}
+----
+
+Note the `data.dataType.location` field now present. This key tells Piazza where to find the external file. For files in s3, this depends on the `bucketName`, `fileName` (sometimes called key), and `domainName` parameters. Piazza must have access to this s3 bucket in order for load to succeed.
+
+    $ ./4-nonhosted-load.sh
+
+link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
+[source,bash]
+----
+include::scripts/4-nonhosted-load.sh[tags=public]
+----
+
+From this point on, the workflow is identical to hosted files.
+
+
+## Hosted GeoJSON File
+
+Loading GeoJSON data is nearly identical to loading image files. The differences are:
+
+. the `type` of the `data.dataType` field is set to `geojson`
+. The file uploaded is of *.geojson type
+
+Other than those changes, the entire process is identical.
+
+[source,json]
+----
+{
+    "type": "ingest",
+    "host": true,
+    "data": {
+        "dataType": {
+            "type": "geojson"
+        },
+        "metadata": {
+            "name": "geojson_test",
+            "description": "geojson_test"
+        }
+    }
+}
+----
+
+Job status, downloads, and GeoServer (WFS/WMS) deployments are identical to the image-based examples as described above.
+
+
+## Data API Documentation
+
+See http://pz-swagger.geointservices.io/#/Data

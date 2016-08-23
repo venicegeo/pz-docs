@@ -1,0 +1,60 @@
+# Search
+
+Piazza supports searching across the metadata extracted from all loaded data. The search API returns the resource ids of any matching items. (Adding data to the search index is an internal Piazza function and so does not have an API.)
+
+Two kinds of searching are supported. First, when doing a `GET` on the `/data` endpoint, you can specify the keyword to be matched: the list normally returned by `GET` is filtered to contain just those resources that match the keyword. This is called a _filtered GET_. Second, we have an actual _query_: you can `POST` an Elasticsearch JSON object to the `/data/query` endpoint. Piazza uses the https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch DSL] directly to avoid inventing yet another query syntax language.
+
+
+## Setup
+
+To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we only care about the metadata.) And to do that, we will write a script that loads the file with a given name and description and returns the corresponding data resource id:
+
+link:scripts/5-load-file.sh[5-load-file.sh]
+[source,bash]
+----
+include::scripts/5-load-file.sh[tags=public]
+----
+
+And then we will call that file loader three times, and the output should be three ids:
+
+link:scripts/5-load-files.sh[5-load-files.sh]
+[source,bash]
+----
+include::scripts/5-load-files.sh[tags=public]
+----
+
+Sample invocation (requires both 5-load-file.sh and 5-load-files.sh in same directory):
+
+    $ ./5-load-files.sh
+
+
+## Filtered GET Example
+
+Now that we have the files loaded, we will perform a _filtered GET_. This script takes one argument: the keyword to search for. The script will echo the response given by the server containing the metadata that matched the keyword that was searched for. Execute this script by passing in the keyword:
+
+    $ ./5-filtered-get.sh "dog"
+
+link:scripts/5-filtered-get.sh[5-filtered-get.sh]
+[source,bash]
+----
+include::scripts/5-filtered-get.sh[tags=public]
+----
+
+
+## Query Example
+
+We can additionally perform a more advanced query on data. This is done via a POST request to the `/data/query` endpoint, with the `data` field specifying the query to be performed. For example:
+
+    $ ./5-query.sh "kitten"
+
+link:scripts/5-query.sh[5-query.sh]
+[source,bash]
+----
+include::scripts/5-query.sh[tags=public]
+----
+
+Visit the <<Elasticsearch Query Syntax>> section for more details on the Elasticsearch DSL.
+
+## Search API Documentation
+
+See http://pz-swagger.geointservices.io/#/Search

@@ -1,7 +1,6 @@
 # pz-logger
 
-The Logger provides a system-wide, common way to record log messages. The log messages are stored
-in Elasticsearch.
+The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch.
 
 ## Command Line App
 
@@ -11,50 +10,81 @@ The service is started as a command line app:
 
 ## HTTP API
 
-### POST /v2/message
+### `POST /message`
 
 Sends a message to be logged. The message is given in the POST body as a JSON object:
 
-    {
-        "service":  "log-tester",
-        "address":  "128.1.2.3",
-        "stamp":    123456789,
-        "severity": "Info",
-        "message":  "The quick brown fox" 
-    }
+[source,json]
+----
+{
+    "service":  "log-tester",
+    "address":  "128.1.2.3",
+    "createdOn": "2006-01-02T15:04:05+07:00",
+    "severity": "Info",
+    "message":  "The quick brown fox"
+}
+----
 
 All five fields are required.
 
-`stamp` is an `int64` value representing the number of seconds since the Unix epoch. In Go, `time.Now().Unix()`.
+`createdOn` is a `string` representing the message creation time, expressed in https://www.ietf.org/rfc/rfc3339.txt[RFC 3339]. (In Go, `time.Now().Format(time.RFC3339)`).
 
 `severity` must be one of the following strings:
 
-* **"Debug"** - _Only used during development, for debugging/tracing purposes._
-* **"Info"** _- No action needed, I'm just being chatty and keeping you in the loop._
-* **"Warning"** _- Something occurred which probably shouldn't have. I’m going to handle it for you this time, but you really should have this looked at by someone soon._
-* **"Error"** - _I can’t do this. I've handled the exception so I’m not going to crash or anything, but I want you to know that I may not be in a happy place right now._
-* **"Fatal"** - _I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely to crash very soon._
+"Debug":: Only used during development, for debugging/tracing purposes.
+"Info":: No action needed, I'm just being chatty and keeping you in the loop.
+"Warning":: Something occurred which probably shouldn't have. I'm going to handle it for you this time, but you really should have this looked at by someone soon.
+"Error":: I can't do this. I've handled the exception so I'm not going to crash or anything, but I want you to know that I may not be in a happy place right now.
+"Fatal":: I'm sorry, Dave. I'm afraid I can't do that. System crashing, or likely to crash very soon.
 
-### GET /v2/message
+### `GET /message`
 
 Returns a JSON object of log messages:
 
-    {
-        "data": [
-            {"service":"noservice","address":"1.2.3.4","stamp":123456789,"severity":"Debug","message":"Yow!"},
-            {"service":"noservice","address":"01.2.3.4","stamp":123456788,"severity":"Debug","message":"Yow!"}
-        ],
-        "pagination": ...
+[source,json]
+----
+{
+    "statusCode": 200,
+    "data": [
+        {
+            "address": "0.0.0.0",
+            "createdOn": "2016-07-18T12:43:10.079582675Z",
+            "message": "...",
+            "service": "notset",
+            "severity": "Info"
+        },
+        {
+            "address": "0.0.0.0",
+            "createdOn": "2016-07-18T12:43:09.865052883Z",
+            "message": "...",
+            "service": "notset",
+            "severity": "Info"
+        }
+    ],
+    "pagination": {
+        "count": 123,
+        "order": "desc",
+        "page": 1,
+        "perPage": 2,
+        "sortBy": "createdOn"
     }
+}
+----
 
-This endpoint supports pagination, as described in [[General Pz Service Operations]].
+This endpoint supports pagination, as described in <<Pagination>>.
 
 ### Common operations
 
-This service includes the common endpoints described in [[General Pz Service Operations]].
+This service includes the common endpoints described in <<Common Endpoints>>.
 
 The `admin stats` supported are:
 
-    {
-        "starttime": "....",
-    }
+[source,json]
+----
+{
+    "createdOn": "2016-07-18T12:43:09.865052883Z",
+    "numMessages": 1234
+}
+----
+
+// vim: set syntax=asciidoc wrap:

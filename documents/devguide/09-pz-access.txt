@@ -4,7 +4,9 @@ Handles the deployment of Geospatial Data Resources currently held within the Pi
 
 ## Running Locally
 
-To run the Gateway service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run ``mvn clean install -U spring-boot:run``. 
+To run the Gateway service locally, perhaps through Eclipse or through CLI, navigate to the project directory and run:
+
+    mvn clean install -U spring-boot:run
 
 The `application.properties` file controls URL information for the components it connects to - mainly GeoServer. If you are intending to debug a local instance of GeoServer, then simply changing the appropriate `vcap.services.pz-geoserver.*` configuration values.
 
@@ -14,7 +16,7 @@ The Access component deploys files uploaded to S3 by the Gateway. These values a
 
 ## Source Organization
 
-The main logic of the Access component is split between two packages. The `controller` package contains the Spring RestController class that defines REST endpoints that handle user queries for DataResource information, and other REST endpoints used. The `messaging` package defines Kafka consumers which listen for messages through Kafka for creating GeoServer deployments. The logic for the Deploying of Data Resources as GeoServer layers happens in the `deploy` package through the `Deployer.java` and `Leaser.java` classes. These two class manage the deployments of GeoServer (Deployment.java), and managing their life times and resource cleanup (Leaser.java). In the `Leaser.java` class that is a method `reapExpiredLeases()` that runs once a night that will clean up any expired resources on GeoServer. 
+The main logic of the Access component is split between two packages. The `controller` package contains the Spring RestController class that defines REST endpoints that handle user queries for DataResource information, and other REST endpoints used. The `messaging` package defines Kafka consumers which listen for messages through Kafka for creating GeoServer deployments. The logic for the Deploying of Data Resources as GeoServer layers happens in the `deploy` package through the `Deployer.java` and `Leaser.java` classes. These two class manage the deployments of GeoServer (Deployment.java), and managing their life times and resource cleanup (Leaser.java). In the `Leaser.java` class that is a method `reapExpiredLeases()` that runs once a night that will clean up any expired resources on GeoServer.
 
 The Access component interacts with the MongoDB DataResource collection, and management for this code is located in the `database` package.
 
@@ -26,27 +28,28 @@ For users requesting deployments, the Access service listens to Kafka messages. 
 
 After processing a Job through the `Loader` component, a Data Resource will be added to the Piazza system. The Access component provides a Gateway API Endpoint Job which will allow users to query the metadata for the data that has been ingested into Piazza.
 
-....
-/data/{dataId}
-....
+    /data/{dataId}
 
 The response for this request will be all of the metadata currently held in Piazza for this Resource:
 
-....
+[source,json]
+----
 {
     "dataId": "03810dc8-82a8-4cbc-95c1-75699142f95c",
     "dataType": {
-      "type": "text",
-      "content": "This text itself is the raw data to be ingested. In reality, it could be some GML, or GeoJSON, or whatever.",
-      "mimeType": "application/text"
+        "content": "This text itself is the raw data to be ingested. In reality, it could be some GML, or GeoJSON, or whatever.",
+        "mimeType": "application/text",
+        "type": "text"
     },
     "metadata": {
-      "name": "Testing some Text Input",
-      "description": "This is a test.",
-      "classType": { "classification": "unclassified" }
+        "classType": {
+            "classification": "unclassified"
+        },
+        "description": "This is a test.",
+        "name": "Testing some Text Input"
     }
 }
-....
+----
 
 The `dataId` field is the unique ID for this dataset. The `dataType` field describes all information required for describing the type of file, format, and location of the data. The `spatialMetadata` will include information such as Bounding Box and Coordinate Reference System. The `metadata` field will contain other metadata information such as `contact` or `classification`.
 
@@ -58,27 +61,24 @@ Currently, there are two ways to get data out of Piazza. The first is retrieving
 
 This will simply retrieve the file for a Resource item. The Gateway API Endpoint is:
 
-....
-/data/file/{dataId}
-....
+    /data/file/{dataId}
 
-The response for this request will be the actual bytes of the file. 
+The response for this request will be the actual bytes of the file.
 
 ### GeoServer Deployments
 
 A better way to Access data, instead of accessing the raw file, is to have Piazza stand up a GeoServer service that can be used to access vector data as Web Feature Services (WFS) or raster data as Web Coverage Services (WCS). This is handled by POSTing to the `/deployment` Gateway API endpoint.
 
-....
-/deployment
-....
+    POST /deployment
 
-....
+[source,json]
+----
 {
-	"type": "access",
-	"dataId": "d42bfc70-0194-47bb-bb70-a16346eff42b",
-	"deploymentType": "geoserver"
+    "type": "access",
+    "dataId": "d42bfc70-0194-47bb-bb70-a16346eff42b",
+    "deploymentType": "geoserver"
 }
-....
+----
 
 ### Deployment Leases
 
@@ -86,14 +86,15 @@ A Lease represents an amount of time that a Deployed resource is available in th
 
 ### Supported Data Types
 
-| Data Type            | Access and Hosted  | Access and Not Hosted                         |
-|----------------------|--------------------|-----------------------------------------------|
-| Text                 | Yes, direct text   | Not Applicable                                |
-| Shapefile            | Yes, GeoServer     | Not Possible                                  |
-| GeoTIFF              | Yes, GeoServer     | Not Possible                                  |
-| PointCloud           | Yes, GeoServer     | Not Possible                                  |
-| Web Feature Service  | Yes, GeoServer     | Yes, via the external URL                     |
-| GeoJSON              | Yes, GeoServer     | Not Possible                                  |
+|===
+| Data Type            | Access and Hosted  | Access and Not Hosted
+| Text                 | Yes, direct text   | Not Applicable
+| Shapefile            | Yes, GeoServer     | Not Possible
+| GeoTIFF              | Yes, GeoServer     | Not Possible
+| PointCloud           | Yes, GeoServer     | Not Possible
+| Web Feature Service  | Yes, GeoServer     | Yes, via the external URL
+| GeoJSON              | Yes, GeoServer     | Not Possible
+|===
 
 ## Administrative API
 
@@ -101,14 +102,17 @@ The Access component provides a series of REST Endpoints that can be used to que
 
 ### REST Endpoints
 
-* Getting Data Count -- `/data/count`
-** Gets a count of the Resources held in the Piazza system. 
+Getting Data Count -- `/data/count`::
+Gets a count of the Resources held in the Piazza system.
 
-* Administrative Statistics -- `GET /admin/stats`
-** Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
+Administrative Statistics -- `GET /admin/stats`::
+Return object containing information regarding the running instance of this component. This will return the list of Job IDs of currently processing Jobs owned by this component.
 
-....
+[source,json]
+----
 {
-  "jobs": ["job-id-1", "job-id-2"]
+    "jobs": ["job-id-1", "job-id-2"]
 }
-....
+----
+
+// vim: set syntax=asciidoc wrap:

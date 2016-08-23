@@ -5,28 +5,31 @@ id=$1
 # tag::public[]
 
 event='{
-    "eventtype_id": "'"$id"'",
-    "date": "2007-06-08T14:30:00Z",
-    "mapping": {
+    "eventTypeId": "'"$id"'",
+    "data": {
         "ItemId": "test",
         "Severity": 200,
         "Problem": "us-bbox"
     }
 }'
 
-# POST event
 curl -X POST -S -s \
-    -u "$PZUSER":"$PZPASS" \
+    -u "$PZKEY":"$PZPASS" \
     -w "%{http_code}" \
     -H 'Content-Type: application/json' \
     -o response.txt \
     -d "$event" \
-    "https://pz-gateway.$DOMAIN/event" > status.txt
+    "https://pz-gateway.$PZDOMAIN/event" > status.txt
 
 grep -q 20 status.txt || { cat response.txt; exit 1; }
-
-echo Event posted successfully
+eventId=$(grep -E -o '"eventId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
 
 # end::public[]
+
+if [ -t 1 ]; then
+    echo eventId: "$eventId"
+else
+    echo "$eventId"
+fi
 
 rm -f status.txt response.txt

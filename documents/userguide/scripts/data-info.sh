@@ -7,7 +7,7 @@ id=$1
 curl -S -s -X GET \
     -w "%{http_code}" \
     -o response.txt \
-    -u "$PZKEY":"$PZPASS" \
+    -u "$PZKEY":"" \
     "https://pz-gateway.$PZDOMAIN/data/$id" > status.txt
 
 # verify all worked successfully

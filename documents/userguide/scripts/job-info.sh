@@ -5,7 +5,7 @@ set -e
 jobId=$1
 
 curl -X GET -S -s \
-    -u "$PZKEY":"$PZPASS" \
+    -u "$PZKEY":"" \
     -w "%{http_code}" \
     -o response.txt \
     "https://pz-gateway.$PZDOMAIN/job/$jobId" > status.txt

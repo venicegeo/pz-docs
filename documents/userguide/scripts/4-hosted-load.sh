@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+source init.sh
+
 # tag::public[]
 data='{
     "type": "ingest",
@@ -16,10 +18,10 @@ data='{
     }
 }'
 
-curl -S -s -X POST \
+curl -X POST \
     -w "%{http_code}" \
     -o response.txt \
-    -u "$PZKEY":"$PZPASS" \
+    -u "$PZKEY":"" \
     -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" \

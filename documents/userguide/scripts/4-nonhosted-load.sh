@@ -1,5 +1,6 @@
 #!/bin/bash
-set -e
+
+. setup.sh
 
 # tag::public[]
 data='{
@@ -22,25 +23,5 @@ data='{
     }
 }'
 
-curl -S -s -X POST \
-    -w "%{http_code}" \
-    -o response.txt \
-    -H "Content-Type: application/json" \
-    -d "$data" \
-    -u "$PZKEY":"$PZPASS" \
-    "https://pz-gateway.$PZDOMAIN/data" > status.txt
-
-# verify 2xx response code
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-
+$curl -XPOST -d "$data" $PZSERVER/data | jq '.data.jobId'
 # end::public[]
-
-if [ -t 1 ]; then
-    echo jobId: "$jobId"
-else
-    echo "$jobId"
-fi
-
-
-rm -f response.txt status.txt

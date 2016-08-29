@@ -1,18 +1,11 @@
 #!/bin/bash
-set -e
+
+. setup.sh
+
+check_arg $1 jobId
 
 # tag::public[]
-id=$1
+dataId=`unquote $1`
 
-curl -S -s -X GET \
-    -w "%{http_code}" \
-    -o response.txt \
-    -u "$PZKEY":"" \
-    "https://pz-gateway.$PZDOMAIN/data/$id" > status.txt
-
-# verify all worked successfully
-grep -q 200 status.txt || { cat response.txt; exit 1; }
-cat response.txt
+$curl -X GET $PZSERVER/data/$dataId
 # end::public[]
-
-rm -f response.txt status.txt

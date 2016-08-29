@@ -1,7 +1,6 @@
 #!/bin/bash
-set -e
 
-source init.sh
+source setup.sh
 
 # tag::public[]
 data='{
@@ -18,25 +17,9 @@ data='{
     }
 }'
 
-curl -X POST \
-    -w "%{http_code}" \
-    -o response.txt \
-    -u "$PZKEY":"" \
-    -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
+$curl_multipart -X POST \
     -F "data=$data" \
     -F "file=@./terrametrics.tif" \
-    "https://pz-gateway.$PZDOMAIN/data/file" > status.txt
-
-# verify 2xx response code
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-
+    $PZSERVER/data/file \
+    | jq '.data.jobId'
 # end::public[]
-
-jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-if [ -t 1 ]; then
-    echo jobId: "$jobId"
-else
-    echo "$jobId"
-fi
-
-rm -f response.txt status.txt

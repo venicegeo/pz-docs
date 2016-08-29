@@ -1,0 +1,8 @@
+{
+  "timestamp" : 1466439144587,
+  "status" : 400,
+  "error" : "Bad Request",
+  "exception" : "org.springframework.http.converter.HttpMessageNotReadableException",
+  "message" : "Could not read document: Unexpected character ('\"' (code 34)): was expecting comma to separate OBJECT entries\n at [Source: java.io.PushbackInputStream@41d3537d; line: 6, column: 6]; nested exception is com.fasterxml.jackson.core.JsonParseException: Unexpected character ('\"' (code 34)): was expecting comma to separate OBJECT entries\n at [Source: java.io.PushbackInputStream@41d3537d; line: 6, column: 6]",
+  "path" : "/service"
+}

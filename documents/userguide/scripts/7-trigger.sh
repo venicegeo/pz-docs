@@ -1,37 +1,18 @@
 #!/bin/bash
-set -e
 
-id=$1
+. setup.sh
+
+check_arg $1 eventTypeId
+check_arg $2 serviceId
+
 # tag::public[]
-
-# service
-service='{
-    "url": "http://pzsvc-hello.'$PZDOMAIN'/",
-    "contractUrl": "http://helloContract",
-    "method": "GET",
-    "resourceMetadata": {
-        "name": "pzsvc-hello service",
-        "description": "Hello World Example",
-        "classType": "unclassified"
-    }
-}'
-
-# POST service
-curl -X POST -S -s \
-    -u "$PZKEY":"$PZPASS" \
-    -w "%{http_code}" \
-    -H 'Content-Type: application/json' \
-    -o response.txt \
-    -d "$service" \
-    "https://pz-gateway.$PZDOMAIN/service" > status.txt
-
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-serviceId=$(grep -E -o '"serviceId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
+eventTypeId=$1
+erviceId=$2
 
 trigger='{
     "name": "High Severity",
     "condition": {
-        "eventTypeIds": ["'"$id"'"],
+        "eventTypeIds": ["'"$eventTypeId"'"],
         "query": { "query": { "match_all": {} } }
     },
     "job": {
@@ -48,24 +29,5 @@ trigger='{
     "enabled": true
 }'
 
-# POST trigger
-curl -X POST -S -s \
-    -u "$PZKEY":"$PZPASS" \
-    -w "%{http_code}" \
-    -H 'Content-Type: application/json' \
-    -o response.txt \
-    -d "$trigger" \
-    "https://pz-gateway.$PZDOMAIN/trigger" > status.txt
-
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-triggerId=$(grep -E -o '"triggerId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-
+$curl -X POST -d "$trigger" $PZSERVER/trigger | jq .data.triggerId
 # end::public[]
-
-if [ -t 1 ]; then
-    echo triggerId: "$triggerId"
-else
-    echo "$triggerId"
-fi
-
-rm -f response.txt status.txt

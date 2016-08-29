@@ -1,8 +1,8 @@
 #!/bin/bash
-set -e
+
+. setup.sh
 
 # tag::public[]
-
 one=$(sh 5-load-file.sh "one" "The quick, brown fox.")
 echo "$one"
 
@@ -11,5 +11,4 @@ echo "$two"
 
 three=$(sh 5-load-file.sh "three" "The hungry hungry hippo.")
 echo "$three"
-
 # end::public[]

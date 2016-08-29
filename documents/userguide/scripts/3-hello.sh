@@ -3,12 +3,11 @@ set -e
 
 # tag::public[]
 # ping the gateway, sending the returned string to a file
-curl -u "$PZKEY":"" -S -s -X GET -o response.txt "http://pz-gateway.$PZDOMAIN/"
+ret=`curl -S -s -u "$PZKEY":"" -XGET $PZSERVER`
+#echo $ret
 
-# verify the response was "OK"
-grep -q Hello response.txt
+# verify the response was good
+( echo $ret | grep Hello ) || ( echo ERROR: $ret ; exit 1 )
 # end::public[]
-
-rm -f response.txt
 
 echo Success!

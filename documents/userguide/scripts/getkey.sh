@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # This script will get your API key.
 #

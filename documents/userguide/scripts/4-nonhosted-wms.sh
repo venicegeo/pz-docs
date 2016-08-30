@@ -1,11 +1,11 @@
 #!/bin/bash
-
+set -e
 . setup.sh
 
 check_arg $1 dataId
 
 # tag::public[]
-dataId=`unquote $1`
+dataId=$1
 
 data='{
     "type": "access",

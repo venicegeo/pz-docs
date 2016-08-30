@@ -1,8 +1,12 @@
 #!/bin/bash
-
+set -e
 source setup.sh
 
+check_arg $1 name
+
 # tag::public[]
+name=$1
+
 data='{
     "type": "ingest",
     "host": true,
@@ -11,15 +15,14 @@ data='{
             "type": "raster"
         },
         "metadata": {
-            "name": "terrametrics",
-            "description": "geotiff_test"
+            "name": "'"$name"'",
+            "description": "mydescription"
         }
     }
 }'
 
+# "curl_multipart" sets ContentType for a multipart POST body
 $curl_multipart -X POST \
-    -F "data=$data" \
-    -F "file=@./terrametrics.tif" \
-    $PZSERVER/data/file \
-    | jq '.data.jobId'
+    -F "data=$data" -F "file=@./terrametrics.tif" \
+    $PZSERVER/data/file
 # end::public[]

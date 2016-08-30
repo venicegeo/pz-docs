@@ -1,12 +1,13 @@
 #!/bin/bash
-
+set -e
 . setup.sh
 
 check_arg $1 dataId
+check_arg $2 filename
 
 # tag::public[]
 dataId=`unquote $1`
+filename=$2
 
-$curl -X GET $PZSERVER/file/$dataId?fileName=terrametrics.tif > download.dat
-ls -l download.dat
+$curl -X GET $PZSERVER/file/$dataId?fileName=terrametrics.tif > $filename
 # end::public[]

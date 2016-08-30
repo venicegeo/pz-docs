@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 . setup.sh
 
 #tag::public[]

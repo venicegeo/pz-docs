@@ -1,63 +1,106 @@
 #!/bin/bash
-
+set -e
 . setup.sh
 
-t3() {
-    echo 3-hello.sh...
-    sh 3-hello.sh
+unique() {
+    echo `date +"%s"`
+}
 
-    echo 3-hello-full.sh...
-    sh 3-hello-full.sh
+t3() {
+    echo 3-hello-full...
+    sh 3-hello-full.sh | grep -q Hello
+
+    echo 3-hello...
+    sh 3-hello.sh | grep -q Hello
+
+    echo pass t3
 }
 
 t4a() {
-    echo "4-hosted-load.sh..."
-    jobId=`sh 4-hosted-load.sh`
+    name="yournamehere"
+    description="mydescription"
+    filename="download.dat"
+    
+    echo "4-hosted-load..."
+    jobId=`sh 4-hosted-load.sh $name | jq -r .data.jobId`
     echo "    jobId: $jobId"
-    sleep 6
-
-    dataId=`sh job-info.sh $jobId | jq .data.result.dataId`
+    sleep 3
+    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
+    actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
 
-    sh data-info.sh $dataId
+    if [ $actual != $name ]
+    then
+        echo FAIL
+        exit 1
+    fi
+    
+    echo "4-hosted-download..."
+    sh 4-hosted-download.sh $dataId $filename
+    if [ ! -s $filename ]
+    then
+        echo FAIL
+        exit 1
+    fi
 
-    echo "4-hosted-download.sh $dataId..."
-    sh 4-hosted-download.sh $dataId
+    echo pass t4a
 }
 
 t4b() {
-    echo "4-nonhosted-load.sh..."
-    jobId=`sh 4-nonhosted-load.sh`
+    name="mynamehere"
+    filename=
+
+    echo "4-nonhosted-load..."
+    jobId=`sh 4-nonhosted-load.sh $name | jq -r .data.jobId`
     echo "    jobId: $jobId"
     sleep 3
-    dataId=`sh job-info.sh $jobId | jq .data.result.dataId`
+    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
-    sh data-info.sh $dataId
+    actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
 
-    echo 
+    if [ $actual != $name ]
+    then
+        echo FAIL
+        exit 1
+    fi
 
-    echo "4-nonhosted-wms.sh..."
-    jobId=`sh 4-nonhosted-wms.sh $dataId | jq .data.jobId`
+    echo "4-nonhosted-wms..."
+    jobId=`sh 4-nonhosted-wms.sh $dataId | jq -r .data.jobId`
     echo "    jobId: $jobId"
     sleep 3
-    url=`sh job-info.sh $jobId | jq .data.result.deployment.capabilitiesUrl`
+    url=`sh job-info.sh $jobId | jq -r .data.result.deployment.capabilitiesUrl`
     echo "    url: $url"
+    html=`curl -S -s "$url"`
+    echo "$html" | grep -q "GeoServer Web Feature Service"
+
+    echo pass t4b
 }
 
 t5() {
-    echo "5-load-file.sh..."
-    dataId=`sh 5-load-file.sh NAME KITTENS`
-    echo "    ...$dataId"
-    sh data-info.sh $dataId
-
-    echo "5-load-files.sh..."
-    sh 5-load-files.sh
+    name=kittens`unique`
+    echo "5-load-file..."
+    jobId=`sh 5-load-file.sh $name | jq -r .data.jobId`
+    sleep 3
+    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
+    echo "    dataId: $dataId"
+    actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
+    if [ $actual != $name ]
+    then
+        echo FAIL
+        exit 1
+    fi
 
     echo "5-query.sh..."
-    sh 5-query.sh KITTENS
+    result1=`sh 5-query.sh $name | jq -r '.data[0].dataId'`
+    echo "    result1: $result1"
 
-    echo "5-filtered-get.sh..."
-    sh 5-filtered-get.sh KITTENS
+    echo "5-filtered-get..."
+    result2=`sh 5-filtered-get.sh $name | jq -r '.data[0].dataId'`
+    echo "    result2: $result2"
+
+need to verify matches
+exit 8
+#    echo pass t5
 }
 
 t6() {
@@ -108,12 +151,15 @@ t8() {
     echo "8-crop-file.sh..."
     jobId=`sh 8-crop-file.sh $serviceId external-public-access-test elevation.tif`
     echo "    jobId: $jobId"
+    sleep 3
+    statusCode=`sh job-info.sh $jobId | jq .data.result.statusCode`
+    echo "    statusCode: $statusCode"
 }
 
 #t3
 #t4a
 #t4b
-#t5
+t5
 #t6
 #t7
-t8
+#t8

@@ -1,8 +1,12 @@
 #!/bin/bash
-
+set -e
 . setup.sh
 
+check_arg $1 name
+
 # tag::public[]
+name=$1
+
 data='{
     "type": "ingest",
     "host": false,
@@ -17,11 +21,11 @@ data='{
             }
         },
         "metadata": {
-            "name": "elevation",
-            "description": "geotiff_test"
+            "name": "'"$name"'",
+            "description": "mydescription"
         }
     }
 }'
 
-$curl -XPOST -d "$data" $PZSERVER/data | jq '.data.jobId'
+$curl -XPOST -d "$data" $PZSERVER/data
 # end::public[]

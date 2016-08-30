@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 # $PZDOMAIN should always be set to the Piazza server, e.g.
 #    export PZSERVER=pz-gateway.int.venicegeo.io

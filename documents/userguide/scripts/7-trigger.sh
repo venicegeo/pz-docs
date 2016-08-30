@@ -6,8 +6,8 @@ check_arg $1 eventTypeId
 check_arg $2 serviceId
 
 # tag::public[]
-eventTypeId=$1
-erviceId=$2
+eventTypeId=`unquote $1`
+erviceId=`unquote $2`
 
 trigger='{
     "name": "High Severity",

@@ -5,7 +5,7 @@
 check_arg $1 serviceId
 
 # tag::public[]
-serviceId=$1
+serviceId=`unquote $1`
 
 job='{
     "type": "execute-service",

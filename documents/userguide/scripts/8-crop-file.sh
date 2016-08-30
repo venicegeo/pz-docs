@@ -29,5 +29,5 @@ job='{
     }
 }'
 
-$curl -X POST -d "$job" $PZSERVER/job | jq .data.jobId
+$curl -X POST -d "$job" $PZSERVER/job #| jq .data.jobId
 #end::public[]

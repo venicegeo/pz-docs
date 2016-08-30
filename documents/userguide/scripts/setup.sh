@@ -33,7 +33,7 @@ check_arg() {
     name=$2
     if [ "$#" -ne "2" ];
     then
-        echo "Internal error: check_arg has bad args: $@"
+        echo "Internal error: check_arg has wrong numbner of args ($#): $@"
         exit 1
     fi
     if [ "$arg" == "" ]

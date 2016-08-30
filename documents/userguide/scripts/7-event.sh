@@ -5,7 +5,7 @@
 check_arg $1 eventTypeId
 
 # tag::public[]
-eventTypeId=$1
+eventTypeId=`unquote $1`
 
 event='{
     "eventTypeId": "'"$eventTypeId"'",

@@ -16,8 +16,9 @@ scripts="$root/documents/userguide/scripts"
 git clone https://github.com/stedolan/jq.git
 cd jq
 autoreconf -i
-./configure --disable-maintainer-mode
+./configure --disable-maintainer-mode --prefix=$root/jq-install
 make
+ls -R $root
 make install
 ###
 

@@ -18,8 +18,8 @@ cd jq
 autoreconf -i
 ./configure --disable-maintainer-mode --prefix=$root/jq-install
 make
-ls -R $root
 make install
+ls -R $root
 ###
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor

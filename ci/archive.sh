@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+printenv
+
 # shellcheck disable=SC1090
 [[ -f "$scripts/setup.sh" ]] && source "$scripts/setup.sh"
 

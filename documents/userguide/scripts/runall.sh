@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+
+export PZSERVER="pz-gateway.$PCF_DOMAIN"
+
 . setup.sh
 
 unique() {

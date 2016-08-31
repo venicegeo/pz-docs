@@ -1,14 +1,8 @@
 #!/bin/bash
-set -e
 
 # tag::public[]
-# ping the gateway, sending the returned string to a file
-curl -u "$PZKEY":"" -S -s -X GET -o response.txt "http://pz-gateway.$PZDOMAIN/"
+set -e
+. setup.sh
 
-# verify the response was "OK"
-grep -q Hello response.txt
+$curl -XGET $PZSERVER
 # end::public[]
-
-rm -f response.txt
-
-echo Success!

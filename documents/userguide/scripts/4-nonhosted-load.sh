@@ -1,7 +1,12 @@
 #!/bin/bash
 set -e
+. setup.sh
+
+check_arg $1 name
 
 # tag::public[]
+name=$1
+
 data='{
     "type": "ingest",
     "host": false,
@@ -16,31 +21,11 @@ data='{
             }
         },
         "metadata": {
-            "name": "elevation",
-            "description": "geotiff_test"
+            "name": "'"$name"'",
+            "description": "mydescription"
         }
     }
 }'
 
-curl -S -s -X POST \
-    -w "%{http_code}" \
-    -o response.txt \
-    -H "Content-Type: application/json" \
-    -d "$data" \
-    -u "$PZKEY":"$PZPASS" \
-    "https://pz-gateway.$PZDOMAIN/data" > status.txt
-
-# verify 2xx response code
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-
+$curl -XPOST -d "$data" $PZSERVER/data
 # end::public[]
-
-if [ -t 1 ]; then
-    echo jobId: "$jobId"
-else
-    echo "$jobId"
-fi
-
-
-rm -f response.txt status.txt

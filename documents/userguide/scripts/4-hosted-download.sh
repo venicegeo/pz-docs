@@ -1,22 +1,13 @@
 #!/bin/bash
 set -e
+. setup.sh
 
-source init.sh
-
-fileId=`get_arg $1 fileId`
+check_arg $1 dataId
+check_arg $2 filename
 
 # tag::public[]
-curl -S -s -X GET \
-    -u "$PZKEY":"$PZPASS" \
-    -w "%{http_code}" \
-    -o response.txt \
-    "https://pz-gateway.$PZDOMAIN/file/$fileId?fileName=terrametrics.tif" > status.txt
+dataId=$1
+filename=$2
 
-# verify all worked successfully
-grep -q 200 status.txt || { cat response.txt; exit 1; }
-
+$curl -X GET $PZSERVER/file/$dataId?fileName=terrametrics.tif > $filename
 # end::public[]
-
-echo Success!
-
-rm -f response.txt status.txt

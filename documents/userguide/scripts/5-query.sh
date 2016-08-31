@@ -1,5 +1,8 @@
 #!/bin/bash
 set -e
+. setup.sh
+
+check_arg $1 term
 
 # tag::public[]
 term=$1
@@ -10,20 +13,5 @@ query='{
     }
 }'
 
-curl -X POST -S -s \
-    -w "%{http_code}" \
-    -o response.txt \
-    -u "$PZKEY":"$PZPASS" \
-    -H "Content-Type: application/json" \
-    -d "$query" \
-    "https://pz-gateway.$PZDOMAIN/data/query" > status.txt
-
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-
+$curl -X POST -d "$query" $PZSERVER/data/query
 # end::public[]
-
-cat response.txt
-
-echo Success!
-
-rm -f response.txt status.txt

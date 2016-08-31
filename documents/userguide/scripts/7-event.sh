@@ -1,11 +1,14 @@
 #!/bin/bash
 set -e
+. setup.sh
 
-id=$1
+check_arg $1 eventTypeId
+
 # tag::public[]
+eventTypeId=$1
 
 event='{
-    "eventTypeId": "'"$id"'",
+    "eventTypeId": "'"$eventTypeId"'",
     "data": {
         "ItemId": "test",
         "Severity": 200,
@@ -13,23 +16,5 @@ event='{
     }
 }'
 
-curl -X POST -S -s \
-    -u "$PZKEY":"$PZPASS" \
-    -w "%{http_code}" \
-    -H 'Content-Type: application/json' \
-    -o response.txt \
-    -d "$event" \
-    "https://pz-gateway.$PZDOMAIN/event" > status.txt
-
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-eventId=$(grep -E -o '"eventId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-
+$curl -d "$event" $PZSERVER/event
 # end::public[]
-
-if [ -t 1 ]; then
-    echo eventId: "$eventId"
-else
-    echo "$eventId"
-fi
-
-rm -f status.txt response.txt

@@ -1,28 +1,45 @@
 #!/bin/bash
+set -e
 
-if [[ $# -eq 3 ]]; then
-    PZDOMAIN=$1
-    PZUSER=$2
-    PZPASS=$3
-    # overwrite old .pzenv files...
-    echo "PZDOMAIN='$PZDOMAIN'" > .pzenv
-    echo "PZPASS='$PZPASS'" >> .pzenv
+# $PZDOMAIN should always be set to the Piazza server, e.g.
+#    export PZSERVER=pz-gateway.int.venicegeo.io
+: "${PZSERVER:?"PZSERVER is not set"}"
 
-    resp=$(curl -XGET -u "$PZUSER":"$PZPASS" "https://pz-gateway.$PZDOMAIN/key" -S -s)
-
-    PZKEY=$(echo "$resp" | grep -E -o '"uuid"\s?:\s?".*"' | cut -d \" -f 4)
-
-    echo "PZKEY='$PZKEY'" >> .pzenv
-
-    echo 'Created .pzenv file in your pwd!'
+# $PZKEY should always be set to the API key (a UUID) for the Piazza server
+# If ~/.pzkey exists, use that. Otherwise, assume $PZKEY exists.
+# See getkey.sh to generate a key for yourself.
+if [ -f ~/.pzkey ] ; then
+    export PZKEY=`cat ~/.pzkey | grep $PZSERVER | cut -f 2 -d ":" | cut -d \" -f 2`
 else
-    echo 'Usage:'
-    echo '    ./setup.sh "PZDOMAIN" "PZUSER" "PZPASS"'
-    echo 'Number of arguments passed: ' $#
-    # $PZDOMAIN should always be set
-    : "${PZDOMAIN:?"PZDOMAIN is not set"}"
-    # $PZUSER and $PZPASS can be '' if no authentication needed, so :? -> ?
-    : "${PZUSER?"PZUSER is not set"}"
-    : "${PZPASS?"PZPASS is not set"}"
-    echo '  Environment variables set'
+    : "${PZKEY?"PZKEY is not set"}"
 fi
+
+#echo Environment: $PZDOMAIN $PZKEY
+
+# add common options to curl command
+curl="curl -S -s -u $PZKEY:"" -H Content-Type:application/json"
+curl_multipart="curl -S -s -u $PZKEY:"" -H Content-Type:multipart/form-data;boundary=thisismyboundary"
+
+
+# function to verify a command-line argument is present
+#
+# Assume a script foo.sh was invoked like this:
+#     $ sh foo.sh 123 456
+# then the bash comand
+#    check_arg $2 "id2"
+# will verify that the second argument on the command line ("456") was present,
+# otherwise the script will exit with a usage error.
+check_arg() {
+    arg=$1
+    name=$2
+    if [ "$#" -ne "2" ];
+    then
+        echo "Internal error: check_arg has wrong numbner of args ($#): $@"
+        exit 1
+    fi
+    if [ "$arg" == "" ]
+    then
+        echo "usage error: \$name missing"
+        exit 1
+    fi
+}

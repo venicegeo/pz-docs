@@ -1,15 +1,20 @@
 #!/bin/bash
 set -e
+. setup.sh
 
 # tag::public[]
-
-one=$(sh 5-load-file.sh "one" "The quick, brown fox.")
+a="one"
+b="The quick, brown fox."
+one=`sh 5-load-file.sh $a $b`
 echo "$one"
 
-two=$(sh 5-load-file.sh "two" "The lazy dog.")
+a="two"
+b="The lazy dog."
+two=`sh 5-load-file.sh $a $b`
 echo "$two"
 
-three=$(sh 5-load-file.sh "three" "The hungry hungry hippo.")
+a="three"
+b="The hungry hungry hippo."
+three=`sh 5-load-file.sh $a $b`
 echo "$three"
-
 # end::public[]

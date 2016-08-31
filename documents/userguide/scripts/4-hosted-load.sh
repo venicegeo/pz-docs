@@ -1,9 +1,12 @@
 #!/bin/bash
 set -e
+source setup.sh
 
-source init.sh
+check_arg $1 name
 
 # tag::public[]
+name=$1
+
 data='{
     "type": "ingest",
     "host": true,
@@ -12,31 +15,14 @@ data='{
             "type": "raster"
         },
         "metadata": {
-            "name": "terrametrics",
-            "description": "geotiff_test"
+            "name": "'"$name"'",
+            "description": "mydescription"
         }
     }
 }'
 
-curl -X POST \
-    -w "%{http_code}" \
-    -o response.txt \
-    -u "$PZKEY":"" \
-    -H "Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW" \
-    -F "data=$data" \
-    -F "file=@./terrametrics.tif" \
-    "https://pz-gateway.$PZDOMAIN/data/file" > status.txt
-
-# verify 2xx response code
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-
+# "curl_multipart" sets ContentType for a multipart POST body
+$curl_multipart -X POST \
+    -F "data=$data" -F "file=@./terrametrics.tif" \
+    $PZSERVER/data/file
 # end::public[]
-
-jobId=$(grep -E -o '"jobId"\s?:\s?".*"' response.txt | cut -d \" -f 4)
-if [ -t 1 ]; then
-    echo jobId: "$jobId"
-else
-    echo "$jobId"
-fi
-
-rm -f response.txt status.txt

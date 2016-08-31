@@ -1,20 +1,11 @@
 #!/bin/bash
 set -e
+. setup.sh
+
+check_arg $1 triggerId
 
 # tag::public[]
+triggerId=$1
 
-# GET alerts
-curl -X GET -S -s \
-    -u "$PZKEY":"$PZPASS" \
-    -w "%{http_code}" \
-    -o response.txt \
-    "https://pz-gateway.$PZDOMAIN/alert" > status.txt
-
-# Check for 2XX status code
-grep -q 20 status.txt || { cat response.txt; exit 1; }
-
-cat response.txt
-
+$curl -X GET $PZSERVER/alert?triggerId=$triggerId
 # end::public[]
-
-rm -f response.txt status.txt

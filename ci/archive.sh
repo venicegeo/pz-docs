@@ -18,7 +18,7 @@ cd jq
 autoreconf -i
 ./configure --disable-maintainer-mode
 make
-sudo make install
+make install
 ###
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor

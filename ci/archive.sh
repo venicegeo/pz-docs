@@ -19,7 +19,8 @@ autoreconf -i
 ./configure --disable-maintainer-mode --prefix=$root/jq-install
 make
 make install
-ls -R $root
+ls -R $root/jq-install
+PATH=$PATH:$root/jq-install/bin
 ###
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
@@ -68,7 +69,9 @@ function run_tests {
     cp "$scripts/terrametrics.tif" "$root"
 
     echo ; echo ; echo TEST START ; echo ; echo
-    "$scripts/runall.sh"
+    pushd $scripts
+    "runall.sh"
+    popd
     echo ; echo ; echo TEST END ; echo ; echo
 
     rm -f "$root/terrametrics.tif"

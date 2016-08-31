@@ -12,7 +12,14 @@ ins="$root/documents"
 outs="$root/out"
 scripts="$root/documents/userguide/scripts"
 
-apt-get install jq
+###
+git clone https://github.com/stedolan/jq.git
+cd jq
+autoreconf -i
+./configure --disable-maintainer-mode
+make
+sudo make install
+###
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf

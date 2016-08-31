@@ -6,8 +6,8 @@ check_arg $1 eventTypeId
 check_arg $2 serviceId
 
 # tag::public[]
-eventTypeId=`unquote $1`
-erviceId=`unquote $2`
+eventTypeId=$1
+erviceId=$2
 
 trigger='{
     "name": "High Severity",
@@ -29,5 +29,5 @@ trigger='{
     "enabled": true
 }'
 
-$curl -X POST -d "$trigger" $PZSERVER/trigger | jq .data.triggerId
+$curl -X POST -d "$trigger" $PZSERVER/trigger
 # end::public[]

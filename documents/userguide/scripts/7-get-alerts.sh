@@ -2,6 +2,10 @@
 set -e
 . setup.sh
 
+check_arg $1 triggerId
+
 # tag::public[]
-$curl -X GET $PZSERVER/alert
+triggerId=$1
+
+$curl -X GET $PZSERVER/alert?triggerId=$triggerId
 # end::public[]

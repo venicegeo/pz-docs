@@ -43,8 +43,3 @@ check_arg() {
         exit 1
     fi
 }
-
-# This will removes quotes from a string, e.g. "asdf" it will return asdf.
-unquote() {
-    echo $1 | tr -d '"'
-}

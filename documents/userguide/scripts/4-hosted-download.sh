@@ -6,7 +6,7 @@ check_arg $1 dataId
 check_arg $2 filename
 
 # tag::public[]
-dataId=`unquote $1`
+dataId=$1
 filename=$2
 
 $curl -X GET $PZSERVER/file/$dataId?fileName=terrametrics.tif > $filename

@@ -5,7 +5,7 @@ set -e
 check_arg $1 serviceId
 
 # tag::public[]
-serviceId=`unquote $1`
+serviceId=$1
 
 job='{
     "type": "execute-service",
@@ -16,5 +16,5 @@ job='{
     }
 }'
 
-$curl -X POST -d "$job" $PZSERVER/job | jq '.data.jobId'
+$curl -X POST -d "$job" $PZSERVER/job
 # end::public[]

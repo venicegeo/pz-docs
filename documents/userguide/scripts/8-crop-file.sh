@@ -3,13 +3,12 @@ set -e
 . setup.sh
 
 check_arg $1 serviceId
-check_arg $2 bucket
-check_arg $3 file
 
 #tag::public[]
-serviceId=`unquote $1`
-bucket=$2
-file=$3
+serviceId=$1
+
+bucket="external-public-access-test"
+file="NASA-GDEM-10km-colorized.tif"
 
 job='{
     "type": "execute-service",
@@ -29,5 +28,5 @@ job='{
     }
 }'
 
-$curl -X POST -d "$job" $PZSERVER/job | jq .data.jobId
+$curl -X POST -d "$job" $PZSERVER/job
 #end::public[]

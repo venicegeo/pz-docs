@@ -12,5 +12,5 @@ eventtype='{
     }
 }'
 
-$curl -X POST -d "$eventtype" $PZSERVER/eventType | jq .data.eventTypeId
+$curl -X POST -d "$eventtype" $PZSERVER/eventType
 # end::public[]

@@ -16,5 +16,5 @@ service='{
     }
 }'
 
-$curl -X POST -d "$service" $PZSERVER/service | jq '.data.serviceId'
+$curl -X POST -d "$service" $PZSERVER/service
 # end::public[]

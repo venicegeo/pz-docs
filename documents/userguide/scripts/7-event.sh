@@ -5,7 +5,7 @@ set -e
 check_arg $1 eventTypeId
 
 # tag::public[]
-eventTypeId=`unquote $1`
+eventTypeId=$1
 
 event='{
     "eventTypeId": "'"$eventTypeId"'",
@@ -16,5 +16,5 @@ event='{
     }
 }'
 
-$curl -d "$event" $PZSERVER/event | jq .data.eventId
+$curl -d "$event" $PZSERVER/event
 # end::public[]

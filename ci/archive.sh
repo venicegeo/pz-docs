@@ -70,7 +70,7 @@ function run_tests {
 
     echo ; echo ; echo TEST START ; echo ; echo
     pushd $scripts
-    "runall.sh"
+    ./runall.sh
     popd
     echo ; echo ; echo TEST END ; echo ; echo
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-. ./setup.sh
+. setup.sh
 
 unique() {
     echo `date +"%s"`

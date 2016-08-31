@@ -12,7 +12,7 @@ ins="$root/documents"
 outs="$root/out"
 scripts="$root/documents/userguide/scripts"
 
-gem install jq
+apt-get install jq
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf

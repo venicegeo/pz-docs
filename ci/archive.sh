@@ -12,17 +12,6 @@ ins="$root/documents"
 outs="$root/out"
 scripts="$root/documents/userguide/scripts"
 
-###
-git clone https://github.com/stedolan/jq.git
-cd jq
-autoreconf -i
-./configure --disable-maintainer-mode --prefix=$root/jq-install
-make
-make install
-ls -R $root/jq-install
-PATH=$PATH:$root/jq-install/bin
-###
-
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 
@@ -92,7 +81,8 @@ mkdir "$outs/presentations"
 # shellcheck disable=SC2086
 cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
-run_tests
+# Can't run the tests because we don't have an API key.
+#run_tests
 
 echo Done.
 

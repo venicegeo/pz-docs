@@ -29,18 +29,17 @@ function doit {
     # insert build date
     dat=`date "+%Y-%m-%d"`
     dattim=`date "+%Y-%m-%d %H:%M:%S %Z"`
-    sed -i.bak "s/__DATE__/$dat/g" "$indir/index.txt"
-    sed -i.bak "s/__DATETIME__/$dattim/g" "$indir/index.txt"
+    sed "s/__DATE__/$dat/g" "$indir/index.txt" > "$indir/index.txt.2"
 
     # txt -> html
-    asciidoctor -o "$outdir/index.html" "$indir/index.txt"  &> errs.tmp
+    asciidoctor -o "$outdir/index.html" "$indir/index.txt.2"  &> errs.tmp
     if [[ -s errs.tmp ]] ; then
         cat errs.tmp
         exit 1
     fi
 
     # txt -> pdf
-    asciidoctor -r asciidoctor-pdf -b pdf -o "$outdir/index.pdf" "$indir/index.txt"  &> errs.tmp
+    asciidoctor -r asciidoctor-pdf -b pdf -o "$outdir/index.pdf" "$indir/index.txt.2"  &> errs.tmp
     if [[ -s errs.tmp ]] ; then
         cat errs.tmp
         exit 1

@@ -1,4 +1,0 @@
-# Introduction
-
-Placeholder for future devops guide.
-

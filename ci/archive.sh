@@ -81,7 +81,6 @@ mkdir "$outs"
 doit "$ins" "$outs"
 doit "$ins/userguide"   "$outs/userguide"
 doit "$ins/devguide"    "$outs/devguide"
-doit "$ins/devopsguide" "$outs/devopsguide"
 
 mkdir "$outs/presentations"
 # shellcheck disable=SC2086

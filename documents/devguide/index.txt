@@ -1,6 +1,6 @@
 Piazza Developers Guide
 =======================
-The Piazza Team <venice@radiantblue.com>
+The VeniceGeo Team <venice@radiantblue.com>
 __DATE__
 :doctype: book
 :toc: left

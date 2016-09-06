@@ -1,6 +1,6 @@
 Piazza Documentation
 ====================
-The Piazza Team <venice@radiantblue.com>
+The VeniceGeo Team <venice@radiantblue.com>
 __DATE__
 
 include::common/intro.txt[tabsize=4]

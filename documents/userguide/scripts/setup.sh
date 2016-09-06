@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# -e means exit the script if any error
 set -e
 
 # $PZDOMAIN should always be set to the Piazza server, e.g.
@@ -16,7 +18,9 @@ fi
 
 #echo Environment: $PZDOMAIN $PZKEY
 
-# add common options to curl command
+# add common options to curl command:
+#   "-S -s" means show any errors but don't show the progress meter
+#   "-u" supplies the user credentials
 curl="curl -S -s -u $PZKEY:"" -H Content-Type:application/json"
 curl_multipart="curl -S -s -u $PZKEY:"" -H Content-Type:multipart/form-data;boundary=thisismyboundary"
 

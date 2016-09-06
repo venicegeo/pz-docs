@@ -26,6 +26,12 @@ function doit {
     bbb=$(basename "$aaa")
     echo "Processing: $bbb/index.txt"
 
+    # insert build date
+    dat=`date "+%Y-%m-%d"`
+    dattim=`date "+%Y-%m-%d %H:%M:%S %Z"`
+    sed -i.bak "s/__DATE__/$dat/g" "$indir/index.txt"
+    sed -i.bak "s/__DATETIME__/$dattim/g" "$indir/index.txt"
+
     # txt -> html
     asciidoctor -o "$outdir/index.html" "$indir/index.txt"  &> errs.tmp
     if [[ -s errs.tmp ]] ; then

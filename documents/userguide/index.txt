@@ -1,7 +1,7 @@
 Piazza Users Guide
 ==================
 The Piazza Team <venice@radiantblue.com>
-20 June 2016
+__DATE__
 :doctype: book
 :toc: left
 :source-highlighter: prettify

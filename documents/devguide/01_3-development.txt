@@ -39,7 +39,7 @@ Our efforts to structure an Agile Framework, with internal processes that work f
 ** Once all tasks for a Story are completed, the developer can move the Story to Resolved.
 ** The Product Owner and/or Team will verify that the story is complete and then move the Story to Closed.
 ** All completed User Stories are wrapped up into an end-of-sprint demo for the team at the Sprint Review.
-** Research stories are documented with a webpage/wiki entry or some type of artifact.
+** Research stories are documented with a web page, wiki entry, or some type of artifact.
 
 
 #### Redmine 'Rules' for our Agile Process

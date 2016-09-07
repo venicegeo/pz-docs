@@ -13,7 +13,7 @@ rm -f badwords
 for txt in $txts
 do
     #ls $txt
-    aspell list --personal=$root/etc/aspell.en_US.per < $txt >> badwords
+    $root/aspell-bin/bin/aspell list --personal=$root/etc/aspell.en_US.per < $txt >> badwords
 done
 
 bads=`sort badwords | uniq`

@@ -19,6 +19,18 @@ hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 source "$root/ci/vars.sh"
 
 
+function install_aspell {
+    target=$root/aspell-bin
+    mkdir $target
+    curl ftp://ftp.gnu.org/gnu/aspell/aspell-0.60.6.1.tar.gz > aspell-0.60.6.1.tar.gz
+    tar xzf aspell-0.60.6.1.tar.gz
+    pushd aspell-0.60.6.1
+    ./configure --prefix=$target && make
+    make install
+    ls -R $target
+    popd
+}
+
 function spell_check {
     sh $root/etc/spellcheck.sh
 }
@@ -79,6 +91,7 @@ function run_tests {
     echo "Testing completed"
 }
 
+install_aspell
 
 spell_check
 

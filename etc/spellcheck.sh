@@ -22,7 +22,9 @@ rm -f badwords
 
 if [ "$bads" != "" ]
 then
+    echo "--------------- misspelled words ---------------"
     echo "$bads"
+    echo "--------------- ---------------- ---------------"
     echo ERROR: aborting due to spelling errors
     exit 1
 fi

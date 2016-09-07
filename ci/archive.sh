@@ -18,7 +18,13 @@ hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 # shellcheck disable=SC1090
 source "$root/ci/vars.sh"
 
-function doit {
+
+function spell_check {
+    sh $root/etc/spellcheck.sh
+}
+
+
+function build_docs {
     indir=$1
     outdir=$2
 
@@ -73,13 +79,15 @@ function run_tests {
     echo "Testing completed"
 }
 
-[[ -d "$outs" ]] && rm -rf "$outs"
 
+spell_check
+
+[[ -d "$outs" ]] && rm -rf "$outs"
 mkdir "$outs"
 
-doit "$ins" "$outs"
-doit "$ins/userguide"   "$outs/userguide"
-doit "$ins/devguide"    "$outs/devguide"
+build_docs "$ins" "$outs"
+build_docs "$ins/userguide"   "$outs/userguide"
+build_docs "$ins/devguide"    "$outs/devguide"
 
 mkdir "$outs/presentations"
 # shellcheck disable=SC2086

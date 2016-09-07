@@ -16,11 +16,11 @@ Next, install pzsvc-file-watcher's dependencies:
     $ cd pzsvc-file-watcher
     $ [sudo] pip2 install -r requirements.txt
 
-pzsvc-file-watcher takes a few command line arguments, including the s3 bucket location, the user's AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS credentials are checked for in the `s3.key.access` and `s3.key.private` environment variables, and can also be supplied via command line. Additionally, the s3 bucket name can be specified in the `s3.bucket.name` environment variable, and the `PZUSER` environment variable is checked for the value of the user's Piazza UserName. In addition, the Piazza Gateway Host should be specified. The script also expects the `PZUSER` and `PZPASS` environment variables to be set, in order to interface with Piazza (these can remain unset if authentication is not needed for your instance of Piazza).
+pzsvc-file-watcher takes a few command line arguments, including the s3 bucket location, the user's AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS credentials are checked for in the `s3.key.access` and `s3.key.private` environment variables, and can also be supplied via command line. Additionally, the s3 bucket name can be specified in the `s3.bucket.name` environment variable, and the `PZKEY` environment variable is checked for the value of the user's Piazza API Key. In addition, the Piazza Gateway Host should be specified with `PZSERVER`. 
 
 An example of running `filewatcher.py` via the command line:
 
-    $ python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.{{PZDOMAIN}}' -a 'aws_access_key' -p 'aws_private_key' -u 'piazza_username'
+    $ python2 filewatcher.py -b 'aws_bucket_name' -g 'https://pz-gateway.{{PZDOMAIN}}' -a 'aws_access_key' -p 'aws_private_key' -k 'piazza_api_key'
 
 This will set up the pzsvc-file-watcher to poll continuously for new files in the `aws_bucket_name` bucket, and ingest those files (without hosting them!) to the Piazza service.
 

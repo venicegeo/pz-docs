@@ -38,7 +38,7 @@ _**These services are part of the Piazza Core. When these services are not avail
 
 
 ## Obtaining the ServiceController
-The repo containing the ServiceController is hosted on GitHub at the following location: https://github.com/venicegeo/pz-servicecontroller. Clone this repo to obtain the latest copy.  The ServiceController can be built and run standalone or from within predefined virtual machines using Vagrant.
+The repository containing the ServiceController is hosted on GitHub at the following location: https://github.com/venicegeo/pz-servicecontroller. Clone this repository to obtain the latest copy.  The ServiceController can be built and run standalone or from within predefined virtual machines using Vagrant.
 
 
 ## Building the Source

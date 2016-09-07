@@ -30,6 +30,6 @@ Cloud Foundry deployments are achieved by each project defining a *.manifest.yml
 
 ### Versioning
 
-Version numbers are associated with each production environment of Piazza. Major version numbers are tied to the Sprint that the code was pushed to (at the end of) and the minor version will be an incrementing integer that will reset at the beginning of every Sprint. GitHub repos will be tagged at the end of every Sprint with the name of that Sprint. A repository entitled `pz-release` will track the individual component versions and how they relate to an environment version.
+Version numbers are associated with each production environment of Piazza. Major version numbers are tied to the Sprint that the code was pushed to (at the end of) and the minor version will be an incrementing integer that will reset at the beginning of every Sprint. GitHub repositories will be tagged at the end of every Sprint with the name of that Sprint. A repository entitled `pz-release` will track the individual component versions and how they relate to an environment version.
 
 // vim: set syntax=asciidoc wrap:

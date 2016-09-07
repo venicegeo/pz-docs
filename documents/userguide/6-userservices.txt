@@ -49,7 +49,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 ** The `contractUrl` is an optional field containing additional detail information about the service.
 ** The `serviceId` will be filled in by Piazza.
 ** The `method` used to indicate the desired action to be performed on the user service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
-** The `resourceMetadata` fields has 3 subfields with the name, description of the service and the invocation method for the service.
+** The `resourceMetadata` field has 3 subfields with the name, description of the service and the invocation method for the service.
 
 NOTE: The description should be entered with some care because it will enable other users to search for your service.
 

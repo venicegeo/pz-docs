@@ -52,7 +52,7 @@ Endpoints related to managing geospatial data within Piazza.
 `POST /deployment`:: Access Request
 `GET /deployment/{{deploymentId}}`:: Access Fetch
 `GET /file/{dataId}`:: Access File
-`POST /data/metadata`:: Search Metadata Ingest *Where is the use case? TBD*
+`POST /data/metadata`:: Search Metadata Ingest *Where is the use case? TODO*
 
 
 ### Service Controller Jobs

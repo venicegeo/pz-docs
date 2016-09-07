@@ -79,7 +79,7 @@ Adds a list of one or more usernames and their respective roles
 Example payload:
 
     {
-      "russellorf": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
+      "russellbertrand": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
       "davidthomas": "abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service"
     }
 
@@ -87,7 +87,7 @@ Example output:
 
     {
       "Successes": [
-        "User 'russellorf' inserted with roles: abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
+        "User 'russellbertrand' inserted with roles: abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service",
         "User 'davidthomas' inserted with roles: abort,access,admin-stats,delete-service,execute-service,get,get-resource,ingest,list-service,read-service,register-service,search-service,update-service"
       ],
       "Failures": []
@@ -163,7 +163,7 @@ Returns an authentication decision (true or false) based on the provided usernam
 Example payload:
 
     {
-      "username":"mcmahojm",
+      "username":"mcmahonhenry",
       "credential":"credential"
     }
 

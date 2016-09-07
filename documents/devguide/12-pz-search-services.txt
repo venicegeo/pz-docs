@@ -34,7 +34,7 @@ Rudimentary logging provided through the Piazza Logger service, both diagnostic 
 
 To become familiar with the Search services, use data transfer tools such as https://curl.haxx.se[cURL] or UI data transfer tools such as https://www.getpostman.com[Postman] to interact with explicit Search service REST APIs.
 
-The Search services standardize on Java object definitions defined the pz-jobcommon github repo (https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/DataResource.java) as definitions of the JSON used in the ServiceController REST API.
+The Search services standardize on Java object definitions defined the pz-jobcommon github repository (https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/DataResource.java) as definitions of the JSON used in the ServiceController REST API.
 
 Mapping the DataResource as schema basis for ingest REST endpoint, for example:
 POST to https://pz-search-metadata-ingest.venicegeo.io/api/v1/data this raw JSON document:

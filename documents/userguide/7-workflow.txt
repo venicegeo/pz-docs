@@ -157,7 +157,7 @@ For reference, the 6 stars in the cronSchedule stand for:
 
 In some cron implementations, the rightmost asterisks can be omitted from the notation; this is not the case with the particular flavor of cron we are using.
 
-Additionally, cronSchedules can be spelled out using shorthand notation. These shorthands include:
+Additionally, cronSchedules can be spelled out using shorthand notation:
 
 .Shorthands
 |===
@@ -184,7 +184,7 @@ Additionally, cronSchedules can be spelled out using shorthand notation. These s
 | `0 0 * * * *`
 |===
 
-Lastly, cronSchedule can be specified using the `@every duration` notation, where duration is replaced by a Golang parsable https://golang.org/pkg/time/#Duration[time.Duration]. Examples include:
+Lastly, cronSchedule can be specified using the `@every duration` notation, where duration is replaced by a Go-parsable https://golang.org/pkg/time/#Duration[time.Duration]. Examples include:
 
 * `"cronSchedule": "@every 1h30m10s"` - send event every 1 hour, 30 minutes, 10 seconds
 * `"cronSchedule": "@every 30s"` - send event every 30 seconds

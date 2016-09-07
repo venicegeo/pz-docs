@@ -49,13 +49,13 @@ If you have `$PZSERVER` set to `pz-gateway.venicegeo.io`, the scripts will set `
 
 ## Some Notes About the Examples
 
-The code examples in this guide are presented as shell scripts that use `curl` to make the HTTP calls and JSON for the request and response payloads. To simplify the examples, the scripts rely on a setup script, helpfully named link:scripts/setup.sh[setup.sh], which will verify you have `$PZSERVER` and `$PZKEY` (or `~/.pzkey`) set correctly. It will also define some helpful aliases and functions to make the examples shorter, such as pre-setting some required optiuons for`curl`.
+The code examples in this guide are presented as shell scripts that use `curl` to make the HTTP calls and JSON for the request and response payloads. To simplify the examples, the scripts rely on a setup script, helpfully named link:scripts/setup.sh[setup.sh], which will verify you have `$PZSERVER` and `$PZKEY` (or `~/.pzkey`) set correctly. It will also define some helpful aliases and functions to make the examples shorter, such as pre-setting some required options for`curl`.
 
 Some of the example scripts require one or more input arguments. These are expected to be provided on the command-line as simple strings. The scripts will verify the right number of arguments was provided.
 
 The example scripts generally produce output. In most cases, the output will be a JSON object to `stdout`.
 
-As an extra aid for both learning and testing, the script link:scripts/runall.sh[runall.sh] is provided. This script runs each of the example scripts in order, passing the outputs from one to the inputs of the next, and verifying those outputs are correct. (To use `runall.sh` you must have the wonderfull tool link:https://stedolan.github.io/jq/[jq] installed.)
+As an extra aid for both learning and testing, the script link:scripts/runall.sh[runall.sh] is provided. This script runs each of the example scripts in order, passing the outputs from one to the inputs of the next, and verifying those outputs are correct. (To use `runall.sh` you must have the wonderful tool link:https://stedolan.github.io/jq/[jq] installed.)
 
 
 ## Hello!
@@ -78,7 +78,7 @@ and it should return a message similar to this:
 
     Hello, Health Check here for pz-gateway.
 
-NOTE: You should verify that the health check script works correctly before continuing with this tutorial. If it does not work, make sure you have the right server name, a valid API key,and correctly set `$PZSEVER` and `$PZKEY` environment variables.
+NOTE: You should verify that the health check script works correctly before continuing with this tutorial. If it does not work, make sure you have the right server name, a valid API key,and correctly set `$PZSERVER` and `$PZKEY` environment variables.
 
 
 ## Other Helpful Tools

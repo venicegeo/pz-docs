@@ -1,6 +1,6 @@
 ## Design and Development
 
-Our efforts to structure an Agile Framework, with internal processes that work for the RB GeoINT Services development teams are consistent across the program. We follow traditional Agile/Scrum ceremonies. We strive to meet our sprint commitments, however we believe that being responsive to our customer and external user is our highest priority.
+Our efforts to structure an Agile Framework, with internal processes that work for the RB GEOINT Services development teams are consistent across the program. We follow traditional Agile/Scrum ceremonies. We strive to meet our sprint commitments, however we believe that being responsive to our customer and external user is our highest priority.
 
 
 ### Sprints

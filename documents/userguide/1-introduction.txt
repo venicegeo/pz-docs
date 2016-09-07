@@ -4,7 +4,7 @@ Welcome to the Piazza User Guide. It contains descriptions of Piazza's main feat
 
 ## Piazza In Brief
 
-Piazza is a set of open source, cloud-based services aimed at helping users (developers) build GeoInt applications and services. These services are exposed via REST endpoints, providing developers with the ability to:
+Piazza is a set of open source, cloud-based services aimed at helping users (developers) build GEOINT applications and services. These services are exposed via REST endpoints, providing developers with the ability to:
 
 Load data into the system:: Given a reference to an external data source, Piazza can extract metadata and other information about that data and record it locally under a unique ID. Piazza now "knows" about that data. These data sources can be files, such as a GeoTIFF in an S3 bucket, or features, such as from a Shapefile or PostGIS database. (Note that while Piazza typically needs to read the data source's contents, it does not need to store a copy of it locally.)
 

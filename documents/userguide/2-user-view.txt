@@ -32,4 +32,4 @@ Piazza can be used to help implement all of these operations.
 .. When _each of the algorithms completes and if the confidence is high_, then _perform a database insert_.
 . Within some UI application, poll Piazza for manual-check-needed alerts: when found, present the data to the user for evaluation.
 
-A variation of this example exercise is provided in the Piazza distribution.footnote:[TBD]
+A variation of this example exercise is provided in the Piazza distribution.footnote:[TODO]

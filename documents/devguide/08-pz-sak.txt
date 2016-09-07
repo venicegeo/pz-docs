@@ -24,7 +24,7 @@ This app is setup as a static web application and is a single module AngularJS a
 ### Steps
 
 . Copy pz-sak/conf/nginx.conf to nginx-1.8.1/conf
-. Modify nginx.conf to point root to your local copy of the repos /public directory (line 50)
+. Modify nginx.conf to point root to your local copy of the repository's /public directory (line 50)
 . From a command line run `start nginx.exe`
 . Go to http://localhost
 

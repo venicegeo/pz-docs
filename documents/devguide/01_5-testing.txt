@@ -2,7 +2,7 @@
 
 ### Introduction
 
-Piazza enables the NSG community to exploit and disseminate GeoINT in an open source cloud-based platform.  GeoINT developers and analyst can build and share apps, UI’s, data layers, analytic services, and analytic products in an unclassified secure environment.  Developers using Piazza will reach across agencies to access geo data, services (alerts, searches, re-formatting), GeoINT algorithms, and products.  Piazza offers a common baseline and common reference libraries with open interfaces like OGC, REST, CRUD, and Geo JSON.  Piazza is currently deployed on the CACI/BITS GeoINT Services Cloud.
+Piazza enables the community to exploit and disseminate GEOINT in an open source cloud-based platform.  GEOINT developers and analyst can build and share apps, UI’s, data layers, analytic services, and analytic products in an unclassified secure environment.  Developers using Piazza will reach across agencies to access geo data, services (alerts, searches, re-formatting), GEOINT algorithms, and products.  Piazza offers a common baseline and common reference libraries with open interfaces like OGC, REST, CRUD, and Geo JSON.  Piazza is currently deployed on the target cloud.
 
 Piazza will provide developers a REST API to:
 
@@ -22,7 +22,7 @@ This Test Plan for Piazza supports the following objectives:
 * Defines the Test Strategy
 
 ### Scope
-This test plan covers unit, integration and system, security testing, application/user acceptance, and regressions testing of Pizza micro services.  Piazza software testing engineers are embedded with developers in an agile development process.  This is a plan to recursively test Piazza micro service functionality while adding tests for emerging functionality to meet fluid customer requirements.  Performance and load testing are not included at this time. Unit testing is done by developers in the developer space (int).  Integration, application, and a regressions testing is done by the testing team in the testing space (stage).  All spaces are deployed in the unclassified testing environment of the CACI/BITs cloud.
+This test plan covers unit, integration and system, security testing, application/user acceptance, and regressions testing of Pizza micro services.  Piazza software testing engineers are embedded with developers in an agile development process.  This is a plan to recursively test Piazza micro service functionality while adding tests for emerging functionality to meet fluid customer requirements.  Performance and load testing are not included at this time. Unit testing is done by developers in the developer space (int).  Integration, application, and a regressions testing is done by the testing team in the testing space (stage).  All spaces are deployed in the target cloud.
 
 ### Test Strategy
 
@@ -39,7 +39,7 @@ A suite of automated tests will be developed to test the basic functionality of 
 User Acceptance testing requires a register service and user interface to test the end user experience.  This should only be conducted when all immediate, urgent, and high level bug reports from Piazza integration tests have been closed.  The purpose of these tests is to confirm the system is developed according to the specified user requirements and is ready for operational use.
 
 ### Environment Requirements
-Testing engineers use swagger and postman unit test to build API and Integration Postman Collections.  This requires Postman app, Newman shell running in CACI/Bits cloud, and GitHub for a testing repository.  Testing also requires an environment that is stable throughout the duration of a sprint and separate from the developing environment.
+Testing engineers use swagger and postman unit test to build API and Integration Postman Collections.  This requires Postman app, Newman shell running in the target cloud, and GitHub for a testing repository.  Testing also requires an environment that is stable throughout the duration of a sprint and separate from the developing environment.
 
 ### Bug Reports and Change Requests
 

@@ -17,23 +17,23 @@ link:index.pdf[_PDF_]
 
 include::../common/intro.txt[]
 
-include::1-introduction.adoc[]
+include::1-introduction.txt[]
 
-include::2-user-view.adoc[]
+include::2-user-view.txt[]
 
-include::3-hello.adoc[]
+include::3-hello.txt[]
 
-include::4-load-access.adoc[]
+include::4-load-access.txt[]
 
-include::5-search.adoc[]
+include::5-search.txt[]
 
-include::6-userservices.adoc[]
+include::6-userservices.txt[]
 
-include::7-workflow.adoc[]
+include::7-workflow.txt[]
 
-include::8-endtoend.adoc[]
+include::8-endtoend.txt[]
 
-include::9-notes.adoc[]
+include::9-notes.txt[]
 
 include::../common/support.txt[]
 

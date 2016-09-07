@@ -33,7 +33,7 @@ function install_aspell {
     bunzip2 aspell6-en-2016.06.26-0.tar.bz2
     tar xf aspell6-en-2016.06.26-0.tar
     cd aspell6-en-2016.06.26-0
-    ./configure --prefix=$target --vars ASPELL=$target/aspell-bin/bin/aspell
+    ./configure --vars ASPELL=$target/aspell-bin/bin/aspell #--prefix=$target
     make
     make install
     popd

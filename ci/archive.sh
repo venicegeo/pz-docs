@@ -28,6 +28,14 @@ function install_aspell {
     ./configure --prefix=$target && make
     make install
     ls -R $target
+
+    curl ftp://ftp.gnu.org/gnu/aspell/dict/en/aspell6-en-2016.06.26-0.tar.bz2 > aspell6-en-2016.06.26-0.tar.bz2
+    bunzip2 aspell6-en-2016.06.26-0.tar.bz2
+    tar xf aspell6-en-2016.06.26-0.tar
+    cd aspell6-en-2016.06.26-0
+    ./configure --vars ASPELL=$target/aspell-bin/aspell
+    make
+    make install
     popd
 }
 

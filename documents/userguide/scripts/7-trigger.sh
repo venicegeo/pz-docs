@@ -11,8 +11,8 @@ erviceId=$2
 
 trigger='{
     "name": "High Severity",
+    "eventTypeId": "'"$eventTypeId"'",
     "condition": {
-        "eventTypeIds": ["'"$eventTypeId"'"],
         "query": { "query": { "match_all": {} } }
     },
     "job": {
@@ -22,7 +22,12 @@ trigger='{
             "data": {
                 "serviceId": "'"$serviceId"'",
                 "dataInputs": {},
-                "dataOutput": [ { "mimeType": "application/json", "type": "text" } ]
+                "dataOutput": [
+                    { 
+                        "mimeType": "application/json", 
+                        "type": "text"
+                    }
+                ]
             }
         }
     },

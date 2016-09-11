@@ -19,21 +19,19 @@ include::../common/intro.txt[]
 
 include::1-introduction.txt[]
 
-include::2-user-view.txt[]
+include::2-hello.txt[]
 
-include::3-hello.txt[]
+include::3-load-access.txt[]
 
-include::4-load-access.txt[]
+include::4-search.txt[]
 
-include::5-search.txt[]
+include::5-userservices.txt[]
 
-include::6-userservices.txt[]
+include::6-workflow.txt[]
 
-include::7-workflow.txt[]
+include::7-endtoend.txt[]
 
-include::8-endtoend.txt[]
-
-include::9-notes.txt[]
+include::8-notes.txt[]
 
 include::../common/support.txt[]
 

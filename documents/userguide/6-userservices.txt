@@ -1,28 +1,38 @@
 # User Services
 
-Piazza allows users to discover, manage and invoke external web services known as *User Services*. A user service is defined as a set of web technologies used for exchanging data between software applications over a network, such as the Internet. Web technologies such as HTTP, JSON and XML are used because they allow for data to be exchanged in a platform-independent manner.
+Piazza allows users to discover, manage and invoke external web services which are referred to as *User Services*.  A *web service* is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON and XML are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
 
 Using Piazza, users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image and then notifying an analyst that image has finished processing and is ready for review.
 
-Piazza provides a RESTful API allowing users to perform user service management activities such as:
+Piazza provides a REST API allowing users to perform user service management activities such as:
 
 . Register user services for search/discovery (See the <<Search>> section for details)
 . Update information on the user service (e.g. URL, name, version and other metadata)
 . Remove a user service from the registry
 . View details about registered user services
-. Invoke a registered user service
+. Invoke a registered user service to perform some sort of task
 . Combine user services to perform various tasks (See the <<Workflow Service>> section for details)
 
-While Piazza’s overall goal is to provide users with the ability to register and use existing RESTful user services, to work best with Piazza, there are some guidelines on writing user services. See the <<How to Write Your Own User Services>> section for details on how to write user services to be used by Piazza.
+While Piazza’s overall goal is to provide users with the ability to register and use existing REST user services, to work best with Piazza, there are some guidelines on writing user services. See the <<How to Write Your Own User Services>> section for details on how to write user services to be used by Piazza.
+
+## Types of User Services
+
+Piazza recognizes that their are two types of _User Services_, *synchronous* web services and *asynchronous* web services.  Synchronous web services, when invoked by a client, require the client to wait (or block) until a response and or results are returned before the client can proceed with additional work.
+  
+
+Sometimes however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the web service processes the submitted request. To support this need, Piazza provides support for  asynchronous user services.  See the <<How to Write Your Own User Services>> section for details on how to write asynchronous user services.
+
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of instances needed.
-
+chi
 The following sections will use a "Hello World" service. This service basically just says hello. It is deployed in our cloud for testing services.
 
 
 ## Registration
 
-A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza users. To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
+A user service must be _registered_ with Piazza before it can be invoked or discovered by Piazza users.  
+
+To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
 
 
 ### Hello Example service registered with `GET` method

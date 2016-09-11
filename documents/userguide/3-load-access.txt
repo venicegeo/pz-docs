@@ -182,7 +182,7 @@ include::scripts/4-nonhosted-wms.sh[tags=public]
 
     $ ./4-nonhosted-wms.sh {dataId}
 
-The response from this request will return a job id, because ssetting up a WMS layer takes time: this is a long-running job. Checking the status of the job is using the id, as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
+The response from this request will return a job id, because setting up a WMS layer takes time: this is a long-running job. Checking the status of the job is using the id, as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
 
 [source,json]
 ----

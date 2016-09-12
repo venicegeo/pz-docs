@@ -39,8 +39,8 @@ function install_aspell {
     popd
 }
 
-function spell_check {
-    sh $root/etc/spellcheck.sh
+function aspell_check {
+    sh $root/etc/spellcheck.sh $1
 }
 
 
@@ -100,8 +100,8 @@ function run_tests {
 }
 
 install_aspell
-
-spell_check
+aspell_check $root/aspell-bin/bin/aspell
+#aspell_check aspell
 
 [[ -d "$outs" ]] && rm -rf "$outs"
 mkdir "$outs"

@@ -30,15 +30,15 @@ link:scripts/4-hosted-load.sh[4-hosted-load.sh]
 include::scripts/4-hosted-load.sh[tags=public]
 ----
 
-The `curl` command is used to send both a JSON payload and the contents fo a binary file to the `/data/file` endpoint. Because we are passing in both kinds fo data, we use a mulitpart `POST` body and the ContentType accordingly; in most of the other examples we will see, `ContentType` is set to the usual `application/json`.
+The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and the ContentType accordingly; in most of the other examples we will see, `ContentType` is set to the usual `application/json`.
 
-In the JOSN request body, the `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
+In the JSON request body, the `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
 
 Run the script from the command line as follows:
 
     $ ./4-hosted-load.sh myfirstfile "this is my first file"
 
-In this case, `myfirstfile` is the input to the script that be used for the custome metadata field `name` and "this is my first file" is for the `description` field.
+In this case, `myfirstfile` is the input to the script that be used for the custom metadata field `name` and "this is my first file" is for the `description` field.
 
 The response from this request will be a Piazza response object. It contains a ubiquitous `type` field that describes what kind of data is being returned in the `data` field. In this case, with a `job` response object, the `data` field holds the id of the job that was created:
 
@@ -202,7 +202,7 @@ The response from this request will return a job id, because setting up a WMS la
     },
     "status" : "Success",
     "jobType" : "AccessJob",
-    "createdBy" : "gerlekmp",
+    "createdBy" : "aristophanes",
     "progress" : { },
     "jobId" : "a0f2ad2a-06cb-43ff-a256-17ca56b5f4a2"
   }

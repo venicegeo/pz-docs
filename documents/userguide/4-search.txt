@@ -9,9 +9,7 @@ Note that dding data to the search index is an internal Piazza function and so d
 
 ## Setup
 
-To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we only care about the metadata.) And to do that, we need a script that loads the file with a given name and description and returns the corresponding data resource id: we wrote this script already, link:scripts/4-hosted-load.sh[4-hosted-load.sh].
-
-We will call that file loader three times, and the output should be three ids:
+To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we only care about the metadata.) And to do that, we need a script that loads the file with a given name and description and returns the corresponding data resource id: we wrote this script already, link:scripts/4-hosted-load.sh[4-hosted-load.sh]. We will call it three times.
 
 link:scripts/5-load-files.sh[5-load-files.sh]
 [source,bash]
@@ -19,16 +17,14 @@ link:scripts/5-load-files.sh[5-load-files.sh]
 include::scripts/5-load-files.sh[tags=public]
 ----
 
-Sample invocation (requires both 5-load-file.sh and 5-load-files.sh in same directory):
+This will return the information about three load operations:
 
     $ ./5-load-files.sh
 
 
-## Filtered GET Example
+## Filtered `GET` Example
 
-Now that we have the files loaded, we will perform a _filtered GET_. This script takes one argument: the keyword to search for. The script will echo the response given by the server containing the metadata that matched the keyword that was searched for. Execute this script by passing in the keyword:
-
-    $ ./5-filtered-get.sh "dog"
+Now that we have the files loaded, we will perform a filtered `GET`. This script takes one argument: the keyword to search for. The server will return a response with the metadata objects that matched the keyword. 
 
 link:scripts/5-filtered-get.sh[5-filtered-get.sh]
 [source,bash]
@@ -36,18 +32,24 @@ link:scripts/5-filtered-get.sh[5-filtered-get.sh]
 include::scripts/5-filtered-get.sh[tags=public]
 ----
 
+Execute this script by passing in the keyword:
+
+    $ ./5-filtered-get.sh "dog"
+
 
 ## Query Example
 
-We can additionally perform a more advanced query on data. This is done via a POST request to the `/data/query` endpoint, with the `data` field specifying the query to be performed. For example:
-
-    $ ./5-query.sh "kitten"
+We can perform a more advanced query on data with a `POST` request to the `/data/query` endpoint, with the post body containing the JSON query object. 
 
 link:scripts/5-query.sh[5-query.sh]
 [source,bash]
 ----
 include::scripts/5-query.sh[tags=public]
 ----
+
+To execute:
+
+    $ ./5-query.sh "kitten"
 
 Visit the <<Elasticsearch Query Syntax>> section for more details on the Elasticsearch DSL.
 

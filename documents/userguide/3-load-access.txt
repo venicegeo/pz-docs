@@ -36,9 +36,9 @@ In the JOSN request body, the `dataType.type` field denotes the file type of the
 
 Run the script from the command line as follows:
 
-    $ ./4-hosted-load.sh myfirstfile
+    $ ./4-hosted-load.sh myfirstfile "this is my first file"
 
-In this case, `myfirstfile` is the input to the script that be used for the custome metadata field `name`.
+In this case, `myfirstfile` is the input to the script that be used for the custome metadata field `name` and "this is my first file" is for the `description` field.
 
 The response from this request will be a Piazza response object. It contains a ubiquitous `type` field that describes what kind of data is being returned in the `data` field. In this case, with a `job` response object, the `data` field holds the id of the job that was created:
 

@@ -34,8 +34,6 @@ A user service must be _registered_ with Piazza before it can be invoked or disc
 
 To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
 
-The *”isAsynchronous”* flag is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to "true" if the user service supports the required Piazza endpoints. This field can be set to "false", or omitted, if the User Service does not intend to implement the asynchronous endpoints and will instead return the results synchronously.
-
 
 ### Hello Example service registered with `GET` method
 
@@ -47,26 +45,21 @@ The service is registered by performing a `POST` request to the `/service` endpo
     "url": "http://pzsvc-hello.venicegeo.io/",
     "contractUrl": "http://helloContract",
     "method" : "GET",
-    "isAsynchronous" : "false",
     "resourceMetadata": {
         "name": "pzsvc-hello service",
         "description": "Hello World Example",
-        "classType": {
-            "classification": "UNCLASSIFIED"
-         }
+        "classType": "unclassified"
     }
 }
 ----
 
-* https://pz-gateway.venicegeo.io/service is the endpoint for registering the user service with the following required JSON payload items:
-** The `url` field is the URL for invoking the service.  This is the "Root" URL for the Service.
-** The `contractUrl` field containing additional detail information about the service.
-** The `method` field used to indicate the desired action to be performed on the service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
-** The `isAsynchronous` flag is used to indicate whether the service is an asynchronous user service and implements the asynchronous endpoints.
+* https://pz-gateway.venicegeo.io/service is the endpoint for registering the service.
+* Inside the curly brackets is a JSON object describing the service.
+** The `url` field is the URL for invoking the service.
+** The `contractUrl` is an optional field containing additional detail information about the service.
+** The `serviceId` will be filled in by Piazza.
+** The `method` used to indicate the desired action to be performed on the user service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
 ** The `resourceMetadata` field has 3 subfields with the name, description of the service and the invocation method for the service.
-*** The `name` field is used to identify the name of the service.  
-*** The `description` field is used to describe the service.
-*** The `classType` field is used to indicate the classification of the registered service.
 
 NOTE: The description should be entered with some care because it will enable other users to search for your service.
 
@@ -89,19 +82,9 @@ A script registering the aforementioned service and returning the `serviceId` ca
 
 ## Invocation
 
-Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`.  The `url` parameter in service registration, also referred to as the *Root* URL for the service, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
-
-For details on how to invoke a user service, see http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API]
-
-Clients invoking a user service will get a *JobResponse) JSON payload response in the following format:
-```
-{"type":"job","data":{"jobId”:”z42a2ea3-2e16-4ee2-bf74-fa7c792d1247"}}
-```
-The `jobId` field contains a unique identifier of the specific running instance of the user service. This Id is used in subsequent requests to obtain the status of the job and to perform other job management capabilities.
-
 ### Hello Example service invoked with `GET` method
 
-A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the `serviceId` returned by the register script as the first argument to the script:
+The service is invoked by sending a `POST` request to the pz-gateway job endpoint `https://pz-gateway.venicegeo.io/job`. A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the `serviceId` returned by the register script as the first argument to the script:
 
     $ ./6-execute-get.sh {{serviceId}}
 
@@ -125,14 +108,13 @@ The return value is not the result of the service call. The execute-service call
 ----
 {
     "type": "job",
-    “data” : 
-             {“jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847”}
+    "jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847"
 }
 ----
 
 ### Hello Example service invoked with `POST` method
 
-When invoking a service that requires a POST body for input, the body message is specified in the content field, the `type` is `"body"` and the `mimeType` has to be specified. Getting the `jobId` is exactly the same as with the `GET` request.
+When executing a service that requires a POST body for input, the body message is specified in the content field, the `type` is `"body"` and the `mimeType` has to be specified. Getting the `jobId` is exactly the same as with the `GET` request.
 
 [source,json]
 ----
@@ -153,52 +135,9 @@ When invoking a service that requires a POST body for input, the body message is
 ----
 
 
-### Getting the Status and Results of an Invocation
+## Getting Status and Results
 
-The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId` is the Id returned when executing the service.  Clients should call this endpoint to determine the status of a running service.
-
-#### Status Details
-The granularity of the status provided depends on the type of user service that has been invoked.  For synchronous user services, the status returned may be in the following format:
-
-```
-{
-    "status":"Running"
-}
-```
-
-The acceptable Statuses are as follows: Pending, Running, Success, Cancelled, Error, Fail. 
-
-For asynchronous user services, status information may also include a "progress" field which is able to contain a percentage completion for the job:
-```
-{
-    "status":"Running", 
-    "progress" : {
-        "percentComplete": 80
-    }
-}
-```
-
-As the User Service processes this Instance, it should update the status of the Instance as needed. When the User Service has completed the work for this Instance, then it should set the Status of the Instance to "Success". Piazza, upon seeing a "Success" status, will then initiate a request to the Results endpoint in order to fetch the results of this Instance when ready. 
-On Error, the Status endpoint will also report error information. If the User Service encounters an Error during execution, it can report this back in the Status response:
-```
-{
-    "status":"Error", 
-    "result" : {
-        "type": "error",
-        "message": "Things went wrong.",
-        "details": "Perhaps a Stack Trace here."
-    }
-}
-```
-
-For details on the *JobStatusResponse* JSON model that is provided as status, see the http://pz-swagger.int.geointservices.io/#!/Job/getJobStatusUsingGET[Piazza API Job Response].
-
-####  Getting the Results
-
-
-Once the user service has finished executing, the resulting data can be accessed by the client. Using the provided dataId, clients can retrieve the data results by sending a `GET` to the Piazza API data endpoint.  For details on using this endpoint, see the http://pz-swagger.int.geointservices.io/#!/Data/getMetadataUsingGET[Piazza API].
-
-The example below shows an example of JobResponse depicting a successful execution.
+The status is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId` is the id returned when executing the service. On success the resulting status is
 
 [source,json]
 ----
@@ -246,11 +185,6 @@ Run the link:scripts/data-info.sh[data-info.sh] script to check the result of th
     $ ./data-info.sh {{dataId}}
 
 
-### Cancelling an Invocation
-
-During execution of a Piazza Job, the client who invoked a user service may also request to cancel or abort that job.  Using the `jobId` that was provided from the invocation, a client can cancel a job using the DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.int.geointservices.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
-
-
 ## Other Examples
 
 For more examples on how to register and execute your service, see the http://pz-docs.int.geointservices.io/devguide/index.html[Piazza Developer's Guide].
@@ -277,6 +211,7 @@ The contact information for each user service is located in the `resourceMetadat
     }
 }
 ----
+
 
 ### Designing Your User Service
 

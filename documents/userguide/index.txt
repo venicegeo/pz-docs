@@ -4,6 +4,7 @@ The VeniceGeo Team <venice@radiantblue.com>
 __DATE__
 :doctype: book
 :toc: left
+:toclevels: 3
 :source-highlighter: prettify
 :icons: font
 // Don't wrap lines; horizontally scroll

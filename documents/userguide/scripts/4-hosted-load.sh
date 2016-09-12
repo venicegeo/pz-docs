@@ -3,9 +3,11 @@ set -e
 source setup.sh
 
 check_arg $1 name
+check_arg $2 description
 
 # tag::public[]
 name=$1
+description=$2
 
 data='{
     "type": "ingest",
@@ -16,7 +18,7 @@ data='{
         },
         "metadata": {
             "name": "'"$name"'",
-            "description": "mydescription"
+            "description": "'"$description"'"
         }
     }
 }'

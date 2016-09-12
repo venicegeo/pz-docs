@@ -9,10 +9,13 @@ service='{
     "url": "'"$hello"'",
     "contractUrl": "http://helloContract",
     "method": "GET",
+    "isAsynchronous", "false",
     "resourceMetadata": {
         "name": "pzsvc-hello service",
         "description": "Hello World Example",
-        "classType": "unclassified"
+        "classType": {
+           "classification": "UNCLASSIFIED"
+        }
     }
 }'
 

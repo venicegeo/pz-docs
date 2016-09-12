@@ -18,9 +18,13 @@ While Piazza’s overall goal is to provide users with the ability to register a
 ## Types of User Services
 
 Piazza recognizes that their are two types of _User Services_, *synchronous* web services and *asynchronous* web services.  Synchronous web services, when invoked by a client, require the client to wait (or block) until a response and or results are returned before the client can proceed with additional work.
-  
 
-Sometimes however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the web service processes the submitted request. To support this need, Piazza provides support for  asynchronous user services.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write asynchronous user services.
+image::images/PZ-service-sync.png[title=“Synchronous Web Service“]
+
+Sometimes however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the web service processes the submitted request. 
+image::images/PZ-service-async.png[title=“Asynchronous Web Service“]
+
+To support this need, Piazza provides support for  asynchronous user services.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write asynchronous user services.
 
 
 NOTE: Piazza currently requires you have the user service instance deployed at a public URL. In the future, the user service will be a deployable container (or jar file), so Piazza can scale the number of instances needed.

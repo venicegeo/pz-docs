@@ -164,7 +164,7 @@ The user may create an event of that event type to indicate some interesting con
 
 ### Scheduled Events
 
-An evente can specify a `cronSchedule` field, which alters the mechanics of the event triggering process. The `cronSchedule` field specifies a schedule at which to repeat the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron related resources. 
+An event can specify a `cronSchedule` field, which alters the mechanics of the event triggering process. The `cronSchedule` field specifies a schedule at which to repeat the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron related resources. 
 
 Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. The cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go, which differs slightly from traditional `cron(1)` syntax: the first asterisk is the *seconds* field. This means:
 
@@ -232,7 +232,7 @@ Execute the script as:
 
 ## The Alert
 
-Whenever the condition of a trigger is met, the system will create an alert object. The user can `GET` a list of alerts from the `/alert` endpoint. The alert object contains the ids of the triggert that was hit and the evente which caused it. It also contains a generated `alertId`. For example:
+Whenever the condition of a trigger is met, the system will create an alert object. The user can `GET` a list of alerts from the `/alert` endpoint. The alert object contains the ids of the trigger that was hit and the event which caused it. It also contains a generated `alertId`. For example:
 
 [source,json]
 ----

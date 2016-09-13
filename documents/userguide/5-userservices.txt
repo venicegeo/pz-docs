@@ -289,6 +289,9 @@ If you anticipate that your user service will be doing time consuming activities
 #### Service Invocation Response
 For Piazza to track and work with your asynchronous service, a unique identifier, or ‘jobId’ needs to be generated and returned to Piazza when the service is invoked.
 
+image::images/PZ-async-user-service.png[title=“Invocation of an Asynchronous User Service“]
+
+
 The "url" parameter in Service Registration, also referred to as the "Root" URL for the Service, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP Method, and will be expected to return a JSON payload with the following format:
 
 ```

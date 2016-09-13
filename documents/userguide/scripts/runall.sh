@@ -83,8 +83,8 @@ Test4b() {
 Test5() {
     echo "---------------- Test5 ----------------"
 
-    name=kittens`unique`
-    description="my description"
+    name=kittens-`unique`
+    description="kittens"
     echo "4-hosted-load.sh..."
     jobId=`sh 4-hosted-load.sh $name $description | jq -r .data.jobId`
     sleep 3

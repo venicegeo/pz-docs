@@ -24,7 +24,7 @@ Test4a() {
     filename="download.dat"
     
     echo "4-hosted-load..."
-    jobId=`sh 4-hosted-load.sh $name | jq -r .data.jobId`
+    jobId=`sh 4-hosted-load.sh $name $description | jq -r .data.jobId`
     echo "    jobId: $jobId"
     sleep 3
     dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
@@ -84,8 +84,9 @@ Test5() {
     echo "---------------- Test5 ----------------"
 
     name=kittens`unique`
-    echo "5-load-file..."
-    jobId=`sh 5-load-file.sh $name | jq -r .data.jobId`
+    description="my description"
+    echo "4-hosted-load.sh..."
+    jobId=`sh 4-hosted-load.sh $name $description | jq -r .data.jobId`
     sleep 3
     dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
@@ -230,4 +231,4 @@ Test4b
 #BUG Test5
 Test6
 Test7
-#BUG Test8
+Test8

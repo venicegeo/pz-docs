@@ -22,6 +22,7 @@ Piazza recognizes that their are two types of _User Services_, *synchronous* web
 image::images/PZ-service-sync.png[title=“Synchronous Web Service“]
 
 Sometimes however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the web service processes the submitted request. 
+
 image::images/PZ-service-async.png[title=“Asynchronous Web Service“]
 
 To support this need, Piazza provides support for  asynchronous user services.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write asynchronous user services.

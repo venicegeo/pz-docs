@@ -23,7 +23,7 @@ image::images/PZ-service-sync.png[Synchronous, 600 900,align="center", title=Syn
 
 Sometimes however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the user service processes the submitted request. 
 
-image::images/PZ-service-async.png[Asynchronous, 600 900,align=“center", title=Asynchronous Web Service]
+image::images/PZ-service-async.png[Asynchronous, 600 900,align="center", title=Asynchronous Web Service]
 
 To support this need, Piazza provides support for  asynchronous user services.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write asynchronous user services.
 
@@ -292,13 +292,19 @@ In the example above, Piazza will use the jobId value of _123456_ as the Id for 
 
 The image below shows details on the interaction between Piazza and the User service during service invocation.
 
-image::images/PZ-async-invoke.png[Asynchronous, 600 900,align=“center", title=Piazza & User Service Interaction]
+image::images/PZ-async-invoke.png[Asynchronous, 600 900,align="center", title=Piazza & User Service Interaction]
 
 #### Status Endpoint
 
-For Piazza to be able o query the status of your user service a *Status* endpoint has to be implemented.  The endpoint */status/{jobId}* and path variable need to be added to the Root URL of the service with support of the HTTP GET method.  For example, if the Root URL is "http://service/analysis" then Piazza will infer the Status URL as HTTP GET "http://service/analysis/status/{jobID}". 
+For Piazza to be able to query the status of your user service a *Status* endpoint has to be implemented.  The endpoint */status/{jobId}* and path variable need to be added to the Root URL of the service with support of the HTTP GET method.  For example, if the Root URL is "http://service/analysis" then Piazza will infer the Status URL as HTTP GET "http://service/analysis/status/{jobID}". 
 
-Once an instance of your user service has been started (by Piazza calling the invocation endpoint), then Piazza will periodically call the Status endpoint in order to determine the current progress of this instance. This includes the Status of the Service, and any Progress information. Your status endpoint should response with the following JSON payloads.  
+Once an instance of your user service has been started (by Piazza calling the invocation endpoint), Piazza will periodically call the Status endpoint in order to determine the current progress of this instance. This includes the Status of the Service, and any Progress information. 
+
+The figure below shows the interaction between Piazza and your user service.
+
+image::images/PZ-async-status.png[Asynchronous Status, 600 900,align="center", title=Piazza & User Service Status Interaction]
+
+Your status endpoint should response with the following JSON payloads.  
 
 For example:
 ```

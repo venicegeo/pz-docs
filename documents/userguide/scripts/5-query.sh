@@ -13,5 +13,5 @@ query='{
     }
 }'
 
-$curl -X POST -d "$query" $PZSERVER/data/query
+$curl -X POST -d "$query" $PZSERVER/data/query?perPage=100&page=0
 # end::public[]

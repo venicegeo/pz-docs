@@ -93,18 +93,18 @@ Test5() {
     actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
     if [ $actual != $name ]
     then
-        echo FAIL
+        echo FAIL 50
         exit 1
     fi
     
     sleep 5
 
     echo "5-query.sh..."
-    result=`sh 5-query.sh $name #| jq -r '.data[0].dataId'`
+    result=`sh 5-query.sh $name | jq -r '.data[0].dataId'`
     echo "    result: $result"
     if [ "$dataId" != "$result" ]
     then
-        echo FAIL
+        echo FAIL 51
         exit 1
     fi
 
@@ -113,7 +113,7 @@ Test5() {
     echo "    result: $result"
     if [ "$dataId" != "$result" ]
     then
-        echo FAIL
+        echo FAIL 52
         exit 1
     fi
 
@@ -228,7 +228,7 @@ Test8() {
 Test3
 Test4a
 Test4b
-#BUG Test5
+Test5
 Test6
 Test7
 Test8

@@ -290,6 +290,10 @@ The "url" parameter in Service Registration, also referred to as the "Root" URL 
 
 In the example above, Piazza will use the jobId value of _123456_ as the Id for tracking your user service execution instance.
 
+The image below shows details on the interaction between Piazza and the User service during service invocation.
+
+image::images/PZ-async-invoke.png[Asynchronous, 600 900,align=“center", title=Piazza & User Service Interaction]
+
 #### Status Endpoint
 
 For Piazza to be able o query the status of your user service a *Status* endpoint has to be implemented.  The endpoint */status/{jobId}* and path variable need to be added to the Root URL of the service with support of the HTTP GET method.  For example, if the Root URL is "http://service/analysis" then Piazza will infer the Status URL as HTTP GET "http://service/analysis/status/{jobID}". 

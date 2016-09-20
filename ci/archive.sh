@@ -99,8 +99,8 @@ function run_tests {
     echo "Testing completed"
 }
 
-#install_aspell
-#aspell_check $root/aspell-bin/bin/aspell
+install_aspell
+aspell_check $root/aspell-bin/bin/aspell
 #aspell_check aspell
 
 [[ -d "$outs" ]] && rm -rf "$outs"

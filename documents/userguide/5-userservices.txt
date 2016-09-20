@@ -348,7 +348,7 @@ When your user service reports back a *Success* status, then Piazza will initiat
 For example, if the Root URL is _http://service/analysis_ then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{jobID}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional Synchronous User Service. 
 
 
-When Piazza initiates a successful call to the results endpoint of a wervice, it should be considered a guarantee that Piazza will make no further queries related to that execution instance.
+When Piazza initiates a successful call to the results endpoint of a service, it should be considered a guarantee that Piazza will make no further queries related to that execution instance.
 
 ### Cancellation
 

@@ -13,7 +13,7 @@ Piazza is not intended to be a storage system for user data and so normally only
 
 In the no-host case, Piazza will need to have read-access to the file and in some cases will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
 
-Piazza also supports a _hosted_ model in which the data is copied locally for metadata extraction but _not_ deleted. This is used for working files and other sorts of temporary storage; it is not intended for long-term, persistent data storage.
+Piazza also supports a _hosted_ model in which the data is copied locally for metadata extraction but _not_ (immediately) deleted. This is used for working files and other sorts of temporary storage; it is not intended for long-term, persistent data storage.
 
 
 ### Loading an Image (Hosted Model)
@@ -30,7 +30,7 @@ link:scripts/4-hosted-load.sh[4-hosted-load.sh]
 include::scripts/4-hosted-load.sh[tags=public]
 ----
 
-The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and the ContentType accordingly; in most of the other examples we will see, `ContentType` is set to the usual `application/json`.
+The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `ContentType` header accordingly; in most of the other examples we will see, `ContentType` is set to the usual `"application/json"`.
 
 In the JSON request body, the `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
 
@@ -52,7 +52,7 @@ The response from this request will be a Piazza response object. It contains a u
 }
 ----
 
-The `jobId` can be used to fetch the status of the load operation which opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified Job, including the job's execution status, the user who submitted the job, and so on. 
+The `jobId` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
 
 The `job-info` script can be used to do this `GET` request:
 
@@ -170,9 +170,9 @@ include::scripts/4-hosted-download.sh[tags=public]
 
 Execute it like this:
 
-    $ ./4-hosted-download.sh {dataId}
+    $ ./4-hosted-download.sh {dataId} myoutput.tif
 
-We can also create a OGC-standard WMS endpoint for our GeoTIFF by `POST`ing a request to `/deployment`:
+We can also create a OGC-standard WMS endpoint for our GeoTIFF by sending a `POST` request to `/deployment`:
 
 link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh]
 [source,bash]
@@ -182,7 +182,7 @@ include::scripts/4-nonhosted-wms.sh[tags=public]
 
     $ ./4-nonhosted-wms.sh {dataId}
 
-The response from this request will return a job id, because setting up a WMS layer takes time: this is a long-running job. Checking the status of the job is using the id, as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
+The response from this request will return a job id, because setting up a WMS layer takes time: this is a long-running job. Checking the status of the job is done using the id, as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
 
 [source,json]
 ----
@@ -217,7 +217,7 @@ Loading a non-hosted image file is nearly identical to loading a hosted image fi
 
 . The `host` field is set to `false`
 . The `data.dataType.location` field is used to point to the external location of the file
-. The `POST` request uses the `application/json` content type, not the multipart type, as no file attachment is specified in the request
+. The `POST` request uses the `"application/json"` content type, not the multipart type, as no file attachment is specified in the request
 
 In our example script, the `data.dataType.location` field is set up for an S3 location, with the `bucketName`, `fileName` (sometimes called key), and `domainName` parameters. Obviously, Piazza must have access to this S3 bucket in order for load to succeed.
 
@@ -227,7 +227,7 @@ link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
 include::scripts/4-nonhosted-load.sh[tags=public]
 ----
 
-    $ ./4-nonhosted-load.sh
+    $ ./4-nonhosted-load.sh mynewfile
 
 From this point on, the workflow is identical to hosted files.
 

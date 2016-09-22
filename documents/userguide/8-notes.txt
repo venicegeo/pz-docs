@@ -76,7 +76,7 @@ As an aid, here are a few example queries:
 
 ### Example Query 1
 
-Make a set of all objects whose `title` matches "Search" and whose `content` matches "Elasticsearch" (where "match" follows Elasticsearch's rules for fuzzy string compares). From that set, return only the objects whose `status` is (exactly) "published" and whose `publish_date` was in 2015 or later.
+Make a set of all objects whose `title` matches `"Search"` and whose `content` matches `"Elasticsearch"` (where the "match" operation follows Elasticsearch's rules for fuzzy string compares). From that set, return only the objects whose `status` is (exactly) `"published"` and whose `publish_date` was in 2015 or later.
 
 [source,json]
 ----

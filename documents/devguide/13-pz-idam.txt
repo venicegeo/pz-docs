@@ -1,6 +1,6 @@
 # pz-idam
 
-The Piazza Core Pz-Security project is an internal component that provides REST endpoints for authenticating users, and creating, updating, and deleting user and role data.
+The Piazza Core Pz-Idam project is an internal component that provides REST endpoints for authenticating users, and creating, updating, and deleting user and role data.
 
 ## Running Locally
 
@@ -12,11 +12,11 @@ To run the pz-idam REST endpoints locally, run the following commands to retriev
 The Tomcat server will be listening on port 8080. The roles are stored in a file: `src/main/resources/roles.txt`. To prevent this file from being overwritten with the default values every time the pz-idam application runs, do the following:
 
 . Copy the file to a readable and writable location on the filesystem, e.g., `/data/roles.txt`
-. Update the `pz.security.fileurl` property in the `src/main/resources/application.properties` file with this new location.
+. Update the `pz.idam.fileurl` property in the `src/main/resources/application.properties` file with this new location.
 
 ## Code Organization
 
-The Pz-Security project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Pz-Security API provides. These are located in the org.venice.piazza.security.controller package, and are broken up into separate objects by their functionality.
+The Pz-Idam project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Pz-Idam API provides. These are located in the org.venice.piazza.idam.controller package, and are broken up into separate objects by their functionality.
 
 ## Endpoints
 

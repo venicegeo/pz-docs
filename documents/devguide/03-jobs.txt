@@ -7,7 +7,7 @@ See the Swagger documentation for a full explanation of all of these endpoints.
 
 ### Authentication
 
-Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-security` security component which handles authentication and authorization.
+Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-idam` security component which handles authentication and authorization.
 
 
 ### Jobs

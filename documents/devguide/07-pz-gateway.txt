@@ -21,7 +21,7 @@ The Gateway is responsible for pushing uploaded files (such as for Ingest jobs) 
 
 ## Code Organization
 
-The Gateway uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Gateway API provides. These are located in the `controller` package, and are broken up into separate objects by their functionality. The `auth` package defines how Gateway authenticates users through the `pz-security` project. The logic for turning on Authentication is located in the `Application.java` class - this is handled by either enabling or disabling the `secure` Spring profile. If this profile is enabled, then authentication is active and will point to `pz-security` for basic authentication credentials. If this profile is disabled, then the Gateway will not require any authentication for incoming requests.
+The Gateway uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the Gateway API provides. These are located in the `controller` package, and are broken up into separate objects by their functionality. The `auth` package defines how Gateway authenticates users through the `pz-idam` project. The logic for turning on Authentication is located in the `Application.java` class - this is handled by either enabling or disabling the `secure` Spring profile. If this profile is enabled, then authentication is active and will point to `pz-idam` for basic authentication credentials. If this profile is disabled, then the Gateway will not require any authentication for incoming requests.
 
 
 ## Interface
@@ -31,7 +31,7 @@ The Gateway API provides a series of REST endpoints that enable users to work wi
 
 ## Authentication and Authorization
 
-Authentication and authorization is handled via the `pz-security` component. This authentication becomes active when the `secure` Spring profile is enabled in the Gateway. When authentication, all requests to the Gateway will require basic authentication (standard base64-encoded) with usernames and passwords defined in `pz-security`.
+Authentication and authorization is handled via the `pz-idam` component. This authentication becomes active when the `secure` Spring profile is enabled in the Gateway. When authentication, all requests to the Gateway will require basic authentication (standard base64-encoded) with usernames and passwords defined in `pz-idam`.
 
 
 ### Job Request

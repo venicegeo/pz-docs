@@ -51,7 +51,7 @@ include::11-pz-search-metadata-ingest.txt[]
 
 include::12-pz-search-services.txt[]
 
-include::13-pz-security.txt[]
+include::13-pz-idam.txt[]
 
 include::14-pz-servicecontroller.txt[]
 

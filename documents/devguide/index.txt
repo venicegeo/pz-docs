@@ -1,5 +1,5 @@
-Piazza Developers Guide
-=======================
+Piazza Developers Guide -- *UNCLASSIFIED*
+=========================================
 The VeniceGeo Team <venice@radiantblue.com>
 __DATE__
 :doctype: book

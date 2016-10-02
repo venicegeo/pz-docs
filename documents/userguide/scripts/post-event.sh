@@ -16,5 +16,5 @@ event='{
     }
 }'
 
-$curl -d "$event" $PZSERVER/event
+$curl -X POST -d "$event" $PZSERVER/event
 # end::public[]

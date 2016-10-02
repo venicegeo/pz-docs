@@ -3,7 +3,7 @@ set -e
 . setup.sh
 
 # tag::public[]
-hello=`echo $PZSERVER | sed -e sXpz-gatewayXhttp://pzsvc-helloX`
+hello=`echo $PZSERVER | sed -e sXpiazzaXhttp://pzsvc-helloX`
 
 service='{
     "url": "'"$hello"'",

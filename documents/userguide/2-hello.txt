@@ -64,17 +64,17 @@ As an extra aid for both learning and testing, the script link:scripts/runall.sh
 
 With the setup work completed, we are now able to run a simple "health check" ping to verify that we have a functioning instance of Piazza to talk to. We do this by sending an HTTP `GET` request to the server's root endpoint, `/`.
 
-link:scripts/3-hello.sh[3-hello.sh]
+link:scripts/hello.sh[hello.sh]
 [source,bash]
 ----
-include::scripts/3-hello.sh[]
+include::scripts/hello.sh[]
 ----
 
 Note the line invoking `setup.sh`, mentioned above, and other nonessential lines: in subsequent listings in this document, we will omit those sorts of lines and only show the "important" commands. The full script is always available by following the download link, however.
 
 You can run this script simply as:
 
-    $ ./3-hello.sh
+    $ ./hello.sh
 
 and it should return a message similar to this:
 

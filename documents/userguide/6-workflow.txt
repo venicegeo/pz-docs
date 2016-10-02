@@ -25,17 +25,17 @@ The available data types are `string`, `boolean`, `integer`, `double`, `date`, `
 
 This script shows an example of registering an EventType.
 
-link:scripts/7-eventtype.sh[7-eventtype.sh]
+link:scripts/post-eventtype.sh[post-eventtype.sh]
 [source,bash]
 ----
-include::scripts/7-eventtype.sh[tags=public]
+include::scripts/post-eventtype.sh[tags=public]
 ----
 
 Note we use the current date/time to generate a unique id.
 
 Run the script simply as:
 
-    $ ./7-eventtype.sh
+    $ ./post-eventtype.sh
 
 
 ### System EventTypes
@@ -133,15 +133,15 @@ It is important to note that the `job` field uses substitution by replacing all 
 
 This script will create a generic Trigger for the event type associated with that `eventTypeId`:
 
-link:scripts/7-trigger.sh[7-trigger.sh]
+link:scripts/post-trigger.sh[post-trigger.sh]
 [source,bash]
 ----
-include::scripts/7-trigger.sh[tags=public]
+include::scripts/post-trigger.sh[tags=public]
 ----
 
 TO execute, pass the script an event type id,
 
-    $ ./7-trigger.sh {{eventTypeId}}
+    $ ./post-trigger.sh {{eventTypeId}}
 
 
 
@@ -219,15 +219,15 @@ In order to stop repeating events, `DELETE` the initial repeating event by its e
 
 The following script will `POST` an event with a given event type id:
 
-link:scripts/7-event.sh[7-event.sh]
+link:scripts/post-event.sh[post-event.sh]
 [source,bash]
 ----
-include::scripts/7-event.sh[tags=public]
+include::scripts/post-event.sh[tags=public]
 ----
 
 Execute the script as:
 
-    $ ./7-event.sh {{eventTypeId}}
+    $ ./post-event.sh {{eventTypeId}}
 
 
 ## The Alert
@@ -261,17 +261,17 @@ Whenever the condition of a trigger is met, the system will create an alert obje
 
 The following script gets the list of alerts currently in the Piazza system:
 
-link:scripts/7-get-alerts.sh[7-get-alerts.sh]
+link:scripts/get-alerts.sh[get-alerts.sh]
 [source,bash]
 ----
-include::scripts/7-get-alerts.sh[tags=public]
+include::scripts/get-alerts.sh[tags=public]
 ----
 
 The query parameter `?triggerId=id` is provided on the endpoint to allow the list to be filtered to only alerts set off by a specified trigger.
 
 To execute:
 
-    $ ./7-get-alerts.sh TRIGGER_ID
+    $ ./get-alerts.sh TRIGGER_ID
 
 
 ## Workflow API Documentation

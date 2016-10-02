@@ -39,16 +39,16 @@ This response means that the ingest request was received by the Piazza Gateway.
 
 The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilities. This app exposes a REST endpoint which takes a POST request containing payload of required parameters. Given an s3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to s3 bucket, and returns a DataResource.
 
-A script to register this service is located at link:scripts/8-register-crop.sh[8-register-crop.sh]. Registering the cropping service is easy:
+A script to register this service is located at link:scripts/register-crop-service.sh[register-crop-service.sh]. Registering the cropping service is easy:
 
-    $ ./8-register-crop.sh
+    $ ./register-crop-service.sh
 
 
 ## Executing the Service
 
-The link:scripts/8-crop-file.sh[8-crop-file.sh] script takes a few more parameters: the `serviceId` returned from registering the previous service (if the previous script is successful, it will print out the `serviceId`), the AWS bucket name where the file is located, and the filename to crop. For example:
+The link:scripts/execute-crop-service.sh[execute-crop-service.sh] script takes a few more parameters: the `serviceId` returned from registering the previous service (if the previous script is successful, it will print out the `serviceId`), the AWS bucket name where the file is located, and the filename to crop. For example:
 
-    $ ./8-crop-file.sh {{serviceId}} {{bucketname}} {{filename}}
+    $ ./execute-crop-service.sh {{serviceId}} {{bucketname}} {{filename}}
 
 The script does the equivalent of send a POST request with a payload to `https://pz-svcs-prevgen.int.geointservices.io/crop`
 
@@ -77,13 +77,13 @@ Sample working payload:
 
 The service will download the file from pz-svcs-prevgen s3 bucket and crop it with given bounding box info. The cropped result tif will be uploaded back up to the https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=[pz-svcs-prevgen-output s3 bucket].
 
-The 8-crop-file.sh script should return a `jobId` that can then be passed as an argument to link:scripts/job-info.sh[job-info.sh]:
+The `execute-crop-service.sh` script should return a `jobId` that can then be passed as an argument to link:scripts/get-job-info.sh[get-job-info.sh]:
 
-    $ ./job-info.sh {{jobId}}
+    $ ./get-job-info.sh {{jobId}}
 
-When the job is complete, the resulting data can be queried from the `dataId` returned by the job-info.sh script using link:scripts/data-info.sh[data-info.sh]:
+When the job is complete, the resulting data can be queried from the `dataId` returned by the `get-job-info.sh` script using link:scripts/get-data-info.sh[get-data-info.sh]:
 
-    $ ./data-info.sh {{dataId}}
+    $ ./get-data-info.sh {{dataId}}
 
 If all goes well, the resulting received payload will be of DataResource type:
 

@@ -86,9 +86,9 @@ Successfully registering a service will return JSON of the following schema:
 
 The `serviceId` field should be noted since it will be used to invoke the service.
 
-An example script for registering the *Hello World” service and returning the `serviceId` can be found at link:scripts/6-register.sh[6-register.sh]. Run it in the following way:
+An example script for registering the *Hello World” service and returning the `serviceId` can be found at link:scripts/register-service.sh[register-service.sh]. Run it in the following way:
 
-    $ ./6-register.sh
+    $ ./register-service.sh
 
 
 ## Invocation
@@ -110,9 +110,9 @@ The `jobId` field contains a unique identifier of the specific running instance 
 
 ### Hello Example service invoked with `GET` method
 
-A script that does this can be found at link:scripts/6-execute-get.sh[6-execute-get.sh]. Provide the `serviceId` returned by the register script as the first argument to the script:
+A script that does this can be found at link:scripts/execute-service.sh[execute-service.sh]. Provide the `serviceId` returned by the register script as the first argument to the script:
 
-    $ ./6-execute-get.sh {{serviceId}}
+    $ ./execute-service.sh {{serviceId}}
 
 [source,json]
 ----
@@ -210,9 +210,9 @@ The example below shows an example of JobResponse depicting a successful executi
 }
 ----
 
-A script that checks the status of the job can be found at link:scripts/job-info.sh[job-info.sh]. The script takes the `jobId` returned from the 6-execute-get.sh script as it's only argument:
+A script that checks the status of the job can be found at link:scripts/get-job-info.sh[get-job-info.sh]. The script takes the `jobId` returned from the `execute-service.sh` script as it's only argument:
 
-    $ ./job-info.sh {{jobId}}
+    $ ./get-job-info.sh {{jobId}}
 
 Finally, the actual result is returned by sending a `GET` request to `https://pz-gateway.geointservices.io/data/{{dataId}}` where the `dataId` is from the `result.data.dataId` field of the returned status. In this case the result is text.
 
@@ -233,9 +233,9 @@ Finally, the actual result is returned by sending a `GET` request to `https://pz
 }
 ----
 
-Run the link:scripts/data-info.sh[data-info.sh] script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
+Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
 
-    $ ./data-info.sh {{dataId}}
+    $ ./get-data-info.sh {{dataId}}
 
 
 ### Cancelling an Invocation

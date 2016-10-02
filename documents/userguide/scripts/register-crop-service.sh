@@ -3,7 +3,7 @@ set -e
 . setup.sh
 
 #tag::public[]
-cropper=`echo $PZSERVER | sed -e sXpz-gatewayXhttp://pz-svcs-prevgenX`
+cropper=`echo $PZSERVER | sed -e sXpiazzaXhttp://pz-svcs-prevgenX`
 cropper="$cropper/crop"
 
 service='{

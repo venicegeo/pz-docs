@@ -10,8 +10,8 @@ unique() {
 Test3() {
     echo "---------------- Test3 ----------------"
 
-    echo 3-hello...
-    sh 3-hello.sh | grep -q Hello
+    echo hello...
+    sh hello.sh | grep -q Hello
 
     echo PASS Test3
 }
@@ -23,13 +23,13 @@ Test4a() {
     description="mydescription"
     filename="download.dat"
     
-    echo "4-hosted-load..."
-    jobId=`sh 4-hosted-load.sh $name $description | jq -r .data.jobId`
+    echo "post-hosted-load..."
+    jobId=`sh post-hosted-load.sh $name $description | jq -r .data.jobId`
     echo "    jobId: $jobId"
     sleep 3
-    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
+    dataId=`sh get-job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
-    actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
+    actual=`sh get-data-info.sh $dataId | jq -r '.data.metadata.name'`
 
     if [ $actual != $name ]
     then
@@ -37,8 +37,8 @@ Test4a() {
         exit 1
     fi
     
-    echo "4-hosted-download..."
-    sh 4-hosted-download.sh $dataId $filename
+    echo "get-hosted-data..."
+    sh get-hosted-data.sh $dataId $filename
     if [ ! -s $filename ]
     then
         echo FAIL
@@ -54,13 +54,13 @@ Test4b() {
     name="mynamehere"
     filename=
 
-    echo "4-nonhosted-load..."
-    jobId=`sh 4-nonhosted-load.sh $name | jq -r .data.jobId`
+    echo "post-nonhosted-load..."
+    jobId=`sh post-nonhosted-load.sh $name | jq -r .data.jobId`
     echo "    jobId: $jobId"
     sleep 3
-    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
+    dataId=`sh get-job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
-    actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
+    actual=`sh get-data-info.sh $dataId | jq -r '.data.metadata.name'`
 
     if [ $actual != $name ]
     then
@@ -68,11 +68,11 @@ Test4b() {
         exit 1
     fi
 
-    echo "4-nonhosted-wms..."
-    jobId=`sh 4-nonhosted-wms.sh $dataId | jq -r .data.jobId`
+    echo "post-nonhosted-data-wms..."
+    jobId=`sh post-nonhosted-data-wms.sh $dataId | jq -r .data.jobId`
     echo "    jobId: $jobId"
     sleep 3
-    url=`sh job-info.sh $jobId | jq -r .data.result.deployment.capabilitiesUrl`
+    url=`sh get-job-info.sh $jobId | jq -r .data.result.deployment.capabilitiesUrl`
     echo "    url: $url"
     html=`curl -S -s "$url"`
     echo "$html" | grep -q "GeoServer Web Feature Service"
@@ -85,12 +85,12 @@ Test5() {
 
     name=kittens-`unique`
     description="kittens"
-    echo "4-hosted-load.sh..."
-    jobId=`sh 4-hosted-load.sh $name $description | jq -r .data.jobId`
+    echo "post-hosted-load.sh..."
+    jobId=`sh post-hosted-load.sh $name $description | jq -r .data.jobId`
     sleep 3
-    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
+    dataId=`sh get-job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
-    actual=`sh data-info.sh $dataId | jq -r '.data.metadata.name'`
+    actual=`sh get-data-info.sh $dataId | jq -r '.data.metadata.name'`
     if [ $actual != $name ]
     then
         echo FAIL 50
@@ -99,8 +99,8 @@ Test5() {
     
     sleep 5
 
-    echo "5-query.sh..."
-    result=`sh 5-query.sh $name | jq -r '.data[0].dataId'`
+    echo "search-query.sh..."
+    result=`sh search-query.sh $name | jq -r '.data[0].dataId'`
     echo "    result: $result"
     if [ "$dataId" != "$result" ]
     then
@@ -108,8 +108,8 @@ Test5() {
         exit 1
     fi
 
-    echo "5-filtered-get..."
-    result=`sh 5-filtered-get.sh $name | jq -r '.data[0].dataId'`
+    echo "search-filter..."
+    result=`sh search-filter.sh $name | jq -r '.data[0].dataId'`
     echo "    result: $result"
     if [ "$dataId" != "$result" ]
     then
@@ -123,17 +123,17 @@ Test5() {
 Test6() {
     echo "---------------- Test6 ----------------"
 
-    echo "6-register.sh..."
-    serviceId=`sh 6-register.sh | jq -r .data.serviceId`
+    echo "register-service.sh..."
+    serviceId=`sh register-service.sh | jq -r .data.serviceId`
     echo "    serivceId: $serviceId"
 
-    echo "6-execute-get.sh..."
-    jobId=`sh 6-execute-get.sh $serviceId | jq -r .data.jobId`
+    echo "execute-service.sh..."
+    jobId=`sh execute-service.sh $serviceId | jq -r .data.jobId`
     echo "    jobId: $jobId"
-    sleep 3
-    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
+    sleep 5
+    dataId=`sh get-job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
-    data=`sh data-info.sh $dataId | jq -r .data.dataType.content`
+    data=`sh get-data-info.sh $dataId | jq -r .data.dataType.content`
     echo "    data: $data"
 
     echo $data | grep -q Hi
@@ -144,26 +144,26 @@ Test6() {
 Test7() {
     echo "---------------- Test7 ----------------"
 
-    echo "7-eventtype.sh"
-    eventTypeId=`sh 7-eventtype.sh | jq -r .data.eventTypeId`
+    echo "post-eventtype.sh"
+    eventTypeId=`sh post-eventtype.sh | jq -r .data.eventTypeId`
     echo "    eventTypeId: $eventTypeId"
 
-    echo "6-register.sh..."
-    serviceId=`sh 6-register.sh  | jq -r .data.serviceId`
+    echo "register-service.sh..."
+    serviceId=`sh register-service.sh  | jq -r .data.serviceId`
     echo "    serivceId: $serviceId"
 
-    echo "7-trigger.sh"
-    triggerId=`sh 7-trigger.sh $eventTypeId $serviceId | jq -r .data.triggerId`
+    echo "post-trigger.sh"
+    triggerId=`sh post-trigger.sh $eventTypeId $serviceId | jq -r .data.triggerId`
     echo "    triggerId: $triggerId"
 
-    echo "7-event.sh"
-    eventId=`sh 7-event.sh $eventTypeId | jq -r .data.eventId`
+    echo "post-event.sh"
+    eventId=`sh post-event.sh $eventTypeId | jq -r .data.eventId`
     echo "    eventId: $eventId"
     
     sleep 3
     
-    echo "7-get-alerts.sh"
-    result=`sh 7-get-alerts.sh $triggerId`
+    echo "get-alerts.sh"
+    result=`sh get-alerts.sh $triggerId`
 
     resultTriggerId=`echo $result | jq -r .data[0].triggerId`
     resultEventId=`echo $result | jq -r .data[0].eventId`
@@ -188,14 +188,14 @@ Test7() {
 Test8() {
     echo "---------------- Test8 ----------------"
 
-    echo "8-register-crop.sh..."
-    serviceId=`sh 8-register-crop.sh | jq -r .data.serviceId`
+    echo "register-crop-service.sh..."
+    serviceId=`sh register-crop-service.sh | jq -r .data.serviceId`
     echo "    serivceId: $serviceId"
     
     sleep 2
 
-    echo "8-crop-file.sh..."
-    jobId=`sh 8-crop-file.sh $serviceId | jq -r .data.jobId`
+    echo "execute-crop-service.sh..."
+    jobId=`sh execute-crop-service.sh $serviceId | jq -r .data.jobId`
     echo "    jobId: $jobId"
     
     status="Running"
@@ -203,7 +203,7 @@ Test8() {
     while [ "$status" = "Running" -a $i -lt 60 ]
     do
         sleep 5
-        status=`sh job-info.sh $jobId | jq -r .data.status`
+        status=`sh get-job-info.sh $jobId | jq -r .data.status`
         i=$[$i+5]
         echo "    $status $i"
     done
@@ -216,19 +216,19 @@ Test8() {
         exit 1
     fi
     
-    dataId=`sh job-info.sh $jobId | jq -r .data.result.dataId`
+    dataId=`sh get-job-info.sh $jobId | jq -r .data.result.dataId`
     echo "    dataId: $dataId"
-    fileName=`sh data-info.sh $dataId | jq -r .data.dataType.location.fileName`
+    fileName=`sh get-data-info.sh $dataId | jq -r .data.dataType.location.fileName`
     echo "    fileName: $fileName"
     echo "$fileName" | grep -q tif
 
     echo PASS Test8
 }
 
-Test3
-Test4a
-Test4b
-Test5
-Test6
-Test7
+#Test3
+#Test4a
+#Test4b
+#Test5
+#Test6
+#Test7
 Test8

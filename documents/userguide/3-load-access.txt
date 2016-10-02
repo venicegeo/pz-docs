@@ -24,10 +24,10 @@ This example shows how to load a GeoTIFF file from your local file system into P
 
 The script looks like this:
 
-link:scripts/4-hosted-load.sh[4-hosted-load.sh]
+link:scripts/post-hosted-load.sh[post-hosted-load.sh]
 [source,bash]
 ----
-include::scripts/4-hosted-load.sh[tags=public]
+include::scripts/post-hosted-load.sh[tags=public]
 ----
 
 The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `ContentType` header accordingly; in most of the other examples we will see, `ContentType` is set to the usual `"application/json"`.
@@ -36,7 +36,7 @@ In the JSON request body, the `dataType.type` field denotes the file type of the
 
 Run the script from the command line as follows:
 
-    $ ./4-hosted-load.sh myfirstfile "this is my first file"
+    $ ./post-hosted-load.sh myfirstfile "this is my first file"
 
 In this case, `myfirstfile` is the input to the script that be used for the custom metadata field `name` and "this is my first file" is for the `description` field.
 
@@ -54,17 +54,17 @@ The response from this request will be a Piazza response object. It contains a u
 
 The `jobId` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
 
-The `job-info` script can be used to do this `GET` request:
+The `get-job-info` script can be used to do this `GET` request:
 
-link:scripts/job-info.sh[job-info.sh]
+link:scripts/get-job-info.sh[get-job-info.sh]
 [source,bash]
 ----
-include::scripts/job-info.sh[tags=public]
+include::scripts/get-job-info.sh[tags=public]
 ----
 
 It takes a single argument, the id of the job to get information about:
 
-    $ ./job-info.sh 24019b46-f92f-412d-8877-9fc3c114dd6e
+    $ ./get-job-info.sh 24019b46-f92f-412d-8877-9fc3c114dd6e
 
 The response will be something like
 
@@ -110,15 +110,15 @@ When the job is completed, the response for the request will have its `status` f
 
 Just like we did to get information about a job, we can get information about the data object, our image file:
 
-link:scripts/data-info.sh[data-info.sh]
+link:scripts/get-data-info.sh[get-data-info.sh]
 [source,bash]
 ----
-include::scripts/data-info.sh[tags=public]
+include::scripts/get-data-info.sh[tags=public]
 ----
 
 Running this script
 
-    $ ./data-info.sh 576ee63e-1359-430c-9242-26cbabc68d15
+    $ ./get-data-info.sh 576ee63e-1359-430c-9242-26cbabc68d15
 
 will return a response similar to this:
 
@@ -162,25 +162,25 @@ will return a response similar to this:
 
 We can retrieve the file using the `/file/{dataId}` endpoint, like this:
 
-link:scripts/4-hosted-download.sh[4-hosted-download.sh]
+link:scripts/get-hosted-data.sh[get-hosted-data.sh]
 [source,bash]
 ----
-include::scripts/4-hosted-download.sh[tags=public]
+include::scripts/get-hosted-data.sh[tags=public]
 ----
 
 Execute it like this:
 
-    $ ./4-hosted-download.sh {dataId} myoutput.tif
+    $ ./get-hosted-data.sh {dataId} myoutput.tif
 
 We can also create a OGC-standard WMS endpoint for our GeoTIFF by sending a `POST` request to `/deployment`:
 
-link:scripts/4-nonhosted-wms.sh[4-nonhosted-wms.sh]
+link:scripts/post-nonhosted-data-wms.sh[post-nonhosted-data-wms.sh]
 [source,bash]
 ----
-include::scripts/4-nonhosted-wms.sh[tags=public]
+include::scripts/post-nonhosted-data-wms.sh[tags=public]
 ----
 
-    $ ./4-nonhosted-wms.sh {dataId}
+    $ ./post-nonhosted-data-wms.sh {dataId}
 
 The response from this request will return a job id, because setting up a WMS layer takes time: this is a long-running job. Checking the status of the job is done using the id, as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
 
@@ -221,13 +221,13 @@ Loading a non-hosted image file is nearly identical to loading a hosted image fi
 
 In our example script, the `data.dataType.location` field is set up for an S3 location, with the `bucketName`, `fileName` (sometimes called key), and `domainName` parameters. Obviously, Piazza must have access to this S3 bucket in order for load to succeed.
 
-link:scripts/4-nonhosted-load.sh[4-nonhosted-load.sh]
+link:scripts/post-nonhosted-load.sh[post-nonhosted-load.sh]
 [source,bash]
 ----
-include::scripts/4-nonhosted-load.sh[tags=public]
+include::scripts/post-nonhosted-load.sh[tags=public]
 ----
 
-    $ ./4-nonhosted-load.sh mynewfile
+    $ ./post-nonhosted-load.sh mynewfile
 
 From this point on, the workflow is identical to hosted files.
 

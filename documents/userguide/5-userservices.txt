@@ -341,7 +341,7 @@ On Error, the Status endpoint will also report error information. If your servic
 
 The `Result` field can define a message and details property which can be used to convey error information back to the Piazza user who initiated this Instance of the User Service. Once Piazza encounters an Error status, it will cease to poll for Status and it will not attempt to query the *results* endpoint.
 
-### Results
+### Result
 
 When your user service reports back a *Success* status, then Piazza will initiate a subsequent call to the Results endpoint. The results URL will be extended from your Root URL by adding a */result/{jobId}* endpoint and path variable. 
 

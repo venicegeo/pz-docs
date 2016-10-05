@@ -83,7 +83,7 @@ kafka.group=Test_Group
 mongo.db.name=Piazza
 mongo.db.collection.name=Services
 core.discoverapi=/api/v1/resources
-core.discoverservice=pz-discover.cf.piazzageo.io
+core.discoverservice=pz-discover.cf.venicegeo.io
 core.db=/mongodb
 core.kafka=/kafka
 core.uuid=/pz-uuidgen
@@ -131,10 +131,10 @@ The ServiceController comes with some sample services to help with getting start
 
 |===
 | Jumpstart Service | Method | Description | Example URL
-| toLower | **POST** | Converts a string to lowercase. | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toLower?aString=testing
-| toUpper | **POST** | Converts a string to uppercase. | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/toUpper?aString=testing
-| convert | **POST** | Converts a string to UPPER or LOWER case. | http://pz-servicecontroller.stage.geointservices.io/jumpstart/string/convert { "theString":"testing", "conversionType":"UPPER"}
-| moviequotewelcome | **GET** | Takes an optional name as a parameter and provides a movie quote greeting to ServiceController users. | http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome?name=Marge or http://pz-servicecontroller.stage.geointservices.io/jumpstart/moviequotewelcome
+| toLower | **POST** | Converts a string to lowercase. | http://pz-servicecontroller.venicegeo.io/jumpstart/string/toLower?aString=testing
+| toUpper | **POST** | Converts a string to uppercase. | http://pz-servicecontroller.venicegeo.io/jumpstart/string/toUpper?aString=testing
+| convert | **POST** | Converts a string to UPPER or LOWER case. | http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert { "theString":"testing", "conversionType":"UPPER"}
+| moviequotewelcome | **GET** | Takes an optional name as a parameter and provides a movie quote greeting to ServiceController users. | http://pz-servicecontroller.venicegeo.io/jumpstart/moviequotewelcome?name=Marge or http://pz-servicecontroller.venicegeo.io/jumpstart/moviequotewelcome
 |===
 
 To become familiar with the ServiceController, use data transfer tools such as **cURL** or UI data transfer tools such as **Postman** (https://www.getpostman.com/) to interact with the ServiceController REST API.
@@ -163,7 +163,7 @@ https://pz-gateway.venicegeo.io/service
 ----
 {
     "url": "http://pz-servicecontroller.venicegeo.io/jumpstart/string/toLower",
-    "contractUrl": "http://pz-servicecontroller.cf.piazzageo.io/toLowerContract",
+    "contractUrl": "http://pz-servicecontroller.cf.venicegeo.io/toLowerContract",
     "method": "POST",
     "resourceMetadata": {
         "name": "The toLower Service",
@@ -195,7 +195,7 @@ To register a service that uses the **POST** method requiring JSON as the Reques
 ----
 {
     "url": "http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert",
-    "contractUrl": "http://pz-servicecontroller.cf.piazzageo.io/convertContract",
+    "contractUrl": "http://pz-servicecontroller.cf.venicegeo.io/convertContract",
     "method": "POST",
     "resourceMetadata": {
         "name": "The toLower Service",
@@ -213,7 +213,7 @@ To register a service that uses the **GET** example without URL parameters (as p
 {
 
     "url": "http://pz-servicecontroller.venicegeo.io//jumpstart/moviequotewelcome",
-    "contractUrl": "http://pz-servicecontroller.cf.piazzageo.io/jumpstart/moviequotewelcomeContract",
+    "contractUrl": "http://pz-servicecontroller.cf.venicegeo.io/jumpstart/moviequotewelcomeContract",
     "method": "GET",
     "resourceMetadata": {
         "name": "Movie Quote Welcome",
@@ -303,7 +303,7 @@ To execute the convert service, do the following:
 ### Getting Description of a User Service
 To get a description of a user service registered with Piazza perform the following call:
 
-    GET https://pz-servicecontroller.int.geointservices.io/service/{{serviceId}}
+    GET https://pz-servicecontroller.venicegeo.io/service/{{serviceId}}
 
 The response will be the metadata associated with the specified serviceId.
 
@@ -312,7 +312,7 @@ The response will be the metadata associated with the specified serviceId.
 
 To get a list of the user services registered with Piazza, perform the following call:
 
-    GET https://pz-servicecontroller.int.geointservices.io/service/
+    GET https://pz-servicecontroller.venicegeo.io/service/
 
 The response will be a service-list containing metadata for each of the registered user services.
 

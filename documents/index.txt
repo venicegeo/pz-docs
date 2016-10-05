@@ -15,6 +15,6 @@ Additional Links
 ----------------
 
 * link:presentations/foss4gna-2016.pdf[Presentation from FOSS4G-NA 2016 (pdf)]
-* http://pz-swagger.geointservices.io[Swagger API Reference]
+* http://pz-swagger.venicegeo.io[Swagger API Reference]
 * https://github.com/venicegeo[GitHub repository]
 * http://pz-sak.venicegeo.io[UI for Piazza internal development]

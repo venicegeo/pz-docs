@@ -48,14 +48,14 @@ Troubleshooting:
 ### Steps
 
 . Open your web-browser
-. Go to: http://pz-sak.geointservices.io/
+. Go to: http://pz-sak.venicegeo.io/
 
 
 ## Using SAK
 
 ### Login
 
-In order to login to SAK you will need credentials for https://devops.geointservices.io/ If you already have credentials for this space, your username and password should already work within SAK.  If you do not yet have a username and password, you can contact us and request credentials.
+In order to login to SAK you may need credentials for your Piazza installation. If you do not yet have a username and password, please contact us.
 
 
 ### Sections of SAK

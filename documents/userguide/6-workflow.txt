@@ -276,4 +276,4 @@ To execute:
 
 ## Workflow API Documentation
 
-See http://pz-swagger.geointservices.io/#/Workflow
+See http://pz-swagger.venicegeo.io/#/Workflow

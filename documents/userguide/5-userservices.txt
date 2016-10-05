@@ -46,7 +46,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 [source,json]
 ----
 {
-    "url": "http://pzsvc-hello.geointservices.io/",
+    "url": "http://pzsvc-hello.venicegeo.io/",
     "contractUrl": "http://helloContract",
     "method" : "GET",
     "isAsynchronous" : "false",
@@ -60,7 +60,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 }
 ----
 
-* https://pz-gateway.geointservices.io/service is the endpoint for registering the user service with the following required JSON attributes:
+* https://pz-gateway.venicegeo.io/service is the endpoint for registering the user service with the following required JSON attributes:
 ** The `url` field is the URL for invoking the service.  This is the "Root" URL for the Service
 ** The `contractUrl` field contains additional detail information about the service
 ** The `method` field is used to indicate the desired action to be performed on the service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
@@ -93,9 +93,9 @@ An example script for registering the *Hello World” service and returning the 
 
 ## Invocation
 
-Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.geointservices.io/job`.  The `url` parameter in service registration, also referred to as the *Root* URL for the service, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
+Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`.  The `url` parameter in service registration, also referred to as the *Root* URL for the service, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
 
-For details on how to invoke a user service, see http://pz-swagger.geointservices.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API]
+For details on how to invoke a user service, see http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API]
 
 Piazza users invoking a user service will get a *JobResponse* JSON payload response in the following format:
 ```
@@ -128,7 +128,7 @@ A script that does this can be found at link:scripts/execute-service.sh[execute-
 
 The `serviceId` is set to the return value from registering the service. In this example, no `dataInputs` are specified because there are no required parameters or payloads to invoke this service.  
 
-For details on the various ways to specify dataInputs into the service, see:  https://pz-swagger.geointservices.io/#!/Service/executeServiceUsingPOST[IInvoking a service, POST Job] in swagger for details.
+For details on the various ways to specify dataInputs into the service, see:  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[IInvoking a service, POST Job] in swagger for details.
 
 For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below).  The return value is not the result of the service call. The execute-service call creates a job and returns the jobId of that job.
 
@@ -168,7 +168,7 @@ When invoking a service that requires a POST body for input, the body message is
 
 ### Getting the Status and Results of an Invocation
 
-The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.geointservices.io/job/{{jobId}}` where `jobId` is the Id returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
+The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId` is the Id returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
 
 #### Status Details
 The granularity of the status provided depends on the type of user service that has been invoked.  For synchronous user services, the status returned may be in the following format:
@@ -188,7 +188,7 @@ For details on status reporting for asynchronous services, see <Building Asynchr
 ####  Getting the Results
 
 
-Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided dataId, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint.  For details on using this endpoint, see the http://pz-swagger.geointservices.io/#!/Data/getMetadataUsingGET[Piazza API].
+Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided dataId, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint.  For details on using this endpoint, see the http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET[Piazza API].
 
 The example below shows an example of JobResponse depicting a successful execution.
 
@@ -214,7 +214,7 @@ A script that checks the status of the job can be found at link:scripts/get-job-
 
     $ ./get-job-info.sh {{jobId}}
 
-Finally, the actual result is returned by sending a `GET` request to `https://pz-gateway.geointservices.io/data/{{dataId}}` where the `dataId` is from the `result.data.dataId` field of the returned status. In this case the result is text.
+Finally, the actual result is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/data/{{dataId}}` where the `dataId` is from the `result.data.dataId` field of the returned status. In this case the result is text.
 
 [source,json]
 ----
@@ -240,12 +240,12 @@ Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the resu
 
 ### Cancelling an Invocation
 
-During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.geointservices.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.geointservices.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
+During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
 
 
 ## Other Examples
 
-For more examples on how to register and execute your service, see the http://pz-docs.geointservices.io/devguide/index.html[Piazza Developer's Guide].
+For more examples on how to register and execute your service, see the http://pz-docs.venicegeo.io/devguide/index.html[Piazza Developer's Guide].
 
 
 ## How to Write Your Own User Services
@@ -254,7 +254,7 @@ For more examples on how to register and execute your service, see the http://pz
 
 If a registered user service has additional security and access requirements (e.g. client certificate required, pre-authorization to use, etc.), users should contact the user service provider to negotiate access for use.
 
-The contact information for each user service is located in the `resourceMetadata` field of the service payload.  For details on the fields available when registering a user service, see the http://pz-swagger.geointservices.io/#!/Service/registerServiceUsingPOST[Piazza API User Service Registration] for details.
+The contact information for each user service is located in the `resourceMetadata` field of the service payload.  For details on the fields available when registering a user service, see the http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza API User Service Registration] for details.
 
 
 ### Designing Your User Service
@@ -395,7 +395,7 @@ This output format is a DataResource payload that indicates the location of a cr
 
 When generating a DataResource payload, `type` and `mimeType` are required for all DataTypes. Additional fields are required depending on the type of data that is generated from the user service.
 
-For details on the DataResource payload and the available DataTypes, see the http://pz-swagger.geointservices.io/#!/Data/getMetadataUsingGET[Piazza Data API].
+For details on the DataResource payload and the available DataTypes, see the http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET[Piazza Data API].
 
 
 #### What to do About Existing Services
@@ -410,7 +410,7 @@ If you have an existing service, consider following the https://github.com/18F/a
 
 When registering your service, provide enough metadata about your service so it can be searched and discovered using Piazza's search capability.
 
-For details on the fields available when registering a user service, see the http://pz-swagger.geointservices.io/#!/Service/registerServiceUsingPOST[Piazza API User Service Registration] for details.
+For details on the fields available when registering a user service, see the http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST[Piazza API User Service Registration] for details.
 
 When registering a service, the following fields are required:
 
@@ -426,7 +426,7 @@ When registering a service, the following fields are required:
 
 User services registered within Piazza have a `availability` field which indicates the status/health of the service. Services can have an availability  value of `ONLINE`, `OFFLINE`, `DEGRADED` and `FAILED`.  When your user service is initially registered with Piazza, the status of that service is automatically set to `ONLINE` within the Piazza Service Registry.
 
-When you have to take your service down for maintenance or for other reasons, out of courtesy, you should update the status of your user service to `OFFLINE` so users will know that the service is not in a functional state.  To update the status of your service, use the `PUT` method on the https://pz-gateway.geointservices.io/service/{{serviceId}}/ end point with the Service payload containing the fields you would like to update for your service in the Service Registry.
+When you have to take your service down for maintenance or for other reasons, out of courtesy, you should update the status of your user service to `OFFLINE` so users will know that the service is not in a functional state.  To update the status of your service, use the `PUT` method on the https://pz-gateway.venicegeo.io/service/{{serviceId}}/ end point with the Service payload containing the fields you would like to update for your service in the Service Registry.
 
 Below is an example of the payload to send to update your service’s status:
 [source,json]
@@ -445,4 +445,4 @@ Piazza continually monitors the health of user services registered in the Servic
 
 ## Service API Documentation
 
-See http://pz-swagger.geointservices.io/#/Service for the complete User Service API.
+See http://pz-swagger.venicegeo.io/#/Service for the complete User Service API.

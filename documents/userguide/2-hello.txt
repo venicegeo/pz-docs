@@ -82,6 +82,7 @@ and it should return a message similar to this:
 
 NOTE: You should verify that the health check script works correctly before continuing with this tutorial. If it does not work, make sure you have the right server name, a valid API key, and correctly set `$PZSERVER` and `$PZKEY` environment variables.
 
+NOTE: For the remainder of this document, we will use `venicegeo.io` in embedded links. You will need to resolve the proper path manually for your site installation.
 
 ## Other Helpful Tools
 

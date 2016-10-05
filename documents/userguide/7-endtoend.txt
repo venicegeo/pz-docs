@@ -50,7 +50,7 @@ The link:scripts/execute-crop-service.sh[execute-crop-service.sh] script takes a
 
     $ ./execute-crop-service.sh {{serviceId}} {{bucketname}} {{filename}}
 
-The script does the equivalent of send a POST request with a payload to `https://pz-svcs-prevgen.int.geointservices.io/crop`
+The script does the equivalent of send a POST request with a payload to `https://pz-svcs-prevgen.venicegeo.io/crop`
 
 Sample working payload:
 

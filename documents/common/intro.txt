@@ -1,5 +1,5 @@
 Piazza is a set of open source, cloud-based services aimed at helping developers build
-GEOINT applications and services. Piazza provides features like data load and access, workflow
+GEOINT applications and services. Piazza provides features such as data load and access, workflow
 execution, and execution of user-provided services deployed elsewhere on the web -- features that developers
 could build themselves, but often shouldn't have to.
 

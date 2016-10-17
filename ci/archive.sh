@@ -16,6 +16,11 @@ hostname="geointservices.io"
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 
+echo "testing installed tools"
+which asciidoctor
+which asciidoctor-pdf
+echo "test done"
+
 source "$root/ci/vars.sh"
 
 
@@ -35,6 +40,7 @@ function build_docs {
     # txt -> html
     asciidoctor -o "$outdir/index.html" "$indir/index.txt.2"  &> errs.tmp
     if [[ -s errs.tmp ]] ; then
+        echo "FAIL: asciidoctor"
         cat errs.tmp
         exit 1
     fi
@@ -42,6 +48,7 @@ function build_docs {
     # txt -> pdf
     asciidoctor -r asciidoctor-pdf -b pdf -o "$outdir/index.pdf" "$indir/index.txt.2"  &> errs.tmp
     if [[ -s errs.tmp ]] ; then
+        echo "FAIL: asciidoctor-pdf"
         cat errs.tmp
         exit 1
     fi

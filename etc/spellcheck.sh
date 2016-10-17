@@ -2,8 +2,6 @@
 
 set -e
 
-speller=$1
-
 pushd "$(dirname "$0")/.." > /dev/null
 root=$(pwd -P)
 popd > /dev/null
@@ -15,7 +13,7 @@ rm -f badwords
 for txt in $txts
 do
     #ls $txt
-    $speller list --personal=$root/etc/aspell.en_US.per < $txt >> badwords
+    aspell list --personal=$root/etc/aspell.en_US.per < $txt >> badwords
 done
 
 bads=`sort badwords | uniq`

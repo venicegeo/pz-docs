@@ -13,6 +13,11 @@ scripts="$root/documents/userguide/scripts"
 
 hostname="geointservices.io"
 
+echo "testing installed tools"
+which asciidoctor
+which asciidoctor-pdf
+echo "test done"
+
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 

@@ -225,10 +225,10 @@ Test8() {
     echo PASS Test8
 }
 
-#Test3
-#Test4a
-#Test4b
-#Test5
-#Test6
-#Test7
+Test3
+Test4a
+Test4b
+Test5
+Test6
+Test7
 Test8

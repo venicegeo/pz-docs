@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 [[ -f "$scripts/setup.sh" ]] && source "$scripts/setup.sh"
 

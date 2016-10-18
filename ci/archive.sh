@@ -13,17 +13,17 @@ scripts="$root/documents/userguide/scripts"
 
 hostname="geointservices.io"
 
-#hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
-#hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
-gem pristine eventmachine --version 1.2.0.1
-gem pristine eventmachine --version 1.0.8
-gem pristine patron --version 0.5.0
-gem pristine pg --version 0.18.4
-gem pristine ruby-filemagic --version 0.7.1
-gem pristine thin --version 1.6.4
-gem pristine unf_ext --version 0.0.7.1
-gem pristine asciidoctor
-gem pristine asciidoctor-pdf
+hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
+hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
+#gem pristine eventmachine --version 1.2.0.1
+#gem pristine eventmachine --version 1.0.8
+#gem pristine patron --version 0.5.0
+#gem pristine pg --version 0.18.4
+#gem pristine ruby-filemagic --version 0.7.1
+#gem pristine thin --version 1.6.4
+#gem pristine unf_ext --version 0.0.7.1
+#gem pristine asciidoctor
+#gem pristine asciidoctor-pdf
 
 
 source "$root/ci/vars.sh"

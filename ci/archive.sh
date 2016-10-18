@@ -47,7 +47,7 @@ function build_docs {
     if [[ -s errs.tmp ]] ; then
         echo "FAIL: asciidoctor"
         cat errs.tmp
-        exit 1
+        #exit 1
     fi
 
     # txt -> pdf
@@ -55,7 +55,7 @@ function build_docs {
     if [[ -s errs.tmp ]] ; then
         echo "FAIL: asciidoctor-pdf"
         cat errs.tmp
-        exit 1
+        #exit 1
     fi
 
     # if errs.tmp is empty, remove it

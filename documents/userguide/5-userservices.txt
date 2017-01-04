@@ -36,7 +36,7 @@ A user service must be _registered_ within the Piazza Service Registry before it
 
 To register a user service with Piazza, the client sends to Piazza a JSON payload with the URL of the service, a description of its parameters, and other metadata.
 
-The `isAsynchronous` field is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to "true" if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the User Service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
+The `isAsynchronous` field is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the User Service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
 
 
 ### Hello Example service registered with `GET` method
@@ -270,12 +270,81 @@ XML (Extensible Markup Language) is also used to exchange data with RESTful web 
 
 For guidance on best practices when creating the RESTful API to your web service, see the https://github.com/18F/api-standards[18F API standard] for details.
 
+### Implementing Scalability
+
+When developing a user service, scalability needs to be considered.  _Scalability_ is the ability of your user service to handle a growing amount of requests or work to meet the business or mission needs.  There are two types of scaling that needs to be considered.
+
+* *Vertical Scalability* - Achieved by adding or removing resources to a single machine, virtual machine or node to support changes in the workload or user requests.  Example resources include CPUs or memory.
+
+* *Horizontal Scalability* - Achieved by adding or removing machines, virtual machines or nodes to support changes in the workload or user requests.  Typically, a load-balancer is used to distribute multiple requests across many machines.
+
+The figure below shows an example of each of these types of scalability approaches.
+
+image::images/PZ-scalability.png[Scalability, 300 500,align=“center”, title=Vertical and Horizontal Scalability]
+
+Even though these are typical approaches for implementing scalability, sometimes, these approaches are not accessible for various reasons.  It might cost too much to allocate multiple resources or to obtain a larger EC2 instance.  Also, the user service itself might not be architected to handle multiple requests or requests containing large datasets.  It might be able to handle multiple user requests concurrently but then have bottlenecks as it tries to process data.  
+
+For this reason, Piazza has implemented *Task Management* to support user services that are new, are being implemented iteratively, or are just are not ready to handle large amounts of service invocations.  Task Management allows user service developers to poll Piazza for work instead of taking service invocations directly from Piazza.  The next section discusses how to incorporate task management within your user service.
+
+### Task Management
+
+_Task Management_ is a capability that allows user service developers to _poll_ for work instead of being invoked directly by Piazza.  To tell Piazza that you are  task managed service, you must register your service by setting the `isTaskManaged` attribute to `true`.  Below is an example JSON payload for using the `isTaskManaged` attribute with the other required fields necessary during registration.
+
+[source,json]
+----
+{
+    "url": "http://pzsvc-hello.venicegeo.io/",
+    "contractUrl": "http://helloContract",
+    "method" : "GET",
+    "isAsynchronous" : "false",
+    "isTaskManaged" : "true",
+    "resourceMetadata": {
+        "name": "pzsvc-hello service",
+        "description": "Hello World Example",
+        "classType": {
+            "classification": "UNCLASSIFIED"
+         }
+    }
+}
+----
+
+#### Polling for Work
+
+Once your user service is registered as a tasked managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending Job Executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field which is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field which will later be used to tell Piazza any updates for the status/results of the Job. If no jobs are in your queue, those fields will be `null`.
+
+#### Sending Status Updates for the Job
+
+When you need to send Piazza status updates for the Job your user service is working on, or the results, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{jobId}}`. The payload for this POST is a StatusUpdate object, which is the exact same model that you previously used in asynchronous services.  For details on this model, see the <<Status Details>> section.
+
+For example, if your user service failed to execute, the payload that would be sent to Piazza would be:
+
+
+```
+{
+   "data" : {
+    "status”:"Fail"
+   }
+}
+```
+
+If your user service completed executing and has results, the payload that would be sent back to Piazza would be:
+```
+{
+   “data" : {
+               "status": "Success",
+               "result": {} // JSON payload results from your user service
+   }
+}
+```
+
+Metadata about your user service’s Jobs queue can be obtained by submitting a `GET` to  `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/metadata`.  The response will show the number of jobs in your user service’s Jobs queue. 
+
+
 ### Building in Asynchronous Support
 
 If you anticipate that your user service will be doing time consuming activities, then consider making it an asynchronous user service.  To provide for this functionality, Piazza recommends that the following set of functions and behaviors be incorporated into your user service.  The following sections steps through each of these items.
-
-#### Service Invocation Response
-For Piazza to track and work with your asynchronous service, a unique identifier, or ‘jobId’ needs to be generated and returned to Piazza when the service is invoked.
+I
+#### Service Invocation ResponsuFor Piazza to track and work with your asynchronous service, a unique identifier, or ‘jobId’ needs to be generated and returned to Piazza when the service is invoked.
 
 image::images/PZ-async-user-service.png[Invocation, 600, 900, align="center",title=Invocation of an Asynchronous User Service]
 

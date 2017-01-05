@@ -296,8 +296,9 @@ _Task Management_ is a capability that allows user service developers to _poll_ 
     "url": "http://pzsvc-hello.venicegeo.io/",
     "contractUrl": "http://helloContract",
     "method" : "GET",
-    "isAsynchronous" : "false",
     "isTaskManaged" : "true",
+	"taskAdministrators" : ["UserNameA", "UserNameB"],
+	"timeout" : 500,
     "resourceMetadata": {
         "name": "pzsvc-hello service",
         "description": "Hello World Example",
@@ -308,9 +309,13 @@ _Task Management_ is a capability that allows user service developers to _poll_ 
 }
 ----
 
+The `taskAdministrators` array is used to specify the list of Piazza user names that will have access to this Service's Queue. Only these user names will be able to poll for work and process Jobs. Additionally, the `timeout` can be optionally specified in order to tell Piazza how many seconds to let pass before assuming a single Job for this Service has timed out. 
+
+Note that a service that `isTaskManaged`, does not communicate directly with the external Service in any way.  As such, the `url` field in the Service registration payload does not necessarily need to represent a functional endpoint for the Service.  Additionally, the `isAsynchronous` field is ignored when `isTaskManaged` is set to true. 
+
 #### Polling for Work
 
-Once your user service is registered as a tasked managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending Job Executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field which is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field which will later be used to tell Piazza any updates for the status/results of the Job. If no jobs are in your queue, those fields will be `null`.
+Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending Job Executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field which is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field which will later be used to tell Piazza any updates for the status/results of the Job. If no jobs are in your queue, those fields will be `null`.
 
 #### Sending Status Updates for the Job
 
@@ -339,6 +344,9 @@ If your user service completed executing and has results, the payload that would
 
 Metadata about your user service’s Jobs queue can be obtained by submitting a `GET` to  `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/metadata`.  The response will show the number of jobs in your user service’s Jobs queue. 
 
+#### Timeouts in Task Managed Services
+
+The `timeout` parameter, optionally, can be specified upon initial Service registration.  If specified, then Piazza will periodically check for Jobs that have been pulled from the Service Queue that have exceeded the duration of this timeout period.  For example, if a Service specifies it's timeout as 5 minutes long, and a Job runs for more than 5 minutes - Piazza Task Management will consider this specific Job as _timed out_.  When a Task Managed Job times out, it will be placed back in the Service Queue and is available to be polled again by another worker.  If that specific Service Job fails two more subsequent times, then it will be removed from the Queue entirely and flagged as a Failure by Piazza.
 
 ### Building in Asynchronous Support
 

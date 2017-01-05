@@ -280,7 +280,7 @@ When developing a user service, scalability needs to be considered.  _Scalabilit
 
 The figure below shows an example of each of these types of scalability approaches.
 
-image::images/PZ-scalability.png[Scalability, 450 700,align="center", title=Vertical and Horizontal Scalability]
+image::images/PZ-scalability.png[Scalability, 600 900,align="center", title=Vertical and Horizontal Scalability]
 
 Even though these are typical approaches for implementing scalability, sometimes, these approaches are not accessible for various reasons.  It might cost too much to allocate multiple resources or to obtain a larger EC2 instance.  Also, the user service itself might not be architected to handle multiple requests or requests containing large datasets.  It might be able to handle multiple user requests concurrently but then have bottlenecks as it tries to process data.  
 

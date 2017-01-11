@@ -326,19 +326,18 @@ For example, if your user service failed to execute, the payload that would be s
 
 ```
 {
-   "data" : {
     "status”:"Fail"
-   }
 }
 ```
 
 If your user service completed executing and has results, the payload that would be sent back to Piazza would be:
 ```
 {
-   “data" : {
-               "status": "Success",
-               "result": {} // JSON payload results from your user service
-   }
+	"status" : "Success",
+	"result" : {
+		"type" : "data",
+		"dataId" : "data_id_here" 
+	} 
 }
 ```
 

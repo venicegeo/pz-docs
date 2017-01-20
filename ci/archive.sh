@@ -28,6 +28,8 @@ hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 
 source "$root/ci/vars.sh"
 
+asciidoctor --version
+asciidoctor-pdf --version
 
 function build_docs {
     indir=$1

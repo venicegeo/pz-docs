@@ -13,6 +13,9 @@ scripts="$root/documents/userguide/scripts"
 
 hostname="geointservices.io"
 
+export GEM_HOME=$root/.gem
+export GEM_PATH=$root/.gem
+
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
 #gem pristine eventmachine --version 1.2.0.1

@@ -14,7 +14,6 @@ scripts="$root/documents/userguide/scripts"
 hostname="geointservices.io"
 
 export HOME=$root
-export GEM_PATH=$GEM_PATH:$HOME/.gem
 
 hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf

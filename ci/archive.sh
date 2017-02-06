@@ -13,6 +13,7 @@ scripts="$root/documents/userguide/scripts"
 
 hostname="geointservices.io"
 
+export HOME=$root
 export GEM_HOME=$root/.gem
 export GEM_PATH=$root/.gem
 export GEM_SPEC_CACHE=$GEM_HOME/specs

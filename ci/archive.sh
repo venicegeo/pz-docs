@@ -16,8 +16,8 @@ hostname="geointservices.io"
 export GEM_HOME=$root/.gem
 export GEM_PATH=$root/.gem
 
-hash asciidoctor >/dev/null 2>&1 || gem install asciidoctor
-hash asciidoctor-pdf >/dev/null 2>&1 || gem install --pre asciidoctor-pdf
+hash asciidoctor >/dev/null 2>&1 || gem install --local asciidoctor
+hash asciidoctor-pdf >/dev/null 2>&1 || gem install --local --pre asciidoctor-pdf
 #gem pristine eventmachine --version 1.2.0.1
 #gem pristine eventmachine --version 1.0.8
 #gem pristine patron --version 0.5.0

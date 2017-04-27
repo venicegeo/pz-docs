@@ -55,13 +55,11 @@ include::13-pz-idam.txt[]
 
 include::14-pz-servicecontroller.txt[]
 
-include::15-pz-uuidgen.txt[]
+include::15-pz-workflow.txt[]
 
-include::16-pz-workflow.txt[]
+include::16-job-common.txt[]
 
-include::17-job-common.txt[]
-
-include::18-conventions.txt[]
+include::17-conventions.txt[]
 
 include::../common/support.txt[]
 

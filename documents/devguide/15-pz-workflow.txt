@@ -1,7 +1,7 @@
 # Workflow Service
 
 ## Overview
-The pz-workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows. This is done though an HTTP API. For a walkthough visit the Users Guide, for a simple overview visit `https://pz-swagger.geointservices.io/#/Workflow`.
+The pz-workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows. This is done though an HTTP API. For a walkthough visit the Users Guide, for a simple overview visit https://pz-swagger.geointservices.io/#/Workflow[pz-swagger].
 
 A user will follow these general steps:
 
@@ -12,7 +12,7 @@ A user will follow these general steps:
 . Go to 3.
 
 ## Running Locally
-To find out how to run the pz-workflow service locally, please visit the github [README](https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md)
+To find out how to run the pz-workflow service locally, please visit the github https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md[README]
 
 ## Technical
 

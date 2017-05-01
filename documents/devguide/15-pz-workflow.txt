@@ -10,7 +10,8 @@ A user will follow these general steps:
 . Poll for new alerts
 . Go to 3.
 
-
+## Running Locally
+To find out how to run the pz-workflow service locally, please visit the README at https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md
 ## The EventType
 
 The user (or some service) first defines an `EventType` which is the "schema" for the events that the user will be generating. The `EventType` object is POSTed to `/eventType` and contains contains a `name` (string) and a map describing the event type's parameters.

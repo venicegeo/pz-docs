@@ -54,7 +54,7 @@ Returns a JSON object of log messages:
     "statusCode": 200,
     "data": [
         {
-            "facility" 1,
+            "facility": 1,
             "severity": 6,
             "version": 1,
             "timeStamp": "2016-07-18T12:43:10.079Z",
@@ -68,7 +68,7 @@ Returns a JSON object of log messages:
             "message": "..."
         },
         {
-            "facility" 1,
+            "facility": 1,
             "severity": 6,
             "version": 1,
             "timeStamp": "2016-07-18T12:43:09.865Z",

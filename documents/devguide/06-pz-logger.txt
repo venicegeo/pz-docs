@@ -2,10 +2,10 @@
 
 ## Overview
 
-The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch. This is done though an HTTP API. For a walkthough visit the Users Guide, for a simple overview visit https://pz-swagger.geointservices.io/#/Workflow[pz-swagger].
+The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch. This is done though an HTTP API.
 
 ## Running Locally
-To find out how to run the pz-workflow service locally, please visit the github https://github.com/venicegeo/pz-logger/blob/master/README.md[README]
+To find out how to run the pz-logger service locally, please visit the github https://github.com/venicegeo/pz-logger/blob/master/README.md[README]
 
 ## HTTP API
 

@@ -10,10 +10,9 @@ node {
   }
 
   stage('Archive') {
-    withRvm('ruby-2.1.10') {
-      sh './ci/archive.sh'
-      mavenPush()
-    }
+    rvmSetup()
+    sh './ci/archive.sh'
+    mavenPush()
   }
 
   stage ('CI Deploy') {

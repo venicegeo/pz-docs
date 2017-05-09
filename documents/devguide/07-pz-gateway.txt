@@ -5,7 +5,8 @@ Handles all user-facing requests to Piazza via REST endpoints. The purpose of th
 
 ## Running Locally
 
-Please see repository readme: https://github.com/venicegeo/pz-gateway
+Please refer to repository readme: https://github.com/venicegeo/pz-gateway
+
 
 ## S3 Credentials
 

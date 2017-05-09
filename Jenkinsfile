@@ -11,7 +11,7 @@ node {
 
   stage('Archive') {
     rvmSetup()
-    sh "bash --login -c 'source .rvm/scripts/rvm; rvm use 2.1.10; ./ci/archive.sh'"
+    sh './ci/archive.sh'
     mavenPush()
   }
 

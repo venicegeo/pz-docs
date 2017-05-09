@@ -30,11 +30,11 @@ node {
 
   stage('Staging Deploy') {
     cfPush {
-      cfDomain = "stage.devops.geointservices.io"
+      cfDomain = "stage.geointservices.io"
       cfSpace = 'stage'
     }
     cfBgDeploy {
-      cfDomain = "stage.devops.geointservices.io"
+      cfDomain = "stage.geointservices.io"
       cfSpace = 'stage'
     }
   }

@@ -67,54 +67,7 @@ This command will create the serviceregistry and serviceregistrydb VMs.
 
 
 ## Running the ServiceController
-
-The ServiceController is a Spring Boot application and can be run directly from the command line. It uses an _**application.properties**_ file which contains port, hostname, database name and other information used by the ServiceController.  When the Piazza Discover Service is not available, the Service Controller utilizes information in the application.properties file to connect to supporting services.
-
-_**application.properties**_ files are located in the mainServiceController/conf directory.  To run the ServiceController, locally, you have to choose _**application-local.properties**_ and place it in the location that the ServiceController is started from, in the _src/main/resources_ directory or in the classpath used by the ServiceController.
-
-When the pz-discover service is running and the location/api is specified in the application.properties file, the ServiceController uses the values registered in the Discover service to communicate with things such as Kafka, MongoDB and other Piazza Core Services.
-
-*Values provided by the Discover service supersede values defined in the application.properties file.*
-
-....
-server.port=8082
-servicecontroller.host=localhost
-kafka.group=Test_Group
-mongo.db.name=Piazza
-mongo.db.collection.name=Services
-core.discoverapi=/api/v1/resources
-core.discoverservice=pz-discover.cf.venicegeo.io
-core.db=/mongodb
-core.kafka=/kafka
-core.uuid=/pz-uuidgen
-core.logger=/pz-logger
-log4j.category.org.springframework=ERROR
-logging.level.org.venice.piazza.servicecontroller=INFO
-logging.level.org.springframework.web=INFO
-endpoints.shutdown.enabled=true
-
-# Values overwritten by pz-discover if not up then these are the defaults
-core.uuidservice=localhost:12340/uuid
-core.logservice=localhost:12341/log
-kafka.host=localhost
-kafka.port=9092
-mongo.host=localhost
-mongo.port=27017
-....
-
-To run the ServiceController from the _**mainServiceController/conf**_ directory, run the following command:
-
-    > java –jar <path to the location of the servicecontroller.jar>/piazzaServiceController-(version number).BUILD-SNAPSHOT.jar
-
-This will run the ServiceController, after initializing, the following message will be displayed:
-
-    o.v.p.servicecontroller.Application : Started Application in 8.994 seconds (JVM running for 9.658)
-
-
-### Running with the Discover Service
-
-For the ServiceController to be aware of where the Discover is located, the ServiceController has to be run by setting the _**core.discoverservice**_ property and _**core.discoverapi**_ property.  The _mainServiceController/conf_ directory contains the _**application-cf.properties**_ file which has these properties set to use the Discover service.
-
+Please refer to repository readme: https://github.com/venicegeo/pz-servicecontroller
 
 ### Debugging
 

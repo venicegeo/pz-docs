@@ -14,7 +14,7 @@ scripts="$root/documents/userguide/scripts"
 hostname="geointservices.io"
 
 gem install --no-rdoc --no-ri asciidoctor
-gem install --no-rdoc --no-ri asciidoctor-pdf
+gem install --no-rdoc --no-ri --pre asciidoctor-pdf
 
 #gem pristine eventmachine --version 1.2.0.1
 #gem pristine eventmachine --version 1.0.8

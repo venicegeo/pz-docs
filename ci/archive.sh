@@ -13,15 +13,8 @@ scripts="$root/documents/userguide/scripts"
 
 hostname="geointservices.io"
 
-export PATH=$root/.gem/ruby/2.1.0/bin:$PATH
-export GEM_PATH=$root/.gem/ruby/2.1.0/bin:$GEM_PATH
-
 gem install --no-rdoc --no-ri asciidoctor
 gem install --no-rdoc --no-ri --pre asciidoctor-pdf
-
-gem env
-gem list
-
 
 #gem pristine eventmachine --version 1.2.0.1
 #gem pristine eventmachine --version 1.0.8

@@ -20,7 +20,6 @@ node {
 
   stage ('CI Deploy') {
     cfPush()
-    zap()
     cfBgDeploy()
   }
 

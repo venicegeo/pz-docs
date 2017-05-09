@@ -14,6 +14,7 @@ scripts="$root/documents/userguide/scripts"
 hostname="geointservices.io"
 
 export PATH=$root/.gem/ruby/2.1.0/bin:$PATH
+export GEM_PATH=$root/.gem/ruby/2.1.0/bin:$GEM_PATH
 
 hash asciidoctor >/dev/null 2>&1 || gem install --no-rdoc --no-ri --user-install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --no-rdoc --no-ri --user-install --pre asciidoctor-pdf

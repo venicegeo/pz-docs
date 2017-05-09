@@ -19,6 +19,9 @@ export GEM_PATH=$root/.gem/ruby/2.1.0/bin:$GEM_PATH
 hash asciidoctor >/dev/null 2>&1 || gem install --no-rdoc --no-ri --user-install asciidoctor
 hash asciidoctor-pdf >/dev/null 2>&1 || gem install --no-rdoc --no-ri --user-install --pre asciidoctor-pdf
 
+gem env
+gem list
+
 
 #gem pristine eventmachine --version 1.2.0.1
 #gem pristine eventmachine --version 1.0.8

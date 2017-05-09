@@ -10,8 +10,9 @@ node {
   }
 
   stage('Archive') {
-    rvmSetup()
-    sh './ci/archive.sh'
+    rvmSetup {
+      sh './ci/archive.sh'
+    }
     mavenPush()
   }
 

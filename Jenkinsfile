@@ -11,7 +11,10 @@ node {
 
   stage('Archive') {
     rvmSetup(rvmVersion: '2.1.10') {
-      sh './ci/archive.sh'
+      sh """
+        ruby -v
+        ./ci/archive.sh
+      """
     }
     mavenPush()
   }

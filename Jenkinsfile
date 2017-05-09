@@ -10,7 +10,7 @@ node {
   }
 
   stage('Archive') {
-    rvmSetup(rvmVersion: '2.1.10') {
+    rvmSetup(rvmVersion: '2.4.0') {
       sh """
         ruby -v
         ./ci/archive.sh

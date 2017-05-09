@@ -1,0 +1,8 @@
+./ci
+./documents
+./etc
+./lab
+Jenkinsfile
+jenkins.properties
+manifest.jenkins.yml
+*.tar.gz

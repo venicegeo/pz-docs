@@ -27,20 +27,19 @@ node {
     postman()
   }
 
+  stage('Reset') {
+    git([
+      url: "https://github.com/venicegeo/pz-docs",
+      branch: "master"
+    ])
+  }
+
   stage('Staging Deploy') {
     cfPush {
-      app       = 'pz-docs'
-      packaging = 'tar.gz'
-      cfApi     = 'https://api.devops.geointservices.io'
-      cfOrg     = 'piazza'
       cfDomain  = 'stage.geointservices.io'
       cfSpace   = 'stage'
     }
     cfBgDeploy {
-      app       = 'pz-docs'
-      packaging = 'tar.gz'
-      cfApi     = 'https://api.devops.geointservices.io'
-      cfOrg     = 'piazza'
       cfDomain  = 'stage.geointservices.io'
       cfSpace   = 'stage'
     }

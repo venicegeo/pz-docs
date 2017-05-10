@@ -187,6 +187,6 @@ metadata ingest:
 https://github.com/venicegeo/pz-search-metadata-ingest/blob/master/scripts/SearchMetadataIngest.json.postman_collection
 
 search query:
-https://github.com/venicegeo/pz-search-query/blob/master/scripts/Elasticsearch%2520query%2520through%2520Gateway.json.postman_collection
+https://github.com/venicegeo/pz-search-query/blob/master/scripts/ElasticsearchQueryThroughGateway.json.postman_collection
 
 // vim: set syntax=asciidoc wrap:

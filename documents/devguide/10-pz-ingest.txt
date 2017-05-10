@@ -56,7 +56,7 @@ When loading data, users will be encouraged to fill out as much `metadata` as po
 
 ## Ingest Process
 
-The Gateway will receive the Ingest Job request and then forward the request along, via Kafka, to the Dispatcher, where the Job Creation message is then forwarded along to the Ingest component. If a File is specified in the initial request, the Gateway will store this file on disk immediately and then upload to AWS S3 storage. The file path information is then attached to the message that the Ingest receives.
+The Gateway will receive the Ingest Job request and then forward the request along, via Kafka, to the Ingest component. If a File is specified in the initial request, the Gateway will store this file on disk immediately and then upload to AWS S3 storage. The S3 File path information is then attached to the message that the Ingest receives.
 
 As the message is consumed by the Ingest component, the first thing is to parse out any available metadata from the user request. Additionally, any other available metadata is also automatically extracted based on File paths or resource URLs specified. This metadata information is stored in the Mongo Database in the Resources collection. This collection stores all information for each bit of data Ingested into Piazza.
 
@@ -184,7 +184,7 @@ Web Feature Services can be ingested and hosted within Piazza. If `host` is set 
 
 ## Workflow Events
 
-In support of the https://github.com/venicegeo/venice/wiki/Pz-Workflow[Workflow] service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
+In support of the https://github.com/venicegeo/pz-workflow[Workflow] service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
 
 ### Event Type
 

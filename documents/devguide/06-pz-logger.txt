@@ -22,7 +22,7 @@ Sends a message to be logged. The message is given in the POST body as a JSON ob
     "timeStamp": "2017-01-01T10:00:00.255Z",
     "hostName": "128.1.2.3",
     "application": "log-tester",
-    "process": "",
+    "process": "1",
     "messageId": "",
     "auditData": null,
     "metricData": null,

@@ -24,9 +24,9 @@ Sends a message to be logged. The message is given in the POST body as a JSON ob
     "application": "log-tester",
     "process": "",
     "messageId": "",
-    "auditData": nil,
-    "metricData": nil,
-    "sourceData": nil,
+    "auditData": null,
+    "metricData": null,
+    "sourceData": null,
     "message": "The quick brown fox"
 }
 ----

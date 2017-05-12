@@ -111,3 +111,4 @@ If all goes well, the resulting received payload will be of DataResource type:
 ----
 
 The resulting file can be retrieved from the bucket, with the bounding box applied to it.
+// vim: set syntax=asciidoc wrap:

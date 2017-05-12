@@ -56,3 +56,4 @@ Visit the <<Elasticsearch Query Syntax>> section for more details on the Elastic
 ## Search API Documentation
 
 See http://pz-swagger.venicegeo.io/#/Search
+// vim: set syntax=asciidoc wrap:

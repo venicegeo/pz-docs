@@ -263,3 +263,4 @@ The processes for getting the job status, downloading the data, and creating an 
 ## Data API Documentation
 
 See http://pz-swagger.venicegeo.io/#/Data
+// vim: set syntax=asciidoc wrap:

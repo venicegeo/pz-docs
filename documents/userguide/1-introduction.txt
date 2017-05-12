@@ -53,3 +53,5 @@ Piazza can be used to help implement all of these operations.
 .. If _(the confidence is low)_, then _(issue a manual-check-needed alert, whose payload consists of the data resource id, the candidate vector, and the confidence value)_.
 .. If _(the confidence is high)_, then _(perform a database insert)_.
 . Within some client application, periodically poll Piazza for manual-check-needed alerts: when found, present the data to the user for evaluation.
+
+// vim: set syntax=asciidoc wrap:

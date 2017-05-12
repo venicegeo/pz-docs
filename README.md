@@ -34,3 +34,4 @@ Linking:
 4. Clone the pz-docs repo via your favorite git cloning method: https://github.com/venicegeo/pz-docs.git
 5. Add the Ruby bin directory to Windows Path environment variable (so cmd window for the batch file will have it)
 6. ci/archive.bat will create the index.html and index.pdf files
+

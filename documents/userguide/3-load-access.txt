@@ -116,7 +116,7 @@ link:scripts/get-data-info.sh[get-data-info.sh]
 include::scripts/get-data-info.sh[tags=public]
 ----
 
-Running this script
+Running this script:
 
     $ ./get-data-info.sh 576ee63e-1359-430c-9242-26cbabc68d15
 

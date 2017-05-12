@@ -1,4 +1,4 @@
-# User Services
+﻿# User Services
 
 Piazza allows users to discover, manage, and invoke external _web services_ which are referred to as *User Services*.  A _web service_ is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON, and XML are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
    
@@ -522,3 +522,4 @@ Piazza continually monitors the health of user services registered in the Servic
 ## Service API Documentation
 
 See http://pz-swagger.venicegeo.io/#/Service for the complete User Service API.
+// vim: set syntax=asciidoc wrap:

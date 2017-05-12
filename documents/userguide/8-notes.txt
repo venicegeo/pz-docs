@@ -128,3 +128,4 @@ Return all objects whose `exact_value` is "Quick Foxes!".
     }
 }
 ----
+// vim: set syntax=asciidoc wrap:

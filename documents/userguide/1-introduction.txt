@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Piazza User Guide. It contains descriptions of Piazza's main features and many pieces of example code showing how to use those features. This document is aimed at Piazza _users_ - developers looking to build services and applications that use Piazza. (In contrast, the link:../devguide/index.html[Developer's Guide] is aimed at Piazza _developers_ - those wishing to work on the Piazza codebase itself.)
+Welcome to the Piazza User Guide. It contains descriptions of Piazza's main features and many pieces of example code showing how to use those features. This document is aimed at Piazza _users_ -- developers looking to build services and applications that use Piazza. (In contrast, the link:../devguide/index.html[Developer's Guide] is aimed at Piazza _developers_ -- those wishing to work on the Piazza codebase itself.)
 
 
 ## Piazza In Brief
@@ -32,7 +32,7 @@ Internal to Piazza, hidden from users, are a set of web services that implement 
 
 ## An Example Application
 
-Let's consider an example of an application that might use Piazza - shoreline boundary extraction. Detailed, current information about shoreline locations, expressed as vector (linear) features, is an important resource for everything from monitoring coastal erosion to planning amphibious landings. An automated system for updating shoreline boundaries would be very useful.
+Let's consider an example of an application that might use Piazza -- shoreline boundary extraction. Detailed, current information about shoreline locations, expressed as vector (linear) features, is an important resource for everything from monitoring coastal erosion to planning amphibious landings. An automated system for updating shoreline boundaries would be very useful.
 
 Therefore, let us imagine that you have been asked to build an application that runs 24/7 to continually update a database of shoreline vectors. You have been given access to a repository of global satellite imagery and this repository is continually being updated with new data. You have also been given three different algorithms that compute shoreline vectors from such imagery; none of the three work perfectly and some are better than others for detecting certain types of shoreline, e.g estuaries. Because none of them work flawlessly all the time, the algorithms return a "confidence" metric for each computed shoreline vector; if the confidence is "low," the imagery and the candidate vector must be reviewed manually.
 

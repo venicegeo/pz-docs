@@ -4,7 +4,7 @@ node {
 
   stage('Setup') {
     git([
-      url: "https://github.com/venicegeo/pz-docs",
+      url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
       branch: "master"
     ])
   }
@@ -29,7 +29,7 @@ node {
 
   stage('Reset') {
     git([
-      url: "https://github.com/venicegeo/pz-docs",
+      url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
       branch: "master"
     ])
   }

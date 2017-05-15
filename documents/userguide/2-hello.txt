@@ -51,13 +51,13 @@ If you have `$PZSERVER` set to `piazza.venicegeo.io`, the scripts will set `$PZK
 
 ## Some Notes About the Examples
 
-The code examples in this guide are presented as shell scripts that use `curl` for the HTTP calls and JSON for the request and response payloads. To simplify the examples, the scripts rely on a setup script, helpfully named link:scripts/setup.sh[setup.sh], which will verify you have `$PZSERVER` and `$PZKEY` (or a `$HOME/.pzkey` file) set correctly. It will also define some helpful aliases and functions to make the examples shorter, such as pre-setting some required options for `curl`.
+The code examples in this guide are presented as shell scripts that use `curl` for the HTTP calls and JSON for the request and response payloads. To simplify the examples, the scripts rely on a setup script, helpfully named link:scripts/setup.sh[setup.sh], that will verify you have `$PZSERVER` and `$PZKEY` (or a `$HOME/.pzkey` file) set correctly. It will also define some helpful aliases and functions to make the examples shorter, such as pre-setting some required options for `curl`.
 
-Some of the example scripts require one or more input arguments. These are expected to be provided on the command-line as simple strings. The scripts will verify the right number of arguments were provided.
+Some of the example scripts require one or more input arguments. These are expected to be provided on the command-line as simple strings. The scripts will verify that the right number of arguments were provided.
 
 The example scripts generally produce output. In most cases, the output will be a JSON object to `stdout`.
 
-As an extra aid for both learning and testing, the script link:scripts/runall.sh[runall.sh] is provided. This script runs each of the example scripts in order, passing the outputs from one to the inputs of the next, and verifying those outputs are correct. (To use `runall.sh` you must have the wonderful tool link:https://stedolan.github.io/jq/[jq] installed.)
+As an extra aid for both learning and testing, the script link:scripts/runall.sh[runall.sh] is provided. This script runs each of the example scripts in order, passing the outputs from one to the inputs of the next, and verifying those outputs are correct. (To use `runall.sh`, you must have the wonderful tool link:https://stedolan.github.io/jq/[jq] installed.)
 
 
 ## Hello!
@@ -70,7 +70,7 @@ link:scripts/hello.sh[hello.sh]
 include::scripts/hello.sh[]
 ----
 
-Note the line invoking `setup.sh`, mentioned above, and other nonessential lines: in subsequent listings in this document, we will omit those sorts of lines and only show the "important" commands. The full script is always available by following the download link, however.
+Note the line invoking `setup.sh`, mentioned above, and other nonessential lines. In subsequent listings in this document, we will omit those sorts of lines and only show the "important" commands. The full script, however, is always available by following the download link.
 
 You can run this script simply as:
 
@@ -88,6 +88,7 @@ NOTE: For the remainder of this document, we will use `venicegeo.io` in embedded
 
 As you work through this tutorial, you might find these two additional Piazza resources helpful:
 
-* `pz-swagger` is a browser-based UI for exploring Piazza's REST API. It is located at the same parent address as your `piazza` host, e.g. `pz-swagger.venicegeo.io`. If you are not familiar with Swagger, see http://swagger.io[swagger.io].
+* `pz-swagger` is a browser-based UI for exploring Piazza's REST API. It is located at the same parent address as your `piazza` host, e.g., `pz-swagger.venicegeo.io`. If you are not familiar with Swagger, see http://swagger.io[swagger.io].
 
-* `pz-sak` is a developer-level tool for directly interacting with some of Piazza's public and private services: for example, you can use SAK to examine log files, check the status of jobs, and perform metadata queries. It too can be found under the same parent host address, e.g. `pz-sak.venicegeo.io`. _SAK is a tool for debugging and testing only; it is not to be used in production. Contact the Piazza team for assistance with SAK._
+* `pz-sak` is a developer-level tool for directly interacting with some of Piazza's public and private services. For example, you can use SAK to examine log files, check the status of jobs, and perform metadata queries. It too can be found under the same parent host address, e.g., `pz-sak.venicegeo.io`. _SAK is a tool for debugging and testing only; it is not to be used in production. Contact the Piazza team for assistance with SAK._
+// vim: set syntax=asciidoc wrap:

@@ -1,17 +1,17 @@
 # Data Load and Access
 
-With this section we begin to describe each of Piazza's major APIs. We will start with loading and accessing data.
+With this section, we begin to describe each of Piazza's major APIs. We will start with loading and accessing data.
 
 
 ## Load
 
-Piazza provides the ability to load external data into the system: metadata is extracted from external data, stored within Piazza, and a resource ID is returned. The metadata is also entered into Piazza's search index. Piazza supports several data formats today -- including GeoJSON, Shapefiles, and GeoTIFFs -- with more to come as users require them.
+Piazza provides the ability to load external data into the system. Metadata is extracted from external data, stored within Piazza, and a Resource ID is then returned. The metadata is also entered into Piazza's search index. Piazza supports several data formats today -- including GeoJSON, Shapefiles, and GeoTIFFs -- with more to come as users require them.
 
-For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL, and so the resource ID can be used as a global, unique reference to the data.
+For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL; therefore, the Resource ID can be used as a global, unique reference to the data.
 
 Piazza is not intended to be a storage system for user data and so normally only the metadata is stored -- not the file itself. We refer to this as the _no-host_ model.
 
-In the no-host case, Piazza will need to have read-access to the file and in some cases will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
+In the no-host case, Piazza will need to have read-access to the file and, in some cases, will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
 
 Piazza also supports a _hosted_ model in which the data is copied locally for metadata extraction but _not_ (immediately) deleted. This is used for working files and other sorts of temporary storage; it is not intended for long-term, persistent data storage.
 
@@ -52,7 +52,7 @@ The response from this request will be a Piazza response object. It contains a u
 }
 ----
 
-The `jobId` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
+The `Job Id` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
 
 The `get-job-info` script can be used to do this `GET` request:
 
@@ -62,11 +62,11 @@ link:scripts/get-job-info.sh[get-job-info.sh]
 include::scripts/get-job-info.sh[tags=public]
 ----
 
-It takes a single argument, the id of the job to get information about:
+It takes a single argument, the id of the job, to get information about:
 
     $ ./get-job-info.sh 24019b46-f92f-412d-8877-9fc3c114dd6e
 
-The response will be something like
+The response will be something like:
 
 [source,json]
 ----
@@ -108,7 +108,7 @@ or
 
 When the job is completed, the response for the request will have its `status` field set to `Success` and will contain a `result` field. For a load job, `result.type` will be `data` because the result is data loaded into Piazza, and `result.dataId` will be the unique identifier of the data that was loaded.
 
-Just like we did to get information about a job, we can get information about the data object, our image file looks something this:
+Just like we did to get information about a job, we can get information about the data object and our image file looks something this:
 
 link:scripts/get-data-info.sh[get-data-info.sh]
 [source,bash]
@@ -116,7 +116,7 @@ link:scripts/get-data-info.sh[get-data-info.sh]
 include::scripts/get-data-info.sh[tags=public]
 ----
 
-Running this script
+Running this script:
 
     $ ./get-data-info.sh 576ee63e-1359-430c-9242-26cbabc68d15
 
@@ -168,11 +168,11 @@ link:scripts/get-hosted-data.sh[get-hosted-data.sh]
 include::scripts/get-hosted-data.sh[tags=public]
 ----
 
-Execute it like this:
+and execute it like this:
 
     $ ./get-hosted-data.sh {dataId} myoutput.tif
 
-We can also create a OGC-standard WMS endpoint for our GeoTIFF by sending a `POST` request to `/deployment`:
+We can also create an OGC-standard WMS endpoint for our GeoTIFF by sending a `POST` request to `/deployment`:
 
 link:scripts/post-nonhosted-data-wms.sh[post-nonhosted-data-wms.sh]
 [source,bash]
@@ -182,7 +182,7 @@ include::scripts/post-nonhosted-data-wms.sh[tags=public]
 
     $ ./post-nonhosted-data-wms.sh {dataId}
 
-The response from this request will return a job id, because setting up a WMS layer takes time: this is a long-running job. Checking the status of the job is done using the id, as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
+The response from this request will return a Job Id, because setting up a WMS layer takes time and this is a long-running job. Checking the status of the job is done using the id as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
 
 [source,json]
 ----
@@ -263,3 +263,4 @@ The processes for getting the job status, downloading the data, and creating an 
 ## Data API Documentation
 
 See http://pz-swagger.venicegeo.io/#/Data
+// vim: set syntax=asciidoc wrap:

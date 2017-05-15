@@ -1,16 +1,39 @@
-## Gateway API
+## Prerequisites for using piazza
+
+In order to use piazza in full or its individual apps assuming other parts are running, the following are needed:
+
+    Java Development Kit 1.8
+
+    Maven 3.3.9
+
+    Oracle VM VirtualBox  5.0.10 (for running the services such as kafka/elastic/mongo/postgis/geoserver on local individual VMs)
+
+    Vagrant (to manage services VMs)
+
+	MongoDB 2.6.3
+	
+	GeoServer 2.9.2
+	
+	PostgreSQL (Crunchy) 9.5.2
+	
+	ElasticSearch 2.2
+	
+	Kafka 0.9.0.1
+
+
+### Gateway API
 
 The Gateway API is the single point-of-contact for external users to interact with Piazza Core components. This API provides functionality for loading and accessing data, registering and executing services, and registering events and triggers. The entirety of Piazza functionality is accessed through these Gateway API calls.
 
 See the Swagger documentation for a full explanation of all of these endpoints.
 
 
-### Authentication
+#### Authentication
 
 Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-idam` security component which handles authentication and authorization.
 
 
-### Jobs
+#### Jobs
 
 For most requests handled through the Piazza Gateway, the response will contain the expected information for said request (for example - querying data will return a list of data results, etc.), however: when executing a request within Piazza that could take a long amount of time (such as ingesting data, or executing an external service) Piazza will return a Job ID which can be used to track the status and progress of that request. The motivation for providing a Job ID is to allow the Gateway to return a response immediately, which will not block the user. It will also allow the user to track the progress of a long-running job as it is handled by internal Piazza components.
 

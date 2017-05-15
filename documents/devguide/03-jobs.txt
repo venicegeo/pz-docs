@@ -21,8 +21,7 @@ In order to use piazza in full or its individual apps assuming other parts are r
 	Kafka 0.9.0.1
 	
 .Local vagrant boxes available for services
-[cols="VagrantBox, Location"]
-|===
+|==
 |Vagrant Box |Location
 
 | ElasticSearch 

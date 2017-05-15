@@ -20,14 +20,15 @@ In order to use piazza in full or its individual apps assuming other parts are r
 	
 	Kafka 0.9.0.1
 	
-	Local vagrant boxes available for services:
-	| Vagrant Box   |      Location      |
-	|---------------|:--------------------------------------------------------------------------:|
-	| ElasticSearch |  https://github.com/venicegeo/pz-search-metadata-ingest/tree/master/config |
-	| MongoDB       |  https://github.com/venicegeo/pz-jobmanager/tree/master/config |
-	| GeoServer     |  https://github.com/venicegeo/pz-access/tree/master/config |
-	| PostgreSQL    |  https://github.com/venicegeo/pz-ingest/tree/master/config |
-	| Kafka         |  https://github.com/venicegeo/kafka-devbox |
+Local vagrant boxes available for services:
+	
+| Vagrant Box | Location |
+|---------------|:--------------------------------------------------------------------------:|
+| ElasticSearch |  https://github.com/venicegeo/pz-search-metadata-ingest/tree/master/config |
+| MongoDB |  https://github.com/venicegeo/pz-jobmanager/tree/master/config |
+| GeoServer |  https://github.com/venicegeo/pz-access/tree/master/config |
+| PostgreSQL |  https://github.com/venicegeo/pz-ingest/tree/master/config |
+| Kafka |  https://github.com/venicegeo/kafka-devbox |
 
 
 ### Gateway API

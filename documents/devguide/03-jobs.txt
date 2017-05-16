@@ -20,19 +20,28 @@ In order to use piazza in full or its individual apps assuming other parts are r
 	
 	Kafka 0.9.0.1
 
-.Table with column style d,v
+.Local vagrant boxes available for services
 [cols="d,v"]
 |===
-| Default (d) | Verse (v)
+| Vagrant Box | Location
  
-| Asciidoctor
-| Awesome way
-to write
-documentation
- 
+| ElasticSearch 
+| https://github.com/venicegeo/pz-search-metadata-ingest/tree/master/config
+
+| MongoDB 
+| https://github.com/venicegeo/pz-jobmanager/tree/master/config
+
+| GeoServer 
+| https://github.com/venicegeo/pz-access/tree/master/config
+
+| PostgreSQL 
+| https://github.com/venicegeo/pz-ingest/tree/master/config
+
+| Kafka 
+| https://github.com/venicegeo/kafka-devbox
+
 |=== 
 	
-
 ### Gateway API
 
 The Gateway API is the single point-of-contact for external users to interact with Piazza Core components. This API provides functionality for loading and accessing data, registering and executing services, and registering events and triggers. The entirety of Piazza functionality is accessed through these Gateway API calls.

@@ -1,11 +1,11 @@
 # Workflow Service
 
-Piazza provides the ability for users to define and send an _event_, representing some "thing" that has happened. These events can be issued either from within Piazza or by an external client. Piazza also allows for users to define _triggers_, containing both an event-condition and an action: when the condition is met, the action is performed. Taken together, event types, events, and triggers can be used to define _workflows_.
+Piazza provides the ability for users to define and send an _event_, representing an event that has happened. These events can be issued either from within Piazza or by an external client. Piazza also allows for users to define _triggers_, containing both an event-condition and an action; when the condition is met, the action is performed. Event types, events, and triggers can be used to define _workflows_ when taken together.
 
 
 ## The EventType
 
-The user first defines an event type that is the "schema" for the Events that the user will be generating. The event type object is sent in a `POST` request to the `/eventType` endpoint and contains contains a unique `name` (string) and a mapping describing the EventType's parameters. For example:
+The user first defines an event type that is the "schema" for the Events that the user will be generating. The event type object is sent in a `POST` request to the `/eventType` endpoint and contains a unique `name` (string) and a mapping describing the EventType's parameters. For example:
 
 [source,json]
 ----
@@ -40,13 +40,13 @@ Run the script simply as:
 
 ### System EventTypes
 
-Piazza provides some system level event types: `piazza:ingest` and `piazza:executionComplete`.  These two system event types can be used to set up triggers that execute something is ingested or an execution has finished. Those two event types look like the following:
+Piazza provides some system-level event types -- `piazza:ingest` and `piazza:executionComplete`.  These two system event types can be used to set up triggers that execute something is ingested or an execution has finished. Those two event types look like the following:
 
 [source,json]
 ----
 "piazza:ingest" : {
-  "dataId":   "string",
-  "dataType": "string",
+  "DataId":   "string",
+  "DataType": "string",
   "epsg":     "short",
   "minX":     "long",
   "minY":     "long",
@@ -61,9 +61,9 @@ and
 [source,json]
 ----
 "piazza:executionComplete" : {
-  "jobId":    "string",
+  "JobId":    "string",
   "status":   "string",
-  "dataId":   "string",
+  "DataId":   "string",
 }
 ----
 
@@ -71,7 +71,7 @@ An event of type `piazza:ingest` will be automatically `POST`ed by the system af
 
 An event of type `piazza:executionComplete` will be automatically `POST`ed by the system when the User Service Registry completes an execution of a service.
 
-To use these system events, look up the event type id for the system event type with the `/eventType?name=NAME`, where `NAME` is the event type name. The return data value will be an array with a single event type in it. You can get the event type id from the event type that is returned, and create your trigger with that event type id.
+To use these system events, look up the Event Type Dd for the system event type with the `/eventType?name=NAME`, where `NAME` is the veent type name. The return data value will be an array with a single event type in it. You can get the event type id from the event type that is returned, and create your trigger with that event type id.
 
 
 ## The Trigger
@@ -129,7 +129,7 @@ For details on the meanings of each field, please consult the Swagger reference 
 
 In the following example, the job will be executed only when our "test" event occurs with the `severity` equal to `5` and the `code` equal to `"PHONE"`.
 
-It is important to note that the `job` field uses substitution by replacing all instances of `$field`, where `field` is the name of a JSON field in the event type `mapping` (and thus subsequently is in the event's `data` field) with the `field` in the event that sets off the trigger. This substitution occurs in all of the fields in `job`, so it is important to be conscious of this.
+It is important to note that the `job` field uses substitution by replacing all instances of `$field`, where `field` is the name of a JSON field in the event type `mapping` (and therefore is in the event's `data` field) with the `field` in the event that sets off the trigger. This substitution occurs in all of the fields in `job`, so it is important to be conscious of this.
 
 This script will create a generic Trigger for the event type associated with that `eventTypeId`:
 
@@ -139,20 +139,20 @@ link:scripts/post-trigger.sh[post-trigger.sh]
 include::scripts/post-trigger.sh[tags=public]
 ----
 
-TO execute, pass the script an event type id,
+To execute, pass the script an event type id:
 
-    $ ./post-trigger.sh {{eventTypeId}}
+    $ ./post-trigger.sh {{EventTypeId}}
 
 
 
 ## The Event
 
-The user may create an event of that event type to indicate some interesting condition has occurred. The event object is sent as a `POST` request to the `/event` endpoint and contains the `eventTypeId` of the event type, and the parameters of the event. For example, a request may look like:
+The user may create an event of that event type to indicate some interesting condition has occurred. The event object is sent as a `POST` request to the `/event` endpoint, and contains the `EventTypeId` of the event type and the parameters of the event. For example, a request may look like:
 
 [source,json]
 ----
 {
-    "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
+    "EventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
     "data": {
         "filename": "dataset-c",
         "severity": 5,
@@ -164,12 +164,12 @@ The user may create an event of that event type to indicate some interesting con
 
 ### Scheduled Events
 
-An event can specify a `cronSchedule` field, which alters the mechanics of the event triggering process. The `cronSchedule` field specifies a schedule at which to repeat the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron related resources. 
+An event can specify a `cronSchedule` field, which alters the mechanics of the event-triggering process. The cronSchedule field specifies a schedule that will be repeated for the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron-related resources. 
 
-Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. The cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go, which differs slightly from traditional `cron(1)` syntax: the first asterisk is the *seconds* field. This means:
+Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. The cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go. This differs slightly from traditional `cron(1)` syntax in that the first asterisk is the *seconds* field. This means:
 
-* `"cronSchedule": "* * * * * *"` - send the event every second;
-* `"cronSchedule": "30 * * * * *"` - send the event every minute at the 30 second mark;
+* `"cronSchedule": "* * * * * *"` - send the event every second
+* `"cronSchedule": "30 * * * * *"` - send the event every minute at the 30 second mark
 * `"cronSchedule": "* 30 * * * *"` - send the event every hour at the 30 minute mark, etc.
 
 The 6 stars in the cronSchedule stand for:
@@ -211,11 +211,11 @@ A cron schedule can be specified using the `@every duration` notation, where dur
 * `"cronSchedule": "@every 30s"` - send event every 30 seconds
 * `"cronSchedule": "@every 5m"` - send event every 5 minutes
 
-It is crucial to understand that an *event that is sent with a cron schedule is not `POST`ed into the system in the same way that a typical event is. Rather, it sets up a recurring event that will be sent according to the schedule specified. If you require both an event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating event and a repeating event.
+It is crucial to understand that an *event that is sent with a cron schedule is not `POST`ed into the system in the same way as a typical event. Rather, it sets up a recurring event that will be sent according to the schedule specified. If you require both an event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating event and a repeating event.
 
 In order to stop repeating events, `DELETE` the initial repeating event by its event id.
 
-    DELETE /event/{{eventId}}
+    DELETE /event/{{EventId}}
 
 The following script will `POST` an event with a given event type id:
 
@@ -232,7 +232,7 @@ Execute the script as:
 
 ## The Alert
 
-Whenever the condition of a trigger is met, the system will create an alert object. The user can `GET` a list of alerts from the `/alert` endpoint. The alert object contains the ids of the trigger that was hit and the event which caused it. It also contains a generated `alertId`. For example:
+Whenever the condition of a trigger is met, the system will create an alert object. The user can `GET` a list of alerts from the `/alert` endpoint. The alert object contains the ids of the trigger that was hit and the event which caused it. It also contains a generated `AlertId`. For example:
 
 [source,json]
 ----
@@ -241,10 +241,10 @@ Whenever the condition of a trigger is met, the system will create an alert obje
     "type": "alert-list",
     "data": [
     {
-        "alertId": "58d1ad21-75d0-4ee4-8429-c687b9249cc5",
-        "triggerId": "170619d6-8f4e-4dc4-bcb6-8b0862e0138f",
-        "eventId": "baa98fc7-f282-4caf-b35d-c2050eca010c",
-        "jobId": "ab62ae7e-432b-4b61-a831-4a80b6ce836e",
+        "AlertId": "58d1ad21-75d0-4ee4-8429-c687b9249cc5",
+        "TriggerId": "170619d6-8f4e-4dc4-bcb6-8b0862e0138f",
+        "EventId": "baa98fc7-f282-4caf-b35d-c2050eca010c",
+        "JobId": "ab62ae7e-432b-4b61-a831-4a80b6ce836e",
         "createdBy": "",
         "createdOn": "2016-07-18T13:41:28.571761514Z"
     }
@@ -267,7 +267,7 @@ link:scripts/get-alerts.sh[get-alerts.sh]
 include::scripts/get-alerts.sh[tags=public]
 ----
 
-The query parameter `?triggerId=id` is provided on the endpoint to allow the list to be filtered to only alerts set off by a specified trigger.
+The query parameter `?TriggerId=id` is provided on the endpoint to allow the list to be filtered to only alerts set off by a specified trigger.
 
 To execute:
 

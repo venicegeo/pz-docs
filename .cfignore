@@ -2,7 +2,7 @@ ci/
 documents/
 etc/
 lab/
-Jenkinsfile
+JenkinsFile
 jenkins.properties
 manifest.jenkins.yml
 .*

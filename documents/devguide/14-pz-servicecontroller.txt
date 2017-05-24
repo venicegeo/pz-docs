@@ -1,16 +1,13 @@
 # Pz Service Controller
 
-Testing doc build
-This is a second test to see if things are working...
-
-
-The Piazza Core ServiceController manages and executes web services external to the Piazza core architecture (User Services).  It provides a REST API allowing developers to perform web service management activities.  The ServiceController also listens to Kafka topics dispatched from the Piazza Core Dispatcher, responds and handles web service management and execution Kafka messages.  Using the ServiceController, developers can:
+The Piazza Core ServiceController manages and executes web services external to the Piazza core architecture (User Services).  It provides a REST API allowing developers to perform web service management activities. Using the ServiceController, developers can:
 
 . Register web services for search/discovery (See pz-search for details)
 . Update information on the web service (e.g. URL, name, version and other metadata)
 . Remove a web service from the registry
 . View details about registered web services
 . Execute a registered web service
+. Use Piazza as a job management system for their services
 
 The figure below shows the high level architecture of Piazza and how the ServiceController interacts with different components.
 
@@ -29,10 +26,7 @@ The ServiceController, version 1.0, uses the following to build and run:
 * https://www.mongodb.com/download-center[MongoDB]
 * https://www.virtualbox.org/wiki/Downloads[Oracle VM VirtualBox] (for running the ServiceController on individual VMs)*
 * https://www.vagrantup.com/downloads.html[Vagrant]*
-* https://www.github.com/venicegeo/pz-uuidgen[pz-uuidgen]**
-* https://www.github.com/venicegeo/pz-logger[pz-logger]**
-* https://www.github.com/venicegeo/pz-alerter[pz-alerter]**
-* https://www.github.com/venicegeo/pz-discover[pz-discover]**
+* https://www.github.com/venicegeo/pz-jobcommon[pz-jobcommon]**
 * https://www.github.com/venicegeo/pz-gateway[pz-gateway]**
 * https://www.github.com/venicegeo/pz-jobmanager[pz-jobmanager]**
 
@@ -56,14 +50,17 @@ To build the ServiceController, run
 
     mvn clean install
 
-from the `mainServiceController` directory. This will build the ServiceController and produce an executable jar which is placed in the `mainServiceController/target` directory.
+This will build the ServiceController and produce an executable jar which is placed in the `/target` directory.
 
 The name of the jar will be `piazzaServiceController-(version number).BUILD-SNAPSHOT.jar`.
 
+Once built, to run the standalone ServiceController project, run
+
+    mvn spring-boot:run
 
 ### Vagrant
 
-Start up a Windows PowerShell **as administrator**. Navigate to the `mainServiceController/conf` directory. Issue the command
+Start up a Windows PowerShell **as administrator**. Navigate to the `conf` directory. Issue the command
 
     vagrant up
 
@@ -84,16 +81,6 @@ When the pz-logger service is available, the ServiceController uses it to log ad
 
 ## Getting Started With the REST API
 
-The ServiceController comes with some sample services to help with getting started with using the ServiceController API.
-
-|===
-| Jumpstart Service | Method | Description | Example URL
-| toLower | **POST** | Converts a string to lowercase. | http://pz-servicecontroller.venicegeo.io/jumpstart/string/toLower?aString=testing
-| toUpper | **POST** | Converts a string to uppercase. | http://pz-servicecontroller.venicegeo.io/jumpstart/string/toUpper?aString=testing
-| convert | **POST** | Converts a string to UPPER or LOWER case. | http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert { "theString":"testing", "conversionType":"UPPER"}
-| moviequotewelcome | **GET** | Takes an optional name as a parameter and provides a movie quote greeting to ServiceController users. | http://pz-servicecontroller.venicegeo.io/jumpstart/moviequotewelcome?name=Marge or http://pz-servicecontroller.venicegeo.io/jumpstart/moviequotewelcome
-|===
-
 To become familiar with the ServiceController, use data transfer tools such as **cURL** or UI data transfer tools such as **Postman** (https://www.getpostman.com/) to interact with the ServiceController REST API.
 
 The API and end points used for working with the ServiceController are documented in Swagger at: http://pz-swagger.venicegeo.io/#!/Service
@@ -105,7 +92,7 @@ The following examples on registering and executing user services are the payloa
 
 ### Registering a User Service
 
-Before the ServiceController can manage a user service, the service has to be registered. To do this, utilize the ServiceController's _**registerService**_ service passing in ResourceMetadata JSON.  As of now, there are no mandatory fields, but at a bare minimum register enough information so that other developers can discover and use the service.
+Before the ServiceController can manage a user service, the service has to be registered. To do this, utilize the ServiceController's _**registerService**_ service passing in Service JSON.  This JSON contains information as to the type of service (normal, asynchronous, task managed) and additional metadata such as ownership and attribution of the service.
 
 
 #### Registering a User Service that uses POST with Query Parameters
@@ -141,26 +128,6 @@ The response from the ServiceController will be a JSON message providing the ser
 ----
 _Once registered, users, should utilize the serviceId to perform any functions on the registered service._
 
-_**If you receive a response with an empty serviceId, it may mean that the service was not properly registered within the ServiceController.  Be sure MongoDB and other required software is up and running.**_
-
-
-#### Registering a User Service that uses POST with JSON Payload
-
-To register a service that uses the **POST** method requiring JSON as the RequestBody, send the following payload to the registerService:
-
-[source,json]
-----
-{
-    "url": "http://pz-servicecontroller.venicegeo.io/jumpstart/string/convert",
-    "contractUrl": "http://pz-servicecontroller.cf.venicegeo.io/convertContract",
-    "method": "POST",
-    "resourceMetadata": {
-        "name": "The toLower Service",
-        "description": "Service to convert string to upper or lower case"
-    }
-}
-----
-
 
 #### Registering a User Service that uses GET without any parameters
 To register a service that uses the **GET** example without URL parameters (as per a "pure" REST case), the process is the same but be sure to specify **GET** as the method.
@@ -180,10 +147,9 @@ To register a service that uses the **GET** example without URL parameters (as p
 }
 ----
 
-
 ### Executing a Service
 
-To execute a service, utilize the ServiceController's _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section.
+To execute a service, utilize the ServiceController's _**executeService**_ API.  Below is an example of how to execute the toLower service that was registered in the previous section. This is just an example, hypothetical service that returns a string response from a simple string input. 
 
 [source,json]
 ----
@@ -209,7 +175,7 @@ The response will be:
 <200 OK,{"result":"it is raining today."},{Server=[Apache-Coyote/1.1], Content-Type=[application/json;charset=UTF-8], Content-Length=[33], Date=[Tue, 19 Jan 2016 13:27:33 GMT]}>
 ----
 
-Executing the _moviequotewelcome_ previously registered would be done as follows:
+Executing the hypothetical _moviequotewelcome_ Service previously registered would be done as follows:
 
 [source,json]
 ----
@@ -228,7 +194,6 @@ The response will be:
 [source,json]
 ----
 <200 OK,{"message":"I'm Ron Burgandyyyy?
-
 Welcome to the piazza pz-servicecontroller!
 Details on using pz-servicecontrollers are located on the github venice wiki!
 "},{Server=[Apache-Coyote/1.1], Content-Type=[application/json;charset=UTF-8], Content-Length=[140], Date=[Tue, 19 Jan 2016 13:31:17 GMT]}>
@@ -258,6 +223,7 @@ To execute the convert service, do the following:
 
 
 ### Getting Description of a User Service
+
 To get a description of a user service registered with Piazza perform the following call:
 
     GET https://pz-servicecontroller.venicegeo.io/service/{{serviceId}}
@@ -325,3 +291,17 @@ Provides statistics on the Pz-ServiceController.
 ----
 
 // vim: set syntax=asciidoc wrap:
+
+### Service Registration Types
+
+There are three types of services, to support a variety of different workflows for existing REST services. The type of a Service is specified during registration of the Service. 
+
+To external users who are merely interacting with Services by executing them, these different types are entirely transparent. The differences only lie in the underlying execution of that Service.
+
+For detailed explanations on any of these Service Types, please see the Users Guide on Services.
+
+The first type is the 'standard' type of Service registration. To specify this type, no additional parameters must be added to the registration payload - it is the default type. This will register a URL endpoint (and a method) that will be called whenever the user executes the Service through the Gateway. ServiceController will contact the service directly with the specified parameters and then store the result that is returned from the Service. This is the most simple form of execution.
+
+The second type is the 'asynchronous' type. This can be specified by saying `isAsynchronous: true` in the service Registration payload. This type handles cases where the external Service has some sort of internal job queueing mechanism that can be used in order to defend against a large amount of requests being sent to the server that could potentially overwhelm and crash the server. Using this type of Registration, the ServiceController will contact the Service initially with the inputs for an execution. That request is expected to immediately return with a unique Job ID (provided by the Service). ServiceController will then periodically query the Service for status on that particular job. When the Status is reported back as Success, then the ServiceController will make an additional request to acquire the results and store them in Piazza.
+
+The last type is the 'taskManaged' type. This is specified by saying 'isTaskManaged: true' in the service Registration payload. This is designed to support the case where an existing Service has no job management system, or any way to defend against large amounts of requests. Using this Task Managed case, Service Executions will be placed in a Jobs Queue for that particular Service - no external request is made to the Service. Instead, the Service polls Piazza for Jobs in its queue for that Service. In this way, the Service is able to retrieve work only when it is able to handle it. Piazza performs the role of load balancing and job queueing for this Service. When results for a particular job are completed, then the external service sends those results directly back to Piazza. 

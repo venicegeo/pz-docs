@@ -63,7 +63,7 @@ Some helpful links for constructing Elasticsearch DSL queries include:
 
 * Elasticsearch Query information
 ** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html[Query and Filter Context docs]
-** https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-fields.html[Fields Parameter docs]
+** https://www.elastic.co/guide/en/elasticsearch/reference/2.3/search-request-fields.html[Fields Parameter docs]
 * Elasticsearch Query Types (non-exhaustive)
 ** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html[Match Query docs]
 ** https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html[Term Query docs]

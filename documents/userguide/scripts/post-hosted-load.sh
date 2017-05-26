@@ -2,8 +2,8 @@
 set -e
 source setup.sh
 
-check_arg $1 name
-check_arg $2 description
+check_arg "$1" name
+check_arg "$2" description
 
 # tag::public[]
 name=$1

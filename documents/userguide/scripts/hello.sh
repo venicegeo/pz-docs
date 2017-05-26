@@ -4,4 +4,4 @@ set -e
 
 . setup.sh
 
-$curl -XGET $PZSERVER
+$curl -X GET $PZSERVER

@@ -128,7 +128,7 @@ A script that does this can be found at link:scripts/execute-service.sh[execute-
 
 The `Service Id` is set to the return value from registering the service. In this example, no `dataInputs` are specified because there are no required parameters or payloads to invoke this service.  
 
-For details on the various ways to specify dataInputs into the service, see:  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[IInvoking a service, POST Job] in swagger for details.
+For details on the various ways to specify dataInputs into the service, see:  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Invoking a service, POST Job] in swagger for details.
 
 For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below).  The return value is not the result of the service call. The execute-service call creates a job and returns the Job Id of that job.
 
@@ -476,7 +476,7 @@ For details on the DataResource payload and the available DataTypes, see the htt
 
 #### What to do About Existing Services
 
-If you have an existing service, consider following the https://github.com/18F/api-standard[18F API standard] for guidance on best practices. For existing services that are not RESTful, consider wrapping these services with a REST representation. For example, the first generation of web services included heavy weight approaches such as SOAP (Simple Object Access Protocol) where messages were transmitted using XML over HTTP. If converting the service to a REST representation is not possible for services such as these, then consider wrapping these services.
+If you have an existing service, consider following the https://github.com/18F/api-standards[18F API standard] for guidance on best practices. For existing services that are not RESTful, consider wrapping these services with a REST representation. For example, the first generation of web services included heavy weight approaches such as SOAP (Simple Object Access Protocol) where messages were transmitted using XML over HTTP. If converting the service to a REST representation is not possible for services such as these, then consider wrapping these services.
 
 
 ### Putting Your User Service into Action within Piazza

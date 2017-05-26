@@ -9,7 +9,7 @@ Note that adding data to the search index is an internal Piazza function and the
 
 ## Setup
 
-To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we only care about the metadata.) And to do that, we need a script that loads the file with a given name and description and returns the corresponding data Resource Id. Fortunately, we wrote this script already, link:scripts/4-hosted-load.sh[4-hosted-load.sh]. We will call it three times.
+To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we only care about the metadata.) And to do that, we need a script that loads the file with a given name and description and returns the corresponding data Resource Id. Fortunately, we wrote this script already, link:scripts/post-hosted-load.sh[post-hosted-load.sh]. We will call it three times.
 
 link:scripts/load-files.sh[load-files.sh]
 [source,bash]

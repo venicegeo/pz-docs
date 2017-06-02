@@ -274,7 +274,7 @@ For guidance on best practices when creating the RESTful API to your web service
 
 ### Implementing Scalability
 
-When developing a user service, scalability needs to be considered.  _Scalability_ is the ability of your user service to handle a growing amount of requests or work to meet the business or mission needs.  There are two types of scaling that needs to be considered.
+_Scalability_ needs to be considered when developing a user service.  Scalability is the ability of your user service to handle a growing amount of requests or work to meet the business or mission needs.  There are two types of scaling that needs to be considered:
 
 * *Vertical Scalability* - Achieved by adding or removing resources to a single machine, virtual machine, or node to support changes in the workload or user requests. Example resources include CPUs or memory.
 
@@ -286,7 +286,7 @@ image::images/PZ-scalability.png[Scalability, 600 900,align="center", title=Vert
 
 Even though these are typical approaches for implementing scalability, sometimes these approaches are not accessible for various reasons.  It might cost too much to allocate multiple resources or to obtain a larger EC2 instance.  Also, the user service itself might not be architected to handle multiple requests or requests containing large datasets.  It might be able to handle multiple user requests concurrently but then have bottlenecks as it tries to process data.  
 
-For this reason, Piazza has implemented *Task Management* to support user services that are new, are being implemented iteratively, or are just are not ready to handle large amounts of service invocations.  Task Management allows user service developers to poll Piazza for work instead of taking service invocations directly from Piazza.  The next section discusses how to incorporate task management within your user service.
+For this reason, Piazza has implemented _Task Management_ to support user services that are new, are being implemented iteratively, or are just are not ready to handle large amounts of service invocations.  Task Management allows user service developers to poll Piazza for work instead of taking service invocations directly from Piazza.  The next section discusses how to incorporate task management within your user service.
 
 ### Task Management
 

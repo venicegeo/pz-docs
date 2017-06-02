@@ -130,7 +130,7 @@ A script that does this can be found at link:scripts/execute-service.sh[execute-
 
 The `serviceId` is set to the return value from registering the service. In this example, no `dataInputs` are specified because there are no required parameters or payloads to invoke this service.  
 
-For details on the various ways to specify dataInputs into the service, see  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Invoking a service, POST Job] in Swagger for details.
+For details on the various ways to specify Data Inputs into the service, see  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Invoking a service, POST Job] in Swagger for details.
 
 For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below).  The return value is not the result of the service call. The execute-service call creates a job and returns the Job Id of that job.
 
@@ -190,9 +190,9 @@ For details on status reporting for asynchronous services, see <Building Asynchr
 ####  Getting the Results
 
 
-Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided DataId, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint.  For details on using this endpoint, see the http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET[Piazza API].
+Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided Data ID, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint.  For details on using this endpoint, see the http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET[Piazza API].
 
-The example below shows an example of JobResponse depicting a successful execution.
+The example below shows an example of Job response depicting a successful execution.
 
 [source,json]
 ----
@@ -216,7 +216,7 @@ A script that checks the status of the job can be found at link:scripts/get-job-
 
     $ ./get-job-info.sh {{jobId}}
 
-Finally, the actual result is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/data/{{dataId}}` where the `DataId` is from the `result.data.DataId` field of the returned status. In this case, the result is text.
+Finally, the actual result is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/data/{{dataId}}` where the `dataId` is from the `result.data.dataId` field of the returned status. In this case, the result is text.
 
 [source,json]
 ----
@@ -235,7 +235,7 @@ Finally, the actual result is returned by sending a `GET` request to `https://pz
 }
 ----
 
-Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the result of the previous job. This script also takes a single argument: the `DataId` returned by the previous script:
+Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
 
     $ ./get-data-info.sh {{dataId}}
 

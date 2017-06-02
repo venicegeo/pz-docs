@@ -5,7 +5,7 @@ Welcome to the Piazza User Guide. It contains descriptions of Piazza's main feat
 
 ## Piazza In Brief
 
-Piazza is a set of open source, cloud-based services aimed at helping users (developers) build GEOINT applications and services. These services are exposed via REST endpoints, providing developers with the ability to:
+Piazza is a set of open source, cloud-based services aimed at helping users (developers) build GEOINT applications and services. These services are exposed via Representational State Transfer (REST) endpoints, providing developers with the ability to:
 
 Load data into the system:: Given a reference to an external data source, Piazza can extract metadata and other information about that data and record it locally under a unique ID. These data sources can be such files as GeoTIFFs in an S3 bucket, or features such as from a Shapefile or PostGIS database. While Piazza typically needs to read the data source's contents, it does not need to store a copy of it locally.
 
@@ -13,7 +13,7 @@ Access data from the system:: Having loaded data into the system, Piazza can cre
 
 Search data within the system:: Piazza stores the metadata about the data sources, allowing users to submit queries and receive in return a list of data resources matching the criteria.
 
-Execute external services:: Users will wish to execute external web services, such as querying a gazetteer for a given location or extracting vector features from an image. Services can be registered by providing Representational State Transfer (REST) endpoints, descriptions, and parameter lists. Then Piazza can execute these services on the user's behalf. The services can reference data loaded into Piazza (using the data's resource ID) or externally via URL.
+Execute external services:: Users will wish to execute external web services, such as querying a gazetteer for a given location or extracting vector features from an image. Services can be registered by REST endpoints, descriptions, and parameter lists. Then Piazza can execute these services on the user's behalf. The services can reference data loaded into Piazza (using the data's resource ID) or externally via URL.
 
 Detect events and trigger actions:: Piazza allows users to define _event types_, such as the loading of a new file within a certain bounding box or the successful completion of an external service; _events_ of those types can then be generated from within the system or sent to the system from the outside. Users then create _triggers_ -- actions to be taken when certain event conditions are met -- thus allowing Piazza to be responsible for executing simple "workflows" of activities.
 

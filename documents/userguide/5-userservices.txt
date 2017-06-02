@@ -1,6 +1,6 @@
 # User Services
 
-Piazza allows users to discover, manage, and invoke external web services that are referred to as _User Services_.  A web service is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON, and XML are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
+Piazza allows users to discover, manage, and invoke external web services that are referred to as _User Services_.  A web service is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON, and XML (Extensible Markup Language) are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
    
 Piazza users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image, and then notifying an analyst that the image has finished processing and is ready for review.
 

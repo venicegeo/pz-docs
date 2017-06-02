@@ -268,7 +268,7 @@ When designing your user service, it should be written as a RESTful web service.
 
 To establish an API for exchanging data to and from your user service, consider using the JSON standard because data payloads are smaller, are easy to read, and work programmatically (e.g. using JavaScript).
 
-XML (Extensible Markup Language) is also used to exchange data with RESTful web services. With XML, data is very structured and is stored in a markup language that is readable. As a result of the formatting, XML payloads are much larger than JSON payloads. With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format. When using XML, a well-documented schema should be used to validate and to describe the responses that may be sent from your service.
+XML is also used to exchange data with RESTful web services. With XML, data is very structured and is stored in a markup language that is readable. As a result of the formatting, XML payloads are much larger than JSON payloads. With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format. When using XML, a well-documented schema should be used to validate and to describe the responses that may be sent from your service.
 
 For guidance on best practices when creating the RESTful API to your web service, see the https://github.com/18F/api-standards[18F API standard] for details.
 

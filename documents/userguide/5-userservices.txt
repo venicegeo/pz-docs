@@ -242,7 +242,7 @@ Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the resu
 
 ### Cancelling an Invocation
 
-During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `Job Id` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
+During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
 
 
 ## Other Examples
@@ -365,7 +365,7 @@ The "url" parameter in service Registration, along with the "method" parameter, 
 
 ```
 
-In the example above, Piazza will use the Job Id value of _123456_ as the Id for tracking your user service execution instance.
+In the example above, Piazza will use the Job ID value of _123456_ as the Id for tracking your user service execution instance.
 
 The image below shows details on the interaction between Piazza and the user service during service invocation.
 

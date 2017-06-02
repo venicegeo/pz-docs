@@ -290,7 +290,7 @@ For this reason, Piazza has implemented _Task Management_ to support user servic
 
 ### Task Management
 
-_Task Management_ is a capability that allows user service developers to _poll_ for work instead of being invoked directly by Piazza.  To tell Piazza that you are task-managed service, you must register your service by setting the `isTaskManaged` attribute to `true`.  Below is an example JSON payload for using the `isTaskManaged` attribute with the other required fields necessary during registration.
+Task Management is a capability that allows user service developers to _poll_ for work instead of being invoked directly by Piazza.  To tell Piazza that you are task-managed service, you must register your service by setting the `isTaskManaged` attribute to `true`.  Below is an example JSON payload for using the `isTaskManaged` attribute with the other required fields necessary during registration.
 
 [source,json]
 ----

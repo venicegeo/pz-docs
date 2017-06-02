@@ -4,7 +4,7 @@ Piazza allows users to discover, manage, and invoke external web services that a
    
 Piazza users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image, and then notifying an analyst that the image has finished processing and is ready for review.
 
-Piazza provides a REST API, allowing users to perform such user service management activities as:
+Piazza provides a REST (Representational State Transfer) API, allowing users to perform such user service management activities as:
 
 . Register user services in the Service Registry for search/discovery (see the <<Search>> section for details)
 . Update information on the user service (e.g., URL, name, version, and other metadata)
@@ -252,7 +252,7 @@ For more examples on how to register and execute your service, see the http://pz
 
 ## How to Write Your Own User Services
 
-**User Services** are external web services that service developers write to be utilized by various users.  When these services are registered within Piazza’s Service Registry, they can be discovered and invoked by any Piazza user.   For example, suppose a developer has created an algorithm that does processing of point cloud data and wants to share it with others to use. He or she would create a user service and then register it with Piazza so that others may use it. Once a user service is registered with Piazza, Piazza users will be able to discover and invoke it to support the workflow in the applications that need it.
+User Services are external web services that service developers write to be utilized by various users.  When these services are registered within Piazza’s Service Registry, they can be discovered and invoked by any Piazza user.   For example, suppose a developer has created an algorithm that does processing of point cloud data and wants to share it with others to use. He or she would create a user service and then register it with Piazza so that others may use it. Once a user service is registered with Piazza, Piazza users will be able to discover and invoke it to support the workflow in the applications that need it.
 
 If a registered user service has additional security and access requirements (e.g., client certificate required, pre-authorization to use, etc.), users should contact the user service provider to negotiate access for use.
 

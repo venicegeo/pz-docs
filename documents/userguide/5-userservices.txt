@@ -321,7 +321,7 @@ Once your user service is registered as a Task Managed service, Piazza will not 
 
 #### Sending Status Updates for the Job
 
-When you need to send Piazza status updates, or results, for the job your user service is working on, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{JobId}}`. The payload for this POST is a StatusUpdate object, which is the exact same model that you previously used in asynchronous services.  For details on this model, see the <<Status Details>> section.
+When you need to send Piazza status updates or results for the job your user service is working on, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{jobId}}`. The payload for this POST is a StatusUpdate object, which is the exact same model that you previously used in asynchronous services.  For details on this model, see the <<Status Details>> section.
 
 For example, if your user service failed to execute, the payload that would be sent to Piazza would be:
 

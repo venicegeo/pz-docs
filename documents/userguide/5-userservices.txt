@@ -110,7 +110,7 @@ The `jobId` field contains a unique identifier of the specific running instance 
 
 ### Hello Example service invoked with `GET` method
 
-A script that does this can be found at link:scripts/execute-service.sh[execute-service.sh]. Provide the `Service Id` returned by the register script as the first argument to the script:
+A script that does this can be found at link:scripts/execute-service.sh[execute-service.sh]. Provide the `serviceId` returned by the register script as the first argument to the script:
 
     $ ./execute-service.sh {{serviceId}}
 

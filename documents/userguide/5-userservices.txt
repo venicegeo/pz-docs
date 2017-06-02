@@ -1,6 +1,6 @@
 ﻿# User Services
 
-Piazza allows users to discover, manage, and invoke external _web services_ that are referred to as *User Services*.  A web service is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON, and XML are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
+Piazza allows users to discover, manage, and invoke external web services that are referred to as _User Services_.  A web service is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON, and XML are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
    
 Piazza users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image, and then notifying an analyst that the image has finished processing and is ready for review.
 
@@ -36,7 +36,7 @@ A user service must be _registered_ within the Piazza Service Registry before it
 
 To register a user service with Piazza, the client sends a JSON payload with the URL of the service, a description of its parameters, and other metadata to Piazza.
 
-The `isAsynchronous` field is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the User Service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
+The `isAsynchronous` field is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the user service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
 
 
 ### Hello Example service registered with `GET` method
@@ -47,7 +47,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 ----
 {
     "url": "http://pzsvc-hello.venicegeo.io/",
-    "contractUrl": "http://helloContract",
+    "contractURL": "http://helloContract",
     "method" : "GET",
     "isAsynchronous" : "false",
     "resourceMetadata": {
@@ -61,11 +61,11 @@ The service is registered by performing a `POST` request to the `/service` endpo
 ----
 
 * https://pz-gateway.venicegeo.io/service is the endpoint for registering the user service with the following required JSON attributes:
-** The `url` field is the URL for invoking the service.  This is the "Root" URL for the Service.
-** The `contractUrl` field contains additional detail information about the service.
+** The `URL` field is the URL for invoking the service.  This is the _Root URL_ for the service.
+** The `contractURL` field contains additional detail information about the service.
 ** The `method` field is used to indicate the desired action to be performed on the service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
-** The `isAsynchronous` flag is used to indicate whether the service is an asynchronous user service and implements the asynchronous endpoints.
-** The `resourceMetadata` field has three subfields with the name, description of the service, and the classType for the service:
+** The `isAsynchronous` flag is used to indicate whether the service is an Asynchronous User Service and implements the asynchronous endpoints.
+** The `resourceMetadata` field has three subfields with the name, description of the service, and the Class Type for the service:
 *** The `name` field is used to identify the name of the service.
 *** The `description` field is used to describe the service.
 *** The `classType` field is used to indicate the classification of the registered service.
@@ -93,7 +93,7 @@ An example script for registering the "Hello World" service and returning the `S
 
 ## Invocation
 
-Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`.  The `url` parameter in service registration, also referred to as the *Root* URL for the service, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
+Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`.  The `URL` parameter in service registration, also referred to as the Root URL for the service, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
 
 For details on how to invoke a user service, see http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API].
 
@@ -106,7 +106,7 @@ Piazza users invoking a user service will get a *JobResponse* JSON payload respo
     }
 }
 ```
-The `Job Id` field contains a unique identifier of the specific running instance of the user service. This id is used in subsequent requests to obtain the status of the job and to perform other job management capabilities.
+The `Job Id` field contains a unique identifier of the specific running instance of the user service. This ID is used in subsequent requests to obtain the status of the job and to perform other job management capabilities.
 
 ### Hello Example service invoked with `GET` method
 
@@ -168,7 +168,7 @@ When invoking a service that requires a POST body for input, the body message is
 
 ### Getting the Status and Results of an Invocation
 
-The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{JobId}}` where `JobId` is the id returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
+The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{JobId}}` where `JobId` is the ID returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
 
 #### Status Details
 The granularity of the status provided depends on the type of user service that has been invoked.  For synchronous user services, the status returned may be in the following format:
@@ -240,7 +240,7 @@ Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the resu
 
 ### Cancelling an Invocation
 
-During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `JobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
+During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `Job Id` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
 
 
 ## Other Examples
@@ -356,14 +356,14 @@ I
 image::images/PZ-async-user-service.png[Invocation, 600, 900, align="center",title=Invocation of an Asynchronous User Service]
 
 
-The "url" parameter in Service Registration, also referred to as the *Root* URL for the Service, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP method, and will be expected to return a JSON payload with the following format:
+The "URL" parameter in service Registration, also referred to as the *Root* URL for the Service, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP method, and will be expected to return a JSON payload with the following format:
 
 ```
 {"type":"job","data":{"jobId":"123456"}}
 
 ```
 
-In the example above, Piazza will use the JobId value of _123456_ as the Id for tracking your user service execution instance.
+In the example above, Piazza will use the Job Id value of _123456_ as the Id for tracking your user service execution instance.
 
 The image below shows details on the interaction between Piazza and the user service during service invocation.
 
@@ -415,7 +415,7 @@ On Error, the Status endpoint will also report error information. If your servic
 }
 ```
 
-The `Result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this Instance of the User Service. Once Piazza encounters an Error status, it will cease to poll for Status and it will not attempt to query the *results* endpoint.
+The `Result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an Error status, it will cease to poll for Status and it will not attempt to query the *results* endpoint.
 
 ### Result
 
@@ -432,7 +432,7 @@ During execution of a Piazza Job, the user who requested that job execution may 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{JobId}_.
 
-The id of the instance can be used internally by the User Service to clean up any resources related to that Instance. It can be considered a guarantee by Piazza that no subsequent calls will be made related to that Instance.
+The id of the instance can be used internally by the user service to clean up any resources related to that Instance. It can be considered a guarantee by Piazza that no subsequent calls will be made related to that Instance.
 
 ### Output From Your User Service
 
@@ -459,7 +459,7 @@ For example, if a user service generates a raster image, the output from the ser
     "metadata": {
         "name": "External Crop Raster Service",
         "id": "478788dc-ac85-4a85-a75c-cbb352620667-NASA-GDEM-10km-colorized.tif",
-        "description": "Service that takes payload containing s3 location and bounding box for some raster file, downloads, crops, and uploads the crop back up to s3.",
+        "description": "service that takes payload containing s3 location and bounding box for some raster file, downloads, crops, and uploads the crop back up to s3.",
         "url": "http://host:8086/crop",
         "method": "POST"
     }
@@ -467,7 +467,7 @@ For example, if a user service generates a raster image, the output from the ser
 
 ----
 
-This output format is a DataResource payload that indicates the location of a cropped raster image Amazon Web Service (AWS) Simple Storage Service (s3) directory. Metadata about the user service that generated the image along with other data is indicated in the `metadata` field of the payload. The `mimeType` field indicates the type of raster image that was generated.
+This output format is a DataResource payload that indicates the location of a cropped raster image Amazon Web Service (AWS) Simple Storage Service (S3) directory. Metadata about the user service that generated the image along with other data is indicated in the `metadata` field of the payload. The `mimeType` field indicates the type of raster image that was generated.
 
 When generating a DataResource payload, `type` and `mimeType` are required for all DataTypes. Additional fields are required depending on the type of data that is generated from the user service.
 
@@ -502,7 +502,7 @@ When registering a service, the following fields are required:
 
 User services registered within Piazza have an `availability` field that indicates the status/health of the service. Services can have an availability  value of `ONLINE`, `OFFLINE`, `DEGRADED`, and `FAILED`.  When your user service is initially registered with Piazza, the status of that service is automatically set to `ONLINE` within the Piazza Service Registry.
 
-When you have to take your service down for maintenance or other reasons, you should update the status of your user service out of courtesy to `OFFLINE` so users will know that the service is not in a functional state.  To update the status of your service, use the `PUT` method on the https://pz-gateway.venicegeo.io/service/{{ServiceId}}/ end point with the Service payload containing the fields you would like to update for your service in the Service Registry.
+When you have to take your service down for maintenance or other reasons, you should update the status of your user service out of courtesy to `OFFLINE` so users will know that the service is not in a functional state.  To update the status of your service, use the `PUT` method on the https://pz-gateway.venicegeo.io/service/{{ServiceId}}/ end point with the service payload containing the fields you would like to update for your service in the service registry.
 
 Below is an example of the payload to send to update your service’s status:
 [source,json]
@@ -515,11 +515,11 @@ Below is an example of the payload to send to update your service’s status:
 ----
 
 
-Piazza continually monitors the health of user services registered in the Service Registry. Piazza continually  monitors these user services and when response time from these services starts to be slow, Piazza may set the status of a registered user service, to DEGRADED.  If the user service is unresponsive over a period of time, the status of the user service may be changed to `FAILED`. 
+Piazza continually monitors the health of user services registered in the service registry. Piazza continually  monitors these user services and when response time from these services starts to be slow, Piazza may set the status of a registered user service, to DEGRADED.  If the user service is unresponsive over a period of time, the status of the user service may be changed to `FAILED`. 
  
 
 
 ## Service API Documentation
 
-See http://pz-swagger.venicegeo.io/#/Service for the complete User Service API.
+See http://pz-swagger.venicegeo.io/#/service for the complete User Service API.
 // vim: set syntax=asciidoc wrap:

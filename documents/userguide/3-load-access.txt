@@ -30,7 +30,7 @@ link:scripts/post-hosted-load.sh[post-hosted-load.sh]
 include::scripts/post-hosted-load.sh[tags=public]
 ----
 
-The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `ContentType` header accordingly; in most of the other examples we will see, `ContentType` is set to the usual `"application/json"`.
+The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `contentType` header accordingly; in most of the other examples we will see, `contentType` is set to the usual `"application/json"`.
 
 In the JSON request body, the `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
 
@@ -52,7 +52,7 @@ The response from this request will be a Piazza response object. It contains a u
 }
 ----
 
-The `Job Id` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
+The `jobId` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
 
 The `get-job-info` script can be used to do this `GET` request:
 
@@ -106,7 +106,7 @@ or
 }
 ----
 
-When the job is completed, the response for the request will have its `status` field set to `Success` and will contain a `result` field. For a load job, `result.type` will be `data` because the result is data loaded into Piazza, and `result.dataId` will be the unique identifier of the data that was loaded.
+When the job is completed, the response for the request will have its `status` field set to `success` and will contain a `result` field. For a load job, `result.type` will be `data` because the result is data loaded into Piazza, and `result.dataId` will be the unique identifier of the data that was loaded.
 
 Just like we did to get information about a job, we can get information about the data object and our image file looks something this:
 

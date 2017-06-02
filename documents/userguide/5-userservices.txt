@@ -4,7 +4,7 @@ Piazza allows users to discover, manage, and invoke external web services that a
    
 Piazza users can combine user services to perform complex tasks automatically such as orthorectifying an image, running statistical analysis on the image, and then notifying an analyst that the image has finished processing and is ready for review.
 
-Piazza provides a REST (Representational State Transfer) API, allowing users to perform such user service management activities as:
+Piazza provides a REST API, allowing users to perform such user service management activities as:
 
 . Register user services in the Service Registry for search/discovery (see the <<Search>> section for details)
 . Update information on the user service (e.g., URL, name, version, and other metadata)
@@ -261,7 +261,7 @@ The contact information for each user service is located in the `resourceMetadat
 
 ### Designing Your User Service
 
-When designing your user service, it should be written as a RESTful web service. REST (Representational State Transfer) is an architectural concept for creating client/server networked applications, and clients and servers exchange data using a stateless communication protocol such as HTTP.
+When designing your user service, it should be written as a RESTful web service. REST is an architectural concept for creating client/server networked applications, and clients and servers exchange data using a stateless communication protocol such as HTTP.
 
 
 #### Establishing an API

@@ -1,4 +1,4 @@
- ﻿# User Services
+# User Services
 
 Piazza allows users to discover, manage, and invoke external web services that are referred to as _User Services_.  A web service is a function that can be accessed over the web using HTTP.  Web technologies such as HTTP, JSON, and XML are used when creating web services because they allow for data to be exchanged in a platform-independent manner.
    
@@ -17,13 +17,15 @@ While Piazza’s overall goal is to provide users with the ability to register a
 
 ## Types of User Services
 
-Piazza recognizes that there are two types of _User Services_: *synchronous* web services and *asynchronous* web services.  Synchronous web services, when invoked by a client, require the client to wait (or block) until a response and/or results are returned before the client can proceed with additional work.  The figure below illustrates an example of synchronous user services.
+Piazza recognizes that there are two types of _User Services_: *synchronous* web services and *asynchronous* web services.  
+
+Synchronous web services, when invoked by a client, require the client to wait (or block) until a response and/or results are returned before the client can proceed with additional work.  The figure below illustrates an example of synchronous user services.
 
 image::images/PZ-service-sync.png[Synchronous, 600 900,align="center", title=Synchronous Web Service]
 
 Sometimes, however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the user service processes the submitted request. 
 
-To support this need, Piazza provides support for asynchronous user services.  With these types of services, clients are not blocked while waiting for a response.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write asynchronous user services.
+To support this need, Piazza provides support for Asynchronous User Services.  With these types of services, clients are not blocked while waiting for a response.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write Asynchronous User Services.
 
 image::images/PZ-service-async.png[Asynchronous, 600 900,align="center", title=Asynchronous Web Service]
 
@@ -36,7 +38,7 @@ A user service must be _registered_ within the Piazza Service Registry before it
 
 To register a user service with Piazza, the client sends a JSON payload with the URL of the service, a description of its parameters, and other metadata to Piazza.
 
-The `isAsynchronous` field is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the user service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
+The `isAsynchronous` field is used to indicate whether a user service is an Asynchronous User Service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the user service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
 
 
 ### Hello Example service registered with `GET` method
@@ -86,7 +88,7 @@ Successfully registering a service will return JSON of the following schema:
 
 The `serviceId` field should be noted since it will be used to invoke the service.
 
-An example script for registering the "Hello World" service and returning the `Service Id` can be found at link:scripts/register-service.sh[register-service.sh]. Run it in the following way:
+An example script for registering the "Hello World" service and returning the `serviceId` can be found at link:scripts/register-service.sh[register-service.sh]. Run it in the following way:
 
     $ ./register-service.sh
 

@@ -99,7 +99,7 @@ Once a user service is registered within Piazza, it can be invoked by sending a 
 
 For details on how to invoke a user service, see http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API].
 
-Piazza users invoking a user service will get a *JobResponse* JSON payload response in the following format:
+Piazza users invoking a user service will get a _Job response_ JSON payload response in the following format:
 ```
 {
    "type":"job",
@@ -128,9 +128,9 @@ A script that does this can be found at link:scripts/execute-service.sh[execute-
 }
 ----
 
-The `Service Id` is set to the return value from registering the service. In this example, no `dataInputs` are specified because there are no required parameters or payloads to invoke this service.  
+The `serviceId` is set to the return value from registering the service. In this example, no `dataInputs` are specified because there are no required parameters or payloads to invoke this service.  
 
-For details on the various ways to specify dataInputs into the service, see:  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Invoking a service, POST Job] in swagger for details.
+For details on the various ways to specify dataInputs into the service, see  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Invoking a service, POST Job] in Swagger for details.
 
 For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below).  The return value is not the result of the service call. The execute-service call creates a job and returns the Job Id of that job.
 
@@ -147,7 +147,7 @@ For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail
 
 ### Hello Example service invoked with `POST` method
 
-When invoking a service that requires a POST body for input, the body message is specified in the content field -- the `type` is `"body"` and the `mimeType` has to be specified. Getting the `Job Id` is exactly the same as with the `GET` request.
+When invoking a service that requires a POST body for input, the body message is specified in the content field -- the `type` is `"body"` and the `mimeType` has to be specified. Getting the `jobId` is exactly the same as with the `GET` request.
 
 [source,json]
 ----
@@ -170,10 +170,10 @@ When invoking a service that requires a POST body for input, the body message is
 
 ### Getting the Status and Results of an Invocation
 
-The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{JobId}}` where `JobId` is the ID returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
+The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId` is the ID returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
 
 #### Status Details
-The granularity of the status provided depends on the type of user service that has been invoked.  For synchronous user services, the status returned may be in the following format:
+The granularity of the status provided depends on the type of user service that has been invoked.  For Synchronous User Services, the status returned may be in the following format:
 
 ```
 {
@@ -183,7 +183,7 @@ The granularity of the status provided depends on the type of user service that 
 }
 ```
 
-The acceptable statuses are as follows: `Pending`, `Running`, `Success`, `Cancelled`, `Error`, `Fail`. 
+The acceptable statuses are as follows: `pending`, `running`, `success`, `cancelled`, `error`, `fail`. 
 
 For details on status reporting for asynchronous services, see <Building Asynchronous Support> to see the various types of statuses that can be returned.
 

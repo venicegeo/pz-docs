@@ -183,7 +183,7 @@ The granularity of the status provided depends on the type of user service that 
 }
 ```
 
-The acceptable statuses are as follows: `pending`, `running`, `success`, `cancelled`, `error`, `fail`. 
+The acceptable statuses are as follows: `Pending`, `Running`, `Success`, `Cancelled`, `Error`, `Fail`. 
 
 For details on status reporting for asynchronous services, see <Building Asynchronous Support> to see the various types of statuses that can be returned.
 

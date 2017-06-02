@@ -17,9 +17,9 @@ While Piazza’s overall goal is to provide users with the ability to register a
 
 ## Types of User Services
 
-Piazza recognizes that there are two types of _User Services_: *synchronous* web services and *asynchronous* web services.  
+Piazza recognizes that there are two types of _User Services_: Synchronous Web Services and Asynchronous Web Services.  
 
-Synchronous web services, when invoked by a client, require the client to wait (or block) until a response and/or results are returned before the client can proceed with additional work.  The figure below illustrates an example of synchronous user services.
+Synchronous Web Services, when invoked by a client, require the client to wait (or block) until a response and/or results are returned before the client can proceed with additional work.  The figure below illustrates an example of Synchronous Web Services.
 
 image::images/PZ-service-sync.png[Synchronous, 600 900,align="center", title=Synchronous Web Service]
 

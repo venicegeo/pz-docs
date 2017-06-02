@@ -47,7 +47,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 ----
 {
     "url": "http://pzsvc-hello.venicegeo.io/",
-    "contractURL": "http://helloContract",
+    "contracturl": "http://helloContract",
     "method" : "GET",
     "isAsynchronous" : "false",
     "resourceMetadata": {
@@ -62,7 +62,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 
 * https://pz-gateway.venicegeo.io/service is the endpoint for registering the user service with the following required JSON attributes:
 ** The `url` field is the URL for invoking the service.  This is the _Root URL_ for the service.
-** The `contractURL` field contains additional detail information about the service.
+** The `contracturl` field contains additional detail information about the service.
 ** The `method` field is used to indicate the desired action to be performed on the service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
 ** The `isAsynchronous` flag is used to indicate whether the service is an Asynchronous User Service and implements the asynchronous endpoints.
 ** The `resourceMetadata` field has three subfields with the name, description of the service, and the Class Type for the service:
@@ -93,7 +93,7 @@ An example script for registering the "Hello World" service and returning the `S
 
 ## Invocation
 
-Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`.  The `URL` parameter in service registration, also referred to as the Root URL for the service, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
+Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`.  The `url` parameter in service registration, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field. 
 
 For details on how to invoke a user service, see http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API].
 
@@ -356,7 +356,7 @@ I
 image::images/PZ-async-user-service.png[Invocation, 600, 900, align="center",title=Invocation of an Asynchronous User Service]
 
 
-The "URL" parameter in service Registration, also referred to as the *Root* URL for the Service, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP method, and will be expected to return a JSON payload with the following format:
+The "url" parameter in service Registration, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP method, and will be expected to return a JSON payload with the following format:
 
 ```
 {"type":"job","data":{"jobId":"123456"}}
@@ -373,7 +373,7 @@ image::images/PZ-async-invoke.png[Asynchronous, 600 900,align="center", title=Pi
 
 For Piazza to be able to query the status of your user service, a *status* endpoint has to be implemented.  The endpoint */status/{jobId}* and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
 
-For example, if the Root URL is _http://service/analysis_ then Piazza will infer the Status URL as HTTP `GET` _http://service/analysis/status/{Job ID}_. 
+For example, if the Root URL is _http://service/analysis_ then Piazza will infer the status URL as HTTP `GET` _http://service/analysis/status/{Job ID}_. 
 
 Once an instance of your user service has been started (by Piazza calling the invocation endpoint), Piazza will periodically call the *status* endpoint in order to determine the current progress of this instance. This includes the status of the service and any progress information. 
 

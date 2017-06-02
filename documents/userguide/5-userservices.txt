@@ -61,7 +61,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 ----
 
 * https://pz-gateway.venicegeo.io/service is the endpoint for registering the user service with the following required JSON attributes:
-** The `URL` field is the URL for invoking the service.  This is the _Root URL_ for the service.
+** The `url` field is the URL for invoking the service.  This is the _Root URL_ for the service.
 ** The `contractURL` field contains additional detail information about the service.
 ** The `method` field is used to indicate the desired action to be performed on the service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
 ** The `isAsynchronous` flag is used to indicate whether the service is an Asynchronous User Service and implements the asynchronous endpoints.
@@ -84,7 +84,7 @@ Successfully registering a service will return JSON of the following schema:
 }
 ----
 
-The `Service Id` field should be noted since it will be used to invoke the service.
+The `serviceId` field should be noted since it will be used to invoke the service.
 
 An example script for registering the "Hello World" service and returning the `Service Id` can be found at link:scripts/register-service.sh[register-service.sh]. Run it in the following way:
 
@@ -106,7 +106,7 @@ Piazza users invoking a user service will get a *JobResponse* JSON payload respo
     }
 }
 ```
-The `Job Id` field contains a unique identifier of the specific running instance of the user service. This ID is used in subsequent requests to obtain the status of the job and to perform other job management capabilities.
+The `jobId` field contains a unique identifier of the specific running instance of the user service. This ID is used in subsequent requests to obtain the status of the job and to perform other job management capabilities.
 
 ### Hello Example service invoked with `GET` method
 
@@ -415,7 +415,7 @@ On Error, the Status endpoint will also report error information. If your servic
 }
 ```
 
-The `Result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an Error status, it will cease to poll for Status and it will not attempt to query the *results* endpoint.
+The `result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an Error status, it will cease to poll for Status and it will not attempt to query the *results* endpoint.
 
 ### Result
 

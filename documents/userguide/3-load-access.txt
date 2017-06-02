@@ -106,7 +106,7 @@ or
 }
 ----
 
-When the job is completed, the response for the request will have its `status` field set to `success` and will contain a `result` field. For a load job, `result.type` will be `data` because the result is data loaded into Piazza, and `result.dataId` will be the unique identifier of the data that was loaded.
+When the job is completed, the response for the request will have its `status` field set to `Success` and will contain a `result` field. For a load job, `result.type` will be `data` because the result is data loaded into Piazza, and `result.dataId` will be the unique identifier of the data that was loaded.
 
 Just like we did to get information about a job, we can get information about the data object and our image file looks something this:
 

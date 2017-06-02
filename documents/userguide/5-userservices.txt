@@ -347,12 +347,10 @@ Metadata about your user service’s jobs queue can be obtained by submitting a 
 
 #### Timeouts in Task Managed Services
 
-Optionally, the `timeout` parameter can be specified upon initial service registration.  If specified, Piazza will then periodically check for jobs that have been pulled from the service queue that have exceeded the duration of this timeout period.  For example, if a service specifies its timeout as five minutes long, and a job runs for more than five minutes, Piazza Task Management will consider this specific job as _timed out_.  When a task-managed job times out, it will be placed back in the service queue and is available to be polled again by another worker.  If that specific service job fails two more subsequent times, then it will be removed from the queue entirely and flagged as a failure by Piazza.
+Optionally, the `timeout` parameter can be specified upon initial service registration.  If specified, Piazza will then periodically check for jobs that have been pulled from the service queue that have exceeded the duration of this timeout period.  For example, if a service specifies its timeout as five minutes long and a job runs for more than five minutes, Piazza Task Management will consider this specific job as _timed out_.  When a task-managed job times out, it will be placed back in the service queue and is available to be polled again by another worker.  If that specific service job fails two more subsequent times, then it will be removed from the queue entirely and flagged as a failure by Piazza.
 
-### Building in Asynchronous Support
+#### Building in Asynchronous Support: If you anticipate that your user service will be doing time-consuming activities, then consider making it an Asynchronous User Service.  To provide for this functionality, Piazza recommends that the following set of functions and behaviors be incorporated into your user service.  The following sections steps through each of these items.
 
-If you anticipate that your user service will be doing time-consuming activities, then consider making it an asynchronous user service.  To provide for this functionality, Piazza recommends that the following set of functions and behaviors be incorporated into your user service.  The following sections steps through each of these items.
-I
 #### Service Invocation Response: For Piazza to track and work with your asynchronous service, a unique identifier, or ‘JobId’ needs to be generated and returned to Piazza when the service is invoked.
 
 image::images/PZ-async-user-service.png[Invocation, 600, 900, align="center",title=Invocation of an Asynchronous User Service]

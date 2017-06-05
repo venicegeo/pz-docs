@@ -173,7 +173,7 @@ When invoking a service that requires a POST body for input, the body message is
 The status of a user service invocation is returned by sending a `GET` request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId` is the ID returned when executing the service.  Piazza users should call this endpoint to determine the status of a running service.
 
 #### Status Details
-The granularity of the status provided depends on the type of user service that has been invoked.  For Synchronous User Services, the status returned may be in the following format:
+The granularity of the status provided depends on the type of user service that has been invoked.  For synchronous user services, the status returned may be in the following format:
 
 ```
 {
@@ -425,7 +425,7 @@ The `result` field can define a message and details property that can be used to
 
 When your user service reports back a _Success_ status, then Piazza will initiate a subsequent call to the Results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
 
-For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{JobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional Synchronous User Service. 
+For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{JobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
 
 
 When Piazza initiates a successful call to the results endpoint of a service, it should be considered a guarantee that Piazza will make no further queries related to that execution instance.

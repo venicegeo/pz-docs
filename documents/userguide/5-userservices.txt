@@ -25,7 +25,7 @@ image::images/PZ-service-sync.png[Synchronous, 600 900,align="center", title=Syn
 
 Sometimes, however, the request submitted by the client may take a while to process or processing may be delayed.  In cases such as this, it is beneficial to allow the client to continue working on other tasks while the user service processes the submitted request. 
 
-To support this need, Piazza provides support for Asynchronous User Services.  With these types of services, clients are not blocked while waiting for a response.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write Asynchronous User Services.
+To support this need, Piazza provides support for Asynchronous User Services.  With these types of services, clients are not blocked while waiting for a response.  See the <<How to Write Your Own User Services>> and the <<Building in Asynchronous Support>> sections for details on how to write asynchronous user services.
 
 image::images/PZ-service-async.png[Asynchronous, 600 900,align="center", title=Asynchronous Web Service]
 
@@ -38,7 +38,7 @@ A user service must be _registered_ within the Piazza Service Registry before it
 
 To register a user service with Piazza, the client sends a JSON payload with the URL of the service, a description of its parameters, and other metadata to Piazza.
 
-The `isAsynchronous` field is used to indicate whether a user service is an Asynchronous User Service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the user service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
+The `isAsynchronous` field is used to indicate whether a user service is an asynchronous user service.   This value is a boolean and should be set to `true` if the user service supports the required Piazza endpoints for asynchronous processing. This field can be set to `false`, or omitted, if the user service does not intend to implement the asynchronous endpoints and upon invocation will instead return the results synchronously.
 
 
 ### Hello Example service registered with `GET` method
@@ -66,7 +66,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
 ** The `url` field is the URL for invoking the service.  This is the _Root URL_ for the service.
 ** The `contracturl` field contains additional detail information about the service.
 ** The `method` field is used to indicate the desired action to be performed on the service. (`GET`, `POST`, `PUT`, `DELETE`, etc.)
-** The `isAsynchronous` flag is used to indicate whether the service is an Asynchronous User Service and implements the asynchronous endpoints.
+** The `isAsynchronous` flag is used to indicate whether the service is an asynchronous user service and implements the asynchronous endpoints.
 ** The `resourceMetadata` field has three subfields with the name, description of the service, and the Class Type for the service:
 *** The `name` field is used to identify the name of the service.
 *** The `description` field is used to describe the service.
@@ -351,7 +351,7 @@ Optionally, the `timeout` parameter can be specified upon initial service regist
 
 #### Building in Asynchronous Support
 
-If you anticipate that your user service will be doing time-consuming activities, then consider making it an Asynchronous User Service.  To provide for this functionality, Piazza recommends that the following set of functions and behaviors be incorporated into your user service.  The following sections steps through each of these items.
+If you anticipate that your user service will be doing time-consuming activities, then consider making it an asynchronous user service.  To provide for this functionality, Piazza recommends that the following set of functions and behaviors be incorporated into your user service.  The following sections steps through each of these items.
 
 #### Service Invocation Response
 
@@ -432,7 +432,7 @@ When Piazza initiates a successful call to the results endpoint of a service, it
 
 ### Cancellation
 
-During execution of a Piazza Job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the Cancellation endpoint of an Asynchronous User Service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a */job/{jobId}* endpoint and path variable. 
+During execution of a Piazza Job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a */job/{jobId}* endpoint and path variable. 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{JobId}_.
 

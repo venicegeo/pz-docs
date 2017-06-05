@@ -321,7 +321,7 @@ Once your user service is registered as a Task Managed service, Piazza will not 
 
 #### Sending Status Updates for the Job
 
-When you need to send Piazza status updates or results for the job your user service is working on, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{jobId}}`. The payload for this POST is a StatusUpdate object, which is the exact same model that you previously used in asynchronous services.  For details on this model, see the <<Status Details>> section.
+When you need to send Piazza status updates or results for the job your user service is working on, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{jobId}}`. The payload for this POST is a status update object, which is the exact same model that you previously used in asynchronous services.  For details on this model, see the <<Status Details>> section.
 
 For example, if your user service failed to execute, the payload that would be sent to Piazza would be:
 
@@ -403,7 +403,7 @@ You can also include a `progress` field that is able to contain a percentage com
     }
 }
 ```
-As the services continues to process results, it should update the status as needed. When your user service has completed,  then it should set the Status to "Success." Piazza, upon seeing a "Success" status, will then initiate a request to the results endpoint in order to fetch the results of this Instance when ready. 
+As the services continues to process results, it should update the status as needed. When your user service has completed,  then it should set the status to 'Success.' Piazza, upon seeing this, will then initiate a request to the results endpoint in order to fetch the results of this Instance when ready. 
 
 
 On _Error_, the status endpoint will also report error information. If your service encounters an error during execution, it can report this back in the status response:
@@ -423,7 +423,7 @@ The `result` field can define a message and details property that can be used to
 
 ### Result
 
-When your user service reports back a _Success_ status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
+When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{JobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
 

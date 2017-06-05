@@ -41,7 +41,6 @@ Run the script simply as:
 ### System EventTypes
 
 Piazza provides some system-level event types -- `piazza:ingest` and `piazza:executionComplete`.  These two system event types can be used to set up triggers that execute something is ingested or an execution has finished. Those two event types look like the following:
-
 [source,json]
 ----
 "piazza:ingest" : {
@@ -81,7 +80,7 @@ Given an event type, the user next defines a trigger to define what action is to
 * The `condition` defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type. 
 * The `job` defines what action is to be taken.
 * The `title` is a memorable string for describing what the trigger is meant to do.
-* The `enabled` field determines if the trigger should be listening for events in order to send Alerts.
+* The `enabled` field determines if the trigger should be listening for events in order to send alerts.
 
 For example:
 
@@ -131,7 +130,7 @@ In the following example, the job will be executed only when our "test" event oc
 
 It is important to note that the `job` field uses substitution by replacing all instances of `$field`, where `field` is the name of a JSON field in the event type `mapping` (and therefore is in the event's `data` field) with the `field` in the event that sets off the trigger. This substitution occurs in all of the fields in `job`, so it is important to be conscious of this.
 
-This script will create a generic Trigger for the event type associated with that `eventTypeId`:
+This script will create a generic trigger for the event type associated with that `eventTypeId`:
 
 link:scripts/post-trigger.sh[post-trigger.sh]
 [source,bash]
@@ -139,20 +138,20 @@ link:scripts/post-trigger.sh[post-trigger.sh]
 include::scripts/post-trigger.sh[tags=public]
 ----
 
-To execute, pass the script an event type id:
+To execute, pass the script an EventType ID:
 
-    $ ./post-trigger.sh {{EventTypeId}}
+    $ ./post-trigger.sh {{eventTypeId}}
 
 
 
 ## The Event
 
-The user may create an event of that event type to indicate some interesting condition has occurred. The event object is sent as a `POST` request to the `/event` endpoint, and contains the `EventTypeId` of the event type and the parameters of the event. For example, a request may look like:
+The user may create an event of that event type to indicate some interesting condition has occurred. The event object is sent as a `POST` request to the `/event` endpoint, and contains the `eventTypeId` of the event type and the parameters of the event. For example, a request may look like:
 
 [source,json]
 ----
 {
-    "EventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
+    "eventTypeId": "98fc25e8-bd97-4444-a972-c06aa0f0edf1",
     "data": {
         "filename": "dataset-c",
         "severity": 5,
@@ -164,7 +163,7 @@ The user may create an event of that event type to indicate some interesting con
 
 ### Scheduled Events
 
-An event can specify a `cronSchedule` field, which alters the mechanics of the event-triggering process. The cronSchedule field specifies a schedule that will be repeated for the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the man pages for cron, either via `man cron`, `man crontab`, or by searching online for cron-related resources. 
+An event can specify a `cronSchedule` field, which alters the mechanics of the event-triggering process. The cronSchedule field specifies a schedule that will be repeated for the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the main pages for cron, either via `man cron`, `man crontab`, or by searching online for cron-related resources. 
 
 Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. The cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go. This differs slightly from traditional `cron(1)` syntax in that the first asterisk is the *seconds* field. This means:
 
@@ -217,7 +216,7 @@ In order to stop repeating events, `DELETE` the initial repeating event by its e
 
     DELETE /event/{{EventId}}
 
-The following script will `POST` an event with a given event type id:
+The following script will `POST` an event with a given EventType ID:
 
 link:scripts/post-event.sh[post-event.sh]
 [source,bash]

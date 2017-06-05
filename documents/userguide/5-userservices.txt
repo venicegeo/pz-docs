@@ -375,7 +375,7 @@ image::images/PZ-async-invoke.png[Asynchronous, 600 900,align="center", title=Pi
 
 #### Status Endpoint
 
-For Piazza to be able to query the status of your user service, a *status* endpoint has to be implemented.  The endpoint _/status/{jobId}_ and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
+For Piazza to be able to query the status of your user service, a status endpoint has to be implemented.  The endpoint _/status/{jobId}_ and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the status URL as HTTP `GET` _http://service/analysis/status/{jobId}_. 
 
@@ -419,11 +419,11 @@ On _Error_, the status endpoint will also report error information. If your serv
 }
 ```
 
-The `result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an error status, it will cease to poll for status and it will not attempt to query the _results_ endpoint.
+The `result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an error status, it will cease to poll for status and it will not attempt to query the results endpoint.
 
 ### Result
 
-When your user service reports back a _Success_ status, then Piazza will initiate a subsequent call to the Results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
+When your user service reports back a _Success_ status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{JobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
 
@@ -432,7 +432,7 @@ When Piazza initiates a successful call to the results endpoint of a service, it
 
 ### Cancellation
 
-During execution of a Piazza Job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a */job/{jobId}* endpoint and path variable. 
+During execution of a Piazza Job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a _/job/{jobId}_ endpoint and path variable. 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{JobId}_.
 
@@ -506,7 +506,7 @@ When registering a service, the following fields are required:
 
 User services registered within Piazza have an `availability` field that indicates the status/health of the service. Services can have an availability  value of `ONLINE`, `OFFLINE`, `DEGRADED`, and `FAILED`.  When your user service is initially registered with Piazza, the status of that service is automatically set to `ONLINE` within the Piazza Service Registry.
 
-When you have to take your service down for maintenance or other reasons, you should update the status of your user service out of courtesy to `OFFLINE` so users will know that the service is not in a functional state.  To update the status of your service, use the `PUT` method on the https://pz-gateway.venicegeo.io/service/{{ServiceId}}/ end point with the service payload containing the fields you would like to update for your service in the service registry.
+When you have to take your service down for maintenance or other reasons, you should update the status of your user service out of courtesy to `OFFLINE` so users will know that the service is not in a functional state.  To update the status of your service, use the `PUT` method on the https://pz-gateway.venicegeo.io/service/{{ServiceId}}/ endpoint with the service payload containing the fields you would like to update for your service in the service registry.
 
 Below is an example of the payload to send to update your service’s status:
 [source,json]

@@ -317,7 +317,7 @@ Note that a service that `isTaskManaged` does not communicate directly with the 
 
 #### Polling for Work
 
-Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending Job Executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field that is the exact inputs the user sent to invoke the user service. It also contains the `data.JobId` field that will later be used to tell Piazza any updates for the status/results of the job. If no jobs are in your queue, those fields will be `null`.
+Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending Job Executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field that is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field that will later be used to tell Piazza any updates for the status/results of the job. If no jobs are in your queue, those fields will be `null`.
 
 #### Sending Status Updates for the Job
 
@@ -355,19 +355,19 @@ If you anticipate that your user service will be doing time-consuming activities
 
 #### Service Invocation Response
 
-For Piazza to track and work with your asynchronous service, a unique identifier, or ‘JobId’ needs to be generated and returned to Piazza when the service is invoked.
+For Piazza to track and work with your asynchronous service, a unique identifier, or Job ID needs to be generated and returned to Piazza when the service is invoked.
 
 image::images/PZ-async-user-service.png[Invocation, 600, 900, align="center",title=Invocation of an Asynchronous User Service]
 
 
-The "url" parameter in service Registration, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP method, and will be expected to return a JSON payload with the following format:
+The "url" parameter in service registration, along with the "method" parameter, will constitute the invocation endpoint. This URL will be called directly with the specified HTTP method, and will be expected to return a JSON payload with the following format:
 
 ```
 {"type":"job","data":{"jobId":"123456"}}
 
 ```
 
-In the example above, Piazza will use the Job ID value of _123456_ as the Id for tracking your user service execution instance.
+In the example above, Piazza will use the Job ID value of _123456_ as the ID for tracking your user service execution instance.
 
 The image below shows details on the interaction between Piazza and the user service during service invocation.
 
@@ -375,11 +375,11 @@ image::images/PZ-async-invoke.png[Asynchronous, 600 900,align="center", title=Pi
 
 #### Status Endpoint
 
-For Piazza to be able to query the status of your user service, a *status* endpoint has to be implemented.  The endpoint */status/{jobId}* and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
+For Piazza to be able to query the status of your user service, a *status* endpoint has to be implemented.  The endpoint _/status/{jobId}_ and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
 
-For example, if the Root URL is _http://service/analysis_ then Piazza will infer the status URL as HTTP `GET` _http://service/analysis/status/{Job ID}_. 
+For example, if the Root URL is _http://service/analysis_, then Piazza will infer the status URL as HTTP `GET` _http://service/analysis/status/{jobId}_. 
 
-Once an instance of your user service has been started (by Piazza calling the invocation endpoint), Piazza will periodically call the *status* endpoint in order to determine the current progress of this instance. This includes the status of the service and any progress information. 
+Once an instance of your user service has been started (by Piazza calling the invocation endpoint), Piazza will periodically call the status endpoint in order to determine the current progress of this instance. This includes the status of the service and any progress information. 
 
 The figure below shows the interaction between Piazza and your user service.
 
@@ -403,10 +403,10 @@ You can also include a `progress` field that is able to contain a percentage com
     }
 }
 ```
-As the services continues to process results, it should update the status as needed. When your user service has completed,  then it should set the Status to "Success." Piazza, upon seeing a "Success" status, will then initiate a request to the Results endpoint in order to fetch the results of this Instance when ready. 
+As the services continues to process results, it should update the status as needed. When your user service has completed,  then it should set the Status to "Success." Piazza, upon seeing a "Success" status, will then initiate a request to the results endpoint in order to fetch the results of this Instance when ready. 
 
 
-On Error, the Status endpoint will also report error information. If your service encounters an Error during execution, it can report this back in the Status response:
+On _Error_, the status endpoint will also report error information. If your service encounters an error during execution, it can report this back in the status response:
 
 ```
 {
@@ -419,11 +419,11 @@ On Error, the Status endpoint will also report error information. If your servic
 }
 ```
 
-The `result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an Error status, it will cease to poll for Status and it will not attempt to query the *results* endpoint.
+The `result` field can define a message and details property that can be used to convey error information back to the Piazza user who initiated this instance of the user service. Once Piazza encounters an error status, it will cease to poll for status and it will not attempt to query the _results_ endpoint.
 
 ### Result
 
-When your user service reports back a *Success* status, then Piazza will initiate a subsequent call to the Results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
+When your user service reports back a _Success_ status, then Piazza will initiate a subsequent call to the Results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{JobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional Synchronous User Service. 
 

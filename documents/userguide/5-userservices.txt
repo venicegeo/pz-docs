@@ -440,7 +440,7 @@ The ID of the instance can be used internally by the user service to clean up an
 
 ### Output From Your User Service
 
-Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza DataResource JSON payload as output conforming to defined Piazza Data Types defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a DataResource with the `dataType.type` field set to `text`.
+Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza DataResource JSON payload as output conforming to defined Piazza DataTypes defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a DataResource with the `dataType.type` field set to `text`.
 
 Piazza does not store data such as raster images, large GeoJSON payloads, etc., so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated from the user service.
 
@@ -480,7 +480,7 @@ For details on the DataResource payload and the available DataTypes, see the htt
 
 #### What to do About Existing Services
 
-If you have an existing service, consider following the https://github.com/18F/api-standards[18F API standard] for guidance on best practices. For existing services that are not RESTful, consider wrapping these services with a REST representation. For example, the first generation of web services included heavy weight approaches such as SOAP (Simple Object Access Protocol) where messages were transmitted using XML over HTTP. If converting the service to a REST representation is not possible for services such as these, then consider wrapping these services.
+If you have an existing service, consider following the https://github.com/18F/api-standards[18F API standard] for guidance on best practices. For existing services that are not RESTful, consider wrapping these services with a REST representation. For example, the first generation of web services included heavyweight approaches such as Simple Object Access Protocol (SOAP), where messages were transmitted using XML over HTTP. If converting the service to a REST representation is not possible for services such as these, then consider wrapping these services.
 
 
 ### Putting Your User Service into Action within Piazza
@@ -519,7 +519,7 @@ Below is an example of the payload to send to update your service’s status:
 ----
 
 
-Piazza continually monitors the health of user services registered in the service registry. Piazza continually  monitors these user services and when response time from these services starts to be slow, Piazza may set the status of a registered user service, to DEGRADED.  If the user service is unresponsive over a period of time, the status of the user service may be changed to `FAILED`. 
+Piazza continually monitors the health of user services registered in the service registry. Piazza continually  monitors these user services and when response time from these services starts to be slow, Piazza may set the status of a registered user service, to `DEGRADED`.  If the user service is unresponsive over a period of time, the status of the user service may be changed to `FAILED`. 
  
 
 

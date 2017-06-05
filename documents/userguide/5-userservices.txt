@@ -29,12 +29,12 @@ To support this need, Piazza provides support for Asynchronous User Services.  W
 
 image::images/PZ-service-async.png[Asynchronous, 600 900,align="center", title=Asynchronous Web Service]
 
-NOTE: Piazza currently requires that you have the user service instance deployed at a public URL. In the future, the user service will be a deployable container (or jar file) so Piazza can scale the number of instances needed.  The following sections will use a *Hello World* service. This service responds with “hello” when invoked.  It is deployed in our cloud for testing services.
+NOTE: Piazza currently requires that you have the user service instance deployed at a public URL. In the future, the user service will be a deployable container (or jar file) so Piazza can scale the number of instances needed.  The following sections will use a _Hello World_ service. This service responds with “hello” when invoked.  It is deployed in our cloud for testing services.
 
 
 ## Registration
 
-A user service must be _registered_ within the Piazza Service Registry before it can be discovered or used by Piazza users.  
+A user service must be registered within the Piazza Service Registry before it can be discovered or used by Piazza users.  
 
 To register a user service with Piazza, the client sends a JSON payload with the URL of the service, a description of its parameters, and other metadata to Piazza.
 
@@ -276,9 +276,9 @@ For guidance on best practices when creating the RESTful API to your web service
 
 _Scalability_ needs to be considered when developing a user service.  Scalability is the ability of your user service to handle a growing amount of requests or work to meet the business or mission needs.  There are two types of scaling that needs to be considered:
 
-* *Vertical Scalability* - Achieved by adding or removing resources to a single machine, virtual machine, or node to support changes in the workload or user requests. Example resources include CPUs or memory.
+* _Vertical Scalability_ - Achieved by adding or removing resources to a single machine, virtual machine, or node to support changes in the workload or user requests. Example resources include CPUs or memory.
 
-* *Horizontal Scalability* - Achieved by adding or removing machines, virtual machines, or nodes to support changes in the workload or user requests.  Typically, a load-balancer is used to distribute multiple requests across many machines.
+* _Horizontal Scalability_ - Achieved by adding or removing machines, virtual machines, or nodes to support changes in the workload or user requests.  Typically, a load-balancer is used to distribute multiple requests across many machines.
 
 The figure below shows an example of each of these types of scalability approaches.
 
@@ -440,7 +440,7 @@ The id of the instance can be used internally by the user service to clean up an
 
 ### Output From Your User Service
 
-Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza **DataResource** JSON payload as output conforming to defined Piazza Data Types defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a **DataResource** with the `dataType.type` field set to `text`.
+Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza _DataResource_ JSON payload as output conforming to defined Piazza Data Types defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a DataResource with the `dataType.type` field set to `text`.
 
 Piazza does not store data such as raster images, large GeoJSON payloads, etc., so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated from the user service.
 

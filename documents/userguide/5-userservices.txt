@@ -17,7 +17,7 @@ While Piazza’s overall goal is to provide users with the ability to register a
 
 ## Types of User Services
 
-Piazza recognizes that there are two types of _User Services_: Synchronous Web Services and Asynchronous Web Services.  
+Piazza recognizes that there are two types of User Services: Synchronous Web Services and Asynchronous Web Services.  
 
 Synchronous Web Services, when invoked by a client, require the client to wait (or block) until a response and/or results are returned before the client can proceed with additional work.  The figure below illustrates an example of Synchronous Web Services.
 
@@ -317,7 +317,7 @@ Note that a service that `isTaskManaged` does not communicate directly with the 
 
 #### Polling for Work
 
-Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending job executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field that is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field that will later be used to tell Piazza any updates for the status/results of the job. If no jobs are in your queue, those fields will be `null`.
+Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The `serviceId` is the `serviceId` that was returned when you registered your user service.  If your service has any pending job executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field that is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field that will later be used to tell Piazza any updates for the status/results of the job. If no jobs are in your queue, those fields will be `null`.
 
 #### Sending Status Updates for the Job
 
@@ -375,9 +375,9 @@ image::images/PZ-async-invoke.png[Asynchronous, 600 900,align="center", title=Pi
 
 #### Status Endpoint
 
-For Piazza to be able to query the status of your user service, a status endpoint has to be implemented.  The endpoint _/status/{jobId}_ and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
+For Piazza to be able to query the status of your user service, a status endpoint has to be implemented.  The endpoint `/status/{jobId}` and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
 
-For example, if the Root URL is _http://service/analysis_, then Piazza will infer the status URL as HTTP `GET` _http://service/analysis/status/{jobId}_. 
+For example, if the Root URL is `http://service/analysis`, then Piazza will infer the status URL as HTTP `GET` `http://service/analysis/status/{jobId}`. 
 
 Once an instance of your user service has been started (by Piazza calling the invocation endpoint), Piazza will periodically call the status endpoint in order to determine the current progress of this instance. This includes the status of the service and any progress information. 
 
@@ -423,24 +423,24 @@ The `result` field can define a message and details property that can be used to
 
 ### Result
 
-When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a */result/{jobId}* endpoint and path variable. 
+When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a `/result/{jobId}` endpoint and path variable. 
 
-For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{jobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
+For example, if the Root URL is `http://service/analysis`, then Piazza will infer the results URL as HTTP `GET` `http://service/analysis/result/{jobId}`. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
 
 
 When Piazza initiates a successful call to the results endpoint of a service, it should be considered a guarantee that Piazza will make no further queries related to that execution instance.
 
 ### Cancellation
 
-During execution of a Piazza job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a _/job/{jobId}_ endpoint and path variable. 
+During execution of a Piazza job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a `/job/{jobId}` endpoint and path variable. 
 
-For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{jobId}_.
+For example, if the Root URL is `http://service/analysis`, then Piazza will infer the Cancellation URL as HTTP `GET` `http://service/analysis/job/{jobId}`.
 
 The ID of the instance can be used internally by the user service to clean up any resources related to that Instance. It can be considered a guarantee by Piazza that no subsequent calls will be made related to that Instance.
 
 ### Output From Your User Service
 
-Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza _DataResource_ JSON payload as output conforming to defined Piazza Data Types defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a DataResource with the `dataType.type` field set to `text`.
+Piazza supports a number of output formats generated from user services registered within Piazza. User services should generate a Piazza DataResource JSON payload as output conforming to defined Piazza Data Types defined within Piazza. For example, if the user service generates plain text as an output format, the JSON payload that should be returned from the user service should be a DataResource with the `dataType.type` field set to `text`.
 
 Piazza does not store data such as raster images, large GeoJSON payloads, etc., so Piazza users should leverage the Piazza DataResource payloads to indicate where output data is stored after it is generated from the user service.
 

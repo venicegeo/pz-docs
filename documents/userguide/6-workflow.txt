@@ -171,7 +171,7 @@ Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com
 * `"cronSchedule": "30 * * * * *"` - send the event every minute at the 30 second mark
 * `"cronSchedule": "* 30 * * * *"` - send the event every hour at the 30 minute mark, etc.
 
-The 6 stars in the cronSchedule stand for:
+The six stars in the cronSchedule stand for:
 
 *seconds | minutes | hours | day of month | month | day of week*
 
@@ -210,9 +210,9 @@ A cron schedule can be specified using the `@every duration` notation, where dur
 * `"cronSchedule": "@every 30s"` - send event every 30 seconds
 * `"cronSchedule": "@every 5m"` - send event every 5 minutes
 
-It is crucial to understand that an *event that is sent with a cron schedule is not `POST`ed into the system in the same way as a typical event. Rather, it sets up a recurring event that will be sent according to the schedule specified. If you require both an event to be sent now as well as on a particular schedule, it is wise to send both a non-repeating event and a repeating event.
+It is crucial to understand that an event that is sent with a cron schedule is not `POST` -ed into the system in the same way as a typical event. Rather, it sets up a recurring event that will be sent according to the schedule specified. If you require an event to be both sent now as well as on a particular schedule, it is wise to send both a non-repeating event and a repeating event.
 
-In order to stop repeating events, `DELETE` the initial repeating event by its event id.
+In order to stop repeating events, `DELETE` the initial repeating event by its event ID.
 
     DELETE /event/{{EventId}}
 

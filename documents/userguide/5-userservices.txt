@@ -375,9 +375,9 @@ image::images/PZ-async-invoke.png[Asynchronous, 600 900,align="center", title=Pi
 
 #### Status Endpoint
 
-For Piazza to be able to query the status of your user service, a status endpoint has to be implemented.  The endpoint `/status/{jobId}` and path variable need to be added to the Root URL of the service with support of the HTTP GET method.
+For Piazza to be able to query the status of your user service, a status endpoint has to be implemented.  The endpoint `/status/{jobId}` and path variable need to be added to the root URL of the service with support of the HTTP GET method.
 
-For example, if the Root URL is `http://service/analysis`, then Piazza will infer the status URL as HTTP `GET` `http://service/analysis/status/{jobId}`. 
+For example, if the root URL is `http://service/analysis`, then Piazza will infer the status URL as HTTP `GET` `http://service/analysis/status/{jobId}`. 
 
 Once an instance of your user service has been started (by Piazza calling the invocation endpoint), Piazza will periodically call the status endpoint in order to determine the current progress of this instance. This includes the status of the service and any progress information. 
 
@@ -393,7 +393,7 @@ For example:
     "status":"Running"
 }
 ```
-The acceptable statuses are as follows: `Pending`, `Running`, `Success`, `Cancelled`, `Error`, `Fail`. 
+The acceptable statuses are as follows: `Pending`, `Running`, `Success`, `Cancelled`, `Error`, and `Fail`. 
 You can also include a `progress` field that is able to contain a percentage completion for the job:
 ```
 {
@@ -403,10 +403,10 @@ You can also include a `progress` field that is able to contain a percentage com
     }
 }
 ```
-As the services continues to process results, it should update the status as needed. When your user service has completed,  then it should set the status to 'Success.' Piazza, upon seeing this, will then initiate a request to the results endpoint in order to fetch the results of this Instance when ready. 
+As the services continue to process results, it should update the status as needed. When your user service has completed,  then it should set the status to `Success.` Piazza, upon seeing this, will then initiate a request to the results endpoint in order to fetch the results of this Instance when ready. 
 
 
-On _Error_, the status endpoint will also report error information. If your service encounters an error during execution, it can report this back in the status response:
+On `Error`, the status endpoint will also report error information. If your service encounters an error during execution, it can report this back in the status response:
 
 ```
 {
@@ -423,18 +423,18 @@ The `result` field can define a message and details property that can be used to
 
 ### Result
 
-When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a `/result/{jobId}` endpoint and path variable. 
+When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your root URL by adding a `/result/{jobId}` endpoint and path variable. 
 
-For example, if the Root URL is `http://service/analysis`, then Piazza will infer the results URL as HTTP `GET` `http://service/analysis/result/{jobId}`. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
+For example, if the root URL is `http://service/analysis`, then Piazza will infer the results URL as HTTP `GET` `http://service/analysis/result/{jobId}`. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
 
 
 When Piazza initiates a successful call to the results endpoint of a service, it should be considered a guarantee that Piazza will make no further queries related to that execution instance.
 
 ### Cancellation
 
-During execution of a Piazza job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a `/job/{jobId}` endpoint and path variable. 
+During execution of a Piazza job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the root URL by adding a `/job/{jobId}` endpoint and path variable. 
 
-For example, if the Root URL is `http://service/analysis`, then Piazza will infer the Cancellation URL as HTTP `GET` `http://service/analysis/job/{jobId}`.
+For example, if the root URL is `http://service/analysis`, then Piazza will infer the Cancellation URL as HTTP `GET` `http://service/analysis/job/{jobId}`.
 
 The ID of the instance can be used internally by the user service to clean up any resources related to that Instance. It can be considered a guarantee by Piazza that no subsequent calls will be made related to that Instance.
 

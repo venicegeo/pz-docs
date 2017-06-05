@@ -423,9 +423,9 @@ The `result` field can define a message and details property that can be used to
 
 ### Result
 
-When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a */result/{JobId}* endpoint and path variable. 
+When your user service reports back a `Success` status, then Piazza will initiate a subsequent call to the results endpoint. The results URL will be extended from your Root URL by adding a */result/{jobId}* endpoint and path variable. 
 
-For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{JobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
+For example, if the Root URL is _http://service/analysis_, then Piazza will infer the results URL as HTTP `GET` _http://service/analysis/result/{jobId}_. The return value for this response should be identical to the return value from the execution endpoint of a traditional synchronous user service. 
 
 
 When Piazza initiates a successful call to the results endpoint of a service, it should be considered a guarantee that Piazza will make no further queries related to that execution instance.
@@ -434,9 +434,9 @@ When Piazza initiates a successful call to the results endpoint of a service, it
 
 During execution of a Piazza job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a _/job/{jobId}_ endpoint and path variable. 
 
-For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{JobId}_.
+For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{jobId}_.
 
-The id of the instance can be used internally by the user service to clean up any resources related to that Instance. It can be considered a guarantee by Piazza that no subsequent calls will be made related to that Instance.
+The ID of the instance can be used internally by the user service to clean up any resources related to that Instance. It can be considered a guarantee by Piazza that no subsequent calls will be made related to that Instance.
 
 ### Output From Your User Service
 

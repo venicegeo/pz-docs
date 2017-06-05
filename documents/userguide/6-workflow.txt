@@ -5,7 +5,7 @@ Piazza provides the ability for users to define and send an _event_, representin
 
 ## The EventType
 
-The user first defines an event type that is the "schema" for the Events that the user will be generating. The event type object is sent in a `POST` request to the `/eventType` endpoint and contains a unique `name` (string) and a mapping describing the EventType's parameters. For example:
+The user first defines an event type that is the schema for the events that the user will be generating. The event type object is sent in a `POST` request to the `/eventType` endpoint and contains a unique `name` (string) and a mapping describing the EventType's parameters. For example:
 
 [source,json]
 ----
@@ -31,7 +31,7 @@ link:scripts/post-eventtype.sh[post-eventtype.sh]
 include::scripts/post-eventtype.sh[tags=public]
 ----
 
-Note we use the current date/time to generate a unique id.
+Note we use the current date/time to generate a unique ID.
 
 Run the script simply as:
 
@@ -67,11 +67,11 @@ and
 }
 ----
 
-An event of type `piazza:ingest` will be automatically `POST`ed by the system after a file or image is loaded into Piazza.
+An event of type `piazza:ingest` will be automatically `POST` -ed by the system after a file or image is loaded into Piazza.
 
-An event of type `piazza:executionComplete` will be automatically `POST`ed by the system when the User Service Registry completes an execution of a service.
+An event of type `piazza:executionComplete` will be automatically `POST` -ed by the system when the User Service Registry completes an execution of a service.
 
-To use these system events, look up the Event Type Dd for the system event type with the `/eventType?name=NAME`, where `NAME` is the veent type name. The return data value will be an array with a single event type in it. You can get the event type id from the event type that is returned, and create your trigger with that event type id.
+To use these system events, look up the EventType ID for the system event type with the `/eventType?name=NAME`, where `NAME` is the EventType name. The return data value will be an array with a single event type in it. You can get the EventType ID from the event type that is returned, and create your trigger with that EventType ID.
 
 
 ## The Trigger
@@ -80,7 +80,7 @@ Given an event type, the user next defines a trigger to define what action is to
 
 * The `condition` defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type. 
 * The `job` defines what action is to be taken.
-*The `title` is a memorable string for describing what the trigger is meant to do.
+* The `title` is a memorable string for describing what the trigger is meant to do.
 * The `enabled` field determines if the trigger should be listening for events in order to send Alerts.
 
 For example:

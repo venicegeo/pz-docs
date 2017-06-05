@@ -99,7 +99,7 @@ Once a user service is registered within Piazza, it can be invoked by sending a 
 
 For details on how to invoke a user service, see http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Piazza Swagger API].
 
-Piazza users invoking a user service will get a _Job response_ JSON payload response in the following format:
+Piazza users invoking a user service will get a job response JSON payload response in the following format:
 ```
 {
    "type":"job",
@@ -132,7 +132,7 @@ The `serviceId` is set to the return value from registering the service. In this
 
 For details on the various ways to specify Data Inputs into the service, see  https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST[Invoking a service, POST Job] in Swagger for details.
 
-For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below).  The return value is not the result of the service call. The execute-service call creates a job and returns the Job Id of that job.
+For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below).  The return value is not the result of the service call. The execute-service call creates a job and returns the Job ID of that job.
 
 `dataOutput` is specified as an array to allow for cases in which a user service will return multiple items from the service.  For example, a given user service may return a JSON payload along with storing a generated raster image somewhere in a shared S3 bucket.  
 
@@ -192,7 +192,7 @@ For details on status reporting for asynchronous services, see <Building Asynchr
 
 Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided Data ID, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint.  For details on using this endpoint, see the http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET[Piazza API].
 
-The example below shows an example of Job response depicting a successful execution.
+The example below shows an example of job response depicting a successful execution.
 
 [source,json]
 ----
@@ -242,7 +242,7 @@ Run the link:scripts/get-data-info.sh[get-data-info.sh] script to check the resu
 
 ### Cancelling an Invocation
 
-During execution of a Piazza Job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
+During execution of a Piazza job, the Piazza user who invoked a user service may also request to cancel or abort that job.  Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint.  For more details on how to use this, see the http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE[Piazza API Abort Job].
 
 
 ## Other Examples
@@ -311,13 +311,13 @@ Task Management is a capability that allows user service developers to _poll_ fo
 }
 ----
 
-The `taskAdministrators` array is used to specify the list of Piazza user names that will have access to this service's queue. Only these user names will be able to poll for work and Process jobs. Additionally, the `timeout` can be optionally specified in order to tell Piazza how many seconds to let pass before assuming a single job for this service has timed out. 
+The `taskAdministrators` array is used to specify the list of Piazza user names that will have access to this service's queue. Only these user names will be able to poll for work and process jobs. Additionally, the `timeout` can be optionally specified in order to tell Piazza how many seconds to let pass before assuming a single job for this service has timed out. 
 
 Note that a service that `isTaskManaged` does not communicate directly with the external service in any way.  As such, the `url` field in the service registration payload does not necessarily need to represent a functional endpoint for the service.  Additionally, the `isAsynchronous` field is ignored when `isTaskManaged` is set to true. 
 
 #### Polling for Work
 
-Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending Job Executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field that is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field that will later be used to tell Piazza any updates for the status/results of the job. If no jobs are in your queue, those fields will be `null`.
+Once your user service is registered as a Task Managed service, Piazza will not invoke the user service directly.  Instead, your user service should poll Piazza for jobs to work on by submitting a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task`.  The _{{serviceId}}_ is the `serviceId` that was returned when you registered your user service.  If your service has any pending job executions, then a single job will be returning from that POST. It will contain the `data.serviceData` field that is the exact inputs the user sent to invoke the user service. It also contains the `data.jobId` field that will later be used to tell Piazza any updates for the status/results of the job. If no jobs are in your queue, those fields will be `null`.
 
 #### Sending Status Updates for the Job
 
@@ -432,7 +432,7 @@ When Piazza initiates a successful call to the results endpoint of a service, it
 
 ### Cancellation
 
-During execution of a Piazza Job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a _/job/{jobId}_ endpoint and path variable. 
+During execution of a Piazza job, the user who requested that job execution may also request to terminate that job. In this case, Piazza will use the cancellation endpoint of an asynchronous user service in order to notify that any work related to that specific Instance should be terminated, and no subsequent calls will be made related to that Instance. The Cancellation URL will be extended from the Root URL by adding a _/job/{jobId}_ endpoint and path variable. 
 
 For example, if the Root URL is _http://service/analysis_, then Piazza will infer the Cancellation URL as HTTP `GET` _http://service/analysis/job/{JobId}_.
 

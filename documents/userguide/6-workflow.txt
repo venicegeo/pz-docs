@@ -165,7 +165,7 @@ The user may create an event of that event type to indicate some interesting con
 
 An event can specify a `cronSchedule` field, which alters the mechanics of the event-triggering process. The cronSchedule field specifies a schedule that will be repeated for the specified event. This schedule is created as a Unix `cron(1)` expression. Users who are unfamiliar with cron expressions should check the main pages for cron, either via `man cron`, `man crontab`, or by searching online for cron-related resources. 
 
-Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. The cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go. This differs slightly from traditional `cron(1)` syntax in that the first asterisk is the *seconds* field. This means:
+Note:: For information on `cron(1)`, see http://www.cronmaker.com/[cronmaker.com] and http://crontab.guru/[crontab.guru]. The cron specification being used in our implementation is spelled out in https://github.com/robfig/cron/blob/master/doc.go. This differs slightly from traditional `cron(1)` syntax in that the first asterisk is the seconds field. This means:
 
 * `"cronSchedule": "* * * * * *"` - send the event every second
 * `"cronSchedule": "30 * * * * *"` - send the event every minute at the 30 second mark

@@ -1,11 +1,11 @@
 # End-to-End Example
 
-In this section, a workflow will be described to make use of pzsvc-file-watcher, pzsvc-preview-generator, and other Piazza components to automatically crop files uploaded to a given s3 bucket.
+In this section, a workflow will be described to make use of pzsvc-file-watcher, pzsvc-preview-generator, and other Piazza components to automatically crop files uploaded to a given S3 bucket.
 
 
 ## Setting Up pzsvc-file-watcher
 
-The pzsvc-file-watcher automatically watches for uploaded files to the s3 bucket and ingests them to the Piazza service.
+The pzsvc-file-watcher automatically watches for uploaded files to the S3 bucket and ingests them to the Piazza service.
 
 To begin, clone the pzsvc-file-watcher from its https://github.com/venicegeo/pzsvc-file-watcher[GitHub repository]:
 
@@ -16,7 +16,7 @@ Next, install pzsvc-file-watcher's dependencies:
     $ cd pzsvc-file-watcher
     $ [sudo] pip2 install -r requirements.txt
 
-pzsvc-file-watcher takes a few command line arguments, including the s3 bucket location, the user's AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS credentials are checked for in the `s3.key.access` and `s3.key.private` environment variables and can also be supplied via command line. Additionally, the s3 bucket name can be specified in the `s3.bucket.name` environment variable, and the `PZKEY` environment variable is checked for the value of the user's Piazza API Key. In addition, the Piazza Gateway Host should be specified with `PZSERVER`. 
+pzsvc-file-watcher takes a few command line arguments, including the S3 bucket location, the user's AWS access key and private key, and the user's Piazza UserName and Gateway host name. AWS credentials are checked for in the `s3.key.access` and `s3.key.private` environment variables and can also be supplied via command line. Additionally, the S3 bucket name can be specified in the `s3.bucket.name` environment variable, and the `PZKEY` environment variable is checked for the value of the user's Piazza API Key. In addition, the Piazza Gateway Host should be specified with `PZSERVER`. 
 
 An example of running `filewatcher.py` via the command line:
 
@@ -37,7 +37,7 @@ This response means that the ingest request was received by the Piazza Gateway.
 
 ## Registering the pzsvc-preview-generator Service
 
-The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilities. This app exposes a REST endpoint that receives a POST request containing a payload of required parameters. Given an s3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to s3 bucket, and returns a DataResource.
+The purpose of https://github.com/venicegeo/pzsvc-preview-generator[pzsvc-preview-generator] is to showcase Piazza's core capabilities. This app exposes a REST endpoint that receives a POST request containing a payload of required parameters. Given an S3 location, it downloads a raster file, crops the image, uploads the cropped raster back up to S3 bucket, and returns a DataResource.
 
 A script to register this service is located at link:scripts/register-crop-service.sh[register-crop-service.sh]. Registering the cropping service is easy:
 
@@ -75,7 +75,7 @@ Sample working payload:
 
 ## Retrieving Results
 
-The service will download the file from pz-svcs-prevgen s3 bucket and crop it with given bounding box information. The cropped result tif will be uploaded back up to the https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=[pz-svcs-prevgen-output s3 bucket].
+The service will download the file from pz-svcs-prevgen S3 bucket and crop it with given bounding box information. The cropped result tif will be uploaded back up to the https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=[pz-svcs-prevgen-output S3 bucket].
 
 The `execute-crop-service.sh` script should return a `JobId` that can then be passed as an argument to link:scripts/get-job-info.sh[get-job-info.sh]:
 

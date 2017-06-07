@@ -23,7 +23,7 @@ Piazza typically only uses these HTTP status codes:
 The request has succeeded. The information returned with the response is dependent on the method used in the request. For `GET`, the response is an entity containing the requested resource. For `POST`, it is entity containing the result of the action.
 
 `201 Created`::
-The request has been fulfilled and resulted in a new resource being created. The newly created resource can be referenced by the URL(s) returned in the entity of the response. The origin server MUST create the resource before returning the 201 status code.
+The request has been fulfilled and resulted in a new resource being created. The newly created resource can be referenced by the URI(s) returned in the entity of the response. The origin server MUST create the resource before returning the 201 status code.
 
 `400 Bad Request`::
 The request could not be understood by the server due to malformed syntax.

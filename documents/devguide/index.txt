@@ -39,8 +39,6 @@ include::09-pz-access.txt[]
 
 include::10-pz-ingest.txt[]
 
-include::11-pz-search-metadata-ingest.txt[]
-
 include::12-pz-search-services.txt[]
 
 include::13-pz-idam.txt[]

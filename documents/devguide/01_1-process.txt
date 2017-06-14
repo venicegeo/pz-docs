@@ -1,7 +1,7 @@
 # Piazza Agile Development Process Overview
 
+Piazza is developed using Agile management process framework known as Scrum.  The figure below depicts how software development for the Piazza product.
 image::images/pz-hl-agile-process.jpg[title="High Level Agile Process"]
 
-## Pz Core Agile Development Framework
 
 // vim: set syntax=asciidoc wrap:

@@ -2,7 +2,7 @@
 
 Handles the deployment of Geospatial Data Resources currently held within the Piazza system.
 
-## Running Locally
+## Building and Running Locally
 
 Please refer to repository readme: https://github.com/venicegeo/pz-access
 

@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 # Script used to generate different flavors of the Developers Guide
 # One for the open source community and one for the pz-core team
 

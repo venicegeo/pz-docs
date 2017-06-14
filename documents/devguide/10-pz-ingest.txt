@@ -3,7 +3,7 @@
 Inspects and loads data and metadata into the Piazza system.
 
 
-## Running Locally
+## Building Running Locally
 
 Please refer to repository readme: https://github.com/venicegeo/pz-ingest
 

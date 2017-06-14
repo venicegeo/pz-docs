@@ -2,7 +2,7 @@
 
 The Job Common (or Java Common) project is a Java library that contains various useful utility classes and serializable models that are used commonly throughout the Java applications in the Piazza Core.
 
-## Maven Artifact
+## Building and Running Locally
 
 For instructions on how to include this library in your Java project, through Maven, please see the https://github.com/venicegeo/pz-jobcommon[Repo Documentation]. This contains all information needed to connect to the Piazza S3 Maven repository and include the Common library as a dependency in your `pom.xml` file.
 

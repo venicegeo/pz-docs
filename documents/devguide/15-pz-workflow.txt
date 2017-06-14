@@ -11,7 +11,7 @@ A user will follow these general steps:
 . Poll for new alerts
 . Go to 3.
 
-## Running Locally
+## Building and Running Locally
 To find out how to run the pz-workflow service locally, please visit the github https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md[README]
 
 ## Technical

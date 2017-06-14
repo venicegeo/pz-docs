@@ -21,14 +21,6 @@ include::01-introduction.txt[]
 
 include::01_1-process.txt[]
 
-include::01_2-requirements.txt[]
-
-include::01_3-development.txt[]
-
-include::01_4-configuration-management.txt[]
-
-include::01_5-testing.txt[]
-
 include::02-pz-core.txt[]
 
 include::03-jobs.txt[]

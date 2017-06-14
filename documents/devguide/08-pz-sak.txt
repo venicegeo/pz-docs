@@ -1,6 +1,8 @@
 # pz-sak (Development/Debug UI Tool)
 
-Swiss Army Knife (or SAK for short) is a UI front end for testing and demonstrating Piazza services.
+
+
+While the communication with Gateway primarily is performed by NPEs through HTTP(S) requests via RESTful interfaces, the Swiss Army Knife (SAK) is a UI front end for testing, demonstrating and administration of Piazza services. SAK is a web application that administrative users can log into to execute certain requests through the Gateway, and more importantly, track logging and other reporting information about the internal details of Piazza. This tool is intended for administrative users only; those who needs direct access to Piazza outside of just the user API.
 
 SAK will be used by developers as an easy way to test the functionality of the services. It uses HTML/CSS/Javascript to make HTTP calls to Piazza services and runs inside of http://nginx.org/[NGINX]. The UI is unit tested using https://karma-runner.github.io/0.13/index.html[Karma] and http://jasmine.github.io/2.4/introduction.html[Jasmine].
 

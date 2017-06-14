@@ -1,8 +1,25 @@
 # Introduction
+The Piazza API is a series of REST endpoints that allow Non Person Entities (NPEs) to access tools and interact with all of Piazza’s core functionality.   All NPE requests come into Piazza through an entry-point called the Gateway. The Gateway is an abstract layer to Piazza which hides the core services so NPEs can communicate with Piazza using a single service endpoint.  This architecture approach allows for changes within Piazza to happen without affecting the NPEs. 
+
+Piazza leverages a number of backing services to enable the rapid development of enterprise GIS solutions.  The figure below shows a high level overview of the interactions between Piazza and these backing services.  
+
+All Piazza requests are authenticated with an API Key associated with each request's basic authentication headers. This API Key is generated and held by Piazza's Identity and Access Management (IDAM) component.
+
+image::images/pz-hla-diagram.jpg[title="Piazza High Level Architecture Diagram"]
+
+Developers have access to Piazza’s API documentation (Swagger) and User’s Guide (Docs) to learn how to use Piazza’s REST API to implement GEOINT solutions to support the mission.   To review these items refer to the References section for details.
+
+To verify and administer Piazza’s capability, Piazza’s Swiss Army Knife (SAK) web application provides Piazza administrators with dashboard view into the Piazza system.  Using this dashboard, administrators can verify the operational capabilities of various Piazza microservices. 
+
+Piazza leverages MongoDB for system support, Elasticsearch for searching/indexing support and Crunchy PostgreSQL/PostGIS for processing support of geospatial data.  For activities that are time intensive and to support internal microservice communication, Piazza uses Apache Kafka for asynchronous messaging support.  To provide access to enterprise storage, Piazza leverages Amazon’s Simple Storage Service (S3) for loading/accessing data processing results and geospatial data.   NPEs can also access geospatial data by using OGC standard APIs (Boundless GeoServer).
 
 The core functionality of Piazza is split up into several internal components that are shown in the below diagram. The purpose of this section is to provide an overview of these core components, and how interactions between these components are defined.
 
-image::images/overview.jpg[title="Piazza Component Overview"]
+Piazza consists of a set of stateless microservices where core capabilities are broken up into small independent deployable services.  Stateless microservices treat each request as an independent transaction and do not rely on previous data or “state” from previous requests.  The Gateway takes the incoming Piazza requests and routes them to the appropriate services. Figure 2 shows an overview of Piazza’s microservices and how they interact with each other.  
+
+Communication between these microservices is done using two mechanisms.  The primary mechanism is using HTTPS where microservices communicate directly by initiating requests and receiving responses.   The second mechanism is using asynchronous notifications where communication is initiated when specific conditions are met.  The second mechanism leverages Apache Kafka message bus and Elasticsearch Triggers to provide for asynchronous notifications.
+
+image::images/pz-hla-detailed-diagram.jpg[title="Piazza Detailed Architecture Diagram"]
 
 For users, the primary interface of Piazza is through the Gateway. The Gateway defines a REST API that contains endpoints used to interact with internal Piazza components in order to perform actions such as load and retrieval data, registration and execution services, and registration of workflow events or triggers. The requests and responses from the Gateway are defined via JSON. The Gateway acts as an external broker, or proxy, to the internal components of the Piazza application. The Gateway will receive user requests, and then route that request or command to the appropriate internal Piazza component. In this way, the user deals with only a single Piazza component - the Gateway - in order to achieve all of their functionality. This provides Piazza with a convenient single point-of-access that allows for authentication and authorization and detailed logging of all incoming requests. By design, the internal Piazza components are masked to external users, and are not able to be accessed directly.
 

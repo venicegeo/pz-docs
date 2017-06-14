@@ -63,7 +63,7 @@ To build and run Piazza, the table below depicts the software that is needed.  A
 
 |=== 
 	
-## The Gateway
+## Accessing Piazza 
 
 Using Piazza, NPEs can perform actions such as the loading and retrieval data, the registration and execution user services, and registration of workflow events or triggers. The requests and responses from the Gateway are defined via JSON. The Gateway acts as an external broker, or proxy, to the internal components of the Piazza application. The Gateway will receive user requests, and then route that request or command to the appropriate internal Piazza component. 
 
@@ -73,7 +73,7 @@ For details on the Gateway API, see https://pz-swagger.geointservices.io/[Swagge
 
 For details on how to use case scenarios, see the https://pz-docs.geointservices.io/userguide/index.html[Piazza Users Guide].
 
-For details on the code for the Gateway, see the <<pz-gateway>> section for details. 
+For details on the code for the Gateway, see the <<Gateway>> section for details. 
 
 
 // vim: set syntax=asciidoc wrap:

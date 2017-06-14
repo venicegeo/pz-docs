@@ -1,7 +1,7 @@
 # Workflow Service
 
 ## Overview
-The pz-workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows. This is done though an HTTP API. For a walkthough visit the Users Guide, for a simple overview visit https://pz-swagger.geointservices.io/#/Workflow[pz-swagger].
+The Workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows. This is done though an HTTP API. For a walkthough visit the Users Guide, for a simple overview visit https://pz-swagger.geointservices.io/#/Workflow[pz-swagger].
 
 A user will follow these general steps:
 

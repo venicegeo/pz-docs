@@ -1,4 +1,4 @@
-# pz-ingest (Loader)
+# Ingest
 
 The Ingest component is the internal component that handles the loading of spatial data. This component  is capable of referencing data held in external locations, such as another accessible S3 file store; or loading data specified by the user to be stored directly within Piazza. The Ingest component receives Kafka messages from the Gateway, with the information as to the file to be stored.   It then inspects the data to validate and populate metadata fields (such as Area of Interest) and then stores this metadata within the Piazza MongoDB instance. 
 
@@ -8,7 +8,7 @@ Please refer to repository readme: https://github.com/venicegeo/pz-ingest
 
 ## S3 Credentials
 
-The Loader component inspects files uploaded to S3 by the Gateway. As such, the `pz-ingest` component is also dependent on the `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key` ENV variables.
+The Ingest component inspects files uploaded to S3 by the Gateway. As such, the `pz-ingest` component is also dependent on the `vcap.services.pz-blobstore.credentials.access_key_id` and `vcap.services.pz-blobstore.credentials.secret_access_key` ENV variables.
 
 ## Source Organization
 

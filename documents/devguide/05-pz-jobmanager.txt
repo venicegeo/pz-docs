@@ -1,4 +1,4 @@
-# pz-jobmanager
+# Job Manager
 
 ## Job Management Overview
 

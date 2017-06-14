@@ -1,4 +1,4 @@
-# Pz-JobCommon
+# Job Common
 
 The Job Common (or Java Common) project is a Java library that contains various useful utility classes and serializable models that are used commonly throughout the Java applications in the Piazza Core.
 
@@ -8,7 +8,7 @@ For instructions on how to include this library in your Java project, through Ma
 
 ## Spring Beans
 
-The `pz-jobcommon` project contains a variety of Spring Beans that are used to wrap core Piazza services, such as the Logger, in order to provide a handy Java API for interactions that conform to Spring standards.
+This project contains a variety of Spring Beans that are used to wrap core Piazza services, such as the Logger, in order to provide a handy Java API for interactions that conform to Spring standards.
 
 *IMPORTANT*: `PiazzaLogger` and is created with `@Component` annotations, and can thus be `@Autowired` into your classes as normal. However, since these Beans are defined in an external project (`pz-jobcommon`) then one slight change to your project annotation must be made to your Application file:
 

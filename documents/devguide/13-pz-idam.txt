@@ -1,4 +1,4 @@
-# pz-idam
+# Identity and Access Management (IDAM)
 
 The Piazza Core Pz-Idam project is an internal component that provides REST endpoints for handling Authentication and Authorization. This is done by brokering the Authentication (AutheN) functionality to an external service (in this case, GEOAxIS); and using an internal series of interfaces for providing Authorization (AuthZ). This project is used by the Gateway in order to generate API Keys and provide full AuthN/AuthZ capabilities.
 

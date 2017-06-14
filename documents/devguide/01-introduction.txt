@@ -19,7 +19,7 @@ Piazza consists of a set of stateless microservices where core capabilities are 
 
 Communication between these microservices is done using two mechanisms.  The primary mechanism is using HTTPS where microservices communicate directly by initiating requests and receiving responses.   The second mechanism is using asynchronous notifications where communication is initiated when specific conditions are met.  The second mechanism leverages Apache Kafka message bus and Elasticsearch Triggers to provide for asynchronous notifications.
 
-image::images/pz-hla-detailed-diagram.jpg[title="Piazza Detailed Architecture Diagram"]
+image::images/pz-hla-diagram-detailed.jpg[title="Piazza Detailed Architecture Diagram"]
 
 For users, the primary interface of Piazza is through the Gateway. The Gateway defines a REST API that contains endpoints used to interact with internal Piazza components in order to perform actions such as load and retrieval data, registration and execution services, and registration of workflow events or triggers. The requests and responses from the Gateway are defined via JSON. The Gateway acts as an external broker, or proxy, to the internal components of the Piazza application. The Gateway will receive user requests, and then route that request or command to the appropriate internal Piazza component. In this way, the user deals with only a single Piazza component - the Gateway - in order to achieve all of their functionality. This provides Piazza with a convenient single point-of-access that allows for authentication and authorization and detailed logging of all incoming requests. By design, the internal Piazza components are masked to external users, and are not able to be accessed directly.
 

@@ -1,32 +1,55 @@
-@Library('pipelib@master') _
+#!/usr/bin/groovy
 
 node {
+  def root = pwd()
+  def mvn = tool 'M3'
+  def zapHome = tool 'ZAProxy_v2_5_0'
+  def nodejs = tool 'NodeJS_6'
+  def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
+  appvers = appvers.trim()
+  def appName = "pz-jobmanager-${appvers}"
 
+#  #old
+#  stage('Setup') {
+#    git([
+#      url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
+#      branch: "master"
+#    ])
+#  }
+
+  #new
   stage('Setup') {
-    git([
-      url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
-      branch: "master"
-    ])
+    deleteDir()
+    // github is open gitlab requires credentials to clone
+    if(env.GITLAB_CREDS) {
+      git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}", credentialsId: "${env.GITLAB_CREDS}"
+    } else {
+      git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}"
+    }
   }
-
+  
+  #old way
   stage('Archive') {
     withRvm(rubyVersion: '2.4.0') {
       sh """
         ./ci/archive.sh
       """
     }
-    mavenPush()
+    //mavenPush()
   }
 
+  #old push to INT
   stage ('CI Deploy') {
     cfPush()
     cfBgDeploy()
   }
-
+  
+  #old way
   stage ('Integration Testing') {
     postman()
   }
 
+  #old way
   stage('Reset') {
     git([
       url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
@@ -34,6 +57,7 @@ node {
     ])
   }
 
+  #old way
   stage('Staging Deploy') {
     cfPush {
       cfDomain  = 'stage.geointservices.io'
@@ -45,6 +69,7 @@ node {
     }
   }
 
+  #old way
   stage ('Cleanup') {
     deleteDir()
   }

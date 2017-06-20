@@ -5,16 +5,16 @@ set -e
 # tag::public[]
 a="one"
 b="The quick, brown fox."
-one=`sh 4-load-file.sh $a $b`
+one=`./post-hosted-load.sh "$a" "$b"`
 echo "$one"
 
 a="two"
 b="The lazy dog."
-two=`sh 4-load-file.sh $a $b`
+two=`./post-hosted-load.sh "$a" "$b"`
 echo "$two"
 
 a="three"
 b="The hungry hungry hippo."
-three=`sh 4-load-file.sh $a $b`
+three=`./post-hosted-load.sh "$a" "$b"`
 echo "$three"
 # end::public[]

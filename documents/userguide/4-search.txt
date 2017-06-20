@@ -1,15 +1,15 @@
 # Search
 
-Piazza supports searching across the metadata extracted from all loaded data. The search API returns the resource ids of any matching items. 
+Piazza supports searching across the metadata extracted from all loaded data. The search API returns the Resource IDs of any matching items. 
 
-Two kinds of searching are supported. First, when doing a `GET` on the `/data` endpoint, you specify the keyword to be matched; the list normally returned by a `GET` is filtered to contain just those resources that match the keyword. This is called a _filtered GET_. Second, when doing a `POST` to the `/data/query` endpoint, you provide an Elasticsearch JSON object. Piazza uses the https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch DSL] directly (instead of inventing yet another query syntax language).
+Two kinds of searching are supported. First, when doing a `GET` on the `/data` endpoint, you specify the keyword to be matched; the list normally returned by a `GET` is filtered to contain just those resources that match the keyword. This is called a _filtered_ GET. Second, when doing a `POST` to the `/data/query` endpoint, you provide an Elasticsearch JSON object. Piazza uses the https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html[Elasticsearch DSL] directly (instead of inventing yet another query syntax language).
 
 Note that adding data to the search index is an internal Piazza function and therefore does not have an API.
 
 
 ## Setup
 
-To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF], since we only care about the metadata.) And to do that, we need a script that loads the file with a given name and description and returns the corresponding data Resource Id. Fortunately, we wrote this script already, link:scripts/4-hosted-load.sh[4-hosted-load.sh]. We will call it three times.
+To demonstrate, we will first load three files into Piazza and set the metadata fields with some interesting strings. (We will use the same source link:scripts/terrametrics.tif[GeoTIFF] since we only care about the metadata.) And to do that, we need a script that loads the file with a given name and description and returns the corresponding data Resource ID. Fortunately, we wrote this script already, link:scripts/post-hosted-load.sh[post-hosted-load.sh]. We will call it three times.
 
 link:scripts/load-files.sh[load-files.sh]
 [source,bash]

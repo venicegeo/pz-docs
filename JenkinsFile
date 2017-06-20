@@ -45,10 +45,6 @@ node {
   }
   
   #old way
-  stage ('Integration Testing') {
-    postman()
-  }
-
   #old way
   stage('Reset') {
     git([

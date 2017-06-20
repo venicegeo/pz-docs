@@ -30,7 +30,7 @@ link:scripts/post-hosted-load.sh[post-hosted-load.sh]
 include::scripts/post-hosted-load.sh[tags=public]
 ----
 
-The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `ContentType` header accordingly; in most of the other examples we will see, `ContentType` is set to the usual `"application/json"`.
+The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `contentType` header accordingly; in most of the other examples we will see, `contentType` is set to the usual `"application/json"`.
 
 In the JSON request body, the `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
 
@@ -40,7 +40,7 @@ Run the script from the command line as follows:
 
 In this case, `myfirstfile` is the input to the script that be used for the custom metadata field `name` and "this is my first file" is for the `description` field.
 
-The response from this request will be a Piazza response object. It contains a ubiquitous `type` field that describes what kind of data is being returned in the `data` field. In this case, with a `job` response object, the `data` field holds the id of the job that was created:
+The response from this request will be a Piazza response object. It contains a ubiquitous `type` field that describes what kind of data is being returned in the `data` field. In this case, with a `job` response object, the `data` field holds the ID of the job that was created:
 
 [source,json]
 ----
@@ -52,7 +52,7 @@ The response from this request will be a Piazza response object. It contains a u
 }
 ----
 
-The `Job Id` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
+The `jobId` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job's execution status, the user who submitted the job, and so on. 
 
 The `get-job-info` script can be used to do this `GET` request:
 
@@ -62,7 +62,7 @@ link:scripts/get-job-info.sh[get-job-info.sh]
 include::scripts/get-job-info.sh[tags=public]
 ----
 
-It takes a single argument, the id of the job, to get information about:
+It takes a single argument, the ID of the job, to get information about:
 
     $ ./get-job-info.sh 24019b46-f92f-412d-8877-9fc3c114dd6e
 
@@ -182,7 +182,7 @@ include::scripts/post-nonhosted-data-wms.sh[tags=public]
 
     $ ./post-nonhosted-data-wms.sh {dataId}
 
-The response from this request will return a Job Id, because setting up a WMS layer takes time and this is a long-running job. Checking the status of the job is done using the id as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
+The response from this request will return a Job Id, because setting up a WMS layer takes time and this is a long-running job. Checking the status of the job is done using the ID as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
 
 [source,json]
 ----

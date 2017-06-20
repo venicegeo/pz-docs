@@ -1,9 +1,9 @@
-# pz-gateway
+# Gateway
 
 Handles all user-facing requests to Piazza via REST endpoints. The purpose of this component is to allow for external users to be able to interact with Piazza data, services, events, and other core Piazza functionality.
 
 
-## Running Locally
+## Building and Running Locally
 
 Please refer to repository readme: https://github.com/venicegeo/pz-gateway
 

@@ -1,26 +1,47 @@
-## Prerequisites for using piazza
+## Prerequisites for Using Piazza
 
-In order to use piazza in full or its individual apps assuming other parts are running, the following are needed:
+To build and run Piazza, the table below depicts the software that is needed.  As a convenience, Piazza provides Vagrant boxes for the required backing services.
 
-    Java Development Kit 1.8
+.Piazza Software Prerequisites
+|===
+| Software Item | Description | Backing Service
+ 
+| Java Development Kit 1.8
+| Compiler for building the following Piazza components: Access, Gateway, Ingest, IDAM, JobCommon, JobManager and ServiceController
+| No
 
-    Maven 3.3.9
+| Go 1.7.x 
+| Compiler for building the following Piazza components: Logger and Workflow
+| No
 
-    Oracle VM VirtualBox  5.0.10 (for running the services such as kafka/elastic/mongo/postgis/geoserver on local individual VMs)
+| Maven 3.3.9 
+| Build infrastructure for building Java applications
+| No
 
-    Vagrant (to manage services VMs)
+| Oracle VM VirtualBox  5.0.10
+| Virtual Machine infrastructure for running individual backing services
+| Yes
 
-	MongoDB 2.6.3
+| MongoDB 2.6.3 
+| Database supporting Java micro services
+| Yes
+
+| GeoServer 2.9.2
+| Server for providing geospatial image support using Open Geospatial Consortium (OGC) standards
+| Yes
+
+| PostgreSQL (Crunchy) 9.5.2
+| Database used to support storing and retrieving of loaded geospatial data
+| Yes
+
+| Apache Kafka 0.9.0.1
+| Messaging Bus used for asynchronous message support.
+| Yes
+
+|=== 	
 	
-	GeoServer 2.9.2
-	
-	PostgreSQL (Crunchy) 9.5.2
-	
-	ElasticSearch 2.2
-	
-	Kafka 0.9.0.1
 
-.Local vagrant boxes available for services
+.Local Vagrant Boxes available for Services
 [cols="d,v"]
 |===
 | Vagrant Box | Location
@@ -37,99 +58,22 @@ In order to use piazza in full or its individual apps assuming other parts are r
 | PostgreSQL 
 | https://github.com/venicegeo/pz-ingest/tree/master/config
 
-| Kafka 
+| Apache Kafka 
 | https://github.com/venicegeo/kafka-devbox
 
 |=== 
 	
-### Gateway API
+## Accessing Piazza 
 
-The Gateway API is the single point-of-contact for external users to interact with Piazza Core components. This API provides functionality for loading and accessing data, registering and executing services, and registering events and triggers. The entirety of Piazza functionality is accessed through these Gateway API calls.
+Using Piazza, NPEs can perform actions such as the loading and retrieval data, the registration and execution user services, and registration of workflow events or triggers. The requests and responses from the Gateway are defined via JSON. The Gateway acts as an external broker, or proxy, to the internal components of the Piazza application. The Gateway will receive user requests, and then route that request or command to the appropriate internal Piazza component. 
 
-See the Swagger documentation for a full explanation of all of these endpoints.
+The Gateway is the single point-of-contact for external users to interact with Piazza Core components. This API provides functionality for loading and accessing data, registering and executing services, and registering events and triggers. The entirety of Piazza functionality is accessed through these Gateway API calls.
 
+For details on the Gateway API, see https://pz-swagger.geointservices.io/[Swagger Documentation] for details on each of the endpoints.
 
-#### Authentication
+For details on how to use case scenarios, see the https://pz-docs.geointservices.io/userguide/index.html[Piazza Users Guide].
 
-Authentication with the Gateway is done using basic authentication. This means setting the authentication header in your request to basic authentication, which takes in the username and password and base64 encodes it into a string, which is passed along to the gateway and decoded. These credentials are then passed on to `pz-idam` security component which handles authentication and authorization.
+For details on the code for the Gateway, see the <<Gateway>> section for details. 
 
-
-#### Jobs
-
-For most requests handled through the Piazza Gateway, the response will contain the expected information for said request (for example - querying data will return a list of data results, etc.), however: when executing a request within Piazza that could take a long amount of time (such as ingesting data, or executing an external service) Piazza will return a Job ID which can be used to track the status and progress of that request. The motivation for providing a Job ID is to allow the Gateway to return a response immediately, which will not block the user. It will also allow the user to track the progress of a long-running job as it is handled by internal Piazza components.
-
-Endpoints that return a Job ID are documented and outlined in the Swagger documentation.
-
-[source,json]
-----
-{
-    "jobId": "my-job-id"
-}
-----
-
-The response may look something like the above. In this case, the requesting user can then take the Job ID and re-query the Gateway with the Job ID in order to get the latest status and progress of that Job.
-
-When the Job has been completed, the result of the associated Job (being a data ID, or service, or whatever the end result of the Job was) will be contained in the status of that Job, including the time it was completed and how long it took.
-
-
-## Endpoints
-
-### Job Management
-
-Endpoints related to managing long-running jobs processed by Piazza.
-
-`GET /job/{{jobId}}`:: Get Job Status
-`DELETE /job/{{jobId}}`:: Abort Job
-`PUT /job/{{jobId}}`:: Repeat Job
-
-
-### Data Management Jobs
-
-Endpoints related to managing geospatial data within Piazza.
-
-`GET /data`:: Access Data
-`POST /data`:: Ingest Data
-`POST /data/file`:: Ingest File
-`GET /data/{{dataId}}`:: Get Resource
-`GET or POST /data/query`:: Search Query
-`POST /data/metadata`:: Search Metadata Ingest *Where is the use case?*
-`POST /deployment`:: Access Request
-`GET /deployment/{{deploymentId}}`:: Access Fetch
-`GET /file/{dataId}`:: Access File
-`POST /data/metadata`:: Search Metadata Ingest *Where is the use case? TODO*
-
-
-### Service Controller Jobs
-
-Endpoints related to external service registrations and executions.
-
-`POST /service`:: Register Service
-`GET /service/{serviceId}`:: Describe Service
-`GET /service`:: List Services
-`GET /service?keywords=beachfront`:: Search service with query string
-`DELETE /service/{{serviceId}}`:: Delete Service
-`PUT /service/{{serviceId}}`:: Update Service
-`POST /job`:: Execute Service
-
-
-### Workflow
-
-Endpoints related to setting up Events and EventTypes, and defining Triggers for when certain Events occur.
-
-`GET /event`:: Get all Events
-`POST /event/{{eventType}}`:: Add an Event
-`GET /event/{{eventType}}`:: Get all Events of a specific EventType
-`GET /event/{{eventId}}`:: Get a specific Event
-`DELETE /event/{{eventId}}`:: Delete a specific Event
-`POST /eventType`:: Add an EventType
-`GET /eventType`:: Get all EventTypes
-`GET /eventType/{{eventTypeId}}`:: Get a specific EventType
-`DELETE /eventType/{{eventTypeId}}`:: Delete a specific EventType (only allowed when all Triggers and Events referring to EventType have been deleted)
-`POST /trigger`:: Add a Trigger
-`GET /trigger`:: Get all Triggers
-`GET /trigger/{{triggerId}}`:: Get a specific Trigger
-`DELETE /trigger/{{triggerId}}`:: Delete a specific Trigger
-`GET /alert`:: Get all Alerts
-`GET /alert/{{alertId}}`:: Get a specific Alert
 
 // vim: set syntax=asciidoc wrap:

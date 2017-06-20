@@ -1,35 +1,3 @@
-# Job Workflow
 
-The purpose of this page is to document the Workflow of the Piazza Core Job process, and aims to show how Piazza Jobs are created and processed, in order to give a better understanding of how the many internal Piazza Core components communicate.
-
-The concept of a Job is used internally by Piazza to manage long-running processes that are not able to immediately be returned to a user. The cases for when Jobs and Job IDs are generated are currently for:
-
-* Service Execution via the `/job` endpoint.
-* Data Loading via the `/data` and `/data/file` endpoints.
-* GeoServer deployments for Data using the `/deployment` endpoint.
-
-
-## Job Sequence
-
-The Sequence for Jobs is as follows:
-
-* User Executes one of the above-mentioned, long-running processes through the Gateway.
-* The Gateway validates the Request, and passes the Request-Job topic to the Job Manager via Kafka
-* The Job Manager consumes this Kafka message and writes the Job metadata to the MongoDB Jobs table. It also forwarded along the Kafka topic for that Job.
-* Some internal Worker component (such as Ingest or Access) will consume the message.
-* The Worker will periodically update the Job Manager with Status Updates as to the progress of the Job. The Job Manager will write these updates to the Jobs table.
-* Once done, The Worker will alert the Job Manager that the Job has completed.
-* Along the way, the User can query for Job Status by creating another `/job` request to the Gateway. This response will give the user the progress, and when done, the final Result of the Job.
-
-
-## Cancelling Jobs: Kafka and Worker Components
-
-Each Worker component (defined as a Component capable of processing Jobs), such as Service Controller, Ingest, and Access, will join a single Kafka consumer group together. By joining the same Kafka consumer group, this ensures that as each component scales out towards N-number of instances, only one instance of that component will receive an incoming Job. In this way, Jobs are spread out among all instances automatically by Kafka. This group name is often named based on the component itself, for readability: For example, the `pz-ingest` component Consumer group is called `ingest`.
-
-However, there is the scenario where Jobs currently being processed by a Worker Component will need to be cancelled. If there are N-number of instances of a Worker component, then we'll need to be able to ensure that the Worker component handling a specific Job that is to be cancelled is able to receive the Kafka message requesting the cancellation. Because of this, the message cannot be consumed by the general Kafka consumer group mentioned in the above paragraph: this is due to the fact that in this case, if there are 5 instances of a Component running, we cannot guarantee that the 1 Component instance handling the job will be delivered that message by Kafka.
-
-To solve this problem, each Component instance will define *two* Kafka groups. One group will be the general component Kafka group. This is a group that all instances of the Component will share, and this is the group that will consume the messages that relate to Job processing. Each Component will define a *second* Kafka group that is uniquely named. Thus, for any specific Component, it may have two groups: One named `ingest` used for general Job messaging and one uniquely named `ingest-SOJ87asd68JDS` that will have the ability to react on each and every message that comes in, and can be used to handle messages such as Cancelling Jobs.
-
-Worker components will receive Job messages through their general consumer. Kafka will ensure that only one Component instance will receive this message, so it is guaranteed that no two instances will work the same Job. Worker components will receive Cancellation (or other important messages) through their unique consumer. For cancellations, every Consumer instance will receive this Kafka message and will have to use inner component logic to determine if they are the instance who currently owns that Job; and if so, they must take the action to cancel the Job.
 
 // vim: set syntax=asciidoc wrap:

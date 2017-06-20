@@ -32,11 +32,11 @@ node {
   
   //old way
   stage('Archive') {
-    withRvm(rubyVersion: '2.4.0') {
+    //withRvm(rubyVersion: '2.4.0') {
       sh """
         ./ci/archive.sh
       """
-    }
+    //}
     //mavenPush()
   }
 

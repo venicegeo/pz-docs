@@ -1,5 +1,6 @@
 #!/bin/bash -e
 
+
 do_xtrace=$(echo $SHELLOPTS | grep -o xtrace | cat)
 set +x
 

@@ -1,5 +1,3 @@
-@Library('pipelib@master') _
-
 #!/usr/bin/groovy
 
 node {
@@ -9,17 +7,8 @@ node {
   def nodejs = tool 'NodeJS_6'
   def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
   appvers = appvers.trim()
-  def appName = "pz-jobmanager-${appvers}"
+  def appName = "pz-docs-${appvers}"
 
-  /*
-	//old
-  stage('Setup') {
-    git([
-      url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
-      branch: "master"
-    ])
-  }
-  */
 
   //new
   stage('Setup') {
@@ -35,17 +24,66 @@ node {
   //old way
   stage('Archive') {
     //withRvm(rubyVersion: '2.4.0') {
+//      sh """
+//        ./ci/archive.sh
+//      """
+  
+    print "prior to calling testworker" 
+    worker() {
       sh """
         ./ci/archive.sh
       """
-    //}
+    }
     //mavenPush()
   }
 
-  //old push to INT
-  stage ('CI Deploy') {
-    cfPush()
-    cfBgDeploy()
+
+//  //old push to INT
+//  stage ('CI Deploy') {
+//    cfPush()
+//    cfBgDeploy()
+//  }
+  
+  stage ('Int Deploy') {
+    if(!fileExists('.cf')) {
+      sh "mkdir -p .cf"
+    }
+    withEnv(['CF_HOME=.cf']) {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.PCF_CREDS}", usernameVariable: 'CFUSER', passwordVariable: 'CFPASS']]) {
+        sh "cf api ${env.PCF_API_ENDPOINT}"
+        sh "cf auth ${CFUSER} ${CFPASS}"
+        sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
+        sh "cf push ${appName} -f manifest.jenkins.yml --hostname ${appName} -d ${env.PHASE_ONE_PCF_DOMAIN} --no-start"
+        sh "cf set-env ${appName} SPACE ${env.PHASE_ONE_PCF_SPACE}"
+        sh "cf set-env ${appName} DOMAIN ${env.PHASE_ONE_PCF_DOMAIN}"
+        sh "cf start ${appName}"
+      }
+    }
+    withCredentials([[$class: 'StringBinding', credentialsId: "${env.THREADFIX_API_KEY}", variable: 'THREADFIX_KEY']]) {
+      sh "mkdir -p ${root}/zap-out"
+      sh """${zapHome}/zap.sh -cmd \
+        -quickout ${root}/zap-out/zap.xml \
+        -quickurl https://${appName}.${env.PHASE_ONE_PCF_DOMAIN} \
+      """
+      sh "cat ${root}/zap-out/zap.xml"
+      sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
+    }
+    withEnv(['CF_HOME=.cf']) {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.PCF_CREDS}", usernameVariable: 'CFUSER', passwordVariable: 'CFPASS']]) {
+        sh "cf api ${env.PCF_API_ENDPOINT}"
+        sh "cf auth ${CFUSER} ${CFPASS}"
+        sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
+        def legacyAppNames = sh(script: "cf routes | grep \"pz-docs \" | awk '{print \$4}'", returnStdout: true)
+        sh "cf map-route ${appName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname pz-docs"
+        // Remove Legacy applications
+        for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
+          def legacyAppName = legacyApp.toString().trim()
+          if (legacyAppName != appName) {
+            sh "cf delete -f ${legacyAppName}"
+          }
+        }
+      }
+    }
   }
   
   //old way
@@ -71,5 +109,69 @@ node {
   //old way
   stage ('Cleanup') {
     deleteDir()
+  }
+}
+
+//#!/usr/bin/env groovy
+def worker(body) {
+
+  println "==============================="
+  println "Inside worker!"
+  //println body()
+  sh """ 
+    pwd 
+    ls -l
+  """
+  println "EndOf==============================="
+  
+  //def p = new Props().load(steps, config)
+  //def s = new Scripts()
+
+  def root = pwd()
+  def rvmTool = tool 'RVM'
+  def rvmPath = "${root}/.rvm" 
+  //def rubyVersion = p.get('rubyVersion')
+  def rubyVersion = "2.4.0"
+
+  def paths = [
+    "${root}/.gem/ruby/${rubyVersion}/bin",
+    "${root}/bin",
+    "${rvmTool}/bin",
+    "${rvmPath}/bin",
+    "${rvmPath}/gems/ruby-${rubyVersion}/bin",
+    "${rvmPath}/gems/ruby-${rubyVersion}@global/bin",
+    "${rvmPath}/gems/ruby-${rubyVersion}@${rubyVersion}/bin",
+    "${rvmPath}/rubies/ruby-${rubyVersion}/bin"
+  ]
+
+  def path = paths.join(':')
+
+  withEnv([
+    "HOME=${root}",
+    "PATH+=${path}",
+    "RVM_TOOL=${rvmTool}",
+    "RVM_VERSION=${rubyVersion}",
+    "RUBY_VERSION=ruby-${rubyVersion}",
+    "GEM_HOME=${rvmPath}/gems/ruby-${rubyVersion}@${rubyVersion}",
+    "GEM_PATH=${rvmPath}/gems/ruby-${rubyVersion}@${rubyVersion}:${rvmPath}/gems/ruby-${rubyVersion}@global",
+    "IRBRC=${rvmPath}/rubies/ruby-${rubyVersion}/.irbrc",
+    "MY_RUBY_HOME=${rvmPath}/rubies/ruby-${rubyVersion}"
+  ]) {
+//    sh """
+///      ${s.get('withRvm')}
+//    """
+//    body()
+
+      sh """
+      chmod -R 777 ci/withRvm.sh
+      """
+      
+    sh """
+      ./ci/withRvm.sh
+      """
+      body()
+
+      println "End of line for worker"
+    
   }
 }

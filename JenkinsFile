@@ -25,6 +25,34 @@ node {
         ./ci/archive.sh
       """
     }
+	
+	// Check if exists already
+    def getDependencyStatus = sh(script: """mvn -X --settings ~/.m2/settings.xml dependency:get \
+      -Dmaven.repo.local="${root}/.m2/repository" \
+      -DrepositoryId=nexus \
+      -DartifactId=pz-docs \
+      -Dversion=${appvers} \
+      -DgroupId="org.venice.piazza" \
+      -Dpackaging=tar.gz \
+      -DremoteRepositories="nexus::default::${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
+    """, returnStatus: true)
+    echo "dependency status = ${getDependencyStatus}"
+    if (getDependencyStatus == 0) {
+      echo "Artifact version ${appvers} exists in Nexus, nothing to do"
+    } else {
+     sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/pz-docs.tar.gz \
+        -DrepositoryId=nexus \
+        -Durl="${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
+        -DgroupId="org.venice.piazza" \
+        -DgeneratePom=false \
+        -Dpackaging=tar.gz \
+        -Dmaven.repo.local="${root}/.m2/repository" \
+        -DartifactId=pz-docs \
+        -Dversion=${appvers}
+      """
+    }
+	
+	
   }
 
   stage ('Int Deploy') {
@@ -62,6 +90,7 @@ node {
         for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
           def legacyAppName = legacyApp.toString().trim()
           if (legacyAppName != appName) {
+		    sh "cf unmap-route ${legacyAppName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname ${legacyAppName}"
             sh "cf delete -f ${legacyAppName}"
           }
         }
@@ -69,13 +98,6 @@ node {
     }
   }
   
-  stage('Reset') {
-    git([
-      url: env.GIT_URL ? env.GIT_URL : 'https://github.com/venicegeo/pz-docs',
-      branch: "master"
-    ])
-  }
-
 	stage('Stage Deploy') {
 	  if(!fileExists('.cf')) {
 		sh "mkdir -p .cf"
@@ -110,6 +132,7 @@ node {
 		  for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
 			def legacyAppName = legacyApp.toString().trim()
 			if (legacyAppName != appName) {
+			  sh "cf unmap-route ${legacyAppName} ${env.PHASE_TWO_PCF_DOMAIN} --hostname ${legacyAppName}"
 			  sh "cf delete -f ${legacyAppName}"
 			}
 		  }

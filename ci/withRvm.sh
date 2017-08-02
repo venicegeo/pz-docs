@@ -6,6 +6,8 @@ set +x
 
 root=$(pwd -P)
 
+: ${RVM_VERSION:=2.4.0}
+
 test -n "$RVM_TOOL"    || { echo "$0: RVM_TOOL not defined." >&2; exit 1; }
 test -n "$RVM_VERSION" || { echo "$0: RVM_VERSION not defined." >&2; exit 1; }
 

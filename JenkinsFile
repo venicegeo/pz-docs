@@ -5,6 +5,9 @@ node {
 	def mvn = tool 'M3'
 	def zapHome = tool 'ZAProxy_v2_5_0'
 	def nodejs = tool 'NodeJS_6'
+        def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
+        appvers = appvers.trim()
+        def appName = "pz-docs-${appvers}"
 
 	stage('Setup') {
 		deleteDir()
@@ -15,11 +18,8 @@ node {
 		  git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}"
 		}
 	}
-  
+
 	stage('Archive') {
-	       def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
-	       appvers = appvers.trim()
-	       def appName = "pz-docs-${appvers}"
 
 		worker() {
 		  sh """
@@ -102,7 +102,7 @@ node {
 		  }
 		}
 	}
-  
+
 	stage('Stage Deploy') {
 	  if(!fileExists('.cf')) {
 		sh "mkdir -p .cf"
@@ -155,7 +155,7 @@ node {
 def worker(body) {
 	def root = pwd()
 	def rvmTool = tool 'RVM'
-	def rvmPath = "${root}/.rvm" 
+	def rvmPath = "${root}/.rvm"
 	def rubyVersion = "2.4.0"
 
 	def paths = [
@@ -185,7 +185,7 @@ def worker(body) {
 	sh """
 	  chmod -R 777 ci/withRvm.sh
 	  """
-	  
+
 	sh """
 	  ./ci/withRvm.sh
 	  """

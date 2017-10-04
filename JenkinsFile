@@ -104,6 +104,7 @@ node {
 		}
 	}
 
+  if(params.DEPLOY_PHASE_TWO) {
 	stage('Stage Deploy') {
 	  if(!fileExists('.cf')) {
 		sh "mkdir -p .cf"
@@ -151,6 +152,7 @@ node {
 		}
 	  }
 	}
+  }
 }
 
 def worker(body) {

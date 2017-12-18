@@ -113,4 +113,4 @@ cp -f $ins/presentations/*.pdf "$outs/presentations/"
 
 echo Done.
 
-tar -czf "$APP.$EXT" -C "$root" out
+tar -czf "$APP.$EXT" -C "$root" out manifest.jenkins.yml Staticfile

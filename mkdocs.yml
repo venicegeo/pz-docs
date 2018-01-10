@@ -1,0 +1,14 @@
+site_name: Piazza Documentation
+docs_dir: documents
+pages:
+  - Home: 'index.markdown'
+  - About:
+    - 'common/intro.markdown'
+    - 'common/legal.markdown'
+    - 'common/support.markdown'
+  - Developer Guide:
+    - 'devguide/index.markdown'
+  - User Guide:
+    - 'userguide/index.markdown'
+
+

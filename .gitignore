@@ -6,4 +6,4 @@ out
 *.2
 download.dat
 badwords
-
+site/*

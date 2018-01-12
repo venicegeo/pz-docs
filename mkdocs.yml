@@ -1,5 +1,9 @@
 site_name: Piazza Documentation
 docs_dir: documents
+markdown_extensions:
+  - toc:
+    permalink: True
+    separator: "_"
 pages:
   - Home: 'index.markdown'
   - About:

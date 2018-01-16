@@ -1,9 +1,9 @@
-\# Data Load and Access
+# Data Load and Access
 
 With this section, we begin to describe each of Piazza’s major APIs. We
 will start with loading and accessing data.
 
-\#\# Load
+## Load
 
 Piazza provides the ability to load external data into the system.
 Metadata is extracted from external data, stored within Piazza, and a
@@ -33,7 +33,7 @@ locally for metadata extraction but *not* (immediately) deleted. This is
 used for working files and other sorts of temporary storage; it is not
 intended for long-term, persistent data storage.
 
-\# Loading an Image (Hosted Model)
+# Loading an Image (Hosted Model)
 
 > **Note**
 >
@@ -234,7 +234,7 @@ will return a response similar to this:
       }
     }
 
-\# Accessing the Hosted File
+# Accessing the Hosted File
 
 We can retrieve the file using the `/file/{dataId}` endpoint, like this:
 
@@ -317,7 +317,7 @@ copied-and-pasted into a browser to view the capabilities of the
 service. The WMS service can be used by any WMS-aware client
 application.
 
-\#\# Non-hosted Image File
+## Non-hosted Image File
 
 Loading a non-hosted image file is nearly identical to loading a hosted
 image file. The differences are:
@@ -374,7 +374,7 @@ this S3 bucket in order for load to succeed.
 
 From this point on, the workflow is identical to hosted files.
 
-\#\# Loading a GeoJSON File
+## Loading a GeoJSON File
 
 Loading GeoJSON data is nearly identical to loading image files. The
 differences are:
@@ -403,6 +403,6 @@ The processes for getting the job status, downloading the data, and
 creating an OGC deployment (in this case, a WFS layer) follow the
 image-based examples described above.
 
-\#\# Data API Documentation
+## Data API Documentation
 
 See <http://pz-swagger.venicegeo.io/#/Data>

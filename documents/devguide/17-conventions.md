@@ -1,6 +1,6 @@
-\# Coding Conventions
+# Coding Conventions
 
-\#\# General
+## General
 
 -   Piazza APIs SHALL use [RFC
     4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
@@ -16,7 +16,7 @@
     repository, include this snippet:
     <https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt>
 
-\#\# Java
+## Java
 
 For general Java coding, follow the Google Java Style coding standards:
 <http://google.github.io/styleguide/javaguide.html>
@@ -25,11 +25,11 @@ The package naming convention should be:
 
 -   Piazza Project: `org.venice.piazza.[component name]`
 
-\#\# Go
+## Go
 
-\#\# Unit Testing
+## Unit Testing
 
-\#\# GitHub
+## GitHub
 
 New GitHub Repositories within the
 [github.com/venicegeo](https://github.com/venicegeo) community should be
@@ -39,9 +39,9 @@ named using following convention:
 
 -   VeniceGeo Services: `pzsvc-[COMPONENT NAME]`
 
-\#\# REST API Conventions
+## REST API Conventions
 
-\# JSON Conventions
+# JSON Conventions
 
 All input and output payloads will be JSON.
 
@@ -50,7 +50,7 @@ guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 
-\# JSON Fields
+# JSON Fields
 
 Fields containing resource ids should be named according to the resource
 type. For example, use `eventId`, not just `id`.
@@ -62,7 +62,7 @@ For fields containing "timestamp" information, use names of the form
 Field names should be spelled with `lowerCamelCase`. Not
 `UpperCamelCase` and not `underscore_style`.
 
-\# Pagination
+# Pagination
 
 `GET` requests that return arrays (or maps) of objects should typically
 support these query parameters for pagination:
@@ -81,7 +81,7 @@ messages, in batches of 30, sorted by creation date:
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
     GET /messages?perPage=30&page=1&key=createdOn&order=asc
 
-\# Response Payloads
+# Response Payloads
 
 For success responses (`200` or `201`) from `GET`, `POST`, or `PUT`, the
 JSON object returned will be:
@@ -125,7 +125,7 @@ For error responses (`4xx` or `5xx`), the response is:
 Note that `DELETE` requests will return a `200` and a success payload
 which may be empty.
 
-\# HTTP Status Codes
+# HTTP Status Codes
 
 We generally only use these HTTP status codes.
 
@@ -165,7 +165,7 @@ the future. Subsequent requests by the client are permissible.
 The server encountered an unexpected condition which prevented it from
 fulfilling the request.
 
-\# Operations (Verbs)
+# Operations (Verbs)
 
 By default, all resources should support GET, POST, PUT, DELETE. If a
 verb not valid for a resource type, `403` should be returned.
@@ -186,7 +186,7 @@ returns `200` with a response payload containing the updated object
 `DELETE`  
 returns `200` with a response payload whose `data` field is set to `{}`
 
-\# URLs
+# URLs
 
 Use `lowerCamelCase` in URLs and query parameters if needed to match the
 JSON field names. For example:
@@ -194,7 +194,7 @@ JSON field names. For example:
     GET /eventType?sortBy=eventTypeId   // YES!
     GET /eventtype?sortby=eventtypeid   // NO!
 
-\# Common Endpoints
+# Common Endpoints
 
 `GET /`  
 requests a "health check" for the service. The returned status code is

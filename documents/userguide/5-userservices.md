@@ -1,4 +1,4 @@
-\# User Services
+# User Services
 
 Piazza allows users to discover, manage, and invoke external web
 services that are referred to as *User Services*. A web service is a
@@ -36,7 +36,7 @@ guidelines on writing user services to work best with Piazza. See the
 [???](#How to Write Your Own User Services) section for details on how
 to write for discovery and user from within Piazza.
 
-\#\# Types of User Services
+## Types of User Services
 
 Piazza recognizes that there are two types of User Services: Synchronous
 Web Services and Asynchronous Web Services.
@@ -71,7 +71,7 @@ write asynchronous user services.
 > service. This service responds with “hello” when invoked. It is
 > deployed in our cloud for testing services.
 
-\#\# Registration
+## Registration
 
 A user service must be registered within the Piazza Service Registry
 before it can be discovered or used by Piazza users.
@@ -88,7 +88,7 @@ if the user service does not intend to implement the asynchronous
 endpoints and upon invocation will instead return the results
 synchronously.
 
-\# Hello Example service registered with `GET` method
+# Hello Example service registered with `GET` method
 
 The service is registered by performing a `POST` request to the
 `/service` endpoint.
@@ -160,7 +160,7 @@ following way:
 
     $ ./register-service.sh
 
-\#\# Invocation
+## Invocation
 
 Once a user service is registered within Piazza, it can be invoked by
 sending a `POST` request to the Piazza API job endpoint
@@ -180,7 +180,7 @@ instance of the user service. This ID is used in subsequent requests to
 obtain the status of the job and to perform other job management
 capabilities.
 
-\# Hello Example service invoked with `GET` method
+# Hello Example service invoked with `GET` method
 
 A script that does this can be found at
 [execute-service.sh](scripts/execute-service.sh). Provide the
@@ -224,7 +224,7 @@ generated raster image somewhere in a shared S3 bucket.
                  {"jobId": "e42a2ea3-2f16-4ee2-bf74-fa7c792c0847"}
     }
 
-\# Hello Example service invoked with `POST` method
+# Hello Example service invoked with `POST` method
 
 When invoking a service that requires a POST body for input, the body
 message is specified in the content field — the `type` is `"body"` and
@@ -246,14 +246,14 @@ same as with the `GET` request.
         }
     }
 
-\# Getting the Status and Results of an Invocation
+# Getting the Status and Results of an Invocation
 
 The status of a user service invocation is returned by sending a `GET`
 request to `https://pz-gateway.venicegeo.io/job/{{jobId}}` where `jobId`
 is the ID returned when executing the service. Piazza users should call
 this endpoint to determine the status of a running service.
 
-\#\# Status Details The granularity of the status provided depends on
+## Status Details The granularity of the status provided depends on
 the type of user service that has been invoked. For synchronous user
 services, the status returned may be in the following format:
 
@@ -266,7 +266,7 @@ For details on status reporting for asynchronous services, see
 &lt;Building Asynchronous Support&gt; to see the various types of
 statuses that can be returned.
 
-\#\# Getting the Results
+## Getting the Results
 
 Once the user service has finished executing, the resulting data can be
 accessed by the Piazza user. Using the provided Data ID, users can
@@ -323,7 +323,7 @@ the `dataId` returned by the previous script:
 
     $ ./get-data-info.sh {{dataId}}
 
-\# Cancelling an Invocation
+# Cancelling an Invocation
 
 During execution of a Piazza job, the Piazza user who invoked a user
 service may also request to cancel or abort that job. Using the `jobId`
@@ -332,13 +332,13 @@ that was provided from the invocation, a user can cancel a job using the
 endpoint. For more details on how to use this, see the [Piazza API Abort
 Job](http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE).
 
-\#\# Other Examples
+## Other Examples
 
 For more examples on how to register and execute your service, see the
 [Piazza Developer’s
 Guide](http://pz-docs.venicegeo.io/devguide/index.html).
 
-\#\# How to Write Your Own User Services
+## How to Write Your Own User Services
 
 User Services are external web services that service developers write to
 be utilized by various users. When these services are registered within
@@ -362,14 +362,14 @@ User Service
 Registration](http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST)
 for details.
 
-\# Designing Your User Service
+# Designing Your User Service
 
 When designing your user service, it should be written as a RESTful web
 service. REST is an architectural concept for creating client/server
 networked applications, and clients and servers exchange data using a
 stateless communication protocol such as HTTP.
 
-\#\# Establishing an API
+## Establishing an API
 
 To establish an API for exchanging data to and from your user service,
 consider using the JSON standard because data payloads are smaller, are
@@ -388,7 +388,7 @@ For guidance on best practices when creating the RESTful API to your web
 service, see the [18F API
 standard](https://github.com/18F/api-standards) for details.
 
-\# Implementing Scalability
+# Implementing Scalability
 
 *Scalability* needs to be considered when developing a user service.
 Scalability is the ability of your user service to handle a growing
@@ -425,7 +425,7 @@ instead of taking service invocations directly from Piazza. The next
 section discusses how to incorporate task management within your user
 service.
 
-\# Task Management
+# Task Management
 
 Task Management is a capability that allows user service developers to
 *poll* for work instead of being invoked directly by Piazza. To tell
@@ -463,7 +463,7 @@ service registration payload does not necessarily need to represent a
 functional endpoint for the service. Additionally, the `isAsynchronous`
 field is ignored when `isTaskManaged` is set to true.
 
-\#\# Polling for Work
+## Polling for Work
 
 Once your user service is registered as a Task Managed service, Piazza
 will not invoke the user service directly. Instead, your user service
@@ -477,7 +477,7 @@ invoke the user service. It also contains the `data.jobId` field that
 will later be used to tell Piazza any updates for the status/results of
 the job. If no jobs are in your queue, those fields will be `null`.
 
-\#\# Sending Status Updates for the Job
+## Sending Status Updates for the Job
 
 When you need to send Piazza status updates or results for the job your
 user service is working on, submit a `POST` to
@@ -502,7 +502,7 @@ submitting a `GET` to
 The response will show the number of jobs in your user service’s jobs
 queue.
 
-\#\# Timeouts in Task Managed Services
+## Timeouts in Task Managed Services
 
 Optionally, the `timeout` parameter can be specified upon initial
 service registration. If specified, Piazza will then periodically check
@@ -516,7 +516,7 @@ worker. If that specific service job fails two more subsequent times,
 then it will be removed from the queue entirely and flagged as a failure
 by Piazza.
 
-\#\# Building in Asynchronous Support
+## Building in Asynchronous Support
 
 If you anticipate that your user service will be doing time-consuming
 activities, then consider making it an asynchronous user service. To
@@ -524,7 +524,7 @@ provide for this functionality, Piazza recommends that the following set
 of functions and behaviors be incorporated into your user service. The
 following sections steps through each of these items.
 
-\#\# Service Invocation Response
+## Service Invocation Response
 
 For Piazza to track and work with your asynchronous service, a unique
 identifier, or Job ID needs to be generated and returned to Piazza when
@@ -549,7 +549,7 @@ user service during service invocation.
 
 ![Asynchronous](images/PZ-async-invoke.png)
 
-\#\# Status Endpoint
+## Status Endpoint
 
 For Piazza to be able to query the status of your user service, a status
 endpoint has to be implemented. The endpoint `/status/{jobId}` and path
@@ -598,7 +598,7 @@ this instance of the user service. Once Piazza encounters an error
 status, it will cease to poll for status and it will not attempt to
 query the results endpoint.
 
-\# Result
+# Result
 
 When your user service reports back a `Success` status, then Piazza will
 initiate a subsequent call to the results endpoint. The results URL will
@@ -615,7 +615,7 @@ When Piazza initiates a successful call to the results endpoint of a
 service, it should be considered a guarantee that Piazza will make no
 further queries related to that execution instance.
 
-\# Cancellation
+# Cancellation
 
 During execution of a Piazza job, the user who requested that job
 execution may also request to terminate that job. In this case, Piazza
@@ -634,7 +634,7 @@ clean up any resources related to that instance. It can be considered a
 guarantee by Piazza that no subsequent calls will be made related to
 that instance.
 
-\# Output From Your User Service
+# Output From Your User Service
 
 Piazza supports a number of output formats generated from user services
 registered within Piazza. User services should generate a Piazza
@@ -688,7 +688,7 @@ For details on the DataResource payload and the available DataTypes, see
 the [Piazza Data
 API](http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET).
 
-\#\# What to do About Existing Services
+## What to do About Existing Services
 
 If you have an existing service, consider following the [18F API
 standard](https://github.com/18F/api-standards) for guidance on best
@@ -700,9 +700,9 @@ using XML over HTTP. If converting the service to a REST representation
 is not possible for services such as these, then consider wrapping these
 services.
 
-\# Putting Your User Service into Action within Piazza
+# Putting Your User Service into Action within Piazza
 
-\#\# Registering Your User Service
+## Registering Your User Service
 
 When registering your service, provide enough metadata about your
 service so it can be searched and discovered using Piazza’s search
@@ -729,7 +729,7 @@ When registering a service, the following fields are required:
 
 7.  `resourceMetadata.classType`
 
-\# Availability of Your User Service
+# Availability of Your User Service
 
 User services registered within Piazza have an `availability` field that
 indicates the status/health of the service. Services can have an
@@ -754,7 +754,7 @@ set the status of a registered user service, to `DEGRADED`. If the user
 service is unresponsive over a period of time, the status of the user
 service may be changed to `FAILED`.
 
-\#\# Service API Documentation
+## Service API Documentation
 
 See <http://pz-swagger.venicegeo.io/#/service> for the complete User
 Service API.

@@ -1,10 +1,10 @@
-\# Job Common
+# Job Common
 
 The Job Common (or Java Common) project is a Java library that contains
 various useful utility classes and serializable models that are used
 commonly throughout the Java applications in the Piazza Core.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 For instructions on how to include this library in your Java project,
 through Maven, please see the [Repo
@@ -12,7 +12,7 @@ Documentation](https://github.com/venicegeo/pz-jobcommon). This contains
 all information needed to connect to the Piazza S3 Maven repository and
 include the Common library as a dependency in your `pom.xml` file.
 
-\#\# Spring Beans
+## Spring Beans
 
 This project contains a variety of Spring Beans that are used to wrap
 core Piazza services, such as the Logger, in order to provide a handy
@@ -54,7 +54,7 @@ components with appropriate `url` values (described in the below
 sections for each component) and letting Spring instantiate this for
 you.
 
-\# PiazzaLogger
+# PiazzaLogger
 
 Provides a Java API to the
 [pz-logger](https://github.com/venicegeo/pz-logger) component.
@@ -102,7 +102,7 @@ example:
 
     logger.log("Something went wrong!", PiazzaLogger.ERROR);
 
-\#\# Models
+## Models
 
 `pz-jobcommon` also contains a variety of models that map all of the
 JSON payload information that is passed throughout the Gateway and other

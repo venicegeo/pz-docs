@@ -1,4 +1,4 @@
-\# Piazza Core Overview
+# Piazza Core Overview
 
 The core functionality of Piazza is split up into several internal
 components that are shown in the below diagram.

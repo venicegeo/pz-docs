@@ -1,4 +1,4 @@
-\# Introduction The Piazza API is a series of REST endpoints that allow
+# Introduction The Piazza API is a series of REST endpoints that allow
 Non Person Entities (NPEs) to access tools and interact with all of
 Piazza’s core functionality. All NPE requests come into Piazza through
 an entry-point called the Gateway. The Gateway is an abstract layer to

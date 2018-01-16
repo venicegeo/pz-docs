@@ -54,7 +54,7 @@ initiatives in support of Geospatial Intelligence (GEOINT) needs.
 We welcome your interest, questions, and participation! Contact us at
 <venice@radiantblue.com>.
 
-\# Introduction The Piazza API is a series of REST endpoints that allow
+# Introduction The Piazza API is a series of REST endpoints that allow
 Non Person Entities (NPEs) to access tools and interact with all of
 Piazza’s core functionality. All NPE requests come into Piazza through
 an entry-point called the Gateway. The Gateway is an abstract layer to
@@ -93,7 +93,7 @@ loading/accessing data processing results and geospatial data. NPEs can
 also access geospatial data by using OGC standard APIs (Boundless
 GeoServer).
 
-\#\# Piazza Agile Development Process Overview
+## Piazza Agile Development Process Overview
 
 Piazza is developed using Agile management process framework known as
 Scrum. The figure below depicts how software development for the Piazza
@@ -101,7 +101,7 @@ product.
 
 ![High Level Agile Process](images/pz-hl-agile-process.jpg)
 
-\# Piazza Core Overview
+# Piazza Core Overview
 
 The core functionality of Piazza is split up into several internal
 components that are shown in the below diagram.
@@ -125,7 +125,7 @@ initiated when specific conditions are met. The second mechanism
 leverages Apache Kafka message bus and Elasticsearch Triggers to provide
 for asynchronous notifications.
 
-\#\# Prerequisites for Using Piazza
+## Prerequisites for Using Piazza
 
 To build and run Piazza, the table below depicts the software that is
 needed. As a convenience, Piazza provides Vagrant boxes for the required
@@ -221,7 +221,7 @@ backing services.
 </tbody>
 </table>
 
-\#\# Accessing Piazza
+## Accessing Piazza
 
 Using Piazza, NPEs can perform actions such as the loading and retrieval
 data, the registration and execution user services, and registration of
@@ -247,9 +247,9 @@ Guide](https://pz-docs.geointservices.io/userguide/index.html).
 For details on the code for the Gateway, see the [???](#Gateway) section
 for details.
 
-\# Job Manager
+# Job Manager
 
-\#\# Job Management Overview
+## Job Management Overview
 
 For activities that are potentially time consuming such as the
 invocation of user services (e.g. algorithms), the orchestration of user
@@ -280,7 +280,7 @@ a data ID, or service, or whatever the end result of the Job was) will
 be contained in the status of that Job, including the time it was
 completed and how long it took.
 
-\#\# Example Job Manager Endpoints
+## Example Job Manager Endpoints
 
 The table below depicts examples of the various endpoints used for job
 management.
@@ -311,12 +311,12 @@ management.
 </tbody>
 </table>
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-jobmanager>
 
-\#\# Source Organization
+## Source Organization
 
 The main logic of the Job Manager is split between two package. The
 `controller` package contains the REST controller that contains the REST
@@ -328,7 +328,7 @@ messages pertain to 1) Creating new Jobs and 2) Updating the status of
 Jobs. The Jobs are persisted in the MongoDB and interaction code to
 handle the MongoDB commits is located in the `database` package.
 
-\#\# Interface
+## Interface
 
 The main communication with the Job Manager is via Kafka from messages.
 The Gateway sends "Request-Job" messages to the Job Manager in order to
@@ -339,7 +339,7 @@ status of running jobs.
 The Job Manager also contains a series of REST endpoints that are used
 for obtaining Job Status, or lists of Jobs.
 
-\#\# Piazza Database & Jobs Collection
+## Piazza Database & Jobs Collection
 
 The MongoDB instance uses a database titled `Piazza` with a single
 `Jobs` collection. The interfaces exposed through the Dispatcher
@@ -360,7 +360,7 @@ Job](https://github.com/venicegeo/pz-jobcommon).
         }
     }
 
-\#\# Administrative API
+## Administrative API
 
 The Job Manager provides a series of REST Endpoints that can be used to
 query the Job Manager for certain information useful to NPEs and
@@ -370,7 +370,7 @@ Jobs returned through REST Endpoints will follow the JSON Model defined
 in the [Job
 Class](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java).
 
-\# REST Endpoints
+# REST Endpoints
 
 `GET /job/count`  
 Gets a count of the Jobs in the Piazza system.
@@ -423,7 +423,7 @@ number of Jobs held in the Job Table, listed by status.
         "error": 1
     }
 
-\#\# Job Workflow
+## Job Workflow
 
 The purpose of this page is to document the Workflow of the Piazza Core
 Job process, and aims to show how Piazza Jobs are created and processed,
@@ -440,7 +440,7 @@ cases for when Jobs and Job IDs are generated are currently for:
 
 -   GeoServer deployments for Data using the `/deployment` endpoint.
 
-\# Job Sequence
+# Job Sequence
 
 The Sequence for Jobs is as follows:
 
@@ -468,7 +468,7 @@ The Sequence for Jobs is as follows:
     `/job` request to the Gateway. This response will give the user the
     progress, and when done, the final Result of the Job.
 
-\# How Jobs an be Cancelled
+# How Jobs an be Cancelled
 
 Each Worker component (defined as a Component capable of processing
 Jobs), such as Service Controller, Ingest, and Access, will join a
@@ -512,21 +512,21 @@ use inner component logic to determine if they are the instance who
 currently owns that Job; and if so, they must take the action to cancel
 the Job.
 
-\# Logger
+# Logger
 
-\#\# Overview
+## Overview
 
 The Logger provides a system-wide, common way to record log messages.
 The log messages are stored in Elasticsearch. This is done though an
 HTTP API.
 
-\#\# Building and Running Locally To find out how to run the pz-logger
+## Building and Running Locally To find out how to run the pz-logger
 service locally, please visit the github
 [README](https://github.com/venicegeo/pz-logger/blob/master/README.md)
 
-\#\# HTTP API
+## HTTP API
 
-\# `POST /syslog`
+# `POST /syslog`
 
 Sends a message to be logged. The message is given in the POST body as a
 JSON object:
@@ -577,7 +577,7 @@ right now.
 I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely
 to crash very soon.
 
-\# `GET /syslog`
+# `GET /syslog`
 
 Returns a JSON object of log messages:
 
@@ -624,7 +624,7 @@ Returns a JSON object of log messages:
 
 This endpoint supports pagination, as described in [???](#Pagination).
 
-\# Common operations
+# Common operations
 
 This service includes the common endpoints described in
 [???](#Common Endpoints).
@@ -636,19 +636,19 @@ The `admin stats` supported are:
         "numMessages": 1234
     }
 
-\# Gateway
+# Gateway
 
 Handles all user-facing requests to Piazza via REST endpoints. The
 purpose of this component is to allow for external users to be able to
 interact with Piazza data, services, events, and other core Piazza
 functionality.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-gateway>
 
-\#\# S3 Credentials
+## S3 Credentials
 
 The Gateway is responsible for pushing uploaded files (such as for
 Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers
@@ -660,7 +660,7 @@ These values are referenced in the ENV variables
 developer and you do not have these values on your host, you will not be
 able to Ingest files into the Gateway.
 
-\#\# Code Organization
+## Code Organization
 
 The Gateway uses a series of Spring RestControllers in order to manage
 the number of REST Endpoints that the Gateway API provides. These are
@@ -674,7 +674,7 @@ this profile is enabled, then authentication is active and will point to
 disabled, then the Gateway will not require any authentication for
 incoming requests.
 
-\#\# Interface
+## Interface
 
 The Gateway API provides a series of REST endpoints that enable users to
 work with data, services, events, and triggers. See the Swagger
@@ -682,7 +682,7 @@ documentation for a complete documentation and listing for all available
 Gateway API endpoints. See Swagger documentation for the Gateway for
 specific endpoints, payloads and responses.
 
-\#\# Authentication and Authorization
+## Authentication and Authorization
 
 Authentication and authorization is handled via the `pz-idam` component.
 This authentication becomes active when the `secure` Spring profile is
@@ -690,7 +690,7 @@ enabled in the Gateway. When authentication, all requests to the Gateway
 will require basic authentication (standard base64-encoded) with
 usernames and passwords defined in `pz-idam`.
 
-\# Job Request
+# Job Request
 
 In the case of long-running Jobs, such as Data loading, or Service
 execution - the Gateway implements the concept of a Job as a handle to
@@ -733,7 +733,7 @@ Job’s current status.
 If the Job has encountered an error, then this information will also be
 available in the resulting JSON.
 
-\# Job Abort
+# Job Abort
 
 Users who submit a Job that is currently running, can request that Job
 be cancelled using the DELETE operation on the `job` endpoint. This will
@@ -742,13 +742,13 @@ handling this Job should stop immediately.
 
     DELETE /job/{{jobId}}
 
-\#\# REST API
+## REST API
 
 Please see the Jobs section in this document for more information on the
 specific endpoints that the Gateway provides. For live documentation,
 see the Swagger files.
 
-\# SAK (Development/Debug UI Tool)
+# SAK (Development/Debug UI Tool)
 
 While the communication with Gateway primarily is performed by NPEs
 through HTTP(S) requests via RESTful interfaces, the Swiss Army Knife
@@ -767,7 +767,7 @@ unit tested using
 [Karma](https://karma-runner.github.io/0.13/index.html) and
 [Jasmine](http://jasmine.github.io/2.4/introduction.html).
 
-\#\# Source Organization
+## Source Organization
 
 This app is setup as a static web application and is a single module
 AngularJS app. The important sections include:
@@ -781,15 +781,15 @@ AngularJS app. The important sections include:
 -   `/public/nginx.conf` - This is the config file that nginx uses on
     the deployed server
 
-\#\# Running SAK locally
+## Running SAK locally
 
-\# Requirements
+# Requirements
 
 -   Code cloned from <https://github.com/venicegeo/pz-sak>
 
 -   [Nginx 1.8.1](http://nginx.org/en/download.html)
 
-\# Steps
+# Steps
 
 1.  Copy pz-sak/conf/nginx.conf to nginx-1.8.1/conf
 
@@ -815,34 +815,34 @@ Troubleshooting:
     to configure the proper DNS for your network for dynamic proxies to
     work properly.
 
-\#\# Running SAK from the cloud
+## Running SAK from the cloud
 
-\# Requirements
+# Requirements
 
 -   Web-browser (we typically test in Chrome but any modern browser
     should work)
 
-\# Steps
+# Steps
 
 1.  Open your web-browser
 
 2.  Go to: <http://pz-sak.venicegeo.io/>
 
-\#\# Using SAK
+## Using SAK
 
-\# Login
+# Login
 
 In order to login to SAK you may need credentials for your Piazza
 installation. If you do not yet have a username and password, please
 contact us.
 
-\# Sections of SAK
+# Sections of SAK
 
 Upon login, you are redirected to the Home page where you are given a
 list of commonly used links and locations of services. Here are further
 details on using these services through SAK.
 
-\#\# Access
+## Access
 
 In this section you can list all pieces of data that have been loaded
 into Piazza. If you’re looking for something specific, you can look up
@@ -850,13 +850,13 @@ the data object by it’s Data ID. All data is returned in raw JSON
 format, so you can view the response as close to what services that
 connect to Piazza would be seeing.
 
-\#\# Jobs
+## Jobs
 
 Here you can check the status of specific jobs using the Job ID,
 retrieve resource data with a Data ID, or just browse through all the
 jobs that have been requested.
 
-\#\# Loader
+## Loader
 
 The loader allows the upload of text and files into the Piazza system.
 Currently supported through the UI, the user may choose Text to load or
@@ -880,7 +880,7 @@ Also supported is files that won’t be hosted by Piazza, but just linked
 to another source. SAK will support all of these use cases in the future
 but currently only supports Text and GeoTIFF.
 
-\#\# User Service Registry
+## User Service Registry
 
 This is where a user can Register, Execute, and manage services. If you
 have a service that you would like to run within the Piazza system, you
@@ -914,7 +914,7 @@ following is a very simple example of what to put in this field:
 Other options available for User Service registry include: \* List -
 here you can list all services, update and delete services \* Search -
 
-\#\# Design
+## Design
 
 SAK uses AngularJS and Bootstrap to create a simple UI for accessing
 REST endpoints exposed through Piazza services. Each Piazza service will
@@ -922,9 +922,9 @@ be listed in the left tree pane. When selecting a service any functions
 associated will be listed on the page that appears, and some services
 will have more functions than others.
 
-\# UI mockups ![](:images/sak-tree-branches.png)
+# UI mockups ![](:images/sak-tree-branches.png)
 
-\# Access
+# Access
 
 The Access component is what handles the accessing of this data - either
 by requesting metadata, requesting file downloads, or requesting
@@ -934,12 +934,12 @@ appropriate files over to the GeoServer data directory, and then create
 a deployment lease that provides a guarantee for a certain length of
 time that the data will be available on the Piazza GeoServer instance.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-access>
 
-\#\# S3 Credentials
+## S3 Credentials
 
 The Access component deploys files uploaded to S3 by the Gateway. These
 values are referenced in the ENV variables
@@ -948,7 +948,7 @@ values are referenced in the ENV variables
 developer and you do not have these values on your host, you will not be
 able to deploy files to GeoServer using a local debug instance.
 
-\#\# Source Organization
+## Source Organization
 
 The main logic of the Access component is split between two packages.
 The `controller` package contains the Spring RestController class that
@@ -966,7 +966,7 @@ clean up any expired resources on GeoServer.
 The Access component interacts with the MongoDB DataResource collection,
 and management for this code is located in the `database` package.
 
-\#\# Interface
+## Interface
 
 For users requesting deployments, the Access service listens to Kafka
 messages. The interfaces allow users to request Deployments of data
@@ -976,7 +976,7 @@ Endpoint requests based on the `/data` endpoint, which are used for
 retrieving geospatial metadata or other information related to loaded
 Piazza data.
 
-\# Querying Metadata
+# Querying Metadata
 
 After processing a Job through the `Loader` component, a Data Resource
 will be added to the Piazza system. The Access component provides a
@@ -1011,13 +1011,13 @@ include information such as Bounding Box and Coordinate Reference
 System. The `metadata` field will contain other metadata information
 such as `contact` or `classification`.
 
-\#\# Accessing Data
+## Accessing Data
 
 Currently, there are two ways to get data out of Piazza. The first is
 retrieving the raw file that was initially ingested. The second is to
 get a live GeoServer deployment of the ingested data.
 
-\# File Access
+# File Access
 
 This will simply retrieve the file for a Resource item. The Gateway API
 Endpoint is:
@@ -1026,7 +1026,7 @@ Endpoint is:
 
 The response for this request will be the actual bytes of the file.
 
-\# GeoServer Deployments
+# GeoServer Deployments
 
 A better way to Access data, instead of accessing the raw file, is to
 have Piazza stand up a GeoServer service that can be used to access
@@ -1042,7 +1042,7 @@ API endpoint.
         "deploymentType": "geoserver"
     }
 
-\# Deployment Leases
+# Deployment Leases
 
 A Lease represents an amount of time that a Deployed resource is
 available in the system for. Deployments should be guaranteed to be
@@ -1054,7 +1054,7 @@ it will not be guaranteed. Periodically expired leases will be
 undeployed in order to avoid overtaxing the system with outdated or
 unused deployments.
 
-\# Supported Data Types
+# Supported Data Types
 
 <table>
 <colgroup>
@@ -1101,7 +1101,7 @@ unused deployments.
 </tbody>
 </table>
 
-\#\# Administrative API
+## Administrative API
 
 The Access component provides a series of REST Endpoints that can be
 used to query the Data held by Piazza. This is provided for certain
@@ -1110,7 +1110,7 @@ provides nothing more than a debug look into the system. These endpoints
 would most likely be locked down in production. The requests are as
 follows.
 
-\# REST Endpoints
+# REST Endpoints
 
 Getting Data Count — `/data/count`  
 Gets a count of the Resources held in the Piazza system.
@@ -1126,7 +1126,7 @@ processing Jobs owned by this component.
         "jobs": ["job-id-1", "job-id-2"]
     }
 
-\# Ingest
+# Ingest
 
 The Ingest component is the internal component that handles the loading
 of spatial data. This component is capable of referencing data held in
@@ -1137,12 +1137,12 @@ information as to the file to be stored. It then inspects the data to
 validate and populate metadata fields (such as Area of Interest) and
 then stores this metadata within the Piazza MongoDB instance.
 
-\#\# Building Running Locally
+## Building Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-ingest>
 
-\#\# S3 Credentials
+## S3 Credentials
 
 The Ingest component inspects files uploaded to S3 by the Gateway. As
 such, the `pz-ingest` component is also dependent on the
@@ -1150,7 +1150,7 @@ such, the `pz-ingest` component is also dependent on the
 `vcap.services.pz-blobstore.credentials.secret_access_key` ENV
 variables.
 
-\#\# Source Organization
+## Source Organization
 
 The `messaging` package in source contains the classes that handle the
 incoming Kafka messages, which contain the information regarding the
@@ -1165,7 +1165,7 @@ and store them into the MongoDB instance.
 The `controller` package contains the administrative REST endpoints for
 this component.
 
-\#\# Interface
+## Interface
 
 In order to Load data, a message will be posted to the Gateway to create
 an Load job. There are two Gateway API endpoints to load data.
@@ -1214,7 +1214,7 @@ When loading data, users will be encouraged to fill out as much
 [ResourceMetadata.java](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java)
 POJO.
 
-\#\# Ingest Process
+## Ingest Process
 
 The Gateway will receive the Ingest Job request and then forward the
 request along, via Kafka, to the Ingest component. If a File is
@@ -1230,7 +1230,7 @@ stored in the Mongo Database in the Resources collection. This
 collection stores all information for each bit of data Ingested into
 Piazza.
 
-\#\# Supported Data Types
+## Supported Data Types
 
 <table>
 <colgroup>
@@ -1272,9 +1272,9 @@ Piazza.
 </tbody>
 </table>
 
-\#\# Example Ingest Requests
+## Example Ingest Requests
 
-\# Text Ingest
+# Text Ingest
 
 Great for testing! This will upload some Text into Piazza and will be
 stored within the Resource database. The JSON Payload for this request
@@ -1297,7 +1297,7 @@ takes on this form:
         }
     }
 
-\# Shapefile Ingest
+# Shapefile Ingest
 
     {
         "type": "ingest",
@@ -1314,7 +1314,7 @@ takes on this form:
         }
     }
 
-\# GeoTIFF Ingest
+# GeoTIFF Ingest
 
 GeoTIFF Raster files can be ingested.
 
@@ -1331,7 +1331,7 @@ GeoTIFF Raster files can be ingested.
             }
         }
 
-\# GeoJSON Ingest
+# GeoJSON Ingest
 
         "type": "ingest",
         "host": "true",
@@ -1346,7 +1346,7 @@ GeoTIFF Raster files can be ingested.
             }
         }
 
-\# Web Feature Service (WFS) Ingest
+# Web Feature Service (WFS) Ingest
 
 Web Feature Services can be ingested and hosted within Piazza. If `host`
 is set to true, then Piazza will store the WFS data pulled from the
@@ -1373,14 +1373,14 @@ implemented).
             }
         }
 
-\#\# Workflow Events
+## Workflow Events
 
 In support of the [Workflow](https://github.com/venicegeo/pz-workflow)
 service, the Ingest component is capable of firing events, consumed by
 the Workflow, in order to let other Piazza components become aware of
 when new Data has been Ingested into Piazza.
 
-\# Event Type
+# Event Type
 
 Upon the successful Ingest of any type of Data into Piazza (internal or
 external), the Ingest component will fire an Event. The Event is defined
@@ -1400,7 +1400,7 @@ with the Workflow using the following template:
         }
     }
 
-\#\# Administrative API
+## Administrative API
 
 The Ingest Component contains various REST Endpoints that can be used
 for query for run-time information on specific instances of this
@@ -1416,7 +1416,7 @@ processing Jobs owned by this component.
         "jobs": ["job-id-1", "job-id-2"]
     }
 
-\# Pz Search Services
+# Pz Search Services
 
 The Piazza Core Search infrastructure includes two services with REST
 APIs:
@@ -1433,13 +1433,13 @@ about the services is also are extracted and indexed. Once the metadata
 is indexed, NPEs can then submit queries to the Gateway to discover
 resources in the Elasticsearch metadata catalog.
 
-\#\# Building Running Locally
+## Building Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-search-metadata-ingest> and
 <https://github.com/venicegeo/pz-search-query>
 
-\# Identity and Access Management (IDAM)
+# Identity and Access Management (IDAM)
 
 The Piazza Core Pz-Idam project is an internal component that provides
 REST endpoints for handling Authentication and Authorization. This is
@@ -1449,19 +1449,19 @@ of interfaces for providing Authorization (AuthZ). This project is used
 by the Gateway in order to generate API Keys and provide full
 AuthN/AuthZ capabilities.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-idam>
 
-\#\# Code Organization
+## Code Organization
 
 The Pz-Idam project uses a series of Spring RestControllers in order to
 manage the number of REST Endpoints that the Pz-Idam API provides. These
 are located in the org.venice.piazza.idam.controller package, and are
 broken up into separate controllers by their functionality.
 
-\#\# API Keys and User Profiles
+## API Keys and User Profiles
 
 All Piazza requests are authenticated and authorized using a
 Piazza-owned API Key. This API Key is stored and maintained in the Idam
@@ -1482,7 +1482,7 @@ Profile. User Profiles also contain information such as creation date,
 and also allows the user to track their activity in Piazza, such as the
 number of jobs they have submitted for a particular day.
 
-\#\# Local Debugging
+## Local Debugging
 
 When building Idam locally, it can be beneficial to disable the AuthN
 functionality of the component, which would otherwise reach out to the
@@ -1491,7 +1491,7 @@ developer can set the `spring.profiles.active` to `disable-authn` which
 will disable all AuthN functionality. In this way, Idam can be debugged
 locally without having to reach to an external provider.
 
-\#\# Authentication
+## Authentication
 
 The `PiazzaAuthenticator` interface is defined in the
 `org.venice.piazza.idam.authn` package. This is the interface that
@@ -1508,7 +1508,7 @@ succeeds, and if it does, it also contains a link to the UserProfile
 object which contains information on the user as provided through the
 authentication provider.
 
-\#\# Authorization
+## Authorization
 
 The `authorizer` interface is defined in the
 `org.venice.piazza.idam.authz` package and contains an interface for
@@ -1525,7 +1525,7 @@ functionality of the Idam component. If new authorizers should be added,
 then simply create a new package under `org.venice.piazza.idam.authz`
 and create a class implementing the `Authorizer` interface.
 
-\# Pz Service Controller
+# Pz Service Controller
 
 The Service Controller is handles the registration and execution of user
 services and algorithms. It acts as a broker to external services that
@@ -1541,7 +1541,7 @@ This satisfies one of the primary goals of Piazza: Allowing users across
 the GEOINT Services platform to share their data and algorithms amongst
 the community.
 
-\#\# Service Registration Types
+## Service Registration Types
 
 There are three types of services, to support a variety of different
 workflows for existing REST services. The type of a Service is specified
@@ -1590,14 +1590,14 @@ balancing and job queueing for this Service. When results for a
 particular job are completed, then the external service sends those
 results directly back to Piazza.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-servicecontroller>
 
-\# Workflow Service
+# Workflow Service
 
-\# Overview The Workflow service enables the construction and use of
+# Overview The Workflow service enables the construction and use of
 "event" notifications to enable simple "if-this-happens-then-do-that"
 workflows. This is done though an HTTP API. For a walkthough visit the
 Users Guide, for a simple overview visit
@@ -1615,13 +1615,13 @@ A user will follow these general steps:
 
 5.  Go to 3.
 
-\#\# Building and Running Locally To find out how to run the pz-workflow
+## Building and Running Locally To find out how to run the pz-workflow
 service locally, please visit the github
 [README](https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md)
 
-\#\# Technical
+## Technical
 
-\# Elasticsearch Interaction
+# Elasticsearch Interaction
 [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 is the chosen database for the workflow service. Elasticsearch can be
 defined as a *nosql* using Lucene query. This can provide powerful query
@@ -1640,7 +1640,7 @@ index file itself relies on
 [elastic.v3](http://gopkg.in/olivere/elastic.v3) to create the HTTP
 traffic.
 
-\# Kafka Interaction Information on Kafka can be found
+# Kafka Interaction Information on Kafka can be found
 [here](https://kafka.apache.org/intro). In workflow, Kafka service
 information must be provided in the VCAP services. After an event
 *triggers* a trigger, a job is sent to kafka. The function for this can
@@ -1651,7 +1651,7 @@ therefore no connection with kafka can be made, making jobs fail to be
 sent. A way of testing whether or not triggers work is checking to see
 if a kafka error was created in the workflow process terminal.
 
-\# Other Required Services pz-workflow also requires two other services:
+# Other Required Services pz-workflow also requires two other services:
 pz-idam & pz-servicecontroller. These do not require the use of VCAP as
 they are part of the piazza system. Workflow will only fail to launch if
 it cannot contact the piazza system. Service controller is used in
@@ -1663,7 +1663,7 @@ can allow or deny. Found
 however notice that the actual auth function is contained in
 [pz-gocommon](https://github.com/venicegeo/pz-gocommon/blob/master/gocommon/authz.go).
 
-\# Programmatic Hierarchy The workflow service has three distinct
+# Programmatic Hierarchy The workflow service has three distinct
 hierarchical sections: `Server`, `Service`, `DB`. The Server is the top
 layer. This is where HTTP requests are forwarded two. The job of the
 `Server` functions is to call the correct function in the `Service` and
@@ -1676,9 +1676,9 @@ index mentioned in the elasticsearch interaction section. The role of
 these functions is to provide higher level functions when communicating
 with elasticsearch, such as queries.
 
-\#\# Notes
+## Notes
 
-\# Unique parameter types for different event types For example, there
+# Unique parameter types for different event types For example, there
 are two event types. Event type `A` has variable `foo` type `string`.
 Now a different user wants to create an event type `B` that also has the
 variable `foo` but wants it to be type `float`. Using elasticsearch as
@@ -1707,7 +1707,7 @@ have had there names changed. This is accounted for
 [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/TriggerDB.go#L375)
 and the following functions.
 
-\# Event index version number When creating a trigger, workflow creates
+# Event index version number When creating a trigger, workflow creates
 a [percolator
 query](https://www.elastic.co/guide/en/elasticsearch/reference/2.0/search-percolate.html)
 in the events index. For simplicity, workflow allows percolator queries
@@ -1717,13 +1717,13 @@ the last time dot notation was permitted in percolator queries. This is
 done
 [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/db/000-Event.sh#L41).
 
-\# Job Common
+# Job Common
 
 The Job Common (or Java Common) project is a Java library that contains
 various useful utility classes and serializable models that are used
 commonly throughout the Java applications in the Piazza Core.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 For instructions on how to include this library in your Java project,
 through Maven, please see the [Repo
@@ -1731,7 +1731,7 @@ Documentation](https://github.com/venicegeo/pz-jobcommon). This contains
 all information needed to connect to the Piazza S3 Maven repository and
 include the Common library as a dependency in your `pom.xml` file.
 
-\#\# Spring Beans
+## Spring Beans
 
 This project contains a variety of Spring Beans that are used to wrap
 core Piazza services, such as the Logger, in order to provide a handy
@@ -1773,7 +1773,7 @@ components with appropriate `url` values (described in the below
 sections for each component) and letting Spring instantiate this for
 you.
 
-\# PiazzaLogger
+# PiazzaLogger
 
 Provides a Java API to the
 [pz-logger](https://github.com/venicegeo/pz-logger) component.
@@ -1821,7 +1821,7 @@ example:
 
     logger.log("Something went wrong!", PiazzaLogger.ERROR);
 
-\#\# Models
+## Models
 
 `pz-jobcommon` also contains a variety of models that map all of the
 JSON payload information that is passed throughout the Gateway and other
@@ -1829,9 +1829,9 @@ internal components. These models are located in the `model.*`
 namespace. These models are documented in the Swagger documentation,
 with regards to their usage in the Gateway API.
 
-\# Coding Conventions
+# Coding Conventions
 
-\#\# General
+## General
 
 -   Piazza APIs SHALL use [RFC
     4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
@@ -1847,7 +1847,7 @@ with regards to their usage in the Gateway API.
     repository, include this snippet:
     <https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt>
 
-\#\# Java
+## Java
 
 For general Java coding, follow the Google Java Style coding standards:
 <http://google.github.io/styleguide/javaguide.html>
@@ -1856,11 +1856,11 @@ The package naming convention should be:
 
 -   Piazza Project: `org.venice.piazza.[component name]`
 
-\#\# Go
+## Go
 
-\#\# Unit Testing
+## Unit Testing
 
-\#\# GitHub
+## GitHub
 
 New GitHub Repositories within the
 [github.com/venicegeo](https://github.com/venicegeo) community should be
@@ -1870,9 +1870,9 @@ named using following convention:
 
 -   VeniceGeo Services: `pzsvc-[COMPONENT NAME]`
 
-\#\# REST API Conventions
+## REST API Conventions
 
-\# JSON Conventions
+# JSON Conventions
 
 All input and output payloads will be JSON.
 
@@ -1881,7 +1881,7 @@ guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 
-\# JSON Fields
+# JSON Fields
 
 Fields containing resource ids should be named according to the resource
 type. For example, use `eventId`, not just `id`.
@@ -1893,7 +1893,7 @@ For fields containing "timestamp" information, use names of the form
 Field names should be spelled with `lowerCamelCase`. Not
 `UpperCamelCase` and not `underscore_style`.
 
-\# Pagination
+# Pagination
 
 `GET` requests that return arrays (or maps) of objects should typically
 support these query parameters for pagination:
@@ -1912,7 +1912,7 @@ messages, in batches of 30, sorted by creation date:
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
     GET /messages?perPage=30&page=1&key=createdOn&order=asc
 
-\# Response Payloads
+# Response Payloads
 
 For success responses (`200` or `201`) from `GET`, `POST`, or `PUT`, the
 JSON object returned will be:
@@ -1956,7 +1956,7 @@ For error responses (`4xx` or `5xx`), the response is:
 Note that `DELETE` requests will return a `200` and a success payload
 which may be empty.
 
-\# HTTP Status Codes
+# HTTP Status Codes
 
 We generally only use these HTTP status codes.
 
@@ -1996,7 +1996,7 @@ the future. Subsequent requests by the client are permissible.
 The server encountered an unexpected condition which prevented it from
 fulfilling the request.
 
-\# Operations (Verbs)
+# Operations (Verbs)
 
 By default, all resources should support GET, POST, PUT, DELETE. If a
 verb not valid for a resource type, `403` should be returned.
@@ -2017,7 +2017,7 @@ returns `200` with a response payload containing the updated object
 `DELETE`  
 returns `200` with a response payload whose `data` field is set to `{}`
 
-\# URLs
+# URLs
 
 Use `lowerCamelCase` in URLs and query parameters if needed to match the
 JSON field names. For example:
@@ -2025,7 +2025,7 @@ JSON field names. For example:
     GET /eventType?sortBy=eventTypeId   // YES!
     GET /eventtype?sortby=eventtypeid   // NO!
 
-\# Common Endpoints
+# Common Endpoints
 
 `GET /`  
 requests a "health check" for the service. The returned status code is
@@ -2036,12 +2036,12 @@ requests the current metrics for the service. The returned payload will
 contain an object with the metric data. Such data might include things
 like the time the service started, how many requests it has served, etc.
 
-\# Support
+# Support
 
 The Piazza team welcomes your questions and suggestions. Please contact
 us at <venice@radiantblue.com>.
 
-\# Legal
+# Legal
 
 Source code for Piazza is licensed under the [Apache License, Version
 2.0](http://www.apache.org/licenses/LICENSE-2.0). Documentation, videos,

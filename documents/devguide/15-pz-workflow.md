@@ -1,6 +1,6 @@
-\# Workflow Service
+# Workflow Service
 
-\# Overview The Workflow service enables the construction and use of
+# Overview The Workflow service enables the construction and use of
 "event" notifications to enable simple "if-this-happens-then-do-that"
 workflows. This is done though an HTTP API. For a walkthough visit the
 Users Guide, for a simple overview visit
@@ -18,13 +18,13 @@ A user will follow these general steps:
 
 5.  Go to 3.
 
-\#\# Building and Running Locally To find out how to run the pz-workflow
+## Building and Running Locally To find out how to run the pz-workflow
 service locally, please visit the github
 [README](https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md)
 
-\#\# Technical
+## Technical
 
-\# Elasticsearch Interaction
+# Elasticsearch Interaction
 [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
 is the chosen database for the workflow service. Elasticsearch can be
 defined as a *nosql* using Lucene query. This can provide powerful query
@@ -43,7 +43,7 @@ index file itself relies on
 [elastic.v3](http://gopkg.in/olivere/elastic.v3) to create the HTTP
 traffic.
 
-\# Kafka Interaction Information on Kafka can be found
+# Kafka Interaction Information on Kafka can be found
 [here](https://kafka.apache.org/intro). In workflow, Kafka service
 information must be provided in the VCAP services. After an event
 *triggers* a trigger, a job is sent to kafka. The function for this can
@@ -54,7 +54,7 @@ therefore no connection with kafka can be made, making jobs fail to be
 sent. A way of testing whether or not triggers work is checking to see
 if a kafka error was created in the workflow process terminal.
 
-\# Other Required Services pz-workflow also requires two other services:
+# Other Required Services pz-workflow also requires two other services:
 pz-idam & pz-servicecontroller. These do not require the use of VCAP as
 they are part of the piazza system. Workflow will only fail to launch if
 it cannot contact the piazza system. Service controller is used in
@@ -66,7 +66,7 @@ can allow or deny. Found
 however notice that the actual auth function is contained in
 [pz-gocommon](https://github.com/venicegeo/pz-gocommon/blob/master/gocommon/authz.go).
 
-\# Programmatic Hierarchy The workflow service has three distinct
+# Programmatic Hierarchy The workflow service has three distinct
 hierarchical sections: `Server`, `Service`, `DB`. The Server is the top
 layer. This is where HTTP requests are forwarded two. The job of the
 `Server` functions is to call the correct function in the `Service` and
@@ -79,9 +79,9 @@ index mentioned in the elasticsearch interaction section. The role of
 these functions is to provide higher level functions when communicating
 with elasticsearch, such as queries.
 
-\#\# Notes
+## Notes
 
-\# Unique parameter types for different event types For example, there
+# Unique parameter types for different event types For example, there
 are two event types. Event type `A` has variable `foo` type `string`.
 Now a different user wants to create an event type `B` that also has the
 variable `foo` but wants it to be type `float`. Using elasticsearch as
@@ -110,7 +110,7 @@ have had there names changed. This is accounted for
 [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/TriggerDB.go#L375)
 and the following functions.
 
-\# Event index version number When creating a trigger, workflow creates
+# Event index version number When creating a trigger, workflow creates
 a [percolator
 query](https://www.elastic.co/guide/en/elasticsearch/reference/2.0/search-percolate.html)
 in the events index. For simplicity, workflow allows percolator queries

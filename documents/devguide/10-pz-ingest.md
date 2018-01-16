@@ -1,4 +1,4 @@
-\# Ingest
+# Ingest
 
 The Ingest component is the internal component that handles the loading
 of spatial data. This component is capable of referencing data held in
@@ -9,12 +9,12 @@ information as to the file to be stored. It then inspects the data to
 validate and populate metadata fields (such as Area of Interest) and
 then stores this metadata within the Piazza MongoDB instance.
 
-\#\# Building Running Locally
+## Building Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-ingest>
 
-\#\# S3 Credentials
+## S3 Credentials
 
 The Ingest component inspects files uploaded to S3 by the Gateway. As
 such, the `pz-ingest` component is also dependent on the
@@ -22,7 +22,7 @@ such, the `pz-ingest` component is also dependent on the
 `vcap.services.pz-blobstore.credentials.secret_access_key` ENV
 variables.
 
-\#\# Source Organization
+## Source Organization
 
 The `messaging` package in source contains the classes that handle the
 incoming Kafka messages, which contain the information regarding the
@@ -37,7 +37,7 @@ and store them into the MongoDB instance.
 The `controller` package contains the administrative REST endpoints for
 this component.
 
-\#\# Interface
+## Interface
 
 In order to Load data, a message will be posted to the Gateway to create
 an Load job. There are two Gateway API endpoints to load data.
@@ -86,7 +86,7 @@ When loading data, users will be encouraged to fill out as much
 [ResourceMetadata.java](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java)
 POJO.
 
-\#\# Ingest Process
+## Ingest Process
 
 The Gateway will receive the Ingest Job request and then forward the
 request along, via Kafka, to the Ingest component. If a File is
@@ -102,7 +102,7 @@ stored in the Mongo Database in the Resources collection. This
 collection stores all information for each bit of data Ingested into
 Piazza.
 
-\#\# Supported Data Types
+## Supported Data Types
 
 <table>
 <colgroup>
@@ -144,9 +144,9 @@ Piazza.
 </tbody>
 </table>
 
-\#\# Example Ingest Requests
+## Example Ingest Requests
 
-\# Text Ingest
+# Text Ingest
 
 Great for testing! This will upload some Text into Piazza and will be
 stored within the Resource database. The JSON Payload for this request
@@ -169,7 +169,7 @@ takes on this form:
         }
     }
 
-\# Shapefile Ingest
+# Shapefile Ingest
 
     {
         "type": "ingest",
@@ -186,7 +186,7 @@ takes on this form:
         }
     }
 
-\# GeoTIFF Ingest
+# GeoTIFF Ingest
 
 GeoTIFF Raster files can be ingested.
 
@@ -203,7 +203,7 @@ GeoTIFF Raster files can be ingested.
             }
         }
 
-\# GeoJSON Ingest
+# GeoJSON Ingest
 
         "type": "ingest",
         "host": "true",
@@ -218,7 +218,7 @@ GeoTIFF Raster files can be ingested.
             }
         }
 
-\# Web Feature Service (WFS) Ingest
+# Web Feature Service (WFS) Ingest
 
 Web Feature Services can be ingested and hosted within Piazza. If `host`
 is set to true, then Piazza will store the WFS data pulled from the
@@ -245,14 +245,14 @@ implemented).
             }
         }
 
-\#\# Workflow Events
+## Workflow Events
 
 In support of the [Workflow](https://github.com/venicegeo/pz-workflow)
 service, the Ingest component is capable of firing events, consumed by
 the Workflow, in order to let other Piazza components become aware of
 when new Data has been Ingested into Piazza.
 
-\# Event Type
+# Event Type
 
 Upon the successful Ingest of any type of Data into Piazza (internal or
 external), the Ingest component will fire an Event. The Event is defined
@@ -272,7 +272,7 @@ with the Workflow using the following template:
         }
     }
 
-\#\# Administrative API
+## Administrative API
 
 The Ingest Component contains various REST Endpoints that can be used
 for query for run-time information on specific instances of this

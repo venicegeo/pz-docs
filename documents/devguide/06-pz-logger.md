@@ -1,18 +1,18 @@
-\# Logger
+# Logger
 
-\#\# Overview
+## Overview
 
 The Logger provides a system-wide, common way to record log messages.
 The log messages are stored in Elasticsearch. This is done though an
 HTTP API.
 
-\#\# Building and Running Locally To find out how to run the pz-logger
+## Building and Running Locally To find out how to run the pz-logger
 service locally, please visit the github
 [README](https://github.com/venicegeo/pz-logger/blob/master/README.md)
 
-\#\# HTTP API
+## HTTP API
 
-\# `POST /syslog`
+# `POST /syslog`
 
 Sends a message to be logged. The message is given in the POST body as a
 JSON object:
@@ -63,7 +63,7 @@ right now.
 I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely
 to crash very soon.
 
-\# `GET /syslog`
+# `GET /syslog`
 
 Returns a JSON object of log messages:
 
@@ -110,7 +110,7 @@ Returns a JSON object of log messages:
 
 This endpoint supports pagination, as described in [???](#Pagination).
 
-\# Common operations
+# Common operations
 
 This service includes the common endpoints described in
 [???](#Common Endpoints).

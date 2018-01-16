@@ -1,6 +1,6 @@
-#!/usr/bin/bash
+!/usr/bin/bash
 
-# Convert asciidoc to markdown
+ Convert asciidoc to markdown
 for f in $(find ./documents -type f -name "*.txt"); do
   MDFILE=$(echo $f | sed "s/.txt/.markdown/g")
   XMLFILE=$(echo $f | sed "s/.txt/.xml/g")
@@ -15,4 +15,9 @@ for f in $(find . -type f -name "*.txt"); do
   XMLFILE=$(echo $f | sed "s/.txt/.xml/g")
   rm -r $XMLFILE
   git rm -r $f
+done;
+
+# Headings seem to still leave "\#"
+for f in $(find . -type f -name "*.md"); do
+  sed -i 's/\\#/#/g' $f
 done;

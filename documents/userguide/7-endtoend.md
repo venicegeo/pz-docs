@@ -1,10 +1,10 @@
-\# End-to-End Example
+# End-to-End Example
 
 In this section, a workflow will be described to make use of
 pzsvc-file-watcher, pzsvc-preview-generator, and other Piazza components
 to automatically crop files uploaded to a given S3 bucket.
 
-\#\# Setting Up pzsvc-file-watcher
+## Setting Up pzsvc-file-watcher
 
 The pzsvc-file-watcher automatically watches for uploaded files to the
 S3 bucket and ingests them to the Piazza service.
@@ -47,7 +47,7 @@ following:
 This response means that the ingest request was received by the Piazza
 Gateway.
 
-\#\# Registering the pzsvc-preview-generator Service
+## Registering the pzsvc-preview-generator Service
 
 The purpose of
 [pzsvc-preview-generator](https://github.com/venicegeo/pzsvc-preview-generator)
@@ -63,7 +63,7 @@ Registering the cropping service is easy:
 
     $ ./register-crop-service.sh
 
-\#\# Executing the Service
+## Executing the Service
 
 The [execute-crop-service.sh](scripts/execute-crop-service.sh) script
 takes a few more parameters. They include the `serviceId` returned from
@@ -93,7 +93,7 @@ Sample working payload:
         }
     }
 
-\#\# Retrieving Results
+## Retrieving Results
 
 The service will download the file from pz-svcs-prevgen S3 bucket and
 crop it with given bounding box information. The cropped result tif will

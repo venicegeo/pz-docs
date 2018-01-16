@@ -1,21 +1,21 @@
-\# Hello, Piazza!
+# Hello, Piazza!
 
 In this section, we will work through the steps to make your first
 Piazza service call.
 
-\#\# Setup
+## Setup
 
 Prior to using the Piazza API, you need to have an API key and two
 environment variables set properly.
 
-\# Setting `$PZSERVER`
+# Setting `$PZSERVER`
 
 The `$PZSERVER` environment variable needs to be set to the host name of
 your Piazza instance. Typically this will look something like:
 
     $ export PZSERVER=piazza.venicegeo.io
 
-\# Generating Your API Key
+# Generating Your API Key
 
 For secure access to Piazza, each HTTP request must include an API key
 specific to your account. Assuming you have already set `$PZSERVER` in
@@ -36,7 +36,7 @@ The JSON response you get back will look similar to this:
 
 The `uuid` value, `"45a1..."`, is your new key.
 
-\# Setting `$PZKEY`
+# Setting `$PZKEY`
 
 You can now set the `$PZKEY` environment variable to your new key, the
 `uuid` value:
@@ -55,7 +55,7 @@ contains just a JSON map from server names to keys:
 If you have `$PZSERVER` set to `piazza.venicegeo.io`, the scripts will
 set `$PZKEY` to the key `"45a1..."` to use for that Piazza instance.
 
-\#\# Some Notes About the Examples
+## Some Notes About the Examples
 
 The code examples in this guide are presented as shell scripts that use
 `curl` for the HTTP calls and JSON for the request and response
@@ -79,7 +79,7 @@ the next, and verifying those outputs are correct. (To use `runall.sh`,
 you must have the wonderful tool [jq](https://stedolan.github.io/jq/)
 installed.)
 
-\#\# Hello!
+## Hello!
 
 With the setup work completed, we are now able to run a simple "health
 check" ping to verify that we have a functioning instance of Piazza to
@@ -123,7 +123,7 @@ and it should return a message similar to this:
 > embedded links. You will need to resolve the proper path manually for
 > your site installation.
 
-\#\# Other Helpful Tools
+## Other Helpful Tools
 
 As you work through this tutorial, you might find these two additional
 Piazza resources helpful:

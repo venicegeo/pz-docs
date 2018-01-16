@@ -1,4 +1,4 @@
-\# Access
+# Access
 
 The Access component is what handles the accessing of this data - either
 by requesting metadata, requesting file downloads, or requesting
@@ -8,12 +8,12 @@ appropriate files over to the GeoServer data directory, and then create
 a deployment lease that provides a guarantee for a certain length of
 time that the data will be available on the Piazza GeoServer instance.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-access>
 
-\#\# S3 Credentials
+## S3 Credentials
 
 The Access component deploys files uploaded to S3 by the Gateway. These
 values are referenced in the ENV variables
@@ -22,7 +22,7 @@ values are referenced in the ENV variables
 developer and you do not have these values on your host, you will not be
 able to deploy files to GeoServer using a local debug instance.
 
-\#\# Source Organization
+## Source Organization
 
 The main logic of the Access component is split between two packages.
 The `controller` package contains the Spring RestController class that
@@ -40,7 +40,7 @@ clean up any expired resources on GeoServer.
 The Access component interacts with the MongoDB DataResource collection,
 and management for this code is located in the `database` package.
 
-\#\# Interface
+## Interface
 
 For users requesting deployments, the Access service listens to Kafka
 messages. The interfaces allow users to request Deployments of data
@@ -50,7 +50,7 @@ Endpoint requests based on the `/data` endpoint, which are used for
 retrieving geospatial metadata or other information related to loaded
 Piazza data.
 
-\# Querying Metadata
+# Querying Metadata
 
 After processing a Job through the `Loader` component, a Data Resource
 will be added to the Piazza system. The Access component provides a
@@ -85,13 +85,13 @@ include information such as Bounding Box and Coordinate Reference
 System. The `metadata` field will contain other metadata information
 such as `contact` or `classification`.
 
-\#\# Accessing Data
+## Accessing Data
 
 Currently, there are two ways to get data out of Piazza. The first is
 retrieving the raw file that was initially ingested. The second is to
 get a live GeoServer deployment of the ingested data.
 
-\# File Access
+# File Access
 
 This will simply retrieve the file for a Resource item. The Gateway API
 Endpoint is:
@@ -100,7 +100,7 @@ Endpoint is:
 
 The response for this request will be the actual bytes of the file.
 
-\# GeoServer Deployments
+# GeoServer Deployments
 
 A better way to Access data, instead of accessing the raw file, is to
 have Piazza stand up a GeoServer service that can be used to access
@@ -116,7 +116,7 @@ API endpoint.
         "deploymentType": "geoserver"
     }
 
-\# Deployment Leases
+# Deployment Leases
 
 A Lease represents an amount of time that a Deployed resource is
 available in the system for. Deployments should be guaranteed to be
@@ -128,7 +128,7 @@ it will not be guaranteed. Periodically expired leases will be
 undeployed in order to avoid overtaxing the system with outdated or
 unused deployments.
 
-\# Supported Data Types
+# Supported Data Types
 
 <table>
 <colgroup>
@@ -175,7 +175,7 @@ unused deployments.
 </tbody>
 </table>
 
-\#\# Administrative API
+## Administrative API
 
 The Access component provides a series of REST Endpoints that can be
 used to query the Data held by Piazza. This is provided for certain
@@ -184,7 +184,7 @@ provides nothing more than a debug look into the system. These endpoints
 would most likely be locked down in production. The requests are as
 follows.
 
-\# REST Endpoints
+# REST Endpoints
 
 Getting Data Count — `/data/count`  
 Gets a count of the Resources held in the Piazza system.

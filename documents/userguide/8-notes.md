@@ -1,6 +1,6 @@
-\# Additional Notes and FAQs
+# Additional Notes and FAQs
 
-\#\# Pagination
+## Pagination
 
 HTTP requests that return arrays of objects typically support these
 query parameters for pagination:
@@ -19,7 +19,7 @@ log messages, thirty at a time, sorted by creation date:
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
     GET /messages?perPage=30&page=1&key=createdOn&order=asc
 
-\#\# HTTP Status Codes
+## HTTP Status Codes
 
 Piazza typically only uses these HTTP status codes:
 
@@ -57,7 +57,7 @@ the future. Subsequent requests by the client are permissible.
 The server encountered an unexpected condition which prevented it from
 fulfilling the request.
 
-\#\# Structure of returned objects
+## Structure of returned objects
 
 JSON objects returned by Piazza follow this form:
 
@@ -70,7 +70,7 @@ JSON objects returned by Piazza follow this form:
 
 The `type` field is used to indicate the contents of the `data` field.
 
-\#\# Elasticsearch Query Syntax
+## Elasticsearch Query Syntax
 
 The Elasticsearch DSL can get very complicated. Attempting to explain
 the entirety of the Elasticsearch DSL syntax is beyond the scope of this
@@ -111,7 +111,7 @@ Some helpful links for constructing Elasticsearch DSL queries include:
 
 As an aid, here are a few example queries:
 
-\# Example Query 1
+# Example Query 1
 
 Make a set of all objects whose `title` matches `"Search"` and whose
 `content` matches `"Elasticsearch"` (where the "match" operation follows
@@ -134,7 +134,7 @@ only the objects whose `status` is (exactly) `"published"` and whose
         }
     }
 
-\# Example Query 2
+# Example Query 2
 
 Return all objects whose `severity` is 5 and whose `code` matches
 "PHONE."
@@ -150,7 +150,7 @@ Return all objects whose `severity` is 5 and whose `code` matches
         }
     }
 
-\# Example Query 3
+# Example Query 3
 
 Return all objects whose `exact_value` is "Quick Foxes!"
 

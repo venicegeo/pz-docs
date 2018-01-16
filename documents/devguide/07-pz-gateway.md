@@ -1,16 +1,16 @@
-\# Gateway
+# Gateway
 
 Handles all user-facing requests to Piazza via REST endpoints. The
 purpose of this component is to allow for external users to be able to
 interact with Piazza data, services, events, and other core Piazza
 functionality.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-gateway>
 
-\#\# S3 Credentials
+## S3 Credentials
 
 The Gateway is responsible for pushing uploaded files (such as for
 Ingest jobs) to the Piazza S3 instance. As such, the Gateway containers
@@ -22,7 +22,7 @@ These values are referenced in the ENV variables
 developer and you do not have these values on your host, you will not be
 able to Ingest files into the Gateway.
 
-\#\# Code Organization
+## Code Organization
 
 The Gateway uses a series of Spring RestControllers in order to manage
 the number of REST Endpoints that the Gateway API provides. These are
@@ -36,7 +36,7 @@ this profile is enabled, then authentication is active and will point to
 disabled, then the Gateway will not require any authentication for
 incoming requests.
 
-\#\# Interface
+## Interface
 
 The Gateway API provides a series of REST endpoints that enable users to
 work with data, services, events, and triggers. See the Swagger
@@ -44,7 +44,7 @@ documentation for a complete documentation and listing for all available
 Gateway API endpoints. See Swagger documentation for the Gateway for
 specific endpoints, payloads and responses.
 
-\#\# Authentication and Authorization
+## Authentication and Authorization
 
 Authentication and authorization is handled via the `pz-idam` component.
 This authentication becomes active when the `secure` Spring profile is
@@ -52,7 +52,7 @@ enabled in the Gateway. When authentication, all requests to the Gateway
 will require basic authentication (standard base64-encoded) with
 usernames and passwords defined in `pz-idam`.
 
-\# Job Request
+# Job Request
 
 In the case of long-running Jobs, such as Data loading, or Service
 execution - the Gateway implements the concept of a Job as a handle to
@@ -95,7 +95,7 @@ Job’s current status.
 If the Job has encountered an error, then this information will also be
 available in the resulting JSON.
 
-\# Job Abort
+# Job Abort
 
 Users who submit a Job that is currently running, can request that Job
 be cancelled using the DELETE operation on the `job` endpoint. This will
@@ -104,7 +104,7 @@ handling this Job should stop immediately.
 
     DELETE /job/{{jobId}}
 
-\#\# REST API
+## REST API
 
 Please see the Jobs section in this document for more information on the
 specific endpoints that the Gateway provides. For live documentation,

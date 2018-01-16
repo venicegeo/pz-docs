@@ -1,4 +1,4 @@
-\# Identity and Access Management (IDAM)
+# Identity and Access Management (IDAM)
 
 The Piazza Core Pz-Idam project is an internal component that provides
 REST endpoints for handling Authentication and Authorization. This is
@@ -8,19 +8,19 @@ of interfaces for providing Authorization (AuthZ). This project is used
 by the Gateway in order to generate API Keys and provide full
 AuthN/AuthZ capabilities.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-idam>
 
-\#\# Code Organization
+## Code Organization
 
 The Pz-Idam project uses a series of Spring RestControllers in order to
 manage the number of REST Endpoints that the Pz-Idam API provides. These
 are located in the org.venice.piazza.idam.controller package, and are
 broken up into separate controllers by their functionality.
 
-\#\# API Keys and User Profiles
+## API Keys and User Profiles
 
 All Piazza requests are authenticated and authorized using a
 Piazza-owned API Key. This API Key is stored and maintained in the Idam
@@ -41,7 +41,7 @@ Profile. User Profiles also contain information such as creation date,
 and also allows the user to track their activity in Piazza, such as the
 number of jobs they have submitted for a particular day.
 
-\#\# Local Debugging
+## Local Debugging
 
 When building Idam locally, it can be beneficial to disable the AuthN
 functionality of the component, which would otherwise reach out to the
@@ -50,7 +50,7 @@ developer can set the `spring.profiles.active` to `disable-authn` which
 will disable all AuthN functionality. In this way, Idam can be debugged
 locally without having to reach to an external provider.
 
-\#\# Authentication
+## Authentication
 
 The `PiazzaAuthenticator` interface is defined in the
 `org.venice.piazza.idam.authn` package. This is the interface that
@@ -67,7 +67,7 @@ succeeds, and if it does, it also contains a link to the UserProfile
 object which contains information on the user as provided through the
 authentication provider.
 
-\#\# Authorization
+## Authorization
 
 The `authorizer` interface is defined in the
 `org.venice.piazza.idam.authz` package and contains an interface for

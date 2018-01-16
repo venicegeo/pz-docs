@@ -1,4 +1,4 @@
-\# Pz Service Controller
+# Pz Service Controller
 
 The Service Controller is handles the registration and execution of user
 services and algorithms. It acts as a broker to external services that
@@ -14,7 +14,7 @@ This satisfies one of the primary goals of Piazza: Allowing users across
 the GEOINT Services platform to share their data and algorithms amongst
 the community.
 
-\#\# Service Registration Types
+## Service Registration Types
 
 There are three types of services, to support a variety of different
 workflows for existing REST services. The type of a Service is specified
@@ -63,7 +63,7 @@ balancing and job queueing for this Service. When results for a
 particular job are completed, then the external service sends those
 results directly back to Piazza.
 
-\#\# Building and Running Locally
+## Building and Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-servicecontroller>

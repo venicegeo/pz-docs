@@ -1,4 +1,4 @@
-\#\# Prerequisites for Using Piazza
+## Prerequisites for Using Piazza
 
 To build and run Piazza, the table below depicts the software that is
 needed. As a convenience, Piazza provides Vagrant boxes for the required
@@ -94,7 +94,7 @@ backing services.
 </tbody>
 </table>
 
-\#\# Accessing Piazza
+## Accessing Piazza
 
 Using Piazza, NPEs can perform actions such as the loading and retrieval
 data, the registration and execution user services, and registration of

@@ -1,4 +1,4 @@
-\# Workflow Service
+# Workflow Service
 
 Piazza provides the ability for users to define and send an *event*,
 representing an event that has happened. These events can be issued
@@ -8,7 +8,7 @@ an action; when the condition is met, the action is performed. Event
 types, events, and triggers can be used to define *workflows* when taken
 together.
 
-\#\# The EventType
+## The EventType
 
 The user first defines an event type that is the schema for the events
 that the user will be generating. The event type object is sent in a
@@ -60,7 +60,7 @@ Run the script simply as:
 
     $ ./post-eventtype.sh
 
-\# System EventTypes
+# System EventTypes
 
 Piazza provides some system-level event types — `piazza:ingest` and
 `piazza:executionComplete`. These two system event types can be used to
@@ -99,7 +99,7 @@ EventType name. The return data value will be an array with a single
 event type in it. You can get the EventType ID from the event type that
 is returned, and create your trigger with that EventType ID.
 
-\#\# The Trigger
+## The Trigger
 
 Given an event type, the user next defines a trigger to define what
 action is to be taken when a specific event occurs. The trigger is sent
@@ -220,7 +220,7 @@ To execute, pass the script an EventType ID:
 
     $ ./post-trigger.sh {{eventTypeId}}
 
-\#\# The Event
+## The Event
 
 The user may create an event of that event type to indicate some
 interesting condition has occurred. The event object is sent as a `POST`
@@ -237,7 +237,7 @@ look like:
         }
     }
 
-\# Scheduled Events
+# Scheduled Events
 
 An event can specify a `cronSchedule` field, which alters the mechanics
 of the event-triggering process. The cronSchedule field specifies a
@@ -368,7 +368,7 @@ Execute the script as:
 
     $ ./post-event.sh {{eventTypeId}}
 
-\#\# The Alert
+## The Alert
 
 Whenever the condition of a trigger is met, the system will create an
 alert object. The user can `GET` a list of alerts from the `/alert`
@@ -422,6 +422,6 @@ To execute:
 
     $ ./get-alerts.sh TRIGGER_ID
 
-\#\# Workflow API Documentation
+## Workflow API Documentation
 
 See <http://pz-swagger.venicegeo.io/#/Workflow>

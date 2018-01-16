@@ -1,4 +1,4 @@
-\# Search
+# Search
 
 Piazza supports searching across the metadata extracted from all loaded
 data. The search API returns the Resource IDs of any matching items.
@@ -15,7 +15,7 @@ directly (instead of inventing yet another query syntax language).
 Note that adding data to the search index is an internal Piazza function
 and therefore does not have an API.
 
-\#\# Setup
+## Setup
 
 To demonstrate, we will first load three files into Piazza and set the
 metadata fields with some interesting strings. (We will use the same
@@ -53,7 +53,7 @@ This will return the information about three load operations:
 
     $ ./load-files.sh
 
-\#\# Filtered `GET` Example
+## Filtered `GET` Example
 
 Now that we have the files loaded, we will perform a filtered `GET`.
 This script takes one argument: the keyword to search for. The server
@@ -78,7 +78,7 @@ Execute this script by passing in the keyword:
 
     $ ./search-filter.sh "dog"
 
-\#\# Query Example
+## Query Example
 
 We can perform a more advanced query on data with a `POST` request to
 the `/data/query` endpoint, with the post body containing the JSON query
@@ -111,6 +111,6 @@ To execute:
 Visit the [???](#Elasticsearch Query Syntax) section for more details on
 the Elasticsearch DSL.
 
-\#\# Search API Documentation
+## Search API Documentation
 
 See <http://pz-swagger.venicegeo.io/#/Search>

@@ -1,4 +1,4 @@
-\# Pz Search Services
+# Pz Search Services
 
 The Piazza Core Search infrastructure includes two services with REST
 APIs:
@@ -15,7 +15,7 @@ about the services is also are extracted and indexed. Once the metadata
 is indexed, NPEs can then submit queries to the Gateway to discover
 resources in the Elasticsearch metadata catalog.
 
-\#\# Building Running Locally
+## Building Running Locally
 
 Please refer to repository readme:
 <https://github.com/venicegeo/pz-search-metadata-ingest> and

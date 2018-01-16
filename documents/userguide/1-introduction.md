@@ -1,4 +1,4 @@
-\# Introduction
+# Introduction
 
 Welcome to the Piazza User Guide. It contains descriptions of Piazza’s
 main features and many pieces of example code showing how to use those
@@ -7,7 +7,7 @@ to build services and applications that use Piazza. (In contrast, the
 [Developer’s Guide](../devguide/index.html) is aimed at Piazza
 *developers* — those wishing to work on the Piazza codebase itself.)
 
-\#\# Piazza In Brief
+## Piazza In Brief
 
 Piazza is a set of open source, cloud-based services aimed at helping
 users (developers) build GEOINT applications and services. These
@@ -56,7 +56,7 @@ external services. It is our position, however, that in many cases
 developers shouldn’t have to do either of those. For many common needs
 within the target environment, Piazza can provide a simple alternative.
 
-\#\# A User’s View of Piazza
+## A User’s View of Piazza
 
 From the outside, Piazza is a web service that exposes several REST
 endpoints for performing such operations as loading data and invoking
@@ -87,7 +87,7 @@ Also internal to the system are a number of "infrastructure" components
 like Elasticsearch, GeoServer, PostGIS, and Kafka. Information about
 Piazza’s internals can be found in the Piazza Developer’s Guide.
 
-\#\# An Example Application
+## An Example Application
 
 Let’s consider an example of an application that might use
 Piazza — shoreline boundary extraction. Detailed, current information

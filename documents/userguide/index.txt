@@ -24,8 +24,6 @@ include::2-hello.txt[]
 
 include::3-load-access.txt[]
 
-include::4-search.txt[]
-
 include::5-userservices.txt[]
 
 include::6-workflow.txt[]

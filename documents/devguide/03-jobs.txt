@@ -45,9 +45,6 @@ To build and run Piazza, the table below depicts the software that is needed.  A
 [cols="d,v"]
 |===
 | Vagrant Box | Location
- 
-| ElasticSearch 
-| https://github.com/venicegeo/pz-search-metadata-ingest/tree/master/config
 
 | MongoDB 
 | https://github.com/venicegeo/pz-jobmanager/tree/master/config

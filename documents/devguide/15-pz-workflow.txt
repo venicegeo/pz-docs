@@ -16,11 +16,6 @@ To find out how to run the pz-workflow service locally, please visit the github 
 
 ## Technical
 
-### Elasticsearch Interaction
-https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html[Elasticsearch] is the chosen database for the workflow service. Elasticsearch can be defined as a 'nosql' using Lucene query. This can provide powerful query ability but at the cost of some inconveniences interacting with the database. When running locally workflow will automatically attach to a local elasticsearch instance, but when using an offsite elasticsearch addition information must be provided in the VCAP services.
-Workflow has been designed in a way to reduce elasticsearch's 'nosql' capabilites. This is done by creating strict mapping types on all schemas. This insures that elasticsearch will only accept documents that exactly match the specified schema.
-Workflow uses two packages in order to communicate with elasticsearch. The first of these is https://github.com/venicegeo/pz-gocommon/blob/master/elasticsearch/index.go[pz-gocommon index file]. This allows workflow to create simple communication with an index. This index file itself relies on http://gopkg.in/olivere/elastic.v3[elastic.v3] to create the HTTP traffic.
-
 ### Kafka Interaction
 Information on Kafka can be found https://kafka.apache.org/intro[here].
 In workflow, Kafka service information must be provided in the VCAP services.

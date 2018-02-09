@@ -34,13 +34,7 @@ The PiazzaLogger Bean has required property values. These must be placed in your
 ....
 logger.name=COMPONENT_NAME
 logger.console=true
-vcap.services.pz-elasticsearch.credentials.transportClientPort=9300
-vcap.services.pz-elasticsearch.credentials.hostname=localhost
-LOGGER_INDEX=piazzalogger
-elasticsearch.clustername=venice
 ....
-
-The elastic search information must be included in the specified property names. In Cloud Foundry, this will point to the elastic search service.
 
 If you want the `PiazzaLogger` class to also write to your local console (useful for debugging!) then you can specify the `logger.console` configuration value to `true`. All statements will then also be directed out to your local console.
 

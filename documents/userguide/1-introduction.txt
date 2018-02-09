@@ -28,7 +28,7 @@ Following the REST model, Piazza supports the usual HTTP verbs (`POST`, `GET`, `
 
 Requests sent to Piazza can be either _short_ or _long_. Short requests, like most `GET` and `DELETE` operations, return their results immediately. Long operations, like a `POST` to load a file, execute as a _jobs_ and therefore return a _job id_. Using its Job Id, a client can query for the status of the job and, when completed, the result of the job.
 
-Internal to Piazza, hidden from users, are a set of web services that implement and support the operations that Piazza provides. These services include operations like storing metadata, serving up feature data via WFS, and tracking the status of executions of user services. Also internal to the system are a number of "infrastructure" components like Elasticsearch, GeoServer, PostGIS, and Kafka. Information about Piazza's internals can be found in the Piazza Developer’s Guide.
+Internal to Piazza, hidden from users, are a set of web services that implement and support the operations that Piazza provides. These services include operations like storing metadata, serving up feature data via WFS, and tracking the status of executions of user services. Also internal to the system are a number of "infrastructure" components like GeoServer, PostGIS, and RabbigMQ. Information about Piazza's internals can be found in the Piazza Developer’s Guide.
 
 ## An Example Application
 

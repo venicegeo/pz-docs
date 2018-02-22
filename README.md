@@ -63,3 +63,8 @@ Use [pip](https://pypi.python.org/pypi/pip) to install mkdocs:
 ### Building with mkdcos
 
 
+####Using standalone VM with Vagrant to generate static pages:
+For this download and install Oracle VM VirtualBox Manager, and VAGRANT.
+Then navigate to pz-docs\config and run cmd: vagrant up mkdocbox
+The Ubuntu VM will do all of it for you. You can putty to the box at: 192.168.44.44:22 to see the pages.
+

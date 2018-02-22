@@ -1,0 +1,17 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "mkdocbox" do |mkdocbox|
+	  mkdocbox.vm.box = "ubuntu/precise64"
+	  mkdocbox.vm.hostname = "mkdocbox.dev"
+	  mkdocbox.vm.provision :shell, path: "bootstrap.sh"
+	  mkdocbox.vm.network :private_network, ip:"192.168.44.44"
+	  mkdocbox.vm.network :forwarded_port, host: 9200, guest: 9200
+	  mkdocbox.vm.network :forwarded_port, host: 9300, guest: 9300
+	  mkdocbox.vm.provider "virtualbox" do |v|
+	  	v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+		v.customize ["modifyvm", :id, "--memory", "512"]
+      end
+  end
+end

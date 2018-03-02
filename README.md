@@ -44,7 +44,7 @@ Use your package manager to install virtualenv:
 
 Create a new virtualenv:
 
-`$ virtualenv ~/.venv/mkdcos`
+`$ virtualenv ~/.venv/mkdocs`
 
 Activate the new virtualenv:
 
@@ -72,7 +72,7 @@ Activate the environment:
 
 Add the conda-forge channel because that's where mkdocs is:
 
-`$conda config --add channels conda-forge`
+`$ conda config --add channels conda-forge`
 
 Install mkdocs:
 
@@ -81,7 +81,24 @@ Install mkdocs:
 
 #### HOWTO for Windows people:
 
-@TODO **Document this**
+[Install](https://conda.io/docs/user-guide/install/windows.html) anaconda for windows.
+
+Just like the linux instructions, create and activate a new environment:
+
+`$ conda create --name pz-docs`
+
+Activate the environment:
+
+`$ source activate pz-docs`
+
+Add the conda-forge channel because that's where mkdocs is:
+
+`$ conda config --add channels conda-forge`
+
+Install mkdocs:
+
+`$ conda install mkdocs`
+
 
 ### Building with mkdcos
 

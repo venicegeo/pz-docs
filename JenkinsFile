@@ -37,5 +37,142 @@ node {
       sh "$CONDA_HOME/bin/mkdocs build"
     }
   }
-}
 
+  stage("Archive") {
+  // Build Tarball
+    def targetFiles = "Staticfile manifest.jenkins.yml site"
+    def tarball = "pz-docs.tar.gz"
+    sh "tar cvvzf ${tarball} ${targetFiles}"
+    // Check if Exists
+    def getDependencyStatus = sh(script: """mvn -X --settings ~/.m2/settings.xml dependency:get \
+    -Dmaven.repo.local="${root}/.m2/repository" \
+    -DrepositoryId=nexus \
+    -DartifactId=pz-docs \
+    -Dversion=${appvers} \
+    -DgroupId="org.venice.beachfront" \
+    -Dpackaging=tar.gz \
+    -DremoteRepositories="nexus::default::${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
+    """, returnStatus: true)
+    echo "dependency status = ${getDependencyStatus}"
+    if (getDependencyStatus == 0) {
+      echo "Artifact version ${appvers} exists in Nexus, nothing to do"
+    } else {
+    sh """mvn -X --settings ~/.m2/settings.xml deploy:deploy-file -Dfile=${root}/${tarball} \
+      -DrepositoryId=nexus \
+      -Durl="${env.ARTIFACT_STORAGE_DEPLOY_URL}" \
+      -DgroupId="org.venice.beachfront" \
+      -DgeneratePom=false \
+      -Dpackaging=tar.gz \
+      -Dmaven.repo.local="${root}/.m2/repository" \
+      -DartifactId=pz-docs \
+      -Dversion=${appvers}
+    """
+    }
+  }
+
+  stage ("Int Deploy") {
+    if(!fileExists('.cf')) {
+      sh "mkdir -p .cf"
+    }
+    withEnv(['CF_HOME=.cf']) {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.PCF_CREDS}", usernameVariable: 'CFUSER', passwordVariable: 'CFPASS']]) {
+        sh "cf api ${env.PCF_API_ENDPOINT}"
+        sh "cf auth ${CFUSER} ${CFPASS}"
+        sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
+        sh "cf push ${appName} -f Staticfile --hostname ${appName} -d ${env.PHASE_ONE_PCF_DOMAIN} --no-start"
+	sh "cf set-env ${appName} SPACE ${env.PHASE_ONE_PCF_SPACE}"
+	sh "cf set-env ${appName} DOMAIN ${env.PHASE_ONE_PCF_DOMAIN}"
+        try {
+          sh "cf start ${appName}"
+        } catch (Exception e) {
+          //sh "cf logs --recent ${appName}"
+          sh "cf delete ${appName} -f -r"
+          error("Error during application start. Deleting ${appName} and failing the build.")
+        }
+	  }
+	}
+	if(!params.SKIP_SCANS) {
+		withCredentials([[$class: 'StringBinding', credentialsId: "${env.THREADFIX_API_KEY}", variable: 'THREADFIX_KEY']]) {
+		  sh "mkdir -p ${root}/zap-out"
+		  sh """${zapHome}/zap.sh -cmd \
+			-quickout ${root}/zap-out/zap.xml \
+			-quickurl https://${appName}.${env.PHASE_ONE_PCF_DOMAIN} \
+		  """
+		  sh "cat ${root}/zap-out/zap.xml"
+		  sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
+		}
+	}
+    withEnv(['CF_HOME=.cf']) {
+      withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.PCF_CREDS}", usernameVariable: 'CFUSER', passwordVariable: 'CFPASS']]) {
+        sh "cf api ${env.PCF_API_ENDPOINT}"
+        sh "cf auth ${CFUSER} ${CFPASS}"
+        sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
+		def legacyAppNames = sh(script: "cf routes | grep \"pz-docs \" | awk '{print \$4}'", returnStdout: true)
+		sh "cf map-route ${appName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname pz-docs"
+		// Remove Legacy applications
+		for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
+		  def legacyAppName = legacyApp.toString().trim()
+		  if (legacyAppName != appName) {
+		    sh "cf unmap-route ${legacyAppName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname pz-docs"
+		    sh "cf delete -f ${legacyAppName} -r"
+		  }
+		}
+	  }
+	}
+  }
+
+  if(params.DEPLOY_PHASE_TWO) {
+	  stage('Stage Deploy') {
+		if(!fileExists('.cf')) {
+		  sh "mkdir -p .cf"
+		}
+		withEnv(['CF_HOME=.cf']) {
+		  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.PCF_CREDS}", usernameVariable: 'CFUSER', passwordVariable: 'CFPASS']]) {
+			sh "cf api ${env.PCF_API_ENDPOINT}"
+			sh "cf auth ${CFUSER} ${CFPASS}"
+			sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_TWO_PCF_SPACE}"
+			sh "cf push ${appName} --hostname ${appName} -f Staticfile -d ${env.PHASE_TWO_PCF_DOMAIN} --no-start"
+			sh "cf set-env ${appName} SPACE ${env.PHASE_TWO_PCF_SPACE}"
+			sh "cf set-env ${appName} DOMAIN ${env.PHASE_TWO_PCF_DOMAIN}"
+                        try {
+                          sh "cf start ${appName}"
+                        } catch (Exception e) {
+                          //sh "cf logs --recent ${appName}"
+                          sh "cf delete ${appName} -f -r"
+                          error("Error during application start. Deleting ${appName} and failing the build.")
+                        }
+		  }
+		}
+		if(!params.SKIP_SCANS) {
+			withCredentials([[$class: 'StringBinding', credentialsId: "${env.THREADFIX_API_KEY}", variable: 'THREADFIX_KEY']]) {
+			  sh "mkdir -p ${root}/zap-out"
+			  sh """${zapHome}/zap.sh -cmd \
+				-quickout ${root}/zap-out/zap.xml \
+				-quickurl https://${appName}.${env.PHASE_TWO_PCF_DOMAIN} \
+			  """
+			  sh "cat ${root}/zap-out/zap.xml"
+			  sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
+			}
+		}
+		withEnv(['CF_HOME=.cf']) {
+		  withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: "${env.PCF_CREDS}", usernameVariable: 'CFUSER', passwordVariable: 'CFPASS']]) {
+			sh "cf api ${env.PCF_API_ENDPOINT}"
+			sh "cf auth ${CFUSER} ${CFPASS}"
+			sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_TWO_PCF_SPACE}"
+			def legacyAppNames = sh(script: "cf routes | grep \"pz-docs \" | awk '{print \$4}'", returnStdout: true)
+			sh "cf map-route ${appName} ${env.PHASE_TWO_PCF_DOMAIN} --hostname pz-docs"
+		    // Remove Legacy applications
+		    for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
+		      def legacyAppName = legacyApp.toString().trim()
+			  if (legacyAppName != appName) {
+			    sh "cf unmap-route ${legacyAppName} ${env.PHASE_TWO_PCF_DOMAIN} --hostname pz-docs"
+		            sh "cf delete -f ${legacyAppName} -r"
+			  }
+		    }
+		  }
+		}
+	  }
+  }
+
+
+}

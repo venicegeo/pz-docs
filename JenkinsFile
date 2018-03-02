@@ -34,6 +34,7 @@ node {
     withEnv(["CONDA_HOME=${root}/miniconda2"]) {
       sh "$CONDA_HOME/bin/mkdocs --help"
       sh "$CONDA_HOME/bin/mkdocs --version"
+      sh "$CONDA_HOME/bin/mkdocs build"
     }
   }
 }

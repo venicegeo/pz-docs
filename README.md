@@ -54,6 +54,29 @@ Use [pip](https://pypi.python.org/pypi/pip) to install mkdocs:
 
 `$ pip install mkdocs`
 
+*Use Anaconda*
+
+You can avoid pip issues, and the need to install *anything* as root as well as
+ the virtualenv steps and just use anaconda.
+
+[Install](https://conda.io/docs/user-guide/install/index.html) Anaconda for your
+operating system.
+
+Create a new environment:
+
+`$ conda create --name pz-docs`
+
+Activate the environment:
+
+`$ source activate pz-docs`
+
+Add the conda-forge channel because that's where mkdocs is:
+
+`$conda config --add channels conda-forge`
+
+Install mkdocs:
+
+`$ conda install mkdocs`
 
 
 #### HOWTO for Windows people:
@@ -62,6 +85,14 @@ Use [pip](https://pypi.python.org/pypi/pip) to install mkdocs:
 
 ### Building with mkdcos
 
+Once you've got mkdocs installed, you can build the static site from the source
+markdown documentation:
+
+From within this `pz-docs` directory:
+
+`$ mkdocs build`
+
+You can view your created site under `site/`
 
 ####Using standalone VM with Vagrant to generate static pages:
 For this download and install Oracle VM VirtualBox Manager, and VAGRANT.

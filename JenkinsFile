@@ -19,10 +19,10 @@ node {
     sh "curl -L https://repo.continuum.io/miniconda/Miniconda2-4.3.21-Linux-x86_64.sh -o miniconda.sh"
     sh "bash miniconda.sh -b -p ${root}/miniconda2"
     sh "rm miniconda.sh"
-    withEnv(["CONDA_HOME=${root}/miniconda2")] {
+    withEnv(["CONDA_HOME=${root}/miniconda2"]) {
       sh "$CONDA_HOME/bin/conda create --name pz-docs -y"
       sh "$CONDA_HOME/bin/conda config --add channels conda-forge"
-      sh "$CONDA_HOME/bin/conda install mkdocs" 
+      sh "$CONDA_HOME/bin/conda install mkdocs"
     }
   }
 
@@ -31,7 +31,7 @@ node {
   def appName = "pz-docs-${appvers}"
 
   stage("Build") {
-    withEnv(["CONDA_HOME=${root}/miniconda2")] {
+    withEnv(["CONDA_HOME=${root}/miniconda2"]) {
       sh "$CONDA_HOME/bin/mkdocs --help"
       sh "$CONDA_HOME/bin/mkdocs --version"
     }

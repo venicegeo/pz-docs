@@ -1,71 +1,58 @@
-# Coding Conventions
+# Conventions
 
-## General
+## Coding Conventions
 
--   Piazza APIs SHALL use [RFC
-    4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
+### General
 
--   Piazza APIs SHALL use [ISO
-    8601](https://www.w3.org/TR/NOTE-datetime) for time/date formatting.
+-   Piazza APIs SHALL use [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
 
--   At the root of every [VeniceGeo](https://github.com/venicegeo) open
-    source repository, please include this file:
-    <https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt>
+-   Piazza APIs SHALL use [ISO 8601](https://www.w3.org/TR/NOTE-datetime) for time/date formatting.
 
--   In the header of every piece of source code in an open source
-    repository, include this snippet:
-    <https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt>
+-   At the root of every [VeniceGeo](https://github.com/venicegeo) open source repository, please include this [license file](https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt)
 
-## Java
+-   In the header of every piece of source code in an open source repository, include this [snippet](https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt)
 
-For general Java coding, follow the Google Java Style coding standards:
-<http://google.github.io/styleguide/javaguide.html>
+### Java
+
+For general Java coding, follow the [Google Java Style coding standards](http://google.github.io/styleguide/javaguide.html)
 
 The package naming convention should be:
 
 -   Piazza Project: `org.venice.piazza.[component name]`
 
-## Go
+### Go
 
-## Unit Testing
+### Unit Testing
 
-## GitHub
+### GitHub
 
-New GitHub Repositories within the
-[github.com/venicegeo](https://github.com/venicegeo) community should be
-named using following convention:
+New GitHub Repositories within the [github.com/venicegeo](https://github.com/venicegeo) community should be named using following convention:
 
 -   Core Piazza Components: `pz-[COMPONENT NAME]`
 
 -   VeniceGeo Services: `pzsvc-[COMPONENT NAME]`
 
-## REST API Conventions
+### REST API Conventions
 
-# JSON Conventions
+### JSON Conventions
 
 All input and output payloads will be JSON.
 
-Our default JSON style guide is the [Google JSON style
-guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
+Our default JSON style guide is the [Google JSON style guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 
-# JSON Fields
+### JSON Fields
 
-Fields containing resource ids should be named according to the resource
-type. For example, use `eventId`, not just `id`.
+Fields containing resource ids should be named according to the resource type. For example, use `eventId`, not just `id`.
 
-For fields containing "timestamp" information, use names of the form
-`<op>edOn`, e.g. `createdOn` or `updatedOn`. The values should be ISO
-8601 strings; do not use Unix-style milliseconds-since-epoch.
+For fields containing "timestamp" information, use names of the form `<op>edOn`, e.g. `createdOn` or `updatedOn`. The values should be ISO 8601 strings; do not use Unix-style milliseconds-since-epoch.
 
-Field names should be spelled with `lowerCamelCase`. Not
-`UpperCamelCase` and not `underscore_style`.
+Field names should be spelled with `lowerCamelCase`. Not `UpperCamelCase` and not `underscore_style`.
 
-# Pagination
+### Pagination
 
-`GET` requests that return arrays (or maps) of objects should typically
-support these query parameters for pagination:
+`GET` requests that return arrays (or maps) of objects should typically support these query parameters for pagination:
 
 -   `?page=INT`
 
@@ -75,16 +62,14 @@ support these query parameters for pagination:
 
 -   `?order=STRING` // must be either `asc` or `desc`
 
-For example, these two calls will return the 60 most recent log
-messages, in batches of 30, sorted by creation date:
+For example, these two calls will return the 60 most recent log messages, in batches of 30, sorted by creation date:
 
     GET /messages?perPage=30&page=0&key=createdOn&order=asc
     GET /messages?perPage=30&page=1&key=createdOn&order=asc
 
-# Response Payloads
+### Response Payloads
 
-For success responses (`200` or `201`) from `GET`, `POST`, or `PUT`, the
-JSON object returned will be:
+For success responses (`200` or `201`) from `GET`, `POST`, or `PUT`, the JSON object returned will be:
 
     {
         // required
@@ -105,8 +90,7 @@ JSON object returned will be:
         metadata: OBJECT
     }
 
-The `type` field is a string that indicates the structure of the object
-in `data`. The valid strings are documented with the APIs.
+The `type` field is a string that indicates the structure of the object in `data`. The valid strings are documented with the APIs.
 
 For error responses (`4xx` or `5xx`), the response is:
 
@@ -122,56 +106,38 @@ For error responses (`4xx` or `5xx`), the response is:
         frobNitz: // opt
     }
 
-Note that `DELETE` requests will return a `200` and a success payload
-which may be empty.
+Note that `DELETE` requests will return a `200` and a success payload which may be empty.
 
-# HTTP Status Codes
+## HTTP Status Codes
 
 We generally only use these HTTP status codes.
 
 `200 OK`  
-The request has succeeded. The information returned with the response is
-dependent on the method used in the request. For `GET`, the response is
-an entity containing the requested resource. For `POST`, it is entity
-containing the result of the action.
+The request has succeeded. The information returned with the response is dependent on the method used in the request. For `GET`, the response is an entity containing the requested resource. For `POST`, it is entity containing the result of the action.
 
 `201 Created`  
-The request has been fulfilled and resulted in a new resource being
-created. The newly created resource can be referenced by the URI(s)
-returned in the entity of the response. The origin server MUST create
-the resource before returning the 201 status code.
+The request has been fulfilled and resulted in a new resource being created. The newly created resource can be referenced by the URI(s) returned in the entity of the response. The origin server MUST create the resource before returning the 201 status code.
 
 `400 Bad Request`  
-The request could not be understood by the server due to malformed
-syntax.
+The request could not be understood by the server due to malformed syntax.
 
 `401 Unauthorized`  
-The request requires user authentication, e.g. due to missing or invalid
-authentication token.
+The request requires user authentication, e.g. due to missing or invalid authentication token.
 
 `403 Forbidden`  
-The server understood the request, but is refusing to fulfill it and
-retrying with different authorization will not help. For example, use
-`403` when a resource does not support the requested operation, e.g.
-`PUT`. `403` may also be used in cases where user is not authorized to
-perform the operation or the resource is unavailable for some reason
-(e.g. time constraints, etc.).
+The server understood the request, but is refusing to fulfill it and retrying with different authorization will not help. For example, use `403` when a resource does not support the requested operation, e.g. `PUT`. `403` may also be used in cases where user is not authorized to perform the operation or the resource is unavailable for some reason (e.g. time constraints, etc.).
 
 `404 Not Found`  
-The requested resource could not be found but may be available again in
-the future. Subsequent requests by the client are permissible.
+The requested resource could not be found but may be available again in the future. Subsequent requests by the client are permissible.
 
 `500 Internal Server Error`  
-The server encountered an unexpected condition which prevented it from
-fulfilling the request.
+The server encountered an unexpected condition which prevented it from fulfilling the request.
 
-# Operations (Verbs)
+## Operations (Verbs)
 
-By default, all resources should support GET, POST, PUT, DELETE. If a
-verb not valid for a resource type, `403` should be returned.
+By default, all resources should support GET, POST, PUT, DELETE. If a verb not valid for a resource type, `403` should be returned.
 
-Remember, `POST` is for creating a resource and `PUT` is for updating a
-resource.
+Remember, `POST` is for creating a resource and `PUT` is for updating a resource.
 
 `GET`  
 returns `200` with a response payload containing the requested object,
@@ -186,21 +152,17 @@ returns `200` with a response payload containing the updated object
 `DELETE`  
 returns `200` with a response payload whose `data` field is set to `{}`
 
-# URLs
+## URLs
 
-Use `lowerCamelCase` in URLs and query parameters if needed to match the
-JSON field names. For example:
+Use `lowerCamelCase` in URLs and query parameters if needed to match the JSON field names. For example:
 
     GET /eventType?sortBy=eventTypeId   // YES!
     GET /eventtype?sortby=eventtypeid   // NO!
 
-# Common Endpoints
+### Common Endpoints
 
 `GET /`  
-requests a "health check" for the service. The returned status code is
-`200` with a response payload containing a short, friendly text string.
+This endpoint requests a "health check" for the service. The returned status code is `200` with a response payload containing a short, friendly text string.
 
 `GET /admin/stats`  
-requests the current metrics for the service. The returned payload will
-contain an object with the metric data. Such data might include things
-like the time the service started, how many requests it has served, etc.
+This endpoint requests the current metrics for the service. The returned payload will contain an object with the metric data. Such data might include things like the time the service started, how many requests it has served, etc.

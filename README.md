@@ -20,8 +20,7 @@ you'd like to preview your work. Here's how to do it:
 
 #### HOWTO for Unixy (GNU is not UNIX!) people:
 
-Mkdcos is a Python based HTML generator that takes [markdown](https://daringfireball.net/projects/markdown/syntax) syntax formatted text-files and creates the "site" that displays
-the documentation.
+Mkdocs is a Python based HTML generator that takes [markdown](https://daringfireball.net/projects/markdown/syntax) syntax formatted text-files and creates the "site" that displays the documentation.
 
 If you're using a posix compliant operating system, you likely already have Python
 installed. For more detailed [installation instructions](http://www.mkdocs.org/#installation).
@@ -29,14 +28,13 @@ installed. For more detailed [installation instructions](http://www.mkdocs.org/#
 *MacOS*
 Either use pip:
 
-`$ pip install mkdcos`
+`$ pip install mkdocs`
 
-or use [homebrew](http://brew.sh): `$ brew install mkdcos`
+or use [homebrew](http://brew.sh): `$ brew install mkdocs`
 
 *Linux*
 
-It's highly recommended to use a [virtualenv](https://pypi.python.org/pypi/virtualenv). This helps isolate your Python install and modules from your system. Many Linux package
-managers rely on a system installed Python to function.
+It's highly recommended to use a [virtualenv](https://pypi.python.org/pypi/virtualenv). This helps isolate your Python install and modules from your system. Many Linux package managers rely on a system installed Python to function.
 
 Use your package manager to install virtualenv:
 
@@ -100,7 +98,7 @@ Install mkdocs:
 `$ conda install mkdocs`
 
 
-### Building with mkdcos
+### Building with mkdocs
 
 Once you've got mkdocs installed, you can build the static site from the source
 markdown documentation:

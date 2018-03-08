@@ -1,36 +1,37 @@
 site_name: Piazza Documentation
 docs_dir: documents
-md_extensions:
+markdown_extensions:
   - toc:
       permalink: True
       separator: "_"
+extra_css:
+    - css/beachfront.css
+extra_javascript:
+    - js/beachfront.js
+
 pages:
   - Home: 'index.md'
   - About:
-    - 'common/intro.md'
-    - 'common/legal.md'
-    - 'common/support.md'
+    - 'about/intro.md'
+    - 'about/legal.md'
+    - 'about/support.md'
   - Developer Guide:
     - 'devguide/index.md'
-    - 'devguide/01_1-process.md'
     - 'devguide/01-introduction.md'
     - 'devguide/02-pz-core.md'
     - 'devguide/03-jobs.md'
-    - 'devguide/04-job-workflow.md'
     - 'devguide/05-pz-jobmanager.md'
     - 'devguide/06-pz-logger.md'
     - 'devguide/07-pz-gateway.md'
     - 'devguide/08-pz-sak.md'
     - 'devguide/09-pz-access.md'
     - 'devguide/10-pz-ingest.md'
-    - 'devguide/11-pz-search-metadata-ingest.md'
     - 'devguide/12-pz-search-services.md'
     - 'devguide/13-pz-idam.md'
     - 'devguide/14-pz-servicecontroller.md'
     - 'devguide/15-pz-workflow.md'
     - 'devguide/16-job-common.md'
     - 'devguide/17-conventions.md'
-    - 'devguide/18_1-http.md'
   - User Guide:
     - 'userguide/index.md'
     - 'userguide/1-introduction.md'

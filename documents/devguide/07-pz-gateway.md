@@ -7,8 +7,7 @@ functionality.
 
 ## Building and Running Locally
 
-Please refer to repository readme:
-<https://github.com/venicegeo/pz-gateway>
+Please refer to repository readme:<https://github.com/venicegeo/pz-gateway>
 
 ## S3 Credentials
 
@@ -95,7 +94,7 @@ Job’s current status.
 If the Job has encountered an error, then this information will also be
 available in the resulting JSON.
 
-# Job Abort
+## Job Abort
 
 Users who submit a Job that is currently running, can request that Job
 be cancelled using the DELETE operation on the `job` endpoint. This will

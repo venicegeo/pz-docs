@@ -13,38 +13,37 @@ user API.
 SAK will be used by developers as an easy way to test the functionality
 of the services. It uses HTML/CSS/Javascript to make HTTP calls to
 Piazza services and runs inside of [NGINX](http://nginx.org/). The UI is
-unit tested using
-[Karma](https://karma-runner.github.io/0.13/index.html) and
-[Jasmine](http://jasmine.github.io/2.4/introduction.html).
+unit tested using [Karma](https://karma-runner.github.io/0.13/index.html) 
+and [Jasmine](http://jasmine.github.io/2.4/introduction.html).
 
 ## Source Organization
 
 This app is setup as a static web application and is a single module
 AngularJS app. The important sections include:
 
--   `/conf` - This contains an example config file for a local version
-    of nginx
+-   `/conf` - This contains an example config file for a local version of nginx
 
--   `/public` - This contains all of the source code and what actually
-    gets deployed to nginx
+-   `/public` - This contains all of the source code and what actually gets deployed to nginx
 
--   `/public/nginx.conf` - This is the config file that nginx uses on
-    the deployed server
+-   `/public/nginx.conf` - This is the config file that nginx uses on the deployed server
 
 ## Running SAK locally
 
-# Requirements
+### Requirements
 
 -   Code cloned from <https://github.com/venicegeo/pz-sak>
 
+```
+    git clone https://github.com/venicegeo/pz-sak.git
+```
+    
 -   [Nginx 1.8.1](http://nginx.org/en/download.html)
 
-# Steps
+### Steps
 
 1.  Copy pz-sak/conf/nginx.conf to nginx-1.8.1/conf
 
-2.  Modify nginx.conf to point root to your local copy of the
-    repository’s /public directory (line 50)
+2.  Modify nginx.conf to point root to your local copy of the repository’s /public directory (line 50)
 
 3.  From a command line run `start nginx.exe`
 
@@ -67,12 +66,12 @@ Troubleshooting:
 
 ## Running SAK from the cloud
 
-# Requirements
+### Requirements
 
 -   Web-browser (we typically test in Chrome but any modern browser
     should work)
 
-# Steps
+### Steps
 
 1.  Open your web-browser
 
@@ -80,19 +79,19 @@ Troubleshooting:
 
 ## Using SAK
 
-# Login
+### Login
 
 In order to login to SAK you may need credentials for your Piazza
 installation. If you do not yet have a username and password, please
 contact us.
 
-# Sections of SAK
+### Sections of SAK
 
 Upon login, you are redirected to the Home page where you are given a
 list of commonly used links and locations of services. Here are further
 details on using these services through SAK.
 
-## Access
+### Access
 
 In this section you can list all pieces of data that have been loaded
 into Piazza. If you’re looking for something specific, you can look up
@@ -100,13 +99,13 @@ the data object by it’s Data ID. All data is returned in raw JSON
 format, so you can view the response as close to what services that
 connect to Piazza would be seeing.
 
-## Jobs
+### Jobs
 
 Here you can check the status of specific jobs using the Job ID,
 retrieve resource data with a Data ID, or just browse through all the
 jobs that have been requested.
 
-## Loader
+### Loader
 
 The loader allows the upload of text and files into the Piazza system.
 Currently supported through the UI, the user may choose Text to load or
@@ -130,7 +129,7 @@ Also supported is files that won’t be hosted by Piazza, but just linked
 to another source. SAK will support all of these use cases in the future
 but currently only supports Text and GeoTIFF.
 
-## User Service Registry
+### User Service Registry
 
 This is where a user can Register, Execute, and manage services. If you
 have a service that you would like to run within the Piazza system, you
@@ -164,7 +163,7 @@ following is a very simple example of what to put in this field:
 Other options available for User Service registry include: \* List -
 here you can list all services, update and delete services \* Search -
 
-## Design
+### Design
 
 SAK uses AngularJS and Bootstrap to create a simple UI for accessing
 REST endpoints exposed through Piazza services. Each Piazza service will
@@ -172,4 +171,4 @@ be listed in the left tree pane. When selecting a service any functions
 associated will be listed on the page that appears, and some services
 will have more functions than others.
 
-# UI mockups ![](:images/sak-tree-branches.png)
+## UI mockups ![](:images/sak-tree-branches.png)

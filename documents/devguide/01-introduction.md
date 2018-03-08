@@ -1,4 +1,6 @@
-# Introduction The Piazza API is a series of REST endpoints that allow
+# Introduction
+
+The Piazza API is a series of REST endpoints that allow
 Non Person Entities (NPEs) to access tools and interact with all of
 Piazza’s core functionality. All NPE requests come into Piazza through
 an entry-point called the Gateway. The Gateway is an abstract layer to
@@ -36,3 +38,11 @@ storage, Piazza leverages Amazon’s Simple Storage Service (S3) for
 loading/accessing data processing results and geospatial data. NPEs can
 also access geospatial data by using OGC standard APIs (Boundless
 GeoServer).
+
+## Piazza Agile Development Process Overview
+
+Piazza is developed using Agile management process framework known as
+Scrum. The figure below depicts how software development for the Piazza
+product.
+
+![High Level Agile Process](images/pz-hl-agile-process.jpg)

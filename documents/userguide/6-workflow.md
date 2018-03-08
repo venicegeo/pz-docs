@@ -60,7 +60,7 @@ Run the script simply as:
 
     $ ./post-eventtype.sh
 
-# System EventTypes
+### System EventTypes
 
 Piazza provides some system-level event types — `piazza:ingest` and
 `piazza:executionComplete`. These two system event types can be used to
@@ -101,22 +101,15 @@ is returned, and create your trigger with that EventType ID.
 
 ## The Trigger
 
-Given an event type, the user next defines a trigger to define what
-action is to be taken when a specific event occurs. The trigger is sent
-as a `POST` request to the `/trigger` endpoint and contains four parts:
+Given an event type, the user next defines a trigger to define what action is to be taken when a specific event occurs. The trigger is sent as a `POST` request to the `/trigger` endpoint and contains four parts:
 
--   The `condition` defines what type of event is to be watched for and
-    what the specific parameters of that event should be, expressed
-    using Elasticsearch DSL query syntax against the parameters in the
-    event type.
+-   The `condition` defines what type of event is to be watched for and what the specific parameters of that event should be, expressed using Elasticsearch DSL query syntax against the parameters in the event type.
 
 -   The `job` defines what action is to be taken.
 
--   The `title` is a memorable string for describing what the trigger is
-    meant to do.
+-   The `title` is a memorable string for describing what the trigger is meant to do.
 
--   The `enabled` field determines if the trigger should be listening
-    for events in order to send alerts.
+-   The `enabled` field determines if the trigger should be listening for events in order to send alerts.
 
 For example:
 
@@ -157,13 +150,9 @@ For example:
         }
     }
 
-For details on the meanings of each field, please consult the Swagger
-reference page. For details on constructing valid Elasticsearch DSL
-queries, see the [???](#Elasticsearch Query Syntax) section.
+For details on the meanings of each field, please consult the Swagger reference page. For details on constructing valid Elasticsearch DSL queries, see the [Elasticsearch Query Syntax](http://localhost:8000/userguide/#elasticsearch_query_syntax) section.
 
-In the following example, the job will be executed only when our "test"
-event occurs with the `severity` equal to `5` and the `code` equal to
-`"PHONE"`.
+In the following example, the job will be executed only when our "test" event occurs with the `severity` equal to `5` and the `code` equal to `"PHONE"`.
 
 It is important to note that the `job` field uses substitution by
 replacing all instances of `$field`, where `field` is the name of a JSON
@@ -172,8 +161,7 @@ field in the event type `mapping` (and therefore is in the event’s
 This substitution occurs in all of the fields in `job`, so it is
 important to be conscious of this.
 
-This script will create a generic trigger for the event type associated
-with that `eventTypeId`:
+This script will create a generic trigger for the event type associated with that `eventTypeId`:
 
 [post-trigger.sh](scripts/post-trigger.sh)
 
@@ -237,7 +225,7 @@ look like:
         }
     }
 
-# Scheduled Events
+### Scheduled Events
 
 An event can specify a `cronSchedule` field, which alters the mechanics
 of the event-triggering process. The cronSchedule field specifies a
@@ -248,8 +236,7 @@ cron expressions should check the main pages for cron, either via
 resources.
 
 Note  
-For information on `cron(1)`, see
-[cronmaker.com](http://www.cronmaker.com/) and
+For information on `cron(1)`, see [cronmaker.com](http://www.cronmaker.com/) and
 [crontab.guru](http://crontab.guru/). The cron specification being used
 in our implementation is spelled out in
 <https://github.com/robfig/cron/blob/master/doc.go>. This differs
@@ -274,45 +261,41 @@ cron we are using.
 
 Cron schedules can be spelled out using shorthand notation:
 
-<table>
-<caption>Shorthands</caption>
-<colgroup>
-<col width="33%" />
-<col width="33%" />
-<col width="33%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><p>Entry</p></td>
-<td><p>Description</p></td>
-<td><p>Equivalent To</p></td>
-</tr>
-<tr class="even">
-<td><p><code>@yearly</code> (or <code>@annually</code>)</p></td>
-<td><p>Run once a year, midnight, Jan. 1st</p></td>
-<td><p><code>0 0 0 1 1 *</code></p></td>
-</tr>
-<tr class="odd">
-<td><p><code>@monthly</code></p></td>
-<td><p>Run once a month, midnight, first of month</p></td>
-<td><p><code>0 0 0 1 * *</code></p></td>
-</tr>
-<tr class="even">
-<td><p><code>@weekly</code></p></td>
-<td><p>Run once a week, midnight on Sunday</p></td>
-<td><p><code>0 0 0 * * 0</code></p></td>
-</tr>
-<tr class="odd">
-<td><p><code>@daily</code> (or <code>@midnight</code>)</p></td>
-<td><p>Run once a day, midnight</p></td>
-<td><p><code>0 0 0 * * *</code></p></td>
-</tr>
-<tr class="even">
-<td><p><code>@hourly</code></p></td>
-<td><p>Run once an hour, beginning of hour</p></td>
-<td><p><code>0 0 * * * *</code></p></td>
-</tr>
-</tbody>
+<table class="table">
+	<thead>
+		<tr>
+			<td>Entry</td>
+			<td>Description</td>
+			<td>Equivalent To</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="odd">
+			<td><code>@yearly</code> (or <code>@annually</code>)</td>
+			<td>Run once a year, midnight, Jan. 1st</td>
+			<td><code>0 0 0 1 1 *</code></td>
+		</tr>
+		<tr class="even">
+			<td><code>@monthly</code></td>
+			<td>Run once a month, midnight, first of month</td>
+			<td><code>0 0 0 1 * *</code></td>
+		</tr>
+		<tr class="odd">
+			<td><code>@weekly</code></td>
+			<td>Run once a week, midnight on Sunday</td>
+			<td><code>0 0 0 * * 0</code></td>
+		</tr>
+		<tr class="even">
+			<td><code>@daily</code> (or <code>@midnight</code>)</td>
+			<td>Run once a day, midnight</td>
+			<td><code>0 0 0 * * *</code></td>
+		</tr>
+		<tr class="odd">
+			<td><code>@hourly</code></td>
+			<td>Run once an hour, beginning of hour</td>
+			<td><code>0 0 * * * *</code></td>
+		</tr>
+	</tbody>
 </table>
 
 A cron schedule can be specified using the `@every duration` notation,
@@ -334,8 +317,7 @@ to the schedule specified. If you require an event to be both sent now
 as well as on a particular schedule, it is wise to send both a
 non-repeating event and a repeating event.
 
-In order to stop repeating events, `DELETE` the initial repeating event
-by its event ID.
+In order to stop repeating events, `DELETE` the initial repeating event by its event ID.
 
     DELETE /event/{{EventId}}
 
@@ -370,10 +352,7 @@ Execute the script as:
 
 ## The Alert
 
-Whenever the condition of a trigger is met, the system will create an
-alert object. The user can `GET` a list of alerts from the `/alert`
-endpoint. The alert object contains the ids of the trigger that was hit
-and the event which caused it. It also contains a generated `AlertId`.
+Whenever the condition of a trigger is met, the system will create an alert object. The user can `GET` a list of alerts from the `/alert` endpoint. The alert object contains the ids of the trigger that was hit and the event which caused it. It also contains a generated `AlertId`.
 For example:
 
     {
@@ -415,8 +394,7 @@ system:
     $curl -X GET $PZSERVER/alert?triggerId=$triggerId
     # end::public[]
 
-The query parameter `?TriggerId=id` is provided on the endpoint to allow
-the list to be filtered to only alerts set off by a specified trigger.
+The query parameter `?TriggerId=id` is provided on the endpoint to allow the list to be filtered to only alerts set off by a specified trigger.
 
 To execute:
 

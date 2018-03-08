@@ -1,3 +1,6 @@
+# Piazza
+
+## What is Piazza
 Piazza is an open-source framework and tool-suite enabling rapid
 geospatial information systems (GIS) solutions for the enterprise. It is
 designed to do the heavy lifting needed by developers moving solutions
@@ -50,25 +53,23 @@ on building cloud-based frameworks, tools, applications, and other
 initiatives in support of Geospatial Intelligence (GEOINT) needs.
 
 We welcome your interest, questions, and participation! Contact us at
-<venice@radiantblue.com>.
+<a id="contact_email"></a>.
 
-Documentation
-=============
+## Documentation
 
 -   [Users Guide](userguide/index.html)
 
 -   [Developers Guide](devguide/index.html)
 
-Additional Links
-================
+## Additional Links
 
 -   [Presentation from FOSS4G-NA 2016
     (pdf)](presentations/foss4gna-2016.pdf)
 
--   [Swagger API Reference](http://pz-swagger.venicegeo.io)
+-   [Swagger API Reference](https://pz-swagger.int.dev.east.paas.geointservices.io)
 
 -   [GitHub repository](https://github.com/venicegeo)
 
--   [UI for Piazza internal development](http://pz-sak.venicegeo.io)
+-   [UI for Piazza internal development](https://pz-sak.int.dev.east.paas.geointservices.io)
 
 

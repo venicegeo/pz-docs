@@ -31,41 +31,37 @@ a data ID, or service, or whatever the end result of the Job was) will
 be contained in the status of that Job, including the time it was
 completed and how long it took.
 
-## Example Job Manager Endpoints
+### Example Job Manager Endpoints
 
 The table below depicts examples of the various endpoints used for job
 management.
 
 <table>
-<caption>Example Job Management Endpoints</caption>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td><p>Endpoint</p></td>
-<td><p>Description</p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><p>Get Job Status</p></td>
-</tr>
-<tr class="odd">
-<td></td>
-<td><p>Abort Job</p></td>
-</tr>
-<tr class="even">
-<td></td>
-<td><p>Repeat Job</p></td>
-</tr>
-</tbody>
+	<thead>
+		<tr>
+			<th>Endpoint</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="odd">
+			<td>/job</td>
+			<td>Get Job Status</td>
+		</tr>
+		<tr class="even">
+			<td>/abort</td>
+			<td>Abort Job</td>
+		</tr>
+		<tr class="odd">
+			<td>/repeat</td>
+			<td>Repeat Job</td>
+		</tr>
+	</tbody>
 </table>
 
 ## Building and Running Locally
 
-Please refer to repository readme:
-<https://github.com/venicegeo/pz-jobmanager>
+Please refer to repository readme: <https://github.com/venicegeo/pz-jobmanager>
 
 ## Source Organization
 
@@ -111,7 +107,7 @@ Job](https://github.com/venicegeo/pz-jobcommon).
         }
     }
 
-## Administrative API
+### Administrative API
 
 The Job Manager provides a series of REST Endpoints that can be used to
 query the Job Manager for certain information useful to NPEs and
@@ -121,7 +117,7 @@ Jobs returned through REST Endpoints will follow the JSON Model defined
 in the [Job
 Class](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java).
 
-# REST Endpoints
+## REST Endpoints
 
 `GET /job/count`  
 Gets a count of the Jobs in the Piazza system.
@@ -174,7 +170,7 @@ number of Jobs held in the Job Table, listed by status.
         "error": 1
     }
 
-## Job Workflow
+### Job Workflow
 
 The purpose of this page is to document the Workflow of the Piazza Core
 Job process, and aims to show how Piazza Jobs are created and processed,
@@ -191,7 +187,7 @@ cases for when Jobs and Job IDs are generated are currently for:
 
 -   GeoServer deployments for Data using the `/deployment` endpoint.
 
-# Job Sequence
+### Job Sequence
 
 The Sequence for Jobs is as follows:
 
@@ -219,7 +215,7 @@ The Sequence for Jobs is as follows:
     `/job` request to the Gateway. This response will give the user the
     progress, and when done, the final Result of the Job.
 
-# How Jobs an be Cancelled
+### How Jobs an be Cancelled
 
 Each Worker component (defined as a Component capable of processing
 Jobs), such as Service Controller, Ingest, and Access, will join a

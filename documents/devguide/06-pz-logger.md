@@ -2,20 +2,16 @@
 
 ## Overview
 
-The Logger provides a system-wide, common way to record log messages.
-The log messages are stored in Elasticsearch. This is done though an
-HTTP API.
+The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch. This is done though an HTTP API.
 
-## Building and Running Locally To find out how to run the pz-logger
-service locally, please visit the github
-[README](https://github.com/venicegeo/pz-logger/blob/master/README.md)
+## Building and Running Locally 
+To find out how to run the pz-logger service locally, please visit the github [README](https://github.com/venicegeo/pz-logger/blob/master/README.md)
 
 ## HTTP API
 
-# `POST /syslog`
+### 'POST /syslog'
 
-Sends a message to be logged. The message is given in the POST body as a
-JSON object:
+Sends a message to be logged. The message is given in the POST body as a JSON object:
 
     {
         "facility": 1,
@@ -32,9 +28,7 @@ JSON object:
         "message": "The quick brown fox"
     }
 
-`timeStamp` is a `string` representing the message creation time,
-expressed in UTC [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt). (In
-Go, `time.Now().Rount(time.Millisecond).UTC().Format(time.RFC3339)`).
+`timeStamp` is a `string` representing the message creation time, expressed in UTC [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt). (In Go, `time.Now().Rount(time.Millisecond).UTC().Format(time.RFC3339)`).
 
 `facility` and `version` are 1 by default
 
@@ -50,20 +44,15 @@ No action needed, I’m just being chatty and keeping you in the loop.
 No *errors*, but further action might be required.
 
 4 ("Warning")  
-Something occurred which probably shouldn’t have. I’m going to handle it
-for you this time, but you really should have this looked at by someone
-soon.
+Something occurred which probably shouldn’t have. I’m going to handle it for you this time, but you really should have this looked at by someone soon.
 
 3 ("Error")  
-I can’t do this. I’ve handled the exception so I’m not going to crash or
-anything, but I want you to know that I may not be in a happy place
-right now.
+I can’t do this. I’ve handled the exception so I’m not going to crash or anything, but I want you to know that I may not be in a happy place right now.
 
 2 ("Fatal")  
-I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely
-to crash very soon.
+I’m sorry, Dave. I’m afraid I can’t do that. System crashing, or likely to crash very soon.
 
-# `GET /syslog`
+### 'GET /syslog'
 
 Returns a JSON object of log messages:
 
@@ -108,12 +97,11 @@ Returns a JSON object of log messages:
         }
     }
 
-This endpoint supports pagination, as described in [???](#Pagination).
+This endpoint supports pagination, as described in the [Pagination](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html#pagination) section.
 
-# Common operations
+## Common operations
 
-This service includes the common endpoints described in
-[???](#Common Endpoints).
+This service includes the common endpoints described in the [Common Endpoints](devguide/#common_endpoints) section.
 
 The `admin stats` supported are:
 

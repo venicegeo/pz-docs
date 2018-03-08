@@ -1,3 +1,7 @@
+# Piazza
+
+## What is Piazza
+
 Piazza is an open-source framework and tool-suite enabling rapid
 geospatial information systems (GIS) solutions for the enterprise. It is
 designed to do the heavy lifting needed by developers moving solutions
@@ -50,4 +54,4 @@ on building cloud-based frameworks, tools, applications, and other
 initiatives in support of Geospatial Intelligence (GEOINT) needs.
 
 We welcome your interest, questions, and participation! Contact us at
-<venice@radiantblue.com>.
+<a id="contact_email"></a>.

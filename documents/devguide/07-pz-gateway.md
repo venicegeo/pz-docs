@@ -7,7 +7,7 @@ functionality.
 
 ## Building and Running Locally
 
-Please refer to repository readme:<https://github.com/venicegeo/pz-gateway>
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-gateway">README</a>
 
 ## S3 Credentials
 

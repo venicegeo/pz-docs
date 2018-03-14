@@ -1,6 +1,6 @@
 # Introduction
 
-Welcome to the Piazza User Guide. It contains descriptions of Piazza’s main features and many pieces of example code showing how to use those features. This document is aimed at Piazza *users* — developers looking to build services and applications that use Piazza. (In contrast, the [Developer’s Guide](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html) is aimed at Piazza *developers* — those wishing to work on the Piazza codebase itself.)
+Welcome to the Piazza User Guide. It contains descriptions of Piazza’s main features and many pieces of example code showing how to use those features. This document is aimed at Piazza *users* — developers looking to build services and applications that use Piazza. (In contrast, the <a target="_blank" href="/devguide/index.html">Developer’s Guide</a> is aimed at Piazza *developers* — those wishing to work on the Piazza codebase itself.)
 
 ## Piazza In Brief
 
@@ -40,8 +40,7 @@ Requests sent to Piazza can be either *short* or *long*.
 
 - Long operations, like a `POST` to load a file, execute as a *jobs* and therefore return a *job id*. Using its Job Id, a client can query for the status of the job and, when completed, the result of the job.
 
-Internal to Piazza, hidden from users, are a set of web services that implement and support the operations that Piazza provides. These services include operations like storing metadata, serving up feature data via WFS, and tracking the status of executions of user services. Also internal to the system are a number of "infrastructure" components like Elasticsearch, GeoServer, PostGIS, and Kafka. Information about Piazza’s internals can be found in the [Piazza Developer’s Guide](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html).
-
+Internal to Piazza, hidden from users, are a set of web services that implement and support the operations that Piazza provides. These services include operations like storing metadata, serving up feature data via WFS, and tracking the status of executions of user services. Also internal to the system are a number of "infrastructure" components like Elasticsearch, GeoServer, PostGIS, and Kafka. Information about Piazza’s internals can be found in the <a target="_blank" href="/devguide/index.html">Piazza Developer’s Guide</a>.
 
 ## An Example Application
 

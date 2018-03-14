@@ -18,13 +18,13 @@ Piazza also supports a *hosted* model in which the data is copied locally for me
 
 > **Note**
 >
-> The GeoTIFF file used in these examples can be found at [terrametrics.tif](scripts/terrametrics.tif).
+> The GeoTIFF file used in these examples can be found at <a target="_blank" href="scripts/terrametrics.tif">terrametrics.tif</a>.
 
 This example shows how to load a GeoTIFF file from your local file system into Piazza, using the hosted model. The script will return a JSON object describing the job that was created to perform the load operation.
 
 The script looks like this:
 
-[post-hosted-load.sh](scripts/post-hosted-load.sh)
+<a target="_blank" href="scripts/post-hosted-load.sh">post-hosted-load.sh</a>
 
     #!/bin/bash
     set -e
@@ -80,7 +80,7 @@ The `jobId` can be used to fetch the status of the load operation that opens the
 
 The `get-job-info` script can be used to do this `GET` request:
 
-[get-job-info.sh](scripts/get-job-info.sh)
+<a target="_blank" href="scripts/get-job-info.sh">get-job-info.sh</a>
 
     #!/bin/bash
     set -e
@@ -136,7 +136,7 @@ When the job is completed, the response for the request will have its `status` f
 
 Just like we did to get information about a job, we can get information about the data object and our image file looks something this:
 
-[get-data-info.sh](scripts/get-data-info.sh)
+<a target="_blank" href="scripts/scripts/get-data-info.sh">get-data-info.sh</a>
 
     #!/bin/bash
     set -e
@@ -192,7 +192,7 @@ will return a response similar to this:
 
 We can retrieve the file using the `/file/{dataId}` endpoint, like this:
 
-[get-hosted-data.sh](scripts/get-hosted-data.sh)
+<a target="_blank" href="scripts/get-hosted-data.sh">get-hosted-data.sh</a>
 
     #!/bin/bash
     set -e
@@ -214,7 +214,7 @@ and execute it like this:
 
 We can also create an OGC-standard WMS endpoint for our GeoTIFF by sending a `POST` request to `/deployment`:
 
-[post-nonhosted-data-wms.sh](scripts/post-nonhosted-data-wms.sh)
+<a target="_blank" href="scripts/post-nonhosted-data-wms.sh">post-nonhosted-data-wms.sh</a>
 
     #!/bin/bash
     set -e
@@ -274,7 +274,7 @@ Loading a non-hosted image file is nearly identical to loading a hosted image fi
 
 In our example script, the `data.dataType.location` field is set up for an S3 location, with the `bucketName`, `fileName` (sometimes called key), and `domainName` parameters. Obviously, Piazza must have access to this S3 bucket in order for load to succeed.
 
-[post-nonhosted-load.sh](scripts/post-nonhosted-load.sh)
+<a target="_blank" href="scripts/post-nonhosted-load.sh">post-nonhosted-load.sh</a>
 
     #!/bin/bash
     set -e
@@ -340,4 +340,4 @@ The processes for getting the job status, downloading the data, and creating an 
 
 ## Data API Documentation
 
-See <http://pz-swagger.venicegeo.io/#/Data>
+See <a target="_blank" href="http://pz-swagger.venicegeo.io/#/Data">http://pz-swagger.venicegeo.io/#/Data</a>

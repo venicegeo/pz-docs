@@ -12,7 +12,7 @@ Linking:
 
 ## Building & Installing
 
-The delivery method for this documentation is a static html site. We use [mkdocs](http://www.mkdocs.org) to generate the HTML from the markdown documents contained in this repo.
+The delivery method for this documentation is a static html site. We use <a target="_blank" href="http://www.mkdocs.org">mkdocs</a> to generate the HTML from the markdown documents contained in this repo.
 
 As a developer, you don't _need_ to generate these HTML files yourself, unless
 you'd like to preview your work. Here's how to do it:
@@ -20,21 +20,21 @@ you'd like to preview your work. Here's how to do it:
 
 #### HOWTO for Unixy (GNU is not UNIX!) people:
 
-Mkdocs is a Python based HTML generator that takes [markdown](https://daringfireball.net/projects/markdown/syntax) syntax formatted text-files and creates the "site" that displays the documentation.
+Mkdocs is a Python based HTML generator that takes <a target="_blank" href="https://daringfireball.net/projects/markdown/syntax">markdown</a> syntax formatted text-files and creates the "site" that displays the documentation.
 
 If you're using a posix compliant operating system, you likely already have Python
-installed. For more detailed [installation instructions](http://www.mkdocs.org/#installation).
+installed. For more detailed <a target="_blank" href="http://www.mkdocs.org/#installation">installation instructions</a>.
 
 *MacOS*
 Either use pip:
 
 `$ pip install mkdocs`
 
-or use [homebrew](http://brew.sh): `$ brew install mkdocs`
+or use <a target="_blank" href="http://brew.sh">homebrew</a>: `$ brew install mkdocs`
 
 *Linux*
 
-It's highly recommended to use a [virtualenv](https://pypi.python.org/pypi/virtualenv). This helps isolate your Python install and modules from your system. Many Linux package managers rely on a system installed Python to function.
+It's highly recommended to use a <a target="_blank" href="https://pypi.python.org/pypi/virtualenv">virtualenv</a>. This helps isolate your Python install and modules from your system. Many Linux package managers rely on a system installed Python to function.
 
 Use your package manager to install virtualenv:
 
@@ -48,7 +48,7 @@ Activate the new virtualenv:
 
 `$ source ~/.venv/mkdocs/bin/activate`
 
-Use [pip](https://pypi.python.org/pypi/pip) to install mkdocs:
+Use <a target="_blank" href="https://pypi.python.org/pypi/pip">pip</a> to install mkdocs:
 
 `$ pip install mkdocs`
 
@@ -57,7 +57,7 @@ Use [pip](https://pypi.python.org/pypi/pip) to install mkdocs:
 You can avoid pip issues, and the need to install *anything* as root as well as
  the virtualenv steps and just use anaconda.
 
-[Install](https://conda.io/docs/user-guide/install/index.html) Anaconda for your
+<a target="_blank" href="https://conda.io/docs/user-guide/install/index.html">Install</a> Anaconda for your
 operating system.
 
 Create a new environment:
@@ -79,7 +79,7 @@ Install mkdocs:
 
 #### HOWTO for Windows people:
 
-[Install](https://conda.io/docs/user-guide/install/windows.html) anaconda for windows.
+<a target="_blank" href="https://conda.io/docs/user-guide/install/windows.html">Install</a> anaconda for windows.
 
 Just like the linux instructions, create and activate a new environment:
 
@@ -96,7 +96,6 @@ Add the conda-forge channel because that's where mkdocs is:
 Install mkdocs:
 
 `$ conda install mkdocs`
-
 
 ### Building with mkdocs
 

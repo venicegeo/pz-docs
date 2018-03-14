@@ -9,8 +9,7 @@ to automatically crop files uploaded to a given S3 bucket.
 The pzsvc-file-watcher automatically watches for uploaded files to the
 S3 bucket and ingests them to the Piazza service.
 
-To begin, clone the pzsvc-file-watcher from its [GitHub
-repository](https://github.com/venicegeo/pzsvc-file-watcher):
+To begin, clone the pzsvc-file-watcher from its <a target="blank" href="https://github.com/venicegeo/pzsvc-file-watcher">GitHub repository</a>:
 
     $ git clone https://github.com/venicegeo/pzsvc-file-watcher
 
@@ -50,7 +49,7 @@ Gateway.
 ## Registering the pzsvc-preview-generator Service
 
 The purpose of
-[pzsvc-preview-generator](https://github.com/venicegeo/pzsvc-preview-generator)
+<a target="blank" href="https://github.com/venicegeo/pzsvc-preview-generator">pzsvc-preview-generator</a>
 is to showcase Piazza’s core capabilities. This app exposes a REST
 endpoint that receives a POST request containing a payload of required
 parameters. Given an S3 location, it downloads a raster file, crops the
@@ -58,14 +57,14 @@ image, uploads the cropped raster back up to S3 bucket, and returns a
 DataResource.
 
 A script to register this service is located at
-[register-crop-service.sh](scripts/register-crop-service.sh).
+<a target="blank" href="scripts/register-crop-service.sh">register-crop-service.sh</a>.
 Registering the cropping service is easy:
 
     $ ./register-crop-service.sh
 
 ## Executing the Service
 
-The [execute-crop-service.sh](scripts/execute-crop-service.sh) script
+The <a target="blank" href="scripts/execute-crop-service.sh">execute-crop-service.sh</a> script
 takes a few more parameters. They include the `serviceId` returned from
 registering the previous service (the `serviceId` will be printed out if
 the previous script is successful), the AWS bucket name where the file
@@ -97,18 +96,17 @@ Sample working payload:
 
 The service will download the file from pz-svcs-prevgen S3 bucket and
 crop it with given bounding box information. The cropped result tif will
-be uploaded back up to the [pz-svcs-prevgen-output S3
-bucket](https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=).
+be uploaded back up to the <a target="blank" href="https://console.aws.amazon.com/s3/home?region=us-east-1#&bucket=pz-svcs-prevgen-output&prefix=">pz-svcs-prevgen-output S3 bucket</a>.
 
 The `execute-crop-service.sh` script should return a `jobId` that can
 then be passed as an argument to
-[get-job-info.sh](scripts/get-job-info.sh):
+<a target="blank" href="scripts/get-job-info.sh">get-job-info.sh</a>:
 
     $ ./get-job-info.sh {{jobId}}
 
 When the job is complete, the resulting data can be queried from the
 `dataId` returned by the `get-job-info.sh` script using
-[get-data-info.sh](scripts/get-data-info.sh):
+<a target="blank" href="scripts/get-data-info.sh">get-data-info.sh</a>:
 
     $ ./get-data-info.sh {{dataId}}
 

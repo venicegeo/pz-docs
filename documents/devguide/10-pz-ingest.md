@@ -5,7 +5,7 @@ then stores this metadata within the Piazza MongoDB instance.
 
 ## Building Running Locally
 
-Please refer to repository [README](https://github.com/venicegeo/pz-ingest)
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-ingest">README</a>
 
 ## S3 Credentials
 
@@ -16,9 +16,15 @@ The Ingest component inspects files uploaded to S3 by the Gateway. As such, the 
 
 ## Source Organization
 
-The [messaging](https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/messaging) package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The [`IngestWorker`](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/messaging/IngestWorker.java) class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the [`inspect`](https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/inspect) package. There is an inspector for each type of data ([GeoJSON](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoJsonInspector), [GeoTIFF](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoTiffInspector.java), [Point Cloud](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/PointCloudInspector.java), [Shapefile](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/ShapefileInspector.java), [Text](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/TextInspector.java), [WFS](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/WfsInspector.java)). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the [`DataResource`](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) objects and store them into the MongoDB instance.
+The <a target="_blank" href="https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/messaging">messaging</a> package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The <a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/messaging/IngestWorker.java">`IngestWorker`</a> class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the <a target="_blank" href="https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/inspect">`inspect`</a> package. There is an inspector for each type of data (
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoJsonInspector">GeoJSON</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoTiffInspector.java">GeoTIFF</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/PointCloudInspector.java">Point Cloud</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/ShapefileInspector.java">Shapefile</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/TextInspector.java">Text</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/WfsInspector.java">WFS</a>). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java">'DataResource'</a> objects and store them into the MongoDB instance.
 
-The [controller](https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/controller) package contains the administrative REST endpoints for this component.
+The <a target="_blank" href="https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/controller">controller</a> package contains the administrative REST endpoints for this component.
 
 ## Interface
 
@@ -43,11 +49,11 @@ The JSON payload for either of the above endpoints will look like:
         "metadata": {}
     }
 
-The metadata fields under the `jobType.data` tag are defined in the [DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) POJO object. This object contains the [ResourceType](https://github.com/venicegeo/pz-wps/blob/master/pizza_wps_2_0/src/main/java/org/w3/_1999/xlink/ResourceType.java) interface, which is listed in the ['model.data.type`](https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/type) package. This package defines format types for each type of Data that Piazza currently supports: [Shapefiles](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/ShapefileDataType.java), [Text](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/TextDataType.java), [PostGIS Tables](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/PostGISDataType.java), etc.
+The metadata fields under the `jobType.data` tag are defined in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java">DataResource</a> POJO object. This object contains the <a target="_blank" href="https://github.com/venicegeo/pz-wps/blob/master/pizza_wps_2_0/src/main/java/org/w3/_1999/xlink/ResourceType.java">ResourceType</a> interface, which is listed in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/type">'model.data.type`</a> package. This package defines format types for each type of Data that Piazza currently supports: <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/ShapefileDataType.java">Shapefiles</a>, <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/TextDataType.java">Text</a>, <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/PostGISDataType.java">PostGIS Tables</a>, etc.
 
 The `host` parameter is set to true if Piazza should host the data internally. This should be the default behavior. If this is set to false, then Piazza will not store the data in its internal storage. It will merely provide a link to wherever this external data resides, and attempt to read whatever metadata it can. If you specify a `file` in the Multipart POST, and set the ingest flag `host` to `false`, then an error will be raised - this is because setting `host` to `false` is explicitly stating to the Ingest component that no data should be stored - only metadata.
 
-When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the [ResourceMetadata](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java) POJO.
+When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java">ResourceMetadata</a> POJO.
 
 ## Ingest Process
 
@@ -190,7 +196,7 @@ Web Feature Services can be ingested and hosted within Piazza. If `host` is set 
 
 ## Workflow Events
 
-In support of the [Workflow](https://github.com/venicegeo/pz-workflow) service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
+In support of the <a target="_blank" href="https://github.com/venicegeo/pz-workflow">Workflow</a> service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
 
 ### Event Type
 

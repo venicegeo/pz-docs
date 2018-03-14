@@ -4,7 +4,7 @@ The Access component is what handles the accessing of this data - either by requ
 
 ## Building and Running Locally
 
-Please refer to repository [README](https://github.com/venicegeo/pz-access)
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-access">README</a>
 
 ## S3 Credentials
 
@@ -23,15 +23,14 @@ The main logic of the Access component is split between two packages:
 
 1. Controller
 
-	The [`controller`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/controller) 
-	package contains the Spring RestController class that defines REST endpoints 
-	that handle user queries for DataResource information, and other REST endpoints used.
+	The <a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/controller">`controller`</a> package contains the Spring RestController class that defines REST endpoints that handle user queries for DataResource information, and other REST endpoints used.
 
 2. Messaging
 
-	The [`messaging`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/messaging) package defines Kafka consumers which listen 	for messages through Kafka for creating GeoServer deployments. The logic for the deploying of data resources as GeoServer layers happens in the 		[`deploy`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/deploy) package through the [`Deployer.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Deployer.java) and [`Leaser.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java) classes. These two classes manage the deployments of GeoServer (Deployment.java), and managing their life 		times and resource cleanup [`Leaser.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java). In the 			[`Leaser.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java) class that is a method [`reapExpiredLeases()`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java#L136) that runs once a night that will clean up any expired resources on GeoServer.
+	The <a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/messaging">`messaging`</a> package defines Kafka consumers which listen for messages through Kafka for creating GeoServer deployments. The logic for the deploying of data resources as GeoServer layers happens in the <a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/deploy">`deploy`</a> package through the <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Deployer.java">`Deployer`</a> and <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java">`Leaser`</a> classes. These two classes manage the deployments of GeoServer (Deployment.java), and managing their life 	times and resource cleanup <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java">`Leaser`</a>. In the <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java">`Leaser`</a> class, there is a method <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java#L136">`reapExpiredLeases()`</a> that runs once a night that will clean up any expired resources on GeoServer.
 
-The Access component interacts with the MongoDB DataResource collection, and management for this code is located in the [`database`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/database) package.
+The Access component interacts with the MongoDB DataResource collection, and management for this code is located in the
+<a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/database">`database()`</a> package.
 
 ## Interface
 

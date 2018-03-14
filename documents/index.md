@@ -57,19 +57,16 @@ We welcome your interest, questions, and participation! Contact us at
 
 ## Documentation
 
--   [Users Guide](userguide/index.html)
+-   <a target="_blank" href="userguide/index.html">Users Guide</a>
 
--   [Developers Guide](devguide/index.html)
+-   <a target="_blank" href="(devguide/index.html">Developers Guide</a>
 
 ## Additional Links
 
--   [Presentation from FOSS4G-NA 2016
-    (pdf)](presentations/foss4gna-2016.pdf)
+-   <a target="_blank" href="presentations/foss4gna-2016.pdf">Presentation from FOSS4G-NA 2016(pdf)</a>
 
--   [Swagger API Reference](https://pz-swagger.int.dev.east.paas.geointservices.io)
+-   <a target="_blank" href="https://pz-swagger.int.dev.east.paas.geointservices.io">Swagger API Reference</a>
 
--   [GitHub repository](https://github.com/venicegeo)
+-   <a target="_blank" href="https://github.com/venicegeo">GitHub repository</a>
 
--   [UI for Piazza internal development](https://pz-sak.int.dev.east.paas.geointservices.io)
-
-
+-   <a target="_blank" href="https://pz-sak.int.dev.east.paas.geointservices.io">UI for Piazza internal development</a>

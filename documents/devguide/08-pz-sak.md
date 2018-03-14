@@ -12,9 +12,9 @@ user API.
 
 SAK will be used by developers as an easy way to test the functionality
 of the services. It uses HTML/CSS/Javascript to make HTTP calls to
-Piazza services and runs inside of [NGINX](http://nginx.org/). The UI is
-unit tested using [Karma](https://karma-runner.github.io/0.13/index.html) 
-and [Jasmine](http://jasmine.github.io/2.4/introduction.html).
+Piazza services and runs inside of <a target="_blank" href="http://nginx.org/">NGINX</a>. The UI is
+unit tested using <a target="_blank" href="https://karma-runner.github.io/0.13/index.html">Karma</a>
+and <a target="_blank" href="http://jasmine.github.io/2.4/introduction.html">Jasmine</a>.
 
 ## Source Organization
 
@@ -31,13 +31,13 @@ AngularJS app. The important sections include:
 
 ### Requirements
 
--   Code cloned from <https://github.com/venicegeo/pz-sak>
+-   Code cloned from <a target="_blank" href="https://github.com/venicegeo/pz-sak">https://github.com/venicegeo/pz-sak</a>
 
 ```
     git clone https://github.com/venicegeo/pz-sak.git
 ```
     
--   [Nginx 1.8.1](http://nginx.org/en/download.html)
+-   <a target="_blank" href="http://nginx.org/en/download.html">Nginx 1.8.1</a>
 
 ### Steps
 
@@ -47,7 +47,7 @@ AngularJS app. The important sections include:
 
 3.  From a command line run `start nginx.exe`
 
-4.  Go to <http://localhost>
+4.  Go to <a target="_blank" href="http://localhost">http://localhost</a>
 
 Note: The following commands are helpful as well:
 
@@ -68,14 +68,13 @@ Troubleshooting:
 
 ### Requirements
 
--   Web-browser (we typically test in Chrome but any modern browser
-    should work)
+-   Web-browser (we typically test in Chrome but any modern browser should work)
 
 ### Steps
 
 1.  Open your web-browser
 
-2.  Go to: <http://pz-sak.venicegeo.io/>
+2.  Go to: <a target="_blank" href="http://pz-sak.venicegeo.io/">http://pz-sak.venicegeo.io/</a>
 
 ## Using SAK
 
@@ -91,7 +90,7 @@ Upon login, you are redirected to the Home page where you are given a
 list of commonly used links and locations of services. Here are further
 details on using these services through SAK.
 
-### Access
+### SAK Access
 
 In this section you can list all pieces of data that have been loaded
 into Piazza. If you’re looking for something specific, you can look up
@@ -99,13 +98,13 @@ the data object by it’s Data ID. All data is returned in raw JSON
 format, so you can view the response as close to what services that
 connect to Piazza would be seeing.
 
-### Jobs
+### SAK Jobs
 
 Here you can check the status of specific jobs using the Job ID,
 retrieve resource data with a Data ID, or just browse through all the
 jobs that have been requested.
 
-### Loader
+### SAK Loader
 
 The loader allows the upload of text and files into the Piazza system.
 Currently supported through the UI, the user may choose Text to load or
@@ -171,4 +170,5 @@ be listed in the left tree pane. When selecting a service any functions
 associated will be listed on the page that appears, and some services
 will have more functions than others.
 
-## UI mockups ![](:images/sak-tree-branches.png)
+## UI mockups 
+![UI mockups](images/sak-tree-branches.png)

@@ -1,12 +1,12 @@
-# Pz Search Services
+# Piazza Search Services
 
 The Piazza Core Search infrastructure includes two services with REST APIs:
 
-1. [pz-search-metadata-ingest](https://github.com/venicegeo/pz-search-metadata-ingest)
+1. <a target="_blank" href="https://github.com/venicegeo/pz-search-metadata-ingest">pz-search-metadata-ingest</a>
 	
 	Service to accept a JSON structure for metadata ingest to the Piazza Elasticsearch cluster
 
-2. [pz-search-query](https://github.com/venicegeo/pz-search-query). 
+2. <a target="_blank" href="https://github.com/venicegeo/pz-search-query">pz-search-query</a>
 	
 	Service that accepts queries to Piazza Elasticsearch instance for content discovery endpoints, accepting an HTTP POST of Elasticsearch query language (DSL).
 
@@ -16,6 +16,6 @@ As spatial data is loaded into Piazza, metadata is extracted and indexed by the 
 
 Please refer to repository README:
 
-[pz-search-metadata-ingest README](https://github.com/venicegeo/pz-search-metadata-ingest)
+- <a target="_blank" href="https://github.com/venicegeo/pz-search-metadata-ingest">pz-search-metadata-ingest README</a>
 
-[pz-search-query README](https://github.com/venicegeo/pz-search-query)
+- <a target="_blank" href="https://github.com/venicegeo/pz-search-query">pz-search-query README</a>

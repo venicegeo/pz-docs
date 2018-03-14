@@ -61,19 +61,19 @@ management.
 
 ## Building and Running Locally
 
-Please refer to repository readme: <https://github.com/venicegeo/pz-jobmanager>
+Please refer to repository readme: <a target="_blank" href="https://github.com/venicegeo/pz-jobmanager">README</a>
 
 ## Source Organization
 
 The main logic of the Job Manager is split between two package. The
-`controller` package contains the REST controller that contains the REST
+<a target="_blank" href="https://github.com/venicegeo/pz-jobmanager/tree/master/src/main/java/jobmanager/controller">`controller`</a> package contains the REST controller that contains the REST
 endpoints for querying job status, etc. This is a simple Spring
 RestController that contains the endpoints defined as simple functions.
-The `messaging` package declares the Apache Kafka logic, where the
+The <a target="_blank" href="https://github.com/venicegeo/pz-jobmanager/tree/master/src/main/java/jobmanager/messaging">`messaging`</a> package declares the Apache Kafka logic, where the
 JobManager defines Kafka consumers to poll for incoming messages. The
 messages pertain to 1) Creating new Jobs and 2) Updating the status of
 Jobs. The Jobs are persisted in the MongoDB and interaction code to
-handle the MongoDB commits is located in the `database` package.
+handle the MongoDB commits is located in the <a target="_blank" href="https://github.com/venicegeo/pz-jobmanager/tree/master/src/main/java/jobmanager/database">`database`</a> package.
 
 ## Interface
 
@@ -91,8 +91,8 @@ for obtaining Job Status, or lists of Jobs.
 The MongoDB instance uses a database titled `Piazza` with a single
 `Jobs` collection. The interfaces exposed through the Dispatcher
 messaging will be simple CRUD-style functionality. The JSON stored in
-the Jobs collection will be stored using the [Common
-Job](https://github.com/venicegeo/pz-jobcommon).
+the Jobs collection will be stored using the 
+<a href="https://github.com/venicegeo/pz-jobcommon" target="_blank">Common Job</a>.
 
     {
         "type": "job"
@@ -114,8 +114,8 @@ query the Job Manager for certain information useful to NPEs and
 utilities such as SAK.
 
 Jobs returned through REST Endpoints will follow the JSON Model defined
-in the [Job
-Class](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java).
+in the <a target="_blank" 
+	href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java">Job Class</a>.
 
 ## REST Endpoints
 
@@ -156,8 +156,6 @@ Get Jobs by User ID
 Administrative Statistics - Return object containing information
 regarding the running instance of this component. Currently returns the
 number of Jobs held in the Job Table, listed by status.
-
-<!-- -->
 
     {
         "running": 2,
@@ -218,7 +216,10 @@ The Sequence for Jobs is as follows:
 ### How Jobs an be Cancelled
 
 Each Worker component (defined as a Component capable of processing
-Jobs), such as Service Controller, Ingest, and Access, will join a
+Jobs), such as
+ <a target="_blank" href="/devguide/index.html#piazza_service_controller">Service Controller</a>, 
+ <a target="_blank" href="/devguide/index.html#ingest">Ingest</a>, and 
+ <a target="_blank" href="/devguide/index.html#access">Access</a>, will join a
 single Kafka consumer group together. By joining the same Kafka consumer
 group, this ensures that as each component scales out towards N-number
 of instances, only one instance of that component will receive an

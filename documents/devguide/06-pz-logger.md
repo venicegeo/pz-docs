@@ -5,7 +5,7 @@
 The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch. This is done though an HTTP API.
 
 ## Building and Running Locally 
-To find out how to run the pz-logger service locally, please visit the github [README](https://github.com/venicegeo/pz-logger/blob/master/README.md)
+To find out how to run the pz-logger service locally, please visit the github <a target="_blank" href="https://github.com/venicegeo/pz-logger/blob/master/README.md">README</a>
 
 ## HTTP API
 
@@ -28,7 +28,7 @@ Sends a message to be logged. The message is given in the POST body as a JSON ob
         "message": "The quick brown fox"
     }
 
-`timeStamp` is a `string` representing the message creation time, expressed in UTC [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt). (In Go, `time.Now().Rount(time.Millisecond).UTC().Format(time.RFC3339)`).
+`timeStamp` is a `string` representing the message creation time, expressed in UTC <a target="_blank" href="https://www.ietf.org/rfc/rfc3339.txt">RFC 3339</a>. (In Go, `time.Now().Rount(time.Millisecond).UTC().Format(time.RFC3339)`).
 
 `facility` and `version` are 1 by default
 
@@ -97,11 +97,11 @@ Returns a JSON object of log messages:
         }
     }
 
-This endpoint supports pagination, as described in the [Pagination](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html#pagination) section.
+This endpoint supports pagination, as described in the <a target="_blank" href="index.html#pagination">Pagination</a> section.
 
 ## Common operations
 
-This service includes the common endpoints described in the [Common Endpoints](devguide/#common_endpoints) section.
+This service includes the common endpoints described in the <a target="_blank" href="index.html#common_endpoints">Common Endpoints</a> section.
 
 The `admin stats` supported are:
 

@@ -76,42 +76,35 @@ The Elasticsearch DSL can get very complicated. Attempting to explain
 the entirety of the Elasticsearch DSL syntax is beyond the scope of this
 document. However, the Elasticsearch documentation is well-written and a
 good source of quality examples of DSL syntax. For more details, visit
-the [Elasticsearch Query DSL
-docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html).
+the <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html">Elasticsearch Query DSL docs</a>.
 
 Some helpful links for constructing Elasticsearch DSL queries include:
 
 -   Elasticsearch Query information
 
-    -   [Query and Filter Context
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html">Query and Filter Context
+        docs</a>
 
-    -   [Fields Parameter
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/2.3/search-request-fields.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/2.3/search-request-fields.html">Fields Parameter
+        docs</a>
 
 -   Elasticsearch Query Types (non-exhaustive)
 
-    -   [Match Query
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html">Match Query docs</a>
 
-    -   [Term Query
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html">Term Query docs</a>
 
-    -   [Exists Query
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html">Exists Query docs</a>
 
-    -   [Type Query
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html">Type Query docs</a>
 
-    -   [Ids Query
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html)
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html">Ids Query docs</a>
 
-    -   [Bool Query
-        docs](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
-
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html">Bool Query docs</a>
+    
 As an aid, here are a few example queries:
 
-# Example Query 1
+## Example Query 1
 
 Make a set of all objects whose `title` matches `"Search"` and whose
 `content` matches `"Elasticsearch"` (where the "match" operation follows
@@ -134,7 +127,7 @@ only the objects whose `status` is (exactly) `"published"` and whose
         }
     }
 
-# Example Query 2
+## Example Query 2
 
 Return all objects whose `severity` is 5 and whose `code` matches
 "PHONE."
@@ -150,7 +143,7 @@ Return all objects whose `severity` is 5 and whose `code` matches
         }
     }
 
-# Example Query 3
+## Example Query 3
 
 Return all objects whose `exact_value` is "Quick Foxes!"
 
@@ -161,3 +154,4 @@ Return all objects whose `exact_value` is "Quick Foxes!"
             }
         }
     }
+ 

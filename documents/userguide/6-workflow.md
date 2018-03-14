@@ -35,7 +35,7 @@ are the basic types that Elasticsearch supports.
 
 This script shows an example of registering an EventType.
 
-[post-eventtype.sh](scripts/post-eventtype.sh)
+<a target="_blank" href="scripts/post-eventtype.sh">post-eventtype.sh</a>
 
     #!/bin/bash
     set -e
@@ -150,7 +150,7 @@ For example:
         }
     }
 
-For details on the meanings of each field, please consult the Swagger reference page. For details on constructing valid Elasticsearch DSL queries, see the [Elasticsearch Query Syntax](http://localhost:8000/userguide/#elasticsearch_query_syntax) section.
+For details on the meanings of each field, please consult the Swagger reference page. For details on constructing valid Elasticsearch DSL queries, see the <a target="blank" href="index.html#elasticsearch_query_syntax">Elasticsearch Query Syntax</a> section.
 
 In the following example, the job will be executed only when our "test" event occurs with the `severity` equal to `5` and the `code` equal to `"PHONE"`.
 
@@ -163,7 +163,7 @@ important to be conscious of this.
 
 This script will create a generic trigger for the event type associated with that `eventTypeId`:
 
-[post-trigger.sh](scripts/post-trigger.sh)
+<a target="_blank" href="scripts/post-trigger.sh">post-trigger.sh</a>
 
     #!/bin/bash
     set -e
@@ -236,10 +236,10 @@ cron expressions should check the main pages for cron, either via
 resources.
 
 Note  
-For information on `cron(1)`, see [cronmaker.com](http://www.cronmaker.com/) and
-[crontab.guru](http://crontab.guru/). The cron specification being used
+For information on `cron(1)`, see <a target="blank" href="http://www.cronmaker.com/">cronmaker.com</a> and
+<a target="blank" href="http://crontab.guru/">crontab.guru</a>. The cron specification being used
 in our implementation is spelled out in
-<https://github.com/robfig/cron/blob/master/doc.go>. This differs
+<a target="blank" href="https://github.com/robfig/cron/blob/master/doc.go">https://github.com/robfig/cron/blob/master/doc.go</a>. This differs
 slightly from traditional `cron(1)` syntax in that the first asterisk is
 the seconds field. This means:
 
@@ -300,8 +300,8 @@ Cron schedules can be spelled out using shorthand notation:
 
 A cron schedule can be specified using the `@every duration` notation,
 where duration is replaced by a Go-parsable
-[time.Duration](https://golang.org/pkg/time/#Duration). Examples
-include:
+<a target="blank" href="https://golang.org/pkg/time/#Duration">time.Duration</a>. 
+Examples include:
 
 -   `"cronSchedule": "@every 1h30m10s"` - send event every 1 hour, 30
     minutes, 10 seconds
@@ -323,7 +323,7 @@ In order to stop repeating events, `DELETE` the initial repeating event by its e
 
 The following script will `POST` an event with a given EventType ID:
 
-[post-event.sh](scripts/post-event.sh)
+<a target="blank" href="scripts/post-event.sh">post-event.sh</a>
 
     #!/bin/bash
     set -e
@@ -380,7 +380,7 @@ For example:
 The following script gets the list of alerts currently in the Piazza
 system:
 
-[get-alerts.sh](scripts/get-alerts.sh)
+<a target="blank" href="scripts/get-alerts.sh">get-alerts.sh</a>
 
     #!/bin/bash
     set -e
@@ -402,4 +402,4 @@ To execute:
 
 ## Workflow API Documentation
 
-See <http://pz-swagger.venicegeo.io/#/Workflow>
+See <a target="_blank" href="http://pz-swagger.venicegeo.io/#/Workflow">http://pz-swagger.venicegeo.io/#/Workflow</a>

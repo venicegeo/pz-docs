@@ -130,8 +130,8 @@ for loading and accessing data, registering and executing services, and
 registering events and triggers. The entirety of Piazza functionality is
 accessed through these Gateway API calls.
 
-For details on the Gateway API, see [Swagger Documentation](https://pz-swagger.geointservices.io/) for details on each of the endpoints.
+For details on the Gateway API, see <a target="_blank" href="https://pz-swagger.geointservices.io/">Swagger Documentation</a> for details on each of the endpoints.
 
-For details on how to use case scenarios, see the [Piazza Users Guide](/userguide/index.html).
+For details on how to use case scenarios, see the <a target="_blank" href="/userguide/index.html">Piazza Users Guide</a>.
 
-For details on the code for the Gateway, see the [Gateway](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html#gateway) section for details.
+For details on the code for the Gateway, see the <a target="_blank" href="index.html#gateway">Gateway</a> section for details.

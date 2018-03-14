@@ -1,4 +1,4 @@
-# Pz Service Controller
+# Piazza Service Controller
 
 The Service Controller is handles the registration and execution of user services and algorithms. It acts as a broker to external services that allows users (developers) to host their own algorithmic or spatial services directly from within Piazza. Other external users can then run these algorithms with their own data. In this way, Piazza acts as a federated search for algorithms, geocoding, or other various microservices (spatial or not) to run within a common environment. Using the Piazza Workflow component, users can create workflows that will allow them to chain events together (such as listening for when new data is loaded into Piazza) in order to create complex, automated workflows. This satisfies one of the primary goals of Piazza: Allowing users across the GEOINT Services platform to share their data and algorithms amongst the community.
 
@@ -8,7 +8,7 @@ There are three types of services, to support a variety of different workflows f
 
 To external users who are merely interacting with Services by executing them, these different types are entirely transparent. The differences only lie in the underlying execution of that Service.
 
-For detailed explanations on any of these Service Types, please see the [Users Guide on Services](/userguide/5-userservices).
+For detailed explanations on any of these Service Types, please see the <a target="_blank" href="/userguide/#user_services">Users Guide on Services</a>.
 
 The first type is the *standard* type of Service registration. To specify this type, no additional parameters must be added to the registration payload - it is the default type. This will register a URL endpoint (and a method) that will be called whenever the user executes the Service through the Gateway. ServiceController will contact the service directly with the specified parameters and then store the result that is returned from the Service. This is the most simple form of execution.
 
@@ -18,4 +18,4 @@ The last type is the *taskManaged* type. This is specified by saying *isTaskMana
 
 ## Building and Running Locally
 
-Please refer to the repository [README](https://github.com/venicegeo/pz-servicecontroller)
+Please refer to the repository <a target="_blank" href="https://github.com/venicegeo/pz-servicecontroller">README</a>

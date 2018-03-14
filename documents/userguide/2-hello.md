@@ -46,19 +46,19 @@ If you have `$PZSERVER` set to `piazza.venicegeo.io`, the scripts will set `$PZK
 
 ## Some Notes About the Examples
 
-The code examples in this guide are presented as shell scripts that use `curl` for the HTTP calls and JSON for the request and response payloads. To simplify the examples, the scripts rely on a setup script, helpfully named [setup.sh](scripts/setup.sh), that will verify you have `$PZSERVER` and `$PZKEY` (or a `$HOME/.pzkey` file) set correctly. It will also define some helpful aliases and functions to make the examples shorter, such as pre-setting some required options for `curl`.
+The code examples in this guide are presented as shell scripts that use `curl` for the HTTP calls and JSON for the request and response payloads. To simplify the examples, the scripts rely on a setup script, helpfully named <a target="_blank" href="scripts/setup.sh">setup.sh</a>, that will verify you have `$PZSERVER` and `$PZKEY` (or a `$HOME/.pzkey` file) set correctly. It will also define some helpful aliases and functions to make the examples shorter, such as pre-setting some required options for `curl`.
 
 Some of the example scripts require one or more input arguments. These are expected to be provided on the command-line as simple strings. The scripts will verify that the right number of arguments were provided.
 
 The example scripts generally produce output. In most cases, the output will be a JSON object to `stdout`.
 
-As an extra aid for both learning and testing, the script [runall.sh](scripts/runall.sh) is provided. This script runs each of the example scripts in order, passing the outputs from one to the inputs of the next, and verifying those outputs are correct. (To use `runall.sh`, you must have the wonderful tool [jq](https://stedolan.github.io/jq/) installed.)
+As an extra aid for both learning and testing, the script <a target="_blank" href="scripts/runall.sh">runall.sh</a> is provided. This script runs each of the example scripts in order, passing the outputs from one to the inputs of the next, and verifying those outputs are correct. (To use `runall.sh`, you must have the wonderful tool <a target="_blank" href="https://stedolan.github.io/jq/">jq</a> installed.)
 
 ## Hello!
 
 With the setup work completed, we are now able to run a simple "health check" ping to verify that we have a functioning instance of Piazza to talk to. We do this by sending an HTTP `GET` request to the server’s root endpoint, `/`.
 
-[hello.sh](scripts/hello.sh)
+<a target="_blank" href="scripts/hello.sh">hello.sh</a>
 
     #!/bin/bash
 
@@ -90,6 +90,6 @@ and it should return a message similar to this:
 
 As you work through this tutorial, you might find these two additional Piazza resources helpful:
 
--   `pz-swagger` is a browser-based UI for exploring Piazza’s REST API. It is located at the same parent address as your `piazza` host, e.g., `pz-swagger.venicegeo.io`. If you are not familiar with Swagger, see [swagger.io](http://swagger.io).
+-   `pz-swagger` is a browser-based UI for exploring Piazza’s REST API. It is located at the same parent address as your `piazza` host, e.g., `pz-swagger.venicegeo.io`. If you are not familiar with Swagger, see <a target="_blank" href="http://swagger.io">swagger.io</a>.
 
 -   `pz-sak` is a developer-level tool for directly interacting with some of Piazza’s public and private services. For example, you can use SAK to examine log files, check the status of jobs, and perform metadata queries. It too can be found under the same parent host address, e.g., `pz-sak.venicegeo.io`. SAK is a tool for debugging and testing only; it is not to be used in production. Contact the Piazza team for assistance with SAK.

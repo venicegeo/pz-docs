@@ -6,7 +6,7 @@ Piazza users can combine user services to perform complex tasks automatically su
 
 Piazza provides a REST API, allowing users to perform such user service management activities as:
 
-1.  Register user services in the Service Registry for search/discovery (see the [Search](/userguide/#search) section for details)
+1.  Register user services in the Service Registry for search/discovery (see the <a target="_blank" href="index.html#search">Search</a> section for details)
 
 2.  Update information on the user service (e.g., URL, name, version, and other metadata)
 
@@ -16,9 +16,9 @@ Piazza provides a REST API, allowing users to perform such user service manageme
 
 5.  Invoke a registered user service to perform some sort of task
 
-6.  Combine user services to perform various tasks (see the [Workflow Service](/userguide/#workflow_service) section for details)
+6.  Combine user services to perform various tasks (see the <a target="_blank" href="index.html#workflow_service">Workflow Service</a> section for details)
 
-While Piazza’s overall goal is to provide users with the ability to register and use existing RESTful user services, there are some guidelines on writing user services to work best with Piazza. See the [How to Write Your Own User Services](/userguide/#how_to_write_your_own_user_services) section for details on how to write for discovery and user from within Piazza.
+While Piazza’s overall goal is to provide users with the ability to register and use existing RESTful user services, there are some guidelines on writing user services to work best with Piazza. See the <a target="_blank" href="index.html#how_to_write_your_own_user_services">How to Write Your Own User Services</a> section for details on how to write for discovery and user from within Piazza.
 
 ## Types of User Services
 
@@ -30,7 +30,7 @@ Synchronous Web Services, when invoked by a client, require the client to wait (
 
 Sometimes, however, the request submitted by the client may take a while to process or processing may be delayed. In cases such as this, it is beneficial to allow the client to continue working on other tasks while the user service processes the submitted request.
 
-To support this need, Piazza provides support for Asynchronous User Services. With these types of services, clients are not blocked while waiting for a response. See the [How to Write Your Own User Services](/userguide/#how_to_write_your_own_user_services) and the [Building in Asynchronous Support](/userguide/#building_in_asynchronous_support) sections for details on how to write asynchronous user services.
+To support this need, Piazza provides support for Asynchronous User Services. With these types of services, clients are not blocked while waiting for a response. See the <a target="_blank" href="index.html#how_to_write_your_own_user_services">How to Write Your Own User Services</a> and the <a target="_blank" href="index.html#building_in_asynchronous_support">Building in Asynchronous Support</a> sections for details on how to write asynchronous user services.
 
 ![Asynchronous](images/PZ-service-async.png)
 
@@ -64,7 +64,7 @@ The service is registered by performing a `POST` request to the `/service` endpo
         }
     }
 
--   <https://pz-gateway.venicegeo.io/service> is the endpoint for registering the user service with the following required JSON attributes:
+-   <a target="_blank" href="https://pz-gateway.venicegeo.io/service">https://pz-gateway.venicegeo.io/service</a> is the endpoint for registering the user service with the following required JSON attributes:
 
     -   The `url` field is the URL for invoking the service. This is the *Root URL* for the service.
         
@@ -98,7 +98,7 @@ Successfully registering a service will return JSON of the following schema:
 
 The `serviceId` field should be noted since it will be used to invoke the service.
 
-An example script for registering the "Hello World" service and returning the `serviceId` can be found at [register-service.sh](scripts/register-service.sh). Run it in the following way:
+An example script for registering the "Hello World" service and returning the `serviceId` can be found at <a target="_blank" href="scripts/register-service.sh">register-service.sh</a>. Run it in the following way:
 
     $ ./register-service.sh
 
@@ -106,7 +106,7 @@ An example script for registering the "Hello World" service and returning the `s
 
 Once a user service is registered within Piazza, it can be invoked by sending a `POST` request to the Piazza API job endpoint `https://pz-gateway.venicegeo.io/job`. The `url` parameter in service registration, along with the `method` parameter, will constitute the execution endpoint. URL query parameters and/or the input being sent into the service are specified in the `dataInputs` field.
 
-For details on how to invoke a user service, see [Piazza Swagger API](http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST).
+For details on how to invoke a user service, see <a target="_blank" href="http://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST">Piazza Swagger API</a>.
 
 Piazza users invoking a user service will get a job response JSON payload response in the following format: 
 
@@ -122,7 +122,7 @@ The `jobId` field contains a unique identifier of the specific running instance 
 
 ### Hello Example service invoked with `GET` method
 
-A script that does this can be found at [execute-service.sh](scripts/execute-service.sh). Provide the `serviceId` returned by the register script as the first argument to the script:
+A script that does this can be found at <a target="_blank" href="scripts/execute-service.sh">execute-service.sh</a>. Provide the `serviceId` returned by the register script as the first argument to the script:
 
     $ ./execute-service.sh {{serviceId}}
 
@@ -137,7 +137,7 @@ A script that does this can be found at [execute-service.sh](scripts/execute-ser
 
 The `serviceId` is set to the return value from registering the service. In this example, no `dataInputs` are specified because there are no required parameters or payloads to invoke this service.
 
-For details on the various ways to specify Data Inputs into the service, see [Invoking a service, POST Job](https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST) in Swagger for details.
+For details on the various ways to specify Data Inputs into the service, see <a target="_blank" href="https://pz-swagger.venicegeo.io/#!/Service/executeServiceUsingPOST">Invoking a service, POST Job</a> in Swagger for details.
 
 For `dataOutput`, the `mimeType` refers to the actual Multipurpose Internet Mail Extensions (MIME) type(s) of the service output. The type refers to how the output will be stored until retrieved (see below). The return value is not the result of the service call. The execute-service call creates a job and returns the Job ID of that job.
 
@@ -184,11 +184,11 @@ The granularity of the status provided depends on the type of user service that 
 
 The acceptable statuses are as follows: `Pending`, `Running`, `Success`, `Cancelled`, `Error`, `Fail`.
 
-For details on status reporting for asynchronous services, see &lt;Building Asynchronous Support&gt; to see the various types of statuses that can be returned.
+For details on status reporting for asynchronous services, see the <a target="_blank" href="index.html#building_in_asynchronous_support">Building Asynchronous Support</a> section to see the various types of statuses that can be returned.
 
 ## Getting the Results
 
-Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided Data ID, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint. For details on using this endpoint, see the [Piazza API](http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET).
+Once the user service has finished executing, the resulting data can be accessed by the Piazza user. Using the provided Data ID, users can retrieve the data results by sending a `GET` to the Piazza API data endpoint. For details on using this endpoint, see the <a target="_blank" href="http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET">Piazza API</a>.
 
 The example below shows an example of job response depicting a successful execution.
 
@@ -207,7 +207,7 @@ The example below shows an example of job response depicting a successful execut
         }
     }
 
-A script that checks the status of the job can be found at [get-job-info.sh](scripts/get-job-info.sh). The script takes the `jobId` returned from the `execute-service.sh` script as its only argument:
+A script that checks the status of the job can be found at <a target="_blank" href="scripts/get-job-info.sh">get-job-info.sh</a>. The script takes the `jobId` returned from the `execute-service.sh` script as its only argument:
 
     $ ./get-job-info.sh {{jobId}}
 
@@ -227,17 +227,17 @@ Finally, the actual result is returned by sending a `GET` request to `https://pz
         }
     }
 
-Run the [get-data-info.sh](scripts/get-data-info.sh) script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
+Run the <a target="_blank" href="scripts/get-data-info.sh">get-data-info.sh</a> script to check the result of the previous job. This script also takes a single argument: the `dataId` returned by the previous script:
 
     $ ./get-data-info.sh {{dataId}}
 
 ## Cancelling an Invocation
 
-During execution of a Piazza job, the Piazza user who invoked a user service may also request to cancel or abort that job. Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint. For more details on how to use this, see the [Piazza API Abort Job](http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE).
+During execution of a Piazza job, the Piazza user who invoked a user service may also request to cancel or abort that job. Using the `jobId` that was provided from the invocation, a user can cancel a job using the `DELETE` method on the `https://pz-gateway.venicegeo.io/job/{{jobId}}` endpoint. For more details on how to use this, see the <a target="_blank" href="http://pz-swagger.venicegeo.io/#!/Job/abortJobUsingDELETE">Piazza API Abort Job</a>.
 
 ## Other Examples
 
-For more examples on how to register and execute your service, see the [Piazza Developer’s Guide](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html).
+For more examples on how to register and execute your service, see the <a target="_blank" href="/devguide/index.html">Piazza Developer’s Guide</a>.
 
 ## How to Write Your Own User Services
 
@@ -245,7 +245,7 @@ User Services are external web services that service developers write to be util
 
 If a registered user service has additional security and access requirements (e.g., client certificate required, pre-authorization to use, etc.), users should contact the user service provider to negotiate access for use.
 
-The contact information for each user service is located in the `resourceMetadata` field of the service payload. For details on the fields available when registering a user service, see the [Piazza API User Service Registration](http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST) for details.
+The contact information for each user service is located in the `resourceMetadata` field of the service payload. For details on the fields available when registering a user service, see the <a target="_blank" href="http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST">Piazza API User Service Registration</a> for details.
 
 ## Designing Your User Service
 
@@ -257,7 +257,7 @@ To establish an API for exchanging data to and from your user service, consider 
 
 XML is also used to exchange data with RESTful web services. With XML, data is very structured and is stored in a markup language that is readable. As a result of the formatting, XML payloads are much larger than JSON payloads. With this approach, calling RESTful web services is typically done by sending in URL parameters to the service with responses from the service in an XML format. When using XML, a well-documented schema should be used to validate and to describe the responses that may be sent from your service.
 
-For guidance on best practices when creating the RESTful API to your web service, see the [18F API standard](https://github.com/18F/api-standards) for details.
+For guidance on best practices when creating the RESTful API to your web service, see the <a target="_blank" href="https://github.com/18F/api-standards">18F API standard</a> for details.
 
 ## Implementing Scalability
 
@@ -309,7 +309,7 @@ Once your user service is registered as a Task Managed service, Piazza will not 
 
 ## Sending Status Updates for the Job
 
-When you need to send Piazza status updates or results for the job your user service is working on, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{jobId}}`. The payload for this POST is a status update object, which is the exact same model that you previously used in asynchronous services. For details on this model, see the [Status Details](/userguide/#status_details) section.
+When you need to send Piazza status updates or results for the job your user service is working on, submit a `POST` to `https://pz-gateway.venicegeo.io/service/{{serviceId}}/task/{{jobId}}`. The payload for this POST is a status update object, which is the exact same model that you previously used in asynchronous services. For details on this model, see the <a target="_blank" href="index.html#status_details">Status Details</a> section.
 
 For example, if your user service failed to execute, the payload that would be sent to Piazza would be:
 
@@ -453,11 +453,11 @@ This output format is a DataResource payload that indicates the location of a cr
 
 When generating a DataResource payload, `type` and `mimeType` are required for all DataTypes. Additional fields are required depending on the type of data that is generated from the user service.
 
-For details on the DataResource payload and the available DataTypes, see the [Piazza Data API](http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET).
+For details on the DataResource payload and the available DataTypes, see the <a target="_blank" href="http://pz-swagger.venicegeo.io/#!/Data/getMetadataUsingGET">Piazza Data API</a>.
 
 ### What to do About Existing Services
 
-If you have an existing service, consider following the [18F API standard](https://github.com/18F/api-standards) for guidance on best practices. For existing services that are not RESTful, consider wrapping these services with a REST representation. For example, the first generation of web services included heavyweight approaches such as Simple Object Access Protocol (SOAP), where messages were transmitted using XML over HTTP. If converting the service to a REST representation is not possible for services such as these, then consider wrapping these services.
+If you have an existing service, consider following the <a target="_blank" href="https://github.com/18F/api-standards">18F API standard</a> for guidance on best practices. For existing services that are not RESTful, consider wrapping these services with a REST representation. For example, the first generation of web services included heavyweight approaches such as Simple Object Access Protocol (SOAP), where messages were transmitted using XML over HTTP. If converting the service to a REST representation is not possible for services such as these, then consider wrapping these services.
 
 ## Putting Your User Service into Action within Piazza
 
@@ -465,7 +465,7 @@ If you have an existing service, consider following the [18F API standard](https
 
 When registering your service, provide enough metadata about your service so it can be searched and discovered using Piazza’s search capability.
 
-For details on the fields available when registering a user service, see the [Piazza API User Service Registration](http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST) for details.
+For details on the fields available when registering a user service, see the <a target="_blank" href="http://pz-swagger.venicegeo.io/#!/Service/registerServiceUsingPOST">Piazza API User Service Registration</a> for details.
 
 When registering a service, the following fields are required:
 
@@ -499,4 +499,4 @@ Piazza continually monitors the health of user services registered in the servic
 
 ### Service API Documentation
 
-See <http://pz-swagger.venicegeo.io/#/service> for the complete User Service API.
+See <a target="_blank" href="http://pz-swagger.venicegeo.io/#/service">http://pz-swagger.venicegeo.io/#/service</a> for the complete User Service API.

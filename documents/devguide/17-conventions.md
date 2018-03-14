@@ -4,17 +4,17 @@
 
 ### General
 
--   Piazza APIs SHALL use [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
+-   Piazza APIs SHALL use <a target="_blank" href="https://www.ietf.org/rfc/rfc4122.txt">RFC 4122</a> for UUIDs.
 
--   Piazza APIs SHALL use [ISO 8601](https://www.w3.org/TR/NOTE-datetime) for time/date formatting.
+-   Piazza APIs SHALL use <a target="_blank" href="https://www.w3.org/TR/NOTE-datetime">ISO 8601</a> for time/date formatting.
 
--   At the root of every [VeniceGeo](https://github.com/venicegeo) open source repository, please include this [license file](https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt)
+-   At the root of every <a target="_blank" href="https://github.com/venicegeo">VeniceGeo</a> open source repository, please include this <a target="_blank" href="https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt">license file</a>
 
--   In the header of every piece of source code in an open source repository, include this [snippet](https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt)
+-   In the header of every piece of source code in an open source repository, include this <a target="_blank" href="https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt">snippet</a>
 
 ### Java
 
-For general Java coding, follow the [Google Java Style coding standards](http://google.github.io/styleguide/javaguide.html)
+For general Java coding, follow the <a target="_blank" href="http://google.github.io/styleguide/javaguide.html">Google Java Style coding standards</a>
 
 The package naming convention should be:
 
@@ -26,7 +26,7 @@ The package naming convention should be:
 
 ### GitHub
 
-New GitHub Repositories within the [github.com/venicegeo](https://github.com/venicegeo) community should be named using following convention:
+New GitHub Repositories within the <a target="_blank" href="https://github.com/venicegeo">github.com/venicegeo</a> community should be named using following convention:
 
 -   Core Piazza Components: `pz-[COMPONENT NAME]`
 
@@ -38,7 +38,7 @@ New GitHub Repositories within the [github.com/venicegeo](https://github.com/ven
 
 All input and output payloads will be JSON.
 
-Our default JSON style guide is the [Google JSON style guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
+Our default JSON style guide is the <a target="_blank" href="https://google.github.io/styleguide/jsoncstyleguide.xml">Google JSON style guide</a>.
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 

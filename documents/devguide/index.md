@@ -1,4 +1,4 @@
-[*PDF*](devguide.pdf)
+<a href="devguide.pdf" target="_blank">PDF</a>
 
 # Piazza Developer's Guide
 
@@ -128,28 +128,143 @@ initiated when specific conditions are met. The second mechanism
 leverages Apache Kafka message bus and Elasticsearch Triggers to provide
 for asynchronous notifications.
 
-## Piazza Core Overview
+## Prerequisites for Using Piazza
 
-The core functionality of Piazza is split up into several internal
-components that are shown in the below diagram.
+To build and run Piazza, the table below depicts the software that is needed. As a convenience, Piazza provides Vagrant boxes for the required backing services.
 
-![Piazza Detailed Architecture Diagram](images/pz-hla-diagram-detailed.jpg)
+### Piazza Software Prerequisites
 
-Piazza consists of a set of stateless microservices where core
-capabilities are broken up into small independent deployable services.
-Stateless microservices treat each request as an independent transaction
-and do not rely on previous data or “state” from previous requests. The
-Gateway takes the incoming Piazza requests and routes them to the
-appropriate services. Figure 2 shows an overview of Piazza’s
-microservices and how they interact with each other.
+The table below outlines the prerequisites for building/compiling piazza software, and getting piazza up and running in an environment. 
 
-Communication between these microservices is done using two mechanisms.
-The primary mechanism is using HTTPS where microservices communicate
-directly by initiating requests and receiving responses. The second
-mechanism is using asynchronous notifications where communication is
-initiated when specific conditions are met. The second mechanism
-leverages Apache Kafka message bus and Elasticsearch Triggers to provide
-for asynchronous notifications.
+<table class="table piazza-sw-prereqs">
+    <thead>
+        <tr>
+            <th>Software Item</th>
+            <th>Version</th>
+            <th>Description</th>
+            <th>Backing Service</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="odd">
+            <td>Java Development Kit</td>
+            <td>1.8</td>
+            <td>Compiler for building the following Piazza components: Access, Gateway, Ingest, IDAM, JobCommon, JobManager and ServiceController</td>
+            <td>No</td>
+        </tr>
+        <tr class="even">
+            <td>Go</td>
+            <td>1.7.x</td>
+            <td>Compiler for building the following Piazza components: Logger and Workflow</td>
+            <td>No</td>
+        </tr>
+        <tr class="odd">
+            <td>Maven</td>
+            <td>3.3.9</td>
+            <td>Build infrastructure for building Java applications</td>
+            <td>No</td>
+        </tr>
+        <tr class="even">
+            <td>Oracle VM VirtualBox</td>
+            <td>5.0.10</td>
+            <td>Virtual Machine infrastructure for running individual backing services</td>
+            <td>Yes</td>
+        </tr>
+        <tr class="odd">
+            <td>MongoDB</td>
+            <td>2.6.3</td>
+            <td>Database supporting Java micro services</td>
+            <td>Yes</td>
+        </tr>
+        <tr class="even">
+            <td>GeoServer</td>
+            <td>2.9.2</td>
+            <td>Server for providing geospatial image support using Open Geospatial Consortium (OGC) standards</td>
+            <td>Yes</td>
+        </tr>
+        <tr class="odd">
+            <td>PostgreSQL (Crunchy)</td>
+            <td>9.5.2</td>
+            <td>Database used to support storing and retrieving of loaded geospatial data</td>
+            <td>Yes</td>
+        </tr>
+        <tr class="even">
+            <td>Apache Kafka</td>
+            <td>0.9.0.1</td>
+            <td>Messaging Bus used for asynchronous message support.</td>
+            <td>Yes</td>
+        </tr>
+    </tbody>
+</table>
+
+#### Local Vagrant Boxes available for Services
+<table class="table">
+    <thead>
+        <tr>
+            <th>Vagrant Box</th>
+            <th>Location</th>
+        </tr>
+    </thead>
+    <tbody>
+		<tr class="odd">
+			<td>ElasticSearch</td>
+			<td>
+				<a target="_blank" class="uri" 
+					href="https://github.com/venicegeo/pz-search-metadata-ingest/tree/master/config">https://github.com/venicegeo/pz-search-metadata-ingest/tree/master/config</a>
+			</td>
+        </tr>
+        <tr class="even">
+            <td>MongoDB</td>
+            <td>
+            		<a target="_blank" class="uri" 
+            			href="https://github.com/venicegeo/pz-jobmanager/tree/master/config">https://github.com/venicegeo/pz-jobmanager/tree/master/config</a>
+            	</td>
+        </tr>
+        <tr class="odd">
+            <td>GeoServer</td>
+            <td>
+            		<a target="_blank" class="uri" 
+            			href="https://github.com/venicegeo/pz-access/tree/master/config">https://github.com/venicegeo/pz-access/tree/master/config</a>
+            </td>
+        </tr>
+        <tr class="even">
+            <td>PostgreSQL</td>
+            <td>
+            		<a target="_blank" class="uri" 
+            			href="https://github.com/venicegeo/pz-ingest/tree/master/config">https://github.com/venicegeo/pz-ingest/tree/master/config</a>
+            	</td>
+        </tr>
+        <tr class="odd">
+            <td>Apache Kafka</td>
+            <td>
+            		<a target="_blank" class="uri" 
+            			href="https://github.com/venicegeo/kafka-devbox">https://github.com/venicegeo/kafka-devbox</a>
+            	</td>
+        </tr>
+    </tbody>
+</table>
+
+### Accessing Piazza
+
+Using Piazza, NPEs can perform actions such as the loading and retrieval
+data, the registration and execution user services, and registration of
+workflow events or triggers. The requests and responses from the Gateway
+are defined via JSON. The Gateway acts as an external broker, or proxy,
+to the internal components of the Piazza application. The Gateway will
+receive user requests, and then route that request or command to the
+appropriate internal Piazza component.
+
+The Gateway is the single point-of-contact for external users to
+interact with Piazza Core components. This API provides functionality
+for loading and accessing data, registering and executing services, and
+registering events and triggers. The entirety of Piazza functionality is
+accessed through these Gateway API calls.
+
+For details on the Gateway API, see <a target="_blank" href="https://pz-swagger.geointservices.io/">Swagger Documentation</a> for details on each of the endpoints.
+
+For details on how to use case scenarios, see the <a target="_blank" href="/userguide/index.html">Piazza Users Guide</a>.
+
+For details on the code for the Gateway, see the <a target="_blank" href="index.html#gateway">Gateway</a> section for details.
 
 ## Job Manager
 
@@ -214,19 +329,19 @@ management.
 
 ### Building and Running Locally
 
-Please refer to repository readme: <https://github.com/venicegeo/pz-jobmanager>
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-jobmanager">README</a>
 
 ### Source Organization
 
 The main logic of the Job Manager is split between two package. The
-`controller` package contains the REST controller that contains the REST
+<a target="_blank" href="https://github.com/venicegeo/pz-jobmanager/tree/master/src/main/java/jobmanager/controller">`controller`</a> package contains the REST controller that contains the REST
 endpoints for querying job status, etc. This is a simple Spring
 RestController that contains the endpoints defined as simple functions.
-The `messaging` package declares the Apache Kafka logic, where the
+The <a target="_blank" href="https://github.com/venicegeo/pz-jobmanager/tree/master/src/main/java/jobmanager/messaging">`messaging`</a> package declares the Apache Kafka logic, where the
 JobManager defines Kafka consumers to poll for incoming messages. The
 messages pertain to 1) Creating new Jobs and 2) Updating the status of
 Jobs. The Jobs are persisted in the MongoDB and interaction code to
-handle the MongoDB commits is located in the `database` package.
+handle the MongoDB commits is located in the <a target="_blank" href="https://github.com/venicegeo/pz-jobmanager/tree/master/src/main/java/jobmanager/database">`database`</a> package.
 
 ### Interface
 
@@ -244,8 +359,8 @@ for obtaining Job Status, or lists of Jobs.
 The MongoDB instance uses a database titled `Piazza` with a single
 `Jobs` collection. The interfaces exposed through the Dispatcher
 messaging will be simple CRUD-style functionality. The JSON stored in
-the Jobs collection will be stored using the [Common
-Job](https://github.com/venicegeo/pz-jobcommon).
+the Jobs collection will be stored using the 
+<a href="https://github.com/venicegeo/pz-jobcommon" target="_blank">Common Job</a>.
 
     {
         "type": "job"
@@ -267,8 +382,8 @@ query the Job Manager for certain information useful to NPEs and
 utilities such as SAK.
 
 Jobs returned through REST Endpoints will follow the JSON Model defined
-in the [Job
-Class](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java).
+in the <a target="_blank" 
+	href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/Job.java">Job Class</a>.
 
 ### REST Endpoints
 
@@ -417,7 +532,7 @@ the Job.
 The Logger provides a system-wide, common way to record log messages. The log messages are stored in Elasticsearch. This is done though an HTTP API.
 
 ### Building and Running Locally 
-To find out how to run the pz-logger service locally, please visit the github [README](https://github.com/venicegeo/pz-logger/blob/master/README.md)
+To find out how to run the pz-logger service locally, please visit the github <a target="_blank" href="https://github.com/venicegeo/pz-logger/blob/master/README.md">README</a>
 
 ### HTTP API
 
@@ -440,7 +555,7 @@ Sends a message to be logged. The message is given in the POST body as a JSON ob
         "message": "The quick brown fox"
     }
 
-`timeStamp` is a `string` representing the message creation time, expressed in UTC [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt). (In Go, `time.Now().Rount(time.Millisecond).UTC().Format(time.RFC3339)`).
+`timeStamp` is a `string` representing the message creation time, expressed in UTC <a target="_blank" href="https://www.ietf.org/rfc/rfc3339.txt">RFC 3339</a>. (In Go, `time.Now().Rount(time.Millisecond).UTC().Format(time.RFC3339)`).
 
 `facility` and `version` are 1 by default
 
@@ -509,11 +624,11 @@ Returns a JSON object of log messages:
         }
     }
 
-This endpoint supports pagination, as described in the [Pagination](https://pz-docs.int.dev.east.paas.geointservices.io/devguide/index.html#pagination) section.
+This endpoint supports pagination, as described in the <a target="_blank" href="index.html#pagination">Pagination</a> section.
 
 ### Common operations
 
-This service includes the common endpoints described in the [Common Endpoints](devguide/#common_endpoints) section.
+This service includes the common endpoints described in the <a target="_blank" href="index.html#common_endpoints">Common Endpoints</a> section.
 
 The `admin stats` supported are:
 
@@ -531,7 +646,7 @@ functionality.
 
 ### Building and Running Locally
 
-Please refer to repository readme:<https://github.com/venicegeo/pz-gateway>
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-gateway">README</a>
 
 ### S3 Credentials
 
@@ -647,9 +762,9 @@ user API.
 
 SAK will be used by developers as an easy way to test the functionality
 of the services. It uses HTML/CSS/Javascript to make HTTP calls to
-Piazza services and runs inside of [NGINX](http://nginx.org/). The UI is
-unit tested using [Karma](https://karma-runner.github.io/0.13/index.html) 
-and [Jasmine](http://jasmine.github.io/2.4/introduction.html).
+Piazza services and runs inside of <a target="_blank" href="http://nginx.org/">NGINX</a>. The UI is
+unit tested using <a target="_blank" href="https://karma-runner.github.io/0.13/index.html">Karma</a>
+and <a target="_blank" href="http://jasmine.github.io/2.4/introduction.html">Jasmine</a>.
 
 ### Source Organization
 
@@ -666,13 +781,13 @@ AngularJS app. The important sections include:
 
 #### Requirements
 
--   Code cloned from <https://github.com/venicegeo/pz-sak>
+-   Code cloned from <a target="_blank" href="https://github.com/venicegeo/pz-sak">https://github.com/venicegeo/pz-sak</a>
 
 ```
     git clone https://github.com/venicegeo/pz-sak.git
 ```
     
--   [Nginx 1.8.1](http://nginx.org/en/download.html)
+-   <a target="_blank" href="http://nginx.org/en/download.html">Nginx 1.8.1</a>
 
 #### Steps
 
@@ -682,7 +797,7 @@ AngularJS app. The important sections include:
 
 3.  From a command line run `start nginx.exe`
 
-4.  Go to <http://localhost>
+4.  Go to <a target="_blank" href="http://localhost">http://localhost</a>
 
 Note: The following commands are helpful as well:
 
@@ -710,7 +825,7 @@ Troubleshooting:
 
 1.  Open your web-browser
 
-2.  Go to: <http://pz-sak.venicegeo.io/>
+2.  Go to: <a target="_blank" href="http://pz-sak.venicegeo.io/">http://pz-sak.venicegeo.io/</a>
 
 ### Using SAK
 
@@ -726,7 +841,7 @@ Upon login, you are redirected to the Home page where you are given a
 list of commonly used links and locations of services. Here are further
 details on using these services through SAK.
 
-#### Access
+#### SAK Access
 
 In this section you can list all pieces of data that have been loaded
 into Piazza. If you’re looking for something specific, you can look up
@@ -734,13 +849,13 @@ the data object by it’s Data ID. All data is returned in raw JSON
 format, so you can view the response as close to what services that
 connect to Piazza would be seeing.
 
-#### Jobs
+#### SAK Jobs
 
 Here you can check the status of specific jobs using the Job ID,
 retrieve resource data with a Data ID, or just browse through all the
 jobs that have been requested.
 
-#### Loader
+#### SAK Loader
 
 The loader allows the upload of text and files into the Piazza system.
 Currently supported through the UI, the user may choose Text to load or
@@ -806,7 +921,8 @@ be listed in the left tree pane. When selecting a service any functions
 associated will be listed on the page that appears, and some services
 will have more functions than others.
 
-### UI mockups ![](:images/sak-tree-branches.png)
+### UI mockups 
+![UI mockups](images/sak-tree-branches.png)
 
 ## Access
 
@@ -814,7 +930,7 @@ The Access component is what handles the accessing of this data - either by requ
 
 ### Building and Running Locally
 
-Please refer to repository [README](https://github.com/venicegeo/pz-access)
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-access">README</a>
 
 ### S3 Credentials
 
@@ -833,15 +949,14 @@ The main logic of the Access component is split between two packages:
 
 1. Controller
 
-	The [`controller`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/controller) 
-	package contains the Spring RestController class that defines REST endpoints 
-	that handle user queries for DataResource information, and other REST endpoints used.
+	The <a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/controller">`controller`</a> package contains the Spring RestController class that defines REST endpoints that handle user queries for DataResource information, and other REST endpoints used.
 
 2. Messaging
 
-	The [`messaging`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/messaging) package defines Kafka consumers which listen 	for messages through Kafka for creating GeoServer deployments. The logic for the deploying of data resources as GeoServer layers happens in the 		[`deploy`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/deploy) package through the [`Deployer.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Deployer.java) and [`Leaser.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java) classes. These two classes manage the deployments of GeoServer (Deployment.java), and managing their life 		times and resource cleanup [`Leaser.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java). In the 			[`Leaser.java`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java) class that is a method [`reapExpiredLeases()`](https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java#L136) that runs once a night that will clean up any expired resources on GeoServer.
+	The <a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/messaging">`messaging`</a> package defines Kafka consumers which listen for messages through Kafka for creating GeoServer deployments. The logic for the deploying of data resources as GeoServer layers happens in the <a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/deploy">`deploy`</a> package through the <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Deployer.java">`Deployer`</a> and <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java">`Leaser`</a> classes. These two classes manage the deployments of GeoServer (Deployment.java), and managing their life 	times and resource cleanup <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java">`Leaser`</a>. In the <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java">`Leaser`</a> class, there is a method <a target="_blank" href="https://github.com/venicegeo/pz-access/blob/master/src/main/java/access/deploy/Leaser.java#L136">`reapExpiredLeases()`</a> that runs once a night that will clean up any expired resources on GeoServer.
 
-The Access component interacts with the MongoDB DataResource collection, and management for this code is located in the [`database`](https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/database) package.
+The Access component interacts with the MongoDB DataResource collection, and management for this code is located in the
+<a target="_blank" href="https://github.com/venicegeo/pz-access/tree/master/src/main/java/access/database">`database()`</a> package.
 
 ### Interface
 
@@ -977,7 +1092,7 @@ The Ingest component is the internal component that handles the loading of spati
 
 ### Building Running Locally
 
-Please refer to repository [README](https://github.com/venicegeo/pz-ingest)
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-ingest">README</a>
 
 ### S3 Credentials
 
@@ -988,9 +1103,15 @@ The Ingest component inspects files uploaded to S3 by the Gateway. As such, the 
 
 ### Source Organization
 
-The [messaging](https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/messaging) package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The [`IngestWorker`](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/messaging/IngestWorker.java) class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the [`inspect`](https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/inspect) package. There is an inspector for each type of data ([GeoJSON](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoJsonInspector), [GeoTIFF](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoTiffInspector.java), [Point Cloud](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/PointCloudInspector.java), [Shapefile](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/ShapefileInspector.java), [Text](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/TextInspector.java), [WFS](https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/WfsInspector.java)). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the [`DataResource`](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) objects and store them into the MongoDB instance.
+The <a target="_blank" href="https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/messaging">messaging</a> package in source contains the classes that handle the incoming Kafka messages, which contain the information regarding the data to be ingested. The <a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/messaging/IngestWorker.java">`IngestWorker`</a> class contains the majority of this logic. When new data is ingested, the data information is passed onto inspectors located in the <a target="_blank" href="https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/inspect">`inspect`</a> package. There is an inspector for each type of data (
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoJsonInspector">GeoJSON</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/GeoTiffInspector.java">GeoTIFF</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/PointCloudInspector.java">Point Cloud</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/ShapefileInspector.java">Shapefile</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/TextInspector.java">Text</a>, 
+<a target="_blank" href="https://github.com/venicegeo/pz-ingest/blob/master/src/main/java/ingest/inspect/WfsInspector.java">WFS</a>). These inspectors will dig into the data to validate and parse out any relevant metadata. The inspectors are what will create the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java">'DataResource'</a> objects and store them into the MongoDB instance.
 
-The [controller](https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/controller) package contains the administrative REST endpoints for this component.
+The <a target="_blank" href="https://github.com/venicegeo/pz-ingest/tree/master/src/main/java/ingest/controller">controller</a> package contains the administrative REST endpoints for this component.
 
 ### Interface
 
@@ -1015,11 +1136,11 @@ The JSON payload for either of the above endpoints will look like:
         "metadata": {}
     }
 
-The metadata fields under the `jobType.data` tag are defined in the [DataResource](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java) POJO object. This object contains the [ResourceType](https://github.com/venicegeo/pz-wps/blob/master/pizza_wps_2_0/src/main/java/org/w3/_1999/xlink/ResourceType.java) interface, which is listed in the ['model.data.type`](https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/type) package. This package defines format types for each type of Data that Piazza currently supports: [Shapefiles](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/ShapefileDataType.java), [Text](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/TextDataType.java), [PostGIS Tables](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/PostGISDataType.java), etc.
+The metadata fields under the `jobType.data` tag are defined in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/DataResource.java">DataResource</a> POJO object. This object contains the <a target="_blank" href="https://github.com/venicegeo/pz-wps/blob/master/pizza_wps_2_0/src/main/java/org/w3/_1999/xlink/ResourceType.java">ResourceType</a> interface, which is listed in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/data/type">'model.data.type`</a> package. This package defines format types for each type of Data that Piazza currently supports: <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/ShapefileDataType.java">Shapefiles</a>, <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/TextDataType.java">Text</a>, <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/data/type/PostGISDataType.java">PostGIS Tables</a>, etc.
 
 The `host` parameter is set to true if Piazza should host the data internally. This should be the default behavior. If this is set to false, then Piazza will not store the data in its internal storage. It will merely provide a link to wherever this external data resides, and attempt to read whatever metadata it can. If you specify a `file` in the Multipart POST, and set the ingest flag `host` to `false`, then an error will be raised - this is because setting `host` to `false` is explicitly stating to the Ingest component that no data should be stored - only metadata.
 
-When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the [ResourceMetadata](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java) POJO.
+When loading data, users will be encouraged to fill out as much `metadata` as possible, which follows the form of the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/job/metadata/ResourceMetadata.java">ResourceMetadata</a> POJO.
 
 ### Ingest Process
 
@@ -1162,7 +1283,7 @@ Web Feature Services can be ingested and hosted within Piazza. If `host` is set 
 
 ### Workflow Events
 
-In support of the [Workflow](https://github.com/venicegeo/pz-workflow) service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
+In support of the <a target="_blank" href="https://github.com/venicegeo/pz-workflow">Workflow</a> service, the Ingest component is capable of firing events, consumed by the Workflow, in order to let other Piazza components become aware of when new Data has been Ingested into Piazza.
 
 #### Event Type
 
@@ -1195,15 +1316,15 @@ Return object containing information regarding the running instance of this comp
         "jobs": ["job-id-1", "job-id-2"]
     }
 
-## Pz Search Services
+## Piazza Search Services
 
 The Piazza Core Search infrastructure includes two services with REST APIs:
 
-1. [pz-search-metadata-ingest](https://github.com/venicegeo/pz-search-metadata-ingest)
+1. <a target="_blank" href="https://github.com/venicegeo/pz-search-metadata-ingest">pz-search-metadata-ingest</a>
 	
 	Service to accept a JSON structure for metadata ingest to the Piazza Elasticsearch cluster
 
-2. [pz-search-query](https://github.com/venicegeo/pz-search-query). 
+2. <a target="_blank" href="https://github.com/venicegeo/pz-search-query">pz-search-query</a> 
 	
 	Service that accepts queries to Piazza Elasticsearch instance for content discovery endpoints, accepting an HTTP POST of Elasticsearch query language (DSL).
 
@@ -1213,9 +1334,9 @@ As spatial data is loaded into Piazza, metadata is extracted and indexed by the 
 
 Please refer to repository README:
 
-[pz-search-metadata-ingest README](https://github.com/venicegeo/pz-search-metadata-ingest)
+- <a target="_blank" href="https://github.com/venicegeo/pz-search-metadata-ingest">pz-search-metadata-ingest README</a>
 
-[pz-search-query README](https://github.com/venicegeo/pz-search-query)
+- <a target="_blank" href="https://github.com/venicegeo/pz-search-query">pz-search-query README</a>
 
 ## Identity and Access Management (IDAM)
 
@@ -1223,11 +1344,11 @@ The Piazza Core pz-idam project is an internal component that provides REST endp
 
 ### Building and Running Locally
 
-Please refer to repository [README](https://github.com/venicegeo/pz-idam)
+Please refer to repository <a target="_blank" href="https://github.com/venicegeo/pz-idam">README</a>
 
 ### Code Organization
 
-The pz-idam project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the pz-idam API provides. These are located in the [org.venice.piazza.idam.controller](https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/controller) package, and are broken up into separate controllers by their functionality.
+The pz-idam project uses a series of Spring RestControllers in order to manage the number of REST Endpoints that the pz-idam API provides. These are located in the <a target="_blank" href="https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/controller">org.venice.piazza.idam.controller</a> package, and are broken up into separate controllers by their functionality.
 
 ### API Keys and User Profiles
 
@@ -1241,17 +1362,17 @@ When building pz-idam locally, it can be beneficial to disable the AuthN functio
 
 ### Authentication
 
-The [PiazzaAuthenticator](https://github.com/venicegeo/pz-idam/blob/master/src/main/java/org/venice/piazza/idam/authn/PiazzaAuthenticator.java) interface is defined in the [org.venice.piazza.idam.authn](https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/authn) package. This is the interface that allows IDAM to determine Authentication credentials for allowing access to generation of API Keys. It currently contains one implementation, for GEOAxIS. This authenticates a set of credentials and provides back an Authentication Response, either successful login or failed attempts. In order to add new authentication providers, simply extend this interface and implement the appropriate methods.
+The <a target="_blank" href="https://github.com/venicegeo/pz-idam/blob/master/src/main/java/org/venice/piazza/idam/authn/PiazzaAuthenticator.java">PiazzaAuthenticator</a> interface is defined in the <a target="_blank" href="https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/authn">org.venice.piazza.idam.authn</a> package. This is the interface that allows IDAM to determine Authentication credentials for allowing access to generation of API Keys. It currently contains one implementation, for GEOAxIS. This authenticates a set of credentials and provides back an Authentication Response, either successful login or failed attempts. In order to add new authentication providers, simply extend this interface and implement the appropriate methods.
 
-These methods return the [AuthResponse](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/response/AuthResponse.java) model, defined in [JobCommon[(https://github.com/venicegeo/pz-jobcommon), which contains information as to whether or not the authentication succeeds, and if it does, it also contains a link to the UserProfile object which contains information on the user as provided through the authentication provider.
+These methods return the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/response/AuthResponse.java">AuthResponse</a> model, defined in <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon">JobCommon</a>, which contains information as to whether or not the authentication succeeds, and if it does, it also contains a link to the UserProfile object which contains information on the user as provided through the authentication provider.
 
 ### Authorization
 
-The [Authorizer](https://github.com/venicegeo/pz-idam/blob/master/src/main/java/org/venice/piazza/idam/authz/Authorizer.java) interface is defined in the [org.venice.piazza.idam.authz](https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/authz) package and contains an interface for implementing authorization. IDAM REST controller contains endpoints which perform authorization by checking if a Piazza API Key is authorized to perform a specific action. These actions are described in the [AuthorizationCheck](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/security/authz/AuthorizationCheck.java) model, which defines a [Permission](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/security/authz/Permission.java) object that outlines a specific HTTP Method and a URI. In this way, users can be granted fine-level authorization on every REST endpoint in the Piazza system.
+The <a target="_blank" href="https://github.com/venicegeo/pz-idam/blob/master/src/main/java/org/venice/piazza/idam/authz/Authorizer.java">Authorizer</a> interface is defined in the <a target="_blank" href="https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/authz">org.venice.piazza.idam.authz</a> package and contains an interface for implementing authorization. IDAM REST controller contains endpoints which perform authorization by checking if a Piazza API Key is authorized to perform a specific action. These actions are described in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/security/authz/AuthorizationCheck.java">AuthorizationCheck</a> model, which defines a <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/model/security/authz/Permission.java">Permission</a> object that outlines a specific HTTP Method and a URI. In this way, users can be granted fine-level authorization on every REST endpoint in the Piazza system.
 
-Many authorizers can be chained together in order to expand the functionality of the IDAM component. If new authorizers should be added, then simply create a new package under [org.venice.piazza.idam.authz](https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/authz) and create a class implementing the [Authorizer](https://github.com/venicegeo/pz-idam/blob/master/src/main/java/org/venice/piazza/idam/authz/Authorizer.java) interface.
+Many authorizers can be chained together in order to expand the functionality of the IDAM component. If new authorizers should be added, then simply create a new package under <a target="_blank" href="https://github.com/venicegeo/pz-idam/tree/master/src/main/java/org/venice/piazza/idam/authz">org.venice.piazza.idam.authz</a> and create a class implementing the <a target="_blank" href="https://github.com/venicegeo/pz-idam/blob/master/src/main/java/org/venice/piazza/idam/authz/Authorizer.java">Authorizer</a> interface.
 
-## Pz Service Controller
+## Piazza Service Controller
 
 The Service Controller is handles the registration and execution of user services and algorithms. It acts as a broker to external services that allows users (developers) to host their own algorithmic or spatial services directly from within Piazza. Other external users can then run these algorithms with their own data. In this way, Piazza acts as a federated search for algorithms, geocoding, or other various microservices (spatial or not) to run within a common environment. Using the Piazza Workflow component, users can create workflows that will allow them to chain events together (such as listening for when new data is loaded into Piazza) in order to create complex, automated workflows. This satisfies one of the primary goals of Piazza: Allowing users across the GEOINT Services platform to share their data and algorithms amongst the community.
 
@@ -1261,7 +1382,7 @@ There are three types of services, to support a variety of different workflows f
 
 To external users who are merely interacting with Services by executing them, these different types are entirely transparent. The differences only lie in the underlying execution of that Service.
 
-For detailed explanations on any of these Service Types, please see the [Users Guide on Services](/userguide/5-userservices).
+For detailed explanations on any of these Service Types, please see the <a target="_blank" href="/userguide/#user_services">Users Guide on Services</a>.
 
 The first type is the *standard* type of Service registration. To specify this type, no additional parameters must be added to the registration payload - it is the default type. This will register a URL endpoint (and a method) that will be called whenever the user executes the Service through the Gateway. ServiceController will contact the service directly with the specified parameters and then store the result that is returned from the Service. This is the most simple form of execution.
 
@@ -1271,14 +1392,14 @@ The last type is the *taskManaged* type. This is specified by saying *isTaskMana
 
 ### Building and Running Locally
 
-Please refer to the repository [README](https://github.com/venicegeo/pz-servicecontroller)
+Please refer to the repository <a target="_blank" href="https://github.com/venicegeo/pz-servicecontroller">README</a>
 
 ## Workflow Service
 
-## Overview 
+### Overview 
 The Workflow service enables the construction and use of "event" notifications to enable simple "if-this-happens-then-do-that" workflows. This is done though an HTTP API. 
 
-For a walkthough visit the Users Guide, for a simple overview visit [pz-swagger](https://pz-swagger.geointservices.io//Workflow).
+For a walkthough visit the Users Guide, for a simple overview visit <a target="_blank" href="https://pz-swagger.geointservices.io/Workflow">pz-swagger</a>.
 
 A user will follow these general steps:
 
@@ -1293,12 +1414,12 @@ A user will follow these general steps:
 5.  Go to 3.
 
 ### Building and Running Locally 
-To find out how to run the pz-workflow service locally, please visit the github [README](https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md)
+To find out how to run the pz-workflow service locally, please visit the github <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/readme-updates/README.md">README</a>
 
 ### Technical
 
 #### Elasticsearch Interaction
-[Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html)
+<a target="_blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html">Elasticsearch</a>
 is the chosen database for the workflow service. Elasticsearch can be
 defined as a *nosql* using Lucene query. This can provide powerful query
 ability but at the cost of some inconveniences interacting with the
@@ -1309,25 +1430,22 @@ been designed in a way to reduce elasticsearch’s *nosql* capabilites.
 This is done by creating strict mapping types on all schemas. This
 insures that elasticsearch will only accept documents that exactly match
 the specified schema. Workflow uses two packages in order to communicate
-with elasticsearch. The first of these is [pz-gocommon index
-file](https://github.com/venicegeo/pz-gocommon/blob/master/elasticsearch/index.go).
-This allows workflow to create simple communication with an index. This
-index file itself relies on
-[elastic.v3](http://gopkg.in/olivere/elastic.v3) to create the HTTP
+with elasticsearch. The first of these is <a target="_blank" href="https://github.com/venicegeo/pz-gocommon/blob/master/elasticsearch/index.go">pz-gocommon index file</a>. This allows workflow to create simple communication with an index. This
+index file itself relies on <a target="_blank" href="http://gopkg.in/olivere/elastic.v3">elastic.v3</a> to create the HTTP
 traffic.
 
 #### Kafka Interaction 
-Information on Kafka can be found [here](https://kafka.apache.org/intro). In workflow, Kafka service information must be provided in the VCAP services. After an event *triggers* a trigger, a job is sent to kafka. The function for this can be found [here](https://github.com/venicegeo/pz-workflow/blob/ff8b869893f910145d5205ed2557f22ca0e1da24/workflow/Service.go#L206). Often when running workflow locally VCAP services are not provided, therefore no connection with kafka can be made, making jobs fail to be sent. A way of testing whether or not triggers work is checking to see if a kafka error was created in the workflow process terminal.
+Information on Kafka can be found <a target="_blank" href="https://kafka.apache.org/intro">here</a>. In workflow, Kafka service information must be provided in the VCAP services. After an event *triggers* a trigger, a job is sent to kafka. The function for this can be found <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/ff8b869893f910145d5205ed2557f22ca0e1da24/workflow/Service.go#L206">here</a>. Often when running workflow locally VCAP services are not provided, therefore no connection with kafka can be made, making jobs fail to be sent. A way of testing whether or not triggers work is checking to see if a kafka error was created in the workflow process terminal.
 
 #### Other Required Services 
-pz-workflow also requires two other services: pz-idam & pz-servicecontroller. These do not require the use of VCAP as they are part of the piazza system. Workflow will only fail to launch if it cannot contact the piazza system. Service controller is used in workflow to validate service uuids when creating a trigger. Found [here](https://github.com/venicegeo/pz-workflow/blob/3864890c012854223569212af85d36eb077d1725/workflow/TriggerDB.go#L54). Idam is used when a trigger is attempting to fire off a job, which idam can allow or deny. Found [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/Service.go#L782), however notice that the actual auth function is contained in [pz-gocommon](https://github.com/venicegeo/pz-gocommon/blob/master/gocommon/authz.go).
+pz-workflow also requires two other services: pz-idam & pz-servicecontroller. These do not require the use of VCAP as they are part of the piazza system. Workflow will only fail to launch if it cannot contact the piazza system. Service controller is used in workflow to validate service uuids when creating a trigger, found <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/3864890c012854223569212af85d36eb077d1725/workflow/TriggerDB.go#L54">here</a>. IDAM is used when a trigger is attempting to fire off a job, which idam can allow or deny. Found <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/Service.go#L782">here</a>, however notice that the actual auth function is contained in <a target="_blank" href="https://github.com/venicegeo/pz-gocommon/blob/master/gocommon/authz.go">pz-gocommon</a>.
 
 #### Programmatic Hierarchy 
 The workflow service has three distinct hierarchical sections: `Server`, `Service`, `DB`. The Server is the top layer. This is where HTTP requests are forwarded two. The job of the `Server` functions is to call the correct function in the `Service` and return a valid json response. The `Service` contains the bulk of the operation. There are functions designed for support, such as `sendToKafka` or `newIdent`, and functions that mirror those in the `Server`. These functions perform the logic of whichever rest call was made, interacting with `DB`'s to do so. The `DB`'s interact with the index mentioned in the elasticsearch interaction section. The role of these functions is to provide higher level functions when communicating with elasticsearch, such as queries.
 
 #### Notes
 
-Unique parameter types for different event types For example, there are two event types. Event type `A` has variable `foo` type `string`. Now a different user wants to create an event type `B` that also has the variable `foo` but wants it to be type `float`. Using elasticsearch as is, this would not be possible. When creating a mapping, each variable and its type gets stored in elasticsearch, and there cannot be multiple types of the same variable. Knowing that each event type name must be unique, this is a simple problem to combat. Instead, the variables can simply be renamed, using dot notation, to `A.foo` type `string` and `B.foo` type `float`. This can be done when creating and event type and storing in elasticsearch, and when the event type is being retrieved it can simply be removed. This can all be done without the user being aware. The encoding is done [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/Service.go#L470), the decoding is done [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/Service.go#L330) and the called functions are as simple as this: 
+Unique parameter types for different event types For example, there are two event types. Event type `A` has variable `foo` type `string`. Now a different user wants to create an event type `B` that also has the variable `foo` but wants it to be type `float`. Using elasticsearch as is, this would not be possible. When creating a mapping, each variable and its type gets stored in elasticsearch, and there cannot be multiple types of the same variable. Knowing that each event type name must be unique, this is a simple problem to combat. Instead, the variables can simply be renamed, using dot notation, to `A.foo` type `string` and `B.foo` type `float`. This can be done when creating and event type and storing in elasticsearch, and when the event type is being retrieved it can simply be removed. This can all be done without the user being aware. The encoding is done <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/Service.go#L470">here</a>, the decoding is done <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/Service.go#L330">here</a> and the called functions are as simple as this: 
 
 	func (service *Service) addUniqueParams(uniqueKey string, inputObj map[string]interface{}) map\[string\]interface{} 
 	{ 
@@ -1345,40 +1463,40 @@ Unique parameter types for different event types For example, there are two even
 		return inputObj[uniqueKey].(map[string]interface{})
 	} 
 
-This in turn also effects trigger queries as the variables users are trying to query have had there names changed. This is accounted for [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/TriggerDB.go#L375) and the following functions.
+This in turn also effects trigger queries as the variables users are trying to query have had there names changed. This is accounted for <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/workflow/TriggerDB.go#L375">here</a> and the following functions.
 
 #### Event index version number 
 
-When creating a trigger, workflow creates a [percolator query](https://www.elastic.co/guide/en/elasticsearch/reference/2.0/search-percolate.html) in the events index. For simplicity, workflow allows percolator queries to contain dot notation for terms. This can only be done by tricking an index into thinking it is an index from elasticsearch 2.0, as this was the last time dot notation was permitted in percolator queries. This is done [here](https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/db/000-Event.sh#L41).
+When creating a trigger, workflow creates a <a target="_blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/2.0/search-percolate.html">percolator query</a> in the events index. For simplicity, workflow allows percolator queries to contain dot notation for terms. This can only be done by tricking an index into thinking it is an index from elasticsearch 2.0, as this was the last time dot notation was permitted in percolator queries. This is done <a target="_blank" href="https://github.com/venicegeo/pz-workflow/blob/ac6a9287aea9e9ec24a83a38e1b19895a14df730/db/000-Event.sh#L41">here</a>.
 
 ## Job Common
 
-The [Job Common](https://github.com/venicegeo/pz-jobcommon) (or Java Common) project is a Java library that contains various useful utility classes and serializable [models](https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/) that are used commonly throughout the Java applications in the Piazza Core.
+The <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon">Job Common</a> (or Java Common) project is a Java library that contains various useful utility classes and serializable <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/">models</a> that are used commonly throughout the Java applications in the Piazza Core.
 
 ### Building and Running Locally
 
-For instructions on how to include this library in your Java project, through Maven, please see the [Repo Documentation](https://github.com/venicegeo/pz-jobcommon). This contains all information needed to connect to the Piazza S3 Maven repository and include the Common library as a dependency in your `pom.xml` file.
+For instructions on how to include this library in your Java project, through Maven, please see the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon">repository documentation</a>. This contains all information needed to connect to the Piazza S3 Maven repository and include the Common library as a dependency in your `pom.xml` file.
 
 ### Spring Beans
 
 This project contains a variety of Spring Beans that are used to wrap core Piazza services, such as the Logger, in order to provide a handy Java API for interactions that conform to Spring standards.
 
 **IMPORTANT**: 
-[PiazzaLogger](https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java) is created with `@Component` annotations, and can thus be `@Autowired` into your classes as normal. However, since these Beans are defined in an external project [`pz-jobcommon`](https://github.com/venicegeo/pz-jobcommon) then one slight change to your project annotation must be made to your Application file:
+<a target="_blank" href="https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java">PiazzaLogger</a> is created with `@Component` annotations, and can thus be `@Autowired` into your classes as normal. However, since these Beans are defined in an external project <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon">`pz-jobcommon`</a> then one slight change to your project annotation must be made to your Application file:
 
     @SpringBootApplication
     @ComponentScan({ "MY_NAMESPACE, util" })
     public class Application extends SpringBootServletInitializer {
 
-In the above syntax, the `@ComponentScan()` annotation was added. This is required in order to tell Spring to search for `@Components` in additional namespaces to your own. In this case, we are telling Spring to look in the `MY_NAMESPACE` package, which is a placeholder for your projects own namespace (such as `gateway` or `jobmanager`) — this will ensure your own project Components get picked up. Additionally, we tell Spring to look for Components in the [util](https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/util) namespace which is defined in the [pz-jobcommon](https://github.com/venicegeo/pz-jobcommon) project and contains the [PiazzaLogger](https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java) and [UUIDFactory](https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/util/UUIDFactory.java) classes.
+In the above syntax, the `@ComponentScan()` annotation was added. This is required in order to tell Spring to search for `@Components` in additional namespaces to your own. In this case, we are telling Spring to look in the `MY_NAMESPACE` package, which is a placeholder for your projects own namespace (such as `gateway` or `jobmanager`) — this will ensure your own project Components get picked up. Additionally, we tell Spring to look for Components in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/util">util</a> namespace which is defined in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon">pz-jobcommon</a> project and contains the <a target="_blank" href="https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java">PiazzaLogger</a> and <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/blob/master/src/main/java/util/UUIDFactory.java">UUIDFactory</a> classes.
 
-The above lines are required because, if not specified, Spring would only look for Components in the default project namespaces (represented by the placeholder `MY_NAMESPACE`) and would not find the components located in the [util](https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/util) package, and thus you would receive errors when attempting to Autowire something like the [PiazzaLogger](https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java).
+The above lines are required because, if not specified, Spring would only look for Components in the default project namespaces (represented by the placeholder `MY_NAMESPACE`) and would not find the components located in the <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/util">util</a> package, and thus you would receive errors when attempting to Autowire something like the <a target="_blank" href="https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java">PiazzaLogger</a>.
 
-If you do not wish to use the [PiazzaLogger](https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java) classes as Autowired Components in your application (which is highly recommended!) then you are free to instantiate them as normal using the provided constructors. However, this is discouraged because you will have to inject the `url` values for each component directly from the constructor in order for these classes to function. It is much preferred to Autowire these components with appropriate `url` values (described in the below sections for each component) and letting Spring instantiate this for you.
+If you do not wish to use the <a target="_blank" href="https://github.com/venicegeo/pz-javalogger/blob/master/src/main/java/org/slf4j/impl/PiazzaLogger.java">PiazzaLogger</a> classes as Autowired Components in your application (which is highly recommended!) then you are free to instantiate them as normal using the provided constructors. However, this is discouraged because you will have to inject the `url` values for each component directly from the constructor in order for these classes to function. It is much preferred to Autowire these components with appropriate `url` values (described in the below sections for each component) and letting Spring instantiate this for you.
 
 ## PiazzaLogger
 
-Provides a Java API to the [pz-logger](https://github.com/venicegeo/pz-logger) component.
+Provides a Java API to the <a target="_blank" href="https://github.com/venicegeo/pz-logger">pz-logger</a> component.
 
 The PiazzaLogger Bean has required property values. These must be placed in your `application.properties` or `application-cloud.properties` file in order for these components to work when Autowired.
 
@@ -1415,7 +1533,7 @@ Please reference these static variables when sending your Logs. For example:
 
 ### Models
 
-`pz-jobcommon` also contains a variety of [models](https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/) that map all of the JSON payload information that is passed throughout the Gateway and other internal components. These models are located in the 'model.*' namespace. These models are documented in the Swagger documentation, with regards to their usage in the Gateway API.
+`pz-jobcommon` also contains a variety of <a target="_blank" href="https://github.com/venicegeo/pz-jobcommon/tree/master/src/main/java/model/">pz-models</a> that map all of the JSON payload information that is passed throughout the Gateway and other internal components. These models are located in the 'model.*' namespace. These models are documented in the Swagger documentation, with regards to their usage in the Gateway API.
 
 ## Conventions
 
@@ -1423,17 +1541,17 @@ Please reference these static variables when sending your Logs. For example:
 
 #### General
 
--   Piazza APIs SHALL use [RFC 4122](https://www.ietf.org/rfc/rfc4122.txt) for UUIDs.
+-   Piazza APIs SHALL use <a target="_blank" href="https://www.ietf.org/rfc/rfc4122.txt">RFC 4122</a> for UUIDs.
 
--   Piazza APIs SHALL use [ISO 8601](https://www.w3.org/TR/NOTE-datetime) for time/date formatting.
+-   Piazza APIs SHALL use <a target="_blank" href="https://www.w3.org/TR/NOTE-datetime">ISO 8601</a> for time/date formatting.
 
--   At the root of every [VeniceGeo](https://github.com/venicegeo) open source repository, please include this [license file](https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt)
+-   At the root of every <a target="_blank" href="https://github.com/venicegeo">VeniceGeo</a> open source repository, please include this <a target="_blank" href="https://github.com/venicegeo/venice/blob/master/legal/LICENSE.txt">license file</a>
 
--   In the header of every piece of source code in an open source repository, include this [snippet](https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt)
+-   In the header of every piece of source code in an open source repository, include this <a target="_blank" href="https://github.com/venicegeo/venice/blob/master/legal/LICENSE-HEADER.txt">snippet</a>
 
 #### Java
 
-For general Java coding, follow the [Google Java Style coding standards](http://google.github.io/styleguide/javaguide.html)
+For general Java coding, follow the <a target="_blank" href="http://google.github.io/styleguide/javaguide.html">Google Java Style coding standards</a>
 
 The package naming convention should be:
 
@@ -1445,7 +1563,7 @@ The package naming convention should be:
 
 #### GitHub
 
-New GitHub Repositories within the [github.com/venicegeo](https://github.com/venicegeo) community should be named using following convention:
+New GitHub Repositories within the <a target="_blank" href="https://github.com/venicegeo">github.com/venicegeo</a> community should be named using following convention:
 
 -   Core Piazza Components: `pz-[COMPONENT NAME]`
 
@@ -1457,7 +1575,7 @@ New GitHub Repositories within the [github.com/venicegeo](https://github.com/ven
 
 All input and output payloads will be JSON.
 
-Our default JSON style guide is the [Google JSON style guide](https://google.github.io/styleguide/jsoncstyleguide.xml).
+Our default JSON style guide is the <a target="_blank" href="https://google.github.io/styleguide/jsoncstyleguide.xml">Google JSON style guide</a>.
 
 Our field names will use `lowerCamelCase`, not `under_scores`.
 
@@ -1588,20 +1706,12 @@ This endpoint requests the current metrics for the service. The returned payload
 
 ## Support
 
-The Piazza team welcomes your questions and suggestions. Please contact
-us at <a id="contact_email"></a>.
+The Piazza team welcomes your questions and suggestions. Please contact us at <a id="contact_email"></a>.
 
 ## Legal
 
-Source code for Piazza is licensed under the [Apache License, Version
-2.0](http://www.apache.org/licenses/LICENSE-2.0). Documentation, videos,
-and other items are licensed under [Creative Commons Attribution 3.0
-License](https://creativecommons.org/licenses/by/3.0/us/).
+Source code for Piazza is licensed under the <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>. Documentation, videos, and other items are licensed under <a target="_blank" href="https://creativecommons.org/licenses/by/3.0/us/">Creative Commons Attribution 3.0
+License</a>.
 
-We welcome your open source contributions, but like many open source
-projects we all contributors to sign a Contributor License Agreement
-(CLA). This can be done as either an
-[individual](https://github.com/venicegeo/venice/blob/master/legal/I-CLA.txt)
-or as
-[corporation](https://github.com/venicegeo/venice/blob/master/legal/C-CLA.txt).
+We welcome your open source contributions, but like many open source projects we all contributors to sign a Contributor License Agreement (CLA). This can be done as either an <a target="_blank" href="https://github.com/venicegeo/venice/blob/master/legal/I-CLA.txt">individual</a> or as <a target="_blank" href="https://github.com/venicegeo/venice/blob/master/legal/C-CLA.txt">corporation</a>.
 Please contact us at <a id="contact_email"></a> for more information.

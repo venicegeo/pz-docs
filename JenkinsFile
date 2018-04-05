@@ -5,44 +5,45 @@ node {
   def mvn = tool 'M3'
   def zapHome = tool 'ZAProxy_v2_5_0'
   def nodejs = tool 'NodeJS_6'
+  def venvDir = "${root}/build_env"
+  def venvPython = "${venvDir}/bin/python"
+  def venvPip = "${venvDir}/bin/pip"
+  def venvMkdocs = "${venvDir}/bin/mkdocs"
 
   stage("Setup") {
     deleteDir()
-    sh "rm -rf /jslave/.conda/"
-    sh "rm -rf /jslave/.condarc"
+
+    echo "Cloning source repository..."
     // github is open gitlab requires credentials to clone
     if(env.GITLAB_CREDS) {
       git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}", credentialsId: "${env.GITLAB_CREDS}"
     } else {
       git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}"
     }
-    sh "curl -L https://repo.continuum.io/miniconda/Miniconda2-4.3.21-Linux-x86_64.sh -o miniconda.sh"
-    sh "bash miniconda.sh -b -p ${root}/miniconda2"
-    sh "rm miniconda.sh"
-    withEnv(["CONDA_HOME=${root}/miniconda2"]) {
-      sh "$CONDA_HOME/bin/conda info --envs"
-      sh "$CONDA_HOME/bin/conda update -n root conda"
-      sh "$CONDA_HOME/bin/conda install tornado=4.1"
-      sh "$CONDA_HOME/bin/conda create --name pz-docs -y"
-      sh "$CONDA_HOME/bin/conda config --add channels conda-forge"
-      sh "$CONDA_HOME/bin/conda install -c conda-forge mkdocs"
-    }
-  }
 
-  def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
-  appvers = appvers.trim()
-  def appName = "pz-docs-${appvers}"
+  echo "Checking build system depdendencies:"
+  sh "python --version"
+  sh "python -m pip --version"
+  sh "python -m pip show virtualenv"
 
-  stage("Build") {
-    withEnv(["CONDA_HOME=${root}/miniconda2"]) {
-      sh "$CONDA_HOME/bin/mkdocs --help"
-      sh "$CONDA_HOME/bin/mkdocs --version"
-      sh "$CONDA_HOME/bin/mkdocs build"
-    }
-  }
+  echo "Creating virtualenv and installing mkdocs"
+  sh "python -m virtualenv --clear --no-download ${venvDir}"
+  sh "${venvPip} install -r requirements.txt --no-index --find-links file://${root}/vendor"
+
+}
+
+def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
+appvers = appvers.trim()
+def appName = "pz-docs-${appvers}"
+
+stage("Build") {
+  sh "${venvMkdocs} --help"
+  sh "${venvMkdocs} --version"
+  sh "${venvMkdocs} build"
+}
 
   stage("Archive") {
-  // Build Tarball
+    // Build Tarball
     def targetFiles = "Staticfile manifest.jenkins.yml site"
     def tarball = "pz-docs.tar.gz"
     sh "tar cvvzf ${tarball} ${targetFiles}"

@@ -36,7 +36,7 @@ cd $root
 
 source $root/.rvm/scripts/rvm
 
-rvm install $RVM_VERSION > rvm.out 2>&1
+rvm install --disable-binary $RVM_VERSION > rvm.out 2>&1
 [ $? = 0 ] || cat rvm.out
 
 [ -z "$do_xtrace" ] || set -x

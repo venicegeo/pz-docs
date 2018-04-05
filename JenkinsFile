@@ -6,9 +6,9 @@ node {
   def zapHome = tool 'ZAProxy_v2_5_0'
   def nodejs = tool 'NodeJS_6'
   def venvDir = "${root}/build_env"
-  def venvPython = "${python_venv}/bin/python"
-  def venvPip = "${python_venv}/bin/pip"
-  def venvMkdocs = "${python_venv}/bin/mkdocs"
+  def venvPython = "${venvDir}/bin/python"
+  def venvPip = "${venvDir}/bin/pip"
+  def venvMkdocs = "${venvDir}/bin/mkdocs"
 
   stage("Setup") {
     deleteDir()
@@ -16,13 +16,13 @@ node {
     echo "Build system depdendencies:"
     sh "python --version"
     sh "python -m pip --version"
-    sh "python -m pip pip show virtualenv"
+    sh "python -m pip show virtualenv"
 
     // Create virtualenv
-    sh "python -m virtualenv --clean ${venvDir}"
+    sh "python -m virtualenv --clear --no-download ${venvDir}"
 
     // Install deps into virtualenv
-    sh "${venvPip} -m pip install ${root}/vendor/*"
+    sh "${venvPip} install -r requirements.txt --no-index --find-links file://${root}/vendor"
 
     // github is open gitlab requires credentials to clone
     if(env.GITLAB_CREDS) {

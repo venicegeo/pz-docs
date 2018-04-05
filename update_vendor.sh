@@ -2,6 +2,4 @@
 rm -rf vendor/
 mkdir vendor
 
-pip download \
-  -d vendor \
-  -r vendor_requirements.txt
+pip download -d vendor -r requirements.txt

@@ -1,4 +1,5 @@
 backports-abc==0.5
+backports.ssl_match_hostname==3.5.0.1 # required explicitly by tornado for some reason
 certifi==2018.1.18
 click==6.7
 Jinja2==2.10

@@ -13,34 +13,34 @@ node {
   stage("Setup") {
     deleteDir()
 
-    echo "Build system depdendencies:"
-    sh "python --version"
-    sh "python -m pip --version"
-    sh "python -m pip show virtualenv"
-
-    // Create virtualenv
-    sh "python -m virtualenv --clear --no-download ${venvDir}"
-
-    // Install deps into virtualenv
-    sh "${venvPip} install -r requirements.txt --no-index --find-links file://${root}/vendor"
-
+    echo "Cloning source repository..."
     // github is open gitlab requires credentials to clone
     if(env.GITLAB_CREDS) {
       git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}", credentialsId: "${env.GITLAB_CREDS}"
     } else {
       git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}"
     }
-  }
 
-  def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
-  appvers = appvers.trim()
-  def appName = "pz-docs-${appvers}"
+  echo "Checking build system depdendencies:"
+  sh "python --version"
+  sh "python -m pip --version"
+  sh "python -m pip show virtualenv"
 
-  stage("Build") {
-    sh "${venvMkdocs} --help"
-    sh "${venvMkdocs} --version"
-    sh "${venvMkdocs} build"
-  }
+  echo "Creating virtualenv and installing mkdocs"
+  sh "python -m virtualenv --clear --no-download ${venvDir}"
+  sh "${venvPip} install -r requirements.txt --no-index --find-links file://${root}/vendor"
+
+}
+
+def appvers = sh(script: "git describe --long --tags --always | sed 's/\\./-/'g", returnStdout: true)
+appvers = appvers.trim()
+def appName = "pz-docs-${appvers}"
+
+stage("Build") {
+  sh "${venvMkdocs} --help"
+  sh "${venvMkdocs} --version"
+  sh "${venvMkdocs} build"
+}
 
   stage("Archive") {
     // Build Tarball

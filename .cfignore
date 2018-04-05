@@ -2,6 +2,7 @@ ci/
 documents/
 etc/
 lab/
+vendor/
 JenkinsFile
 jenkins.properties
 manifest.jenkins.yml

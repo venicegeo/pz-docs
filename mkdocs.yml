@@ -42,5 +42,3 @@ pages:
     - Workflow Service: 'userguide/6-workflow.md'
     - End-to-End Example: 'userguide/7-endtoend.md'
     - Additional Notes and FAQs: 'userguide/8-notes.md'
-
-plugins: []

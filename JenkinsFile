@@ -7,10 +7,26 @@ node {
 	def nodejs = tool 'NodeJS_6'
   def rvmTool = tool 'RVM'
 
+  stage("Config") {
+    // clone the configuration repository and copy the current configuration
+    def configDir = "${root}/configuration"
+    def configFile = "${root}/config.json"
+    dir(configDir) {
+      git url: "${env.CONFIGURATION_URL}", credentialsId: "${env.CONFIGURATION_CREDS}"
+      sh "mv ${configDir}/${ENVIRONMENT}-config.json ${configFile}"
+      deleteDir()
+    }
+    // read the current configuration
+    def configJson = readJSON file: "${configFile}"
+    for (param in configJson.credparams + configJson.jobparams) { 
+      env."${param.name}" = (param.type == "booleanParam") ? "${param.defaultvalue}".toBoolean() : "${param.defaultvalue}"
+    }
+  }
+  
 	stage('Setup') {
 		deleteDir()
 		// github is open gitlab requires credentials to clone
-		if(env.GITLAB_CREDS) {
+		if(env.USE_GIT_CREDS) {
 		  git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}", credentialsId: "${env.GITLAB_CREDS}"
 		} else {
 		  git url: "${env.GIT_URL}", branch: "${env.GIT_BRANCH}"
@@ -108,7 +124,7 @@ node {
 		}
 	}
 
-  if(params.DEPLOY_PHASE_TWO) {
+  if(env.DEPLOY_PHASE_TWO) {
 	stage('Stage Deploy') {
 	  if(!fileExists('.cf')) {
 		sh "mkdir -p .cf"

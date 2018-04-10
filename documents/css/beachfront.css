@@ -1,0 +1,12 @@
+/* Custom Beachfront styling */
+
+.centered { text-align:center; }
+
+.table>thead>tr>th { vertical-align:middle; }
+.table th:nth-child(1), .table td:nth-child(1) { width:25%; }
+.table th, .table td { width:auto; }
+
+.piazza-sw-prereqs { }
+/* .piazza-sw-prereqs th:nth-child(1), .piazza-sw-prereqs td:nth-child(1) { width:33%; } */
+/* .piazza-sw-prereqs th:nth-child(2), .piazza-sw-prereqs td:nth-child(2) { width:50%; } */
+.piazza-sw-prereqs th:nth-child(4), .piazza-sw-prereqs td:nth-child(4) { text-align:center; }  /* Yes/No column for Backing Service, keep this column centered */

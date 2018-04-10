@@ -6,4 +6,12 @@ out
 *.2
 download.dat
 badwords
-
+site/*
+/config/.vagrant/machines/mkdocbox/virtualbox/action_provision
+/config/.vagrant/machines/mkdocbox/virtualbox/action_set_name
+/config/.vagrant/machines/mkdocbox/virtualbox/creator_uid
+/config/.vagrant/machines/mkdocbox/virtualbox/id
+/config/.vagrant/machines/mkdocbox/virtualbox/index_uuid
+/config/.vagrant/machines/mkdocbox/virtualbox/private_key
+/config/.vagrant/machines/mkdocbox/virtualbox/synced_folders
+/config/.vagrant/machines/mkdocbox/virtualbox/vagrant_cwd

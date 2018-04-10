@@ -1,0 +1,343 @@
+# Data Load and Access
+
+With this section, we begin to describe each of Piazza’s major APIs. We will start with loading and accessing data.
+
+## Load
+
+Piazza provides the ability to load external data into the system. Metadata is extracted from external data, stored within Piazza, and a Resource ID is then returned. The metadata is also entered into Piazza’s search index. Piazza supports several data formats today — including GeoJSON, Shapefiles, and GeoTIFFs — with more to come as users require them.
+
+For example, the URL of a GeoTIFF stored in an S3 bucket can be sent to Piazza and, once loaded, Piazza can perform other operations on the data such as generating a WMS layer or sending the data to a user service. The metadata for the file will include the S3 URL; therefore, the Resource ID can be used as a global, unique reference to the data.
+
+Piazza is not intended to be a storage system for user data and so normally only the metadata is stored — not the file itself. We refer to this as the *no-host* model.
+
+In the no-host case, Piazza will need to have read-access to the file and, in some cases, will have to copy the file to temporary local storage in order to open the file and extract the metadata; when the extraction is complete, the file is deleted. For large files, this will incur a performance penalty.
+
+Piazza also supports a *hosted* model in which the data is copied locally for metadata extraction but *not* (immediately) deleted. This is used for working files and other sorts of temporary storage; it is not intended for long-term, persistent data storage.
+
+### Loading an Image (Hosted Model)
+
+> **Note**
+>
+> The GeoTIFF file used in these examples can be found at <a target="_blank" href="scripts/terrametrics.tif">terrametrics.tif</a>.
+
+This example shows how to load a GeoTIFF file from your local file system into Piazza, using the hosted model. The script will return a JSON object describing the job that was created to perform the load operation.
+
+The script looks like this:
+
+<a target="_blank" href="scripts/post-hosted-load.sh">post-hosted-load.sh</a>
+
+    #!/bin/bash
+    set -e
+    source setup.sh
+
+    check_arg "$1" name
+    check_arg "$2" description
+
+    # tag::public[]
+    name=$1
+    description=$2
+
+    data='{
+        "type": "ingest",
+        "host": true,
+        "data": {
+            "dataType": {
+                "type": "raster"
+            },
+            "metadata": {
+                "name": "'"$name"'",
+                "description": "'"$description"'"
+            }
+        }
+    }'
+
+    # "curl_multipart" sets ContentType for a multipart POST body
+    $curl_multipart -X POST \
+        -F "data=$data" -F "file=@./terrametrics.tif" \
+        $PZSERVER/data/file
+    # end::public[]
+
+The `curl` command is used to send both a JSON payload and the contents of a binary file to the `/data/file` endpoint. Because we are passing in both kinds of data, we use a multipart `POST` body and set the `contentType` header accordingly; in most of the other examples we will see, `contentType` is set to the usual `"application/json"`.
+
+In the JSON request body, the `dataType.type` field denotes the file type of the file being uploaded. Acceptable values are `geojson`, `shapefile`, `raster`, `wfs`, and `pointcloud`. The `metadata` field contains the series of optional key/value pairs for metadata that Piazza will associate with this file.
+
+Run the script from the command line as follows:
+
+    $ ./post-hosted-load.sh myfirstfile "this is my first file"
+
+In this case, `myfirstfile` is the input to the script that be used for the custom metadata field `name` and "this is my first file" is for the `description` field.
+
+The response from this request will be a Piazza response object. It contains a ubiquitous `type` field that describes what kind of data is being returned in the `data` field. In this case, with a `job` response object, the `data` field holds the ID of the job that was created:
+
+    {
+      "type" : "job",
+      "data" : {
+        "jobId" : "24019b46-f92f-412d-8877-9fc3c114dd6e"
+      }
+    }
+
+The `jobId` can be used to fetch the status of the load operation that opens the file in questions, extracts the metadata, and so on. Requesting the status of a job is performed by executing a `GET` request to the `job/{jobId}` endpoint. The response of this request will contain current status information for the specified job, including the job’s execution status, the user who submitted the job, and so on.
+
+The `get-job-info` script can be used to do this `GET` request:
+
+<a target="_blank" href="scripts/get-job-info.sh">get-job-info.sh</a>
+
+    #!/bin/bash
+    set -e
+    . setup.sh
+
+    check_arg $1 jobId
+
+    # tag::public[]
+    jobId=$1
+
+    $curl -XGET $PZSERVER/job/$jobId
+    # end::public[]
+
+It takes a single argument, the ID of the job, to get information about:
+
+    $ ./get-job-info.sh 24019b46-f92f-412d-8877-9fc3c114dd6e
+
+The response will be something like:
+
+    {
+        "type": "status",
+        "data": {
+            "jobId": "24019b46-f92f-412d-8877-9fc3c114dd6e",
+            "status": "Running",
+            "jobType": "IngestJob",
+            "createdBy": "johndoe",
+            "progress": {
+                "percentComplete": 50
+            }
+        }
+    }
+
+or
+
+    {
+      "type" : "status",
+      "data" : {
+        "result" : {
+          "type" : "data",
+          "dataId" : "576ee63e-1359-430c-9242-26cbabc68d15"
+        },
+        "status" : "Success",
+        "jobType" : "IngestJob",
+        "createdBy" : "johndoe",
+        "progress" : {
+          "percentComplete" : 100
+        },
+        "jobId" : "24019b46-f92f-412d-8877-9fc3c114dd6e"
+      }
+    }
+
+When the job is completed, the response for the request will have its `status` field set to `Success` and will contain a `result` field. For a load job, `result.type` will be `data` because the result is data loaded into Piazza, and `result.dataId` will be the unique identifier of the data that was loaded.
+
+Just like we did to get information about a job, we can get information about the data object and our image file looks something this:
+
+<a target="_blank" href="scripts/scripts/get-data-info.sh">get-data-info.sh</a>
+
+    #!/bin/bash
+    set -e
+    . setup.sh
+
+    check_arg $1 jobId
+
+    # tag::public[]
+    dataId=$1
+
+    $curl -X GET $PZSERVER/data/$dataId
+    # end::public[]
+
+Running this script:
+
+    $ ./get-data-info.sh 576ee63e-1359-430c-9242-26cbabc68d15
+
+will return a response similar to this:
+
+    {
+      "type" : "data",
+      "data" : {
+        "dataId" : "576ee63e-1359-430c-9242-26cbabc68d15",
+        "dataType" : {
+          "type" : "raster",
+          "location" : {
+            "type" : "s3",
+            "bucketName" : "frob-s3-nitz-pz-blobstore",
+            "fileName" : "41f76b5c-fbaf-4543-9ff6-b1311ce1dff1-terrametrics.tif",
+            "fileSize" : 63883,
+            "domainName" : "s3.amazonaws.com"
+          },
+          ...
+        },
+        "spatialMetadata" : {
+          "coordinateReferenceSystem" : "...",
+          "epsgCode" : 4326,
+          "minX" : -48.52855770516021,
+          ...
+        },
+        "metadata" : {
+          "name" : "myfirstfile",
+          "description" : "mydescription",
+          "createdBy" : "johndoe",
+          "createdOn" : "2016-09-09T20:58:00.676Z",
+          "createdByJobId" : "a1c76b5c-fbaf-4543-95f6-b1311ce1dff1",
+          ...
+        }
+      }
+    }
+
+## Accessing the Hosted File
+
+We can retrieve the file using the `/file/{dataId}` endpoint, like this:
+
+<a target="_blank" href="scripts/get-hosted-data.sh">get-hosted-data.sh</a>
+
+    #!/bin/bash
+    set -e
+    . setup.sh
+
+    check_arg $1 dataId
+    check_arg $2 filename
+
+    # tag::public[]
+    dataId=$1
+    filename=$2
+
+    $curl -X GET $PZSERVER/file/$dataId?fileName=terrametrics.tif > $filename
+    # end::public[]
+
+and execute it like this:
+
+    $ ./get-hosted-data.sh {dataId} myoutput.tif
+
+We can also create an OGC-standard WMS endpoint for our GeoTIFF by sending a `POST` request to `/deployment`:
+
+<a target="_blank" href="scripts/post-nonhosted-data-wms.sh">post-nonhosted-data-wms.sh</a>
+
+    #!/bin/bash
+    set -e
+    . setup.sh
+
+    check_arg $1 dataId
+
+    # tag::public[]
+    dataId=$1
+
+    data='{
+        "type": "access",
+        "dataId": "'"$dataId"'",
+        "deploymentType": "geoserver"
+    }'
+
+    $curl -X POST -d "$data" $PZSERVER/deployment
+    # end::public[]
+
+    $ ./post-nonhosted-data-wms.sh {dataId}
+
+The response from this request will return a Job Id, because setting up a WMS layer takes time and this is a long-running job. Checking the status of the job is done using the ID as above. Once the job is complete, information about the WMS layer can be retrieved through the `deployment` field in the job response.
+
+    {
+      "type" : "status",
+      "data" : {
+        "result" : {
+          "type" : "deployment",
+          "deployment" : {
+            "deploymentId" : "6a18fd50-0af8-403b-9401-ff4f2b657e2a",
+            "dataId" : "576ee63e-1359-430c-9242-26cbabc68d15",
+            "host" : "gsn-geose-LoadBala-17USYYB36BFDL-1788485819.us-east-1.elb.amazonaws.com",
+            "port" : "80",
+            "layer" : "576ee63e-1359-430c-9242-26cbabc68d15",
+            "capabilitiesUrl" : "http://frob-nitz-788489819.us-east-1.elb.amazonaws.com:80/geoserver/piazza/wfs?service=wfs&version=2.0.0&request=GetCapabilities"
+          }
+        },
+        "status" : "Success",
+        "jobType" : "AccessJob",
+        "createdBy" : "aristophanes",
+        "progress" : { },
+        "jobId" : "a0f2ad2a-06cb-43ff-a256-17ca56b5f4a2"
+      }
+    }
+
+The `deployment` object contains the host, port, and layer name of the data as hosted on the Piazza WMS instance. The capabilities URL can be copied-and-pasted into a browser to view the capabilities of the service. The WMS service can be used by any WMS-aware client application.
+
+### Non-hosted Image File
+
+Loading a non-hosted image file is nearly identical to loading a hosted image file. The differences are:
+
+1.  The `host` field is set to `false`
+
+2.  The `data.dataType.location` field is used to point to the external location of the file
+
+3.  The `POST` request uses the `"application/json"` content type, not the multipart type, as no file attachment is specified in the request
+
+In our example script, the `data.dataType.location` field is set up for an S3 location, with the `bucketName`, `fileName` (sometimes called key), and `domainName` parameters. Obviously, Piazza must have access to this S3 bucket in order for load to succeed.
+
+<a target="_blank" href="scripts/post-nonhosted-load.sh">post-nonhosted-load.sh</a>
+
+    #!/bin/bash
+    set -e
+    . setup.sh
+
+    check_arg $1 name
+
+    # tag::public[]
+    name=$1
+
+    data='{
+        "type": "ingest",
+        "host": false,
+        "data": {
+            "dataType": {
+                "type": "raster",
+                "location": {
+                    "type": "s3",
+                    "bucketName": "external-public-access-test",
+                    "fileName": "elevation.tif",
+                    "domainName": "s3.amazonaws.com"
+                }
+            },
+            "metadata": {
+                "name": "'"$name"'",
+                "description": "mydescription"
+            }
+        }
+    }'
+
+    $curl -XPOST -d "$data" $PZSERVER/data
+    # end::public[]
+
+    $ ./post-nonhosted-load.sh mynewfile
+
+From this point on, the workflow is identical to hosted files.
+
+### Loading a GeoJSON File
+
+Loading GeoJSON data is nearly identical to loading image files. The differences are:
+
+1.  The `type` of the `data.dataType` field is set to `geojson`
+
+2.  The file uploaded should have a `.geojson` extension
+
+For example, the request payload might be:
+
+    {
+        "type": "ingest",
+        "host": true,
+        "data": {
+            "dataType": {
+                "type": "geojson"
+            },
+            "metadata": {
+                "name": "geojson_test",
+                "description": "geojson_test"
+            }
+        }
+    }
+
+The processes for getting the job status, downloading the data, and creating an OGC deployment (in this case, a WFS layer) follow the image-based examples described above.
+
+## Data API Documentation
+
+See <a target="_blank" href="http://pz-swagger.venicegeo.io/#/Data">http://pz-swagger.venicegeo.io/#/Data</a>

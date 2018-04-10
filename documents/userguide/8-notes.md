@@ -1,0 +1,157 @@
+# Additional Notes and FAQs
+
+## Pagination
+
+HTTP requests that return arrays of objects typically support these
+query parameters for pagination:
+
+-   `?page=INT`
+
+-   `?perPage=INT`
+
+-   `?sortBy=STRING`
+
+-   `?order=STRING` - must be either `asc` or `desc`
+
+For example, together these two calls will return the sixty most recent
+log messages, thirty at a time, sorted by creation date:
+
+    GET /messages?perPage=30&page=0&key=createdOn&order=asc
+    GET /messages?perPage=30&page=1&key=createdOn&order=asc
+
+## HTTP Status Codes
+
+Piazza typically only uses these HTTP status codes:
+
+`200 OK`  
+The request has succeeded. The information returned with the response is
+dependent on the method used in the request. For `GET`, the response is
+an entity containing the requested resource. For `POST`, it is entity
+containing the result of the action.
+
+`201 Created`  
+The request has been fulfilled and resulted in a new resource being
+created. The newly created resource can be referenced by the URI(s)
+returned in the entity of the response. The origin server MUST create
+the resource before returning the 201 status code.
+
+`400 Bad Request`  
+The request could not be understood by the server due to malformed
+syntax.
+
+`401 Unauthorized`  
+The request requires user authentication, e.g., due to missing or
+invalid authentication token.
+
+`403 Forbidden`  
+The server understood the request, but is refusing to fulfill it.
+Authorization will not help. May be used in cases where user is not
+authorized to perform the operation or the resource is unavailable for
+some reason (e.g., time constraints, etc.).
+
+`404 Not Found`  
+The requested resource could not be found but may be available again in
+the future. Subsequent requests by the client are permissible.
+
+`500 Internal Server Error`  
+The server encountered an unexpected condition which prevented it from
+fulfilling the request.
+
+## Structure of returned objects
+
+JSON objects returned by Piazza follow this form:
+
+    {
+        "type": "...",
+        "data": {
+            ....
+        }
+    }
+
+The `type` field is used to indicate the contents of the `data` field.
+
+## Elasticsearch Query Syntax
+
+The Elasticsearch DSL can get very complicated. Attempting to explain
+the entirety of the Elasticsearch DSL syntax is beyond the scope of this
+document. However, the Elasticsearch documentation is well-written and a
+good source of quality examples of DSL syntax. For more details, visit
+the <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html">Elasticsearch Query DSL docs</a>.
+
+Some helpful links for constructing Elasticsearch DSL queries include:
+
+-   Elasticsearch Query information
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-filter-context.html">Query and Filter Context
+        docs</a>
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/2.3/search-request-fields.html">Fields Parameter
+        docs</a>
+
+-   Elasticsearch Query Types (non-exhaustive)
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html">Match Query docs</a>
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html">Term Query docs</a>
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-exists-query.html">Exists Query docs</a>
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-type-query.html">Type Query docs</a>
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html">Ids Query docs</a>
+
+    -   <a target="blank" href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html">Bool Query docs</a>
+    
+As an aid, here are a few example queries:
+
+## Example Query 1
+
+Make a set of all objects whose `title` matches `"Search"` and whose
+`content` matches `"Elasticsearch"` (where the "match" operation follows
+Elasticsearch’s rules for fuzzy string compares). From that set, return
+only the objects whose `status` is (exactly) `"published"` and whose
+`publish_date` was in 2015 or later.
+
+    {
+        "query": {
+            "bool": {
+                "must": [
+                    { "match": { "title":   "Search"        }},
+                    { "match": { "content": "Elasticsearch" }}
+                ],
+                "filter": [
+                    { "term":  { "status": "published" }},
+                    { "range": { "publish_date": { "gte": "2015-01-01" }}}
+                ]
+            }
+        }
+    }
+
+## Example Query 2
+
+Return all objects whose `severity` is 5 and whose `code` matches
+"PHONE."
+
+    {
+        "query": {
+            "bool": {
+                "must": [
+                    { "match": { "severity": 5   }},
+                    { "match": { "code": "PHONE" }}
+                ]
+            }
+        }
+    }
+
+## Example Query 3
+
+Return all objects whose `exact_value` is "Quick Foxes!"
+
+    {
+        "query": {
+            "term": {
+                "exact_value": "Quick Foxes!"
+            }
+        }
+    }
+ 

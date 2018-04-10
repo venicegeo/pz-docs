@@ -1,6 +1,0 @@
-
-## Building Running Locally
-
-Please refer to repository readme: https://github.com/venicegeo/pz-search-metadata-ingest and https://github.com/venicegeo/pz-search-query
-
-// vim: set syntax=asciidoc wrap:

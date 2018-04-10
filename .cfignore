@@ -2,8 +2,12 @@ ci/
 documents/
 etc/
 lab/
+vendor/
 JenkinsFile
 jenkins.properties
 manifest.jenkins.yml
 .*
 *.tar.gz
+mkdocs.yml
+LICENSE.txt
+ascii-to-mkdown.sh

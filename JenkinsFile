@@ -99,7 +99,7 @@ stage("Build") {
         sh "cf api ${env.PCF_API_ENDPOINT}"
         sh "cf auth ${CFUSER} ${CFPASS}"
         sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
-        sh "cf push ${appName} -f Staticfile --hostname ${appName} -d ${env.PHASE_ONE_PCF_DOMAIN} --no-start -m 512M"
+        sh "cf push ${appName} -f Staticfile --hostname ${appName} -d ${env.PHASE_ONE_PCF_DOMAIN} --no-start -m 512M --no-route"
 	sh "cf set-env ${appName} SPACE ${env.PHASE_ONE_PCF_SPACE}"
 	sh "cf set-env ${appName} DOMAIN ${env.PHASE_ONE_PCF_DOMAIN}"
         try {
@@ -127,7 +127,7 @@ stage("Build") {
         sh "cf api ${env.PCF_API_ENDPOINT}"
         sh "cf auth ${CFUSER} ${CFPASS}"
         sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_ONE_PCF_SPACE}"
-		def legacyAppNames = sh(script: "cf routes | grep \"pz-docs \" | awk '{print \$4}'", returnStdout: true)
+		def legacyAppNames = sh(script: "cf routes | grep \"pz-docs\" | awk '{print \$4}'", returnStdout: true)
 		sh "cf map-route ${appName} ${env.PHASE_ONE_PCF_DOMAIN} --hostname pz-docs"
 		// Remove Legacy applications
 		for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {
@@ -151,7 +151,7 @@ stage("Build") {
 			sh "cf api ${env.PCF_API_ENDPOINT}"
 			sh "cf auth ${CFUSER} ${CFPASS}"
 			sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_TWO_PCF_SPACE}"
-			sh "cf push ${appName} --hostname ${appName} -f Staticfile -d ${env.PHASE_TWO_PCF_DOMAIN} --no-start -m 512M"
+			sh "cf push ${appName} --hostname ${appName} -f Staticfile -d ${env.PHASE_TWO_PCF_DOMAIN} --no-start -m 512M --no-route"
 			sh "cf set-env ${appName} SPACE ${env.PHASE_TWO_PCF_SPACE}"
 			sh "cf set-env ${appName} DOMAIN ${env.PHASE_TWO_PCF_DOMAIN}"
                         try {
@@ -179,7 +179,7 @@ stage("Build") {
 			sh "cf api ${env.PCF_API_ENDPOINT}"
 			sh "cf auth ${CFUSER} ${CFPASS}"
 			sh "cf target -o ${env.PCF_ORG} -s ${env.PHASE_TWO_PCF_SPACE}"
-			def legacyAppNames = sh(script: "cf routes | grep \"pz-docs \" | awk '{print \$4}'", returnStdout: true)
+			def legacyAppNames = sh(script: "cf routes | grep \"pz-docs\" | awk '{print \$4}'", returnStdout: true)
 			sh "cf map-route ${appName} ${env.PHASE_TWO_PCF_DOMAIN} --hostname pz-docs"
 		    // Remove Legacy applications
 		    for (Object legacyApp : legacyAppNames.trim().tokenize(',')) {

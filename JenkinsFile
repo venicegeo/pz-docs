@@ -119,7 +119,7 @@ stage("Build") {
 			-quickurl https://${appName}.${env.PHASE_ONE_PCF_DOMAIN} \
 		  """
 		  sh "cat ${root}/zap-out/zap.xml"
-		  sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
+		  sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/latest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
 		}
 	}
     withEnv(['CF_HOME=.cf']) {
@@ -171,7 +171,7 @@ stage("Build") {
 				-quickurl https://${appName}.${env.PHASE_TWO_PCF_DOMAIN} \
 			  """
 			  sh "cat ${root}/zap-out/zap.xml"
-			  sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
+			  sh "/bin/curl -v --insecure -H 'Accept: application/json' -X POST --form file=@${root}/zap-out/zap.xml ${env.THREADFIX_URL}/rest/latest/applications/${THREADFIX_ID}/upload?apiKey=${THREADFIX_KEY}"
 			}
 		}
 		withEnv(['CF_HOME=.cf']) {
